@@ -38,3 +38,6 @@ g_to_kg <- 0.001
 
 # cm3 to m3
 cm3_to_m3 <- 1e-6
+
+# g/cm3 to ppm
+g_per_cm3_to_ppm <- 1000000
