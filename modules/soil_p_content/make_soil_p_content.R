@@ -63,8 +63,8 @@ make_soil_p_content <- function(){
         
     # average across rings, dates, and depths, unit: mg/kg PO4
     myDF8.m <- summaryBy(phosphate~date+ring+depth,data=myDF8,FUN=mean,keep.names=T,na.rm=T)
-        
-    
+
+    ## we have phosphate (mg/kg)
     
     
     
