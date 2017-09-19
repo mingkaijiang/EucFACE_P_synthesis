@@ -13,6 +13,6 @@ source("programs/prepare.R")
 soil_bulk_density <- make_soil_bulk_density()
 
 #### Soil pools
-soil_p_content <- make_soil_p_content()
+soil_p_content <- make_soil_p_content(soil_bulk_density)
 
 

@@ -1,5 +1,5 @@
 #- Make the soil bulk density variable
-make_soil_p_content <- function(){
+make_soil_bulk_density <- function(){
     # return ring-specific soil density data
 
     # download the data
@@ -17,6 +17,10 @@ make_soil_p_content <- function(){
     df.m <- summaryBy(bulk_density~ring+Depth,
                       data=df,FUN=mean,keep.names=T,na.rm=T)
     
-    return(df.m)
+    df.m$bulk_density_kg_m3 <- df.m$bulk_density * g_to_kg / cm3_to_m3
+    
+    df.out <- df.m[,c("ring", "Depth", "bulk_density_kg_m3")]
+    
+    return(df.out)
     
 }
