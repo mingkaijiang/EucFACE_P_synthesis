@@ -15,6 +15,30 @@ soil_bulk_density <- make_soil_bulk_density()
 #### Soil pools
 soil_p_content <- make_soil_p_content(soil_bulk_density)
 
-
 #### Microbial P pool
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
+
+
+
+
+
+
+
+
+
+
+
+###### ---------------- Making tables -------------------- ######
+
+
+
+
+
+
+
+
+
+
+###### ---------------- End -------------------- ######
+#### clear wk space
+rm(list=ls(all=TRUE))
