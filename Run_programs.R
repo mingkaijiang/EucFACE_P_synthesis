@@ -16,3 +16,5 @@ soil_bulk_density <- make_soil_bulk_density()
 soil_p_content <- make_soil_p_content(soil_bulk_density)
 
 
+#### Microbial P pool
+microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
