@@ -5,9 +5,8 @@ make_soil_bulk_density <- function(){
     # download the data
     download_soil_bulk_density_data()
     
-    df <- read.xls(file.path(getToPath(), 
-                            "FACE_RA_P0088_BULKDENSITY_L1_20170914.xlsx"), 
-                  sheet = 1, header = TRUE)
+    df <- read.csv(file.path(getToPath(), 
+                            "FACE_RA_P0088_BULKDENSITY_L1_20170914.csv"))
 
     df <- df[,1:7]
     names(df)[7] <- "bulk_density"
