@@ -20,8 +20,6 @@ make_soil_bulk_density <- function(){
     # unit conversion: g/cm3 to kg/m3
     df.m$bulk_density_kg_m3 <- df.m$bulk_density * g_to_kg / cm3_to_m3
     
-    
-    
     # update variables to output
     df.out <- df.m[,c("ring", "Depth", "bulk_density_kg_m3")]
     
