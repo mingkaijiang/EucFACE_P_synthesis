@@ -19,12 +19,11 @@ soil_p_content <- make_soil_p_content(soil_bulk_density)
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
 
+#### Fine root P data will be available in 3 weeks time
 
+#### Hedley fractionation data will be available in late October
 
-
-
-
-
+#### Sally sent canopy P data (very small samples, but better than nothing)
 
 
 
