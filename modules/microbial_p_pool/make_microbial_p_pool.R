@@ -5,16 +5,11 @@ make_microbial_p_pool <- function(bk_density){
     # download the data
     download_microbial_p_data()
     
-    df <- read.csv("download/MicCNP_2015.csv")
+    df <- read.csv(file.path(getToPath(), 
+                             "FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130.csv"))
 
-    df <- df[,1:14]
-
-    # expand date from month/year to day/month/year
-    df$Date <- as.Date(paste0("1-", df$Date), format = "%d-%b-%y") + months(1) - days(1)
-    
-    
     # average across rings and depths, unit: mg/kg
-    df.m <- summaryBy(Pmic~Ring+Date,
+    df.m <- summaryBy(Pmic~ring+date,
                       data=df,FUN=mean,keep.names=T,na.rm=T)
     
     
@@ -25,11 +20,10 @@ make_microbial_p_pool <- function(bk_density){
     bk_density <- subset(bk_density, Depth != "30-60")
     bk_density <- subset(bk_density, Depth != "60-88")
     
-    
     bk.r<-with(bk_density, tapply(bulk_density_kg_m3, ring, mean))
     
     for (i in 1:6) {
-        df.m[df.m$Ring == i, "bk_density"] <- bk.r[i]
+        df.m[df.m$ring == i, "bk_density"] <- bk.r[i]
     }
         
     # unit conversion: mg/kg to g/m2
@@ -37,7 +31,7 @@ make_microbial_p_pool <- function(bk_density){
     
     
     # update variables to output
-    df.out <- df.m[,c("Ring", "Date", "Pmic_g_m2")]
+    df.out <- df.m[,c("ring", "date", "Pmic_g_m2")]
     
     return(df.out)
     
