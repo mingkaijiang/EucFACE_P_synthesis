@@ -32,6 +32,11 @@ canopy_p_pool <- make_canopy_p_pool()
 
 ###### ---------------- Making tables -------------------- ######
 
+#### Source the functions
+source("programs/make_tables.R")
+
+#### Ring-specific table
+make_EucFACE_ring_table()
 
 
 
