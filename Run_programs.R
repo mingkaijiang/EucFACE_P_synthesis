@@ -8,6 +8,9 @@ rm(list=ls(all=TRUE))
 #### Source functions and packages
 source("programs/prepare.R")
 
+#### turn warnings off globally
+options(warn=-1)
+
 ###### ---------------- Generating stuffs -------------------- ######
 #### Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
@@ -41,3 +44,4 @@ canopy_p_pool <- make_canopy_p_pool()
 ###### ---------------- End -------------------- ######
 #### clear wk space
 rm(list=ls(all=TRUE))
+options(war=0)
