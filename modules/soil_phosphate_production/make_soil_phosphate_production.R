@@ -1,5 +1,5 @@
 
-make_soil_phosphase_content <- function() {
+make_soil_phosphate_content <- function(bk_density) {
     # download the data
     download_soil_p_data()
     

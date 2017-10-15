@@ -15,8 +15,11 @@ options(warn=-1)
 #### Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
 
-#### Soil pools
+#### Soil P pools
 soil_p_content <- make_soil_p_content(soil_bulk_density)
+
+#### Soil phosphate production flux
+
 
 #### Microbial P pool
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
@@ -26,6 +29,8 @@ canopy_p_pool <- make_canopy_p_pool()
 
 #### Frass P production
 frass_p_production <- make_frass_p_production_flux()
+
+#### Leaching P flux
 
 
 #### Fine root P data will be available in 3 weeks time
