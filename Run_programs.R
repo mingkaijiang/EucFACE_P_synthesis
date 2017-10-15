@@ -23,8 +23,8 @@ microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
 #### Hedley fractionation data will be available in late October
 
-#### Sally sent canopy P data (very small samples, but better than nothing)
-
+#### Canopy P data (Sally Power)
+canopy_p_pool <- make_canopy_p_pool()
 
 
 ###### ---------------- Making tables -------------------- ######
