@@ -19,7 +19,7 @@ soil_bulk_density <- make_soil_bulk_density()
 soil_p_content <- make_soil_p_content(soil_bulk_density)
 
 #### Soil phosphate production flux
-
+soil_phosphate_production <- make_soil_phosphate_production(soil_bulk_density)
 
 #### Microbial P pool
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
@@ -58,3 +58,8 @@ make_EucFACE_ring_table()
 #### clear wk space
 rm(list=ls(all=TRUE))
 options(war=0)
+
+
+
+
+
