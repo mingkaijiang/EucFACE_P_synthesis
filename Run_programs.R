@@ -21,13 +21,16 @@ soil_p_content <- make_soil_p_content(soil_bulk_density)
 #### Microbial P pool
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
+#### Canopy P data (Sally Power)
+canopy_p_pool <- make_canopy_p_pool()
+
+#### Frass P production
+frass_p_production <- make_frass_p_production_flux()
+
 
 #### Fine root P data will be available in 3 weeks time
 
 #### Hedley fractionation data will be available in late October
-
-#### Canopy P data (Sally Power)
-canopy_p_pool <- make_canopy_p_pool()
 
 
 ###### ---------------- Making tables -------------------- ######
