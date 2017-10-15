@@ -79,6 +79,8 @@ make_soil_p_content <- function(bk_density){
     myDF.m$totP_g_m2 <-myDF.m$totP_mg_m2 / 1000.0
     
     myDF.out <- myDF.m[,c("Date", "ring", "depth", "totP_g_m2")]
+    
+    myDF.out <- myDF.out[complete.cases(myDF.out),]
 
     return(myDF.out)
     

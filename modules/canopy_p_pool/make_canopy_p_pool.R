@@ -18,7 +18,7 @@ make_canopy_p_pool <- function(){
     names(lai_variable)[3] <- "lai_variable"
     
     #- return a number for ring
-    res$Ring <- as.numeric(res$Ring)
+    lai_variable$Ring <- as.numeric(lai_variable$Ring)
     
     
     lma_raw <- download_lma_data()
@@ -42,10 +42,10 @@ make_canopy_p_pool <- function(){
     dfr$ring <- rep(c(1:6), dim(dfr)[1]/6)
     
     for (i in 1:6) {
-        dfr[dfr$ring == i, "leaf_p_pool"] <- dfr[dfr$ring == i, "leaf_pool"]/1000 * df.m[df.m$Ring == i, "P"]
+        dfr[dfr$ring == i, "leaf_p_pool"] <- dfr[dfr$ring == i, "leaf_pool"]/1000 * df.m[df.m$Ring == i, "P"]/1000
     }
     
-    # leaf p pool in unit of mg/m2
+    # leaf p pool in unit of g/m2
     df.out <- dfr[, c("Date", "ring", "leaf_p_pool")]
     
     

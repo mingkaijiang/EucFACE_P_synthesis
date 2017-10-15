@@ -29,9 +29,10 @@ make_microbial_p_pool <- function(bk_density){
     # unit conversion: mg/kg to g/m2
     df.m$Pmic_g_m2 <- df.m$bk_density * df.m$Pmic * 0.3 / g_to_mg
     
-    
     # update variables to output
     df.out <- df.m[,c("ring", "date", "Pmic_g_m2")]
+    
+    df.out <- df.out[complete.cases(df.out),]
     
     return(df.out)
     
