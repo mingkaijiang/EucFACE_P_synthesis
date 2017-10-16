@@ -37,11 +37,22 @@ make_soil_phosphate_production <- function(bk_density) {
     myDF3.out <- myDF3.m[,c("date", "ring", "depth", "P_g_m2")]
     
     # plotting time series
-    #with(myDF3.out, plot(P_g_m2~date, group_by="ring", col=rainbow(6),
-    #                     ylim=c(0, 1)))
-    #legend("topright", col=rainbow(6), legend=c(1:6), pch = 1)
+    with(myDF3.out, plot(P_g_m2~date, group_by="ring", col=rainbow(6),
+                         ylim=c(0, 1)))
+    legend("topright", col=rainbow(6), legend=c(1:6), pch = 1)
 
-        
+    # compare eCO2 and aCO2 treatment
+    myDF3.out[myDF3.out$ring == 1, "CO2"] <- "eCO2"
+    myDF3.out[myDF3.out$ring == 4, "CO2"] <- "eCO2"
+    myDF3.out[myDF3.out$ring == 5, "CO2"] <- "eCO2"
+    
+    myDF3.out[myDF3.out$ring == 2, "CO2"] <- "aCO2"
+    myDF3.out[myDF3.out$ring == 3, "CO2"] <- "aCO2"
+    myDF3.out[myDF3.out$ring == 6, "CO2"] <- "aCO2"
+    
+    boxplot(P_g_m2~CO2*date, data=myDF3.out,
+            col=c("gold", "green"))
+    legend("topright", c("eCO2", "aCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
 
     return(myDF3.out)
 }

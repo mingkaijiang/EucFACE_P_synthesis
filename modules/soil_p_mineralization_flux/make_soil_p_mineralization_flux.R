@@ -37,18 +37,17 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     #       jitter.x=TRUE, jitter.y=TRUE)
     
     # compare eCO2 and aCO2 treatment
-
-    myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
-    myDF1.out[myDF1.out$ring == 4, "CO2"] <- "eCO2"
-    myDF1.out[myDF1.out$ring == 5, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$ring == 4, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$ring == 5, "CO2"] <- "eCO2"
     
-    myDF1.out[myDF1.out$ring == 2, "CO2"] <- "aCO2"
-    myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
-    myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$ring == 2, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
     
-    boxplot(p_mineralization_g_m2_d~CO2*date, data=myDF1.out,
-            col=c("gold", "green"))
-    legend("topright", c("eCO2", "aCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
+    #boxplot(p_mineralization_g_m2_d~CO2*date, data=myDF1.out,
+    #        col=c("gold", "green"))
+    #legend("topright", c("eCO2", "aCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
     
     return(myDF1.out)
 }
