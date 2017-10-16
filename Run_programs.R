@@ -44,10 +44,10 @@ frass_p_production <- make_frass_p_production_flux()
 ###### ---------------- Making tables -------------------- ######
 
 #### Source the functions
-source("programs/make_tables.R")
+#source("programs/make_tables.R")
 
 #### Ring-specific table
-make_EucFACE_ring_table()
+#make_EucFACE_ring_table()
 
 
 
