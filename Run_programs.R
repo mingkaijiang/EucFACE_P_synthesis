@@ -21,6 +21,9 @@ soil_p_content <- make_soil_p_content(soil_bulk_density)
 #### Soil phosphate production flux
 soil_phosphate_production <- make_soil_phosphate_production(soil_bulk_density)
 
+#### Soil P mienralization flux
+soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
+
 #### Microbial P pool
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
