@@ -36,9 +36,11 @@ frass_p_production <- make_frass_p_production_flux()
 #### Leaching P flux
 
 
-#### Fine root P data will be available in 3 weeks time
+#### Fine root P 
+fineroot_p_pool <- make_fineroot_p_pool()
 
-#### Hedley fractionation data will be available in late October
+
+#### Hedley fractionation data will be available in late November
 
 
 ###### ---------------- Making tables -------------------- ######
