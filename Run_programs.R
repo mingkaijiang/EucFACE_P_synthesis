@@ -36,8 +36,11 @@ frass_p_production <- make_frass_p_production_flux()
 #### Leaching P flux
 
 
-#### Fine root P 
+#### Fine root P biomass pool
 fineroot_p_pool <- make_fineroot_p_pool()
+
+#### Fine root P production flux
+fineroot_p_production <- make_fineroot_p_production()
 
 
 #### Hedley fractionation data will be available in late November
