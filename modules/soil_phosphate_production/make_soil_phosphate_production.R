@@ -68,5 +68,5 @@ make_soil_phosphate_production <- function(bk_density) {
     #        col=c("gold", "green"), ylab="PO4-P (g m-2)")
     #legend("topright", c("eCO2", "aCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
 
-    return(myDF3.out)
+    return(myDF.out)
 }

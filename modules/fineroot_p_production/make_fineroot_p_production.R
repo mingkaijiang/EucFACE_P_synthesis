@@ -47,12 +47,12 @@ make_fineroot_p_production <- function(){
     
     ### summing across depths
     frp.1$frp_10_30cm <- frp.2$frp_10_30cm 
-    frp.1$frp_0_30cm <- (frp.1$frp_10_30cm + frp.1$frp_0_10cm) * g_to_mg
+    frp.1$frp_0_30cm <- (frp.1$frp_10_30cm + frp.1$frp_0_10cm) 
     
     
     #- format dataframe to return
     frp.out <- frp.1[,c("date","Ring.ID","frp_0_30cm")]
-    names(frp.out) <- c("Date", "Ring", "Fineroot_P_production_mg_m2_d")
+    names(frp.out) <- c("Date", "Ring", "Fineroot_P_production_g_m2_d")
     
     return(frp.out)
 }
