@@ -41,14 +41,14 @@ fineroot_p_production <- make_fineroot_p_production()
 
 #### Leaching P flux - we have Shun's data, but needs drainage value
 
-#### Hedley fractionation data will be available in late November
+#### Hedley fractionation data will be available in late December
 
 
 #### Still missing components:
 ####                           1. wood P concentration
 ####                           2. understorey P concentration
 ####                           3. Litter P concentration
-####                           4. more complete canopy P data
+####                           4. canopy P data
 
 
 
