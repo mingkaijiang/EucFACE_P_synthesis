@@ -27,8 +27,11 @@ soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 #### Microbial P pool
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
-#### Canopy P data 
+#### Canopy P data - return a data list - green leaf and dead leaf
 canopy_p_pool <- make_canopy_p_pool()
+
+#### Litter P data
+
 
 #### Frass P production
 frass_p_production <- make_frass_p_production_flux()
@@ -48,11 +51,9 @@ understorey_p_pool <- make_understorey_p_pool()
 
 
 #### Still missing components:
-####                           1. wood P concentration
-####                           2. understorey P concentration
-####                           3. Litter P concentration
-####                           4. canopy P data
-
+### mycorrhizal P content
+### P retranslocation
+### P turnover rate
 
 
 ###### ---------------- Making tables -------------------- ######
