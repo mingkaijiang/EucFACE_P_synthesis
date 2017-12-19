@@ -1,5 +1,5 @@
-#- Make the canopy P pool 
-make_canopy_p_pool <- function(){
+#- Make the understorey P pool from Sally's data
+make_understorey_p_pool <- function(){
     # return ring-specific canopy P data (mg/kg)
 
     # download the data
@@ -53,12 +53,12 @@ make_canopy_p_pool <- function(){
     
 }
 
-download_lai_variable <- function(){
-    
-    downloadTOA5("FACE_P0037_RA_GAPFRACLAI_OPEN_L2.dat", quiet=TRUE)
-    
-}
+#download_lai_variable <- function(){
+#    
+#    downloadTOA5("FACE_P0037_RA_GAPFRACLAI_OPEN_L2.dat", quiet=TRUE)
+#    
+#}
 
-download_lma_data <- function(){
-    downloadCSV("FACE_P0020_RA_LMA_20150129-20150416_L2.csv")
-}
+#download_lma_data <- function(){
+#    downloadCSV("FACE_P0020_RA_LMA_20150129-20150416_L2.csv")
+#}

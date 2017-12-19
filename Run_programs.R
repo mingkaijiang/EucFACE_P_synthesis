@@ -27,7 +27,7 @@ soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 #### Microbial P pool
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
-#### Canopy P data (Sally Power)
+#### Canopy P data 
 canopy_p_pool <- make_canopy_p_pool()
 
 #### Frass P production
@@ -38,6 +38,9 @@ fineroot_p_pool <- make_fineroot_p_pool()
 
 #### Fine root P production flux
 fineroot_p_production <- make_fineroot_p_production()
+
+#### Understorey P pool
+understorey_p_pool <- make_understorey_p_pool()
 
 #### Leaching P flux - we have Shun's data, but needs drainage value
 
