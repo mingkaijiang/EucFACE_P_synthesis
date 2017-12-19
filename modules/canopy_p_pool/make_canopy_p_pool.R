@@ -3,13 +3,21 @@ make_canopy_p_pool <- function(){
     # return ring-specific canopy P data (mg/kg)
 
     # download the data
-    df <- read.csv("download/POW151FR.csv")
-
-    # average across rings and depths, unit: mg/kg
-    df.m <- summaryBy(P~Ring,
-                      data=df,FUN=mean,keep.names=T,na.rm=T)
+    download_canopy_p_data()
     
-    df.m <- df.m[1:6,]
+    df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
+
+    # only include green leaf
+    df <- subset(df, Type == "green leaf")
+    
+    # average across rings and date, unit = %
+    df.m <- summaryBy(PercP~Ring+Campaign,
+                      data=df,FUN=mean,keep.names=T,na.rm=T)
+    colnames(df.m) <- c("Ring", "Date", "PercentP")
+    
+    ### setting up the date
+    df.m$Date <- paste0("1-", as.character(df.m$Date))
+    df.m$date <- as.Date(df.m$Date, "%d-%b-%y")
     
     # get sla and lai data from C balance project
     lai_variable <- download_lai_variable()
