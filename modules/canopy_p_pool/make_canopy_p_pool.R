@@ -1,53 +1,86 @@
 #- Make the canopy P pool 
 make_canopy_p_pool <- function(){
-    # return ring-specific canopy P data (mg/kg)
+    ### return ring-specific canopy P data (mg/kg)
 
-    # download the data
+    ### download the data
     download_canopy_p_data()
     
     df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
-
-    # only include green leaf
-    df <- subset(df, Type == "green leaf")
-    
-    # average across rings and date, unit = %
-    df.m <- summaryBy(PercP~Ring+Campaign,
-                      data=df,FUN=mean,keep.names=T,na.rm=T)
-    colnames(df.m) <- c("Ring", "Date", "PercentP")
     
     ### setting up the date
-    df.m$Date <- paste0("1-", as.character(df.m$Date))
-    df.m$date <- as.Date(df.m$Date, "%d-%b-%y")
+    df$Date <- paste0("1-", as.character(df$Campaign))
+    df$Date <- as.Date(df$Date, "%d-%b-%y")
+
+    ### only include green leaf
+    df.green <- subset(df, Type == "green leaf")
+    df.yellow <- subset(df, Type == "sceneced leaf")
+    df.litter <- subset(df, Type == "Leaf litter")
+    df.wood <- subset(df, Type == "wood")
     
-    # get sla and lai data from C balance project
-    lai_variable <- download_lai_variable()
+    ### green leaf p, average across rings and date, unit = %
+    df.green.p <- summaryBy(PercP~Ring+Date,
+                      data=df.green,FUN=mean,keep.names=T,na.rm=T)
+    df.green.p$month <- month(df.green.p$Date)
+    df.green.p$year <- year(df.green.p$Date)
+
+    ### sceneced p, average across rings and date, unit = %
+    df.yellow.p <- summaryBy(PercP~Ring+Date,
+                            data=df.yellow,FUN=mean,keep.names=T,na.rm=T)
+    df.yellow.p$month <- month(df.yellow.p$Date)
+    df.yellow.p$year <- year(df.yellow.p$Date)
     
-    lai_variable <- subset(lai_variable, select=c(Date, Ring, LAI))
-    names(lai_variable)[3] <- "lai_variable"
+    ### Leaf litter p, average across rings and date, unit = %
+    df.litter.p <- summaryBy(PercP~Ring+Date,
+                            data=df.litter,FUN=mean,keep.names=T,na.rm=T)
+    df.litter.p$month <- month(df.litter.p$Date)
+    df.litter.p$year <- year(df.litter.p$Date)
     
-    #- return a number for ring
-    lai_variable$Ring <- as.numeric(lai_variable$Ring)
+    ### Wood p, average across rings and date, unit = %
+    df.wood.p <- summaryBy(PercP~Ring+Date,
+                            data=df.wood,FUN=mean,keep.names=T,na.rm=T)
+    df.wood.p$month <- month(df.wood.p$Date)
+    df.wood.p$year <- year(df.wood.p$Date)
     
+    ### green leaf c, average across rings and date, unit = %
+    df.green.c <- summaryBy(PercC~Ring+Date,
+                            data=df.green,FUN=mean,keep.names=T,na.rm=T)
+    df.green.c$month <- month(df.green.c$Date)
+    df.green.c$year <- year(df.green.c$Date)
     
-    lma_raw <- download_lma_data()
-    lma_raw$Date <- as.Date(lma_raw$Date, format="%d/%m/%Y")
-    lma <- droplevels(subset(lma_raw, TREE != "outs R6"))  # outside ring trees
-    lma <- mutate(lma, 
-                  Ring = as.numeric(substr(TREE,1,1)),
-                  LMA = as.numeric(LMA),
-                  SLA = 10000 / LMA)  # cm2 g-1
-    lma <- subset(lma, !is.na(Ring), select =c(Date,Ring, SLA))  # missing ring is for tree 'outs R6' - ignore
+    ### sceneced c, average across rings and date, unit = %
+    df.yellow.c <- summaryBy(PercC~Ring+Date,
+                             data=df.yellow,FUN=mean,keep.names=T,na.rm=T)
+    df.yellow.c$month <- month(df.yellow.c$Date)
+    df.yellow.c$year <- year(df.yellow.c$Date)
     
-    lma_a <- summaryBy(SLA ~ Ring + Date, FUN=mean, na.rm=TRUE, data=lma, keep.names=TRUE)
+    ### Leaf litter c, average across rings and date, unit = %
+    df.litter.c <- summaryBy(PercC~Ring+Date,
+                             data=df.litter,FUN=mean,keep.names=T,na.rm=T)
+    df.litter.c$month <- month(df.litter.c$Date)
+    df.litter.c$year <- year(df.litter.c$Date)
     
-    lma <- dplyr::rename(lma, sla_variable = SLA)
+    ### Wood c, average across rings and date, unit = %
+    df.wood.c <- summaryBy(PercC~Ring+Date,
+                           data=df.wood,FUN=mean,keep.names=T,na.rm=T)
+    df.wood.c$month <- month(df.wood.c$Date)
+    df.wood.c$year <- year(df.wood.c$Date)
+
+    ### make lai, sla and leaf c pool 
+    lai_variable <- make_lai_variable()
+    sla_variable <- make_sla_variable()
+    leaf_c_pool <- make_leaf_pool(lai_variable, sla_variable)
+    leaf_c_pool$month <- month(leaf_c_pool$Date)
+    leaf_c_pool$year <- year(leaf_c_pool$Date)
     
-    SLA <- mean(lma$sla_variable, na.rm=TRUE)
-    
-    dfr <- lai_variable[,c("Date","Ring")]
-    dfr$leaf_pool <- lai_variable$lai_variable / (10^-4 * SLA)
-    
-    dfr$ring <- rep(c(1:6), dim(dfr)[1]/6)
+    ### find the common month and year for green leaf
+    greenDF <- assign_percent_to_pool(df.green.c, df.green.p, leaf_c_pool,
+                                      "green.c", "green.p")
+
+    ### complete cases for dead leaf df
+    deadDF <- assign_percent_to_pool(df.yellow.c, df.yellow.p, leaf_c_pool,
+                                      "dead.c", "dead.p")    
+        
+ 
     
     for (i in 1:6) {
         dfr[dfr$ring == i, "leaf_p_pool"] <- dfr[dfr$ring == i, "leaf_pool"]/1000 * df.m[df.m$Ring == i, "P"]/1000
@@ -61,12 +94,36 @@ make_canopy_p_pool <- function(){
     
 }
 
-download_lai_variable <- function(){
-    
-    downloadTOA5("FACE_P0037_RA_GAPFRACLAI_OPEN_L2.dat", quiet=TRUE)
-    
-}
 
-download_lma_data <- function(){
-    downloadCSV("FACE_P0020_RA_LMA_20150129-20150416_L2.csv")
+assign_percent_to_pool <- function(input1, input2, input3, colname1, colname2) {
+    
+    ### input1 <- leaf % c
+    ### input2 <- leaf % p
+    ### input3 <- leaf_c_pool
+    
+    out <- input3
+    
+    ### find the common month and year for dead leaf
+    for (i in c(1:6)) {
+        mydf1 <- subset(input1, Ring == i)
+        mydf2 <- subset(input2, Ring == i)
+        
+        for (j in mydf1$year) {
+            
+            mydf3 <- subset(mydf1, year == j)
+            mydf4 <- subset(mydf2, year == j)
+            
+            for (k in mydf3$month) {
+                mydf5 <- subset(mydf3, month == k)
+                mydf6 <- subset(mydf4, month == k)
+                
+                out[out$Ring == i & out$year == j & out$month == k, colname1] <- mydf5$PercC
+                out[out$Ring == i & out$year == j & out$month == k, colname2] <- mydf6$PercP
+            }
+        }
+    }
+    ### complete cases
+    outDF <- out[complete.cases(out),]
+    
+    return(outDF)
 }
