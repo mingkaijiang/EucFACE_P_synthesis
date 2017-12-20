@@ -37,8 +37,8 @@ leaf_litter_p_flux <- make_leaflitter_p_flux()
 #### Wood P pool   - use tree id!!!
 # wood_p_pool <- make_wood_p_pool()
 
-#### leaf p retranslocation flux
-leaf_p_retranslocation_flux <- make_leaf_p_retranslocation_flux(canopy_p_pool, leaf_litter_p_flux)
+#### leaf p retranslocation coefficient
+leaf_p_retranslocation <- make_leaf_p_retranslocation_calculation()
 
 #### Frass P production
 frass_p_production <- make_frass_p_production_flux()
@@ -61,13 +61,10 @@ understorey_p_pool <- make_understorey_p_pool()
 
 
 
-###### ---------------- Making tables -------------------- ######
+###### ---------------- Making other important variables -------------------- ######
 
-#### Source the functions
-#source("programs/make_tables.R")
-
-#### Ring-specific table
-#make_EucFACE_ring_table()
+#### leaf p retranslocation coefficient
+leaf_p_retranslocation <- make_leaf_p_retranslocation_calculation()
 
 
 ### Standing P stock
@@ -81,6 +78,11 @@ understorey_p_pool <- make_understorey_p_pool()
 
 
 
+#### Source the functions
+#source("programs/make_tables.R")
+
+#### Ring-specific table
+#make_EucFACE_ring_table()
 
 ###### ---------------- End -------------------- ######
 #### clear wk space
