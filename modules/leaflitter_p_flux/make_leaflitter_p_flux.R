@@ -25,7 +25,7 @@ make_leaflitter_p_flux <- function() {
     litter_flux <- make_leaflitter_flux()
     
     ### assign percentage to litter P production flux
-    myDF <- assign_percent_to_flux(df.litter.p, litter_flux)
+    out <- assign_percent_to_flux(df.litter.p, litter_flux)
     
-    
+    return(out)
 }
