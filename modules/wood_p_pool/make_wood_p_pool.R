@@ -10,7 +10,6 @@ make_wood_p_pool <- function() {
     
     df.wood <- subset(df, Type == "wood")
     
-    
     ### Wood p, average across rings and date, unit = %
     df.wood.p <- summaryBy(PercP~Ring+Date,
                            data=df.wood,FUN=mean,keep.names=T,na.rm=T)
