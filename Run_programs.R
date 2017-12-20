@@ -28,13 +28,17 @@ soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
 #### Canopy P pool - return a data list - green leaf and dead leaf
+####                 Question: how much leaf is green and how much is dead?
 canopy_p_pool <- make_canopy_p_pool()
 
 #### Litter P flux
 leaf_litter_p_flux <- make_leaflitter_p_flux()  
 
-#### Wood P pool
-wood_p_pool <- make_wood_p_pool()
+#### Wood P pool   - use tree id!!!
+# wood_p_pool <- make_wood_p_pool()
+
+#### leaf p retranslocation flux
+leaf_p_retranslocation_flux <- make_leaf_p_retranslocation_flux(canopy_p_pool, leaf_litter_p_flux)
 
 #### Frass P production
 frass_p_production <- make_frass_p_production_flux()
@@ -50,13 +54,11 @@ understorey_p_pool <- make_understorey_p_pool()
 
 #### Leaching P flux - we have Shun's data, but needs drainage value
 
-#### Hedley fractionation data will be available in late December
+#### Hedley fractionation data will be available in early January
 
-
-#### Still missing components:
 ### mycorrhizal P content
-### P retranslocation
-### P turnover rate
+
+
 
 
 ###### ---------------- Making tables -------------------- ######
@@ -68,8 +70,13 @@ understorey_p_pool <- make_understorey_p_pool()
 #make_EucFACE_ring_table()
 
 
-
-
+### Standing P stock
+### P requirements
+### P uptake from soil
+### Uptake/requirement
+### MRT
+### Standing PUE
+### P turnover rate in root, branch
 
 
 
