@@ -64,7 +64,7 @@ understorey_p_pool <- make_understorey_p_pool()
 ###### ---------------- Making other important variables -------------------- ######
 
 #### leaf p retranslocation coefficient
-leaf_p_retranslocation <- make_leaf_p_retranslocation_calculation()
+leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
 
 ### Standing P stock
