@@ -22,5 +22,6 @@ make_wood_p_pool <- function() {
     df.wood.c$month <- month(df.wood.c$Date)
     df.wood.c$year <- year(df.wood.c$Date)
     
+    ### incomplete. Need to have additional files for wood mass calculations.
     
 }
