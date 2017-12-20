@@ -1,4 +1,6 @@
-make_leaflitter_p_pool <- function() {
+make_leaflitter_p_flux <- function() {
+    
+    
     df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
     
     ### setting up the date
@@ -17,6 +19,13 @@ make_leaflitter_p_pool <- function() {
                              data=df.litter,FUN=mean,keep.names=T,na.rm=T)
     df.litter.c$month <- month(df.litter.c$Date)
     df.litter.c$year <- year(df.litter.c$Date)
+    
+    
+    ### Leaf litter flux in unit of mg m-2 d-1 of leaf, not C!!!
+    litter_flux <- make_leaflitter_flux()
+    
+    ### assign percentage to litter P production flux
+    myDF <- assign_percent_to_flux(df.litter.p, litter_flux)
     
     
 }
