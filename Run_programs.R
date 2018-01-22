@@ -38,7 +38,7 @@ leaf_litter_p_flux <- make_leaflitter_p_flux()
 # wood_p_pool <- make_wood_p_pool()
 
 #### leaf p retranslocation coefficient
-leaf_p_retranslocation <- make_leaf_p_retranslocation_calculation()
+leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
 #### Frass P production
 frass_p_production <- make_frass_p_production_flux()
@@ -49,8 +49,11 @@ fineroot_p_pool <- make_fineroot_p_pool()
 #### Fine root P production flux
 fineroot_p_production <- make_fineroot_p_production()
 
-#### Understorey P pool
-understorey_p_pool <- make_understorey_p_pool()
+#### Understorey P pool, assume both species contributed equally
+
+
+#### Understorey P pool, using S. Power's data
+understorey_p_pool_2 <- make_understorey_p_pool_2()
 
 #### Leaching P flux - we have Shun's data, but needs drainage value
 
