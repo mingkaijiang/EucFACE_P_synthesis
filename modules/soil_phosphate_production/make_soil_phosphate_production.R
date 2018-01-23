@@ -75,5 +75,7 @@ make_soil_phosphate_production <- function(bk_density) {
     
     dev.off()
     
+    # convert phosphate production into daily values ???
+    
     return(myDF.out)
 }
