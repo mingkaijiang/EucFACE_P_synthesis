@@ -5,7 +5,7 @@ make_understorey_p_pool_2 <- function(){
     # download the data
     df <- read.csv("download/POW151FR.csv")
 
-    # average across rings and depths, unit: mg/kg
+    # average across rings
     df.m <- summaryBy(P~Ring,
                       data=df,FUN=mean,keep.names=T,na.rm=T)
     
