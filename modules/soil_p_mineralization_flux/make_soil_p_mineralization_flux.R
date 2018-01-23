@@ -7,8 +7,6 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1 <- read.csv(file.path(getToPath(), 
                                 "FACE_RA_P0023_SOILMINERALISATION_L3_20120724-20140124.csv"))
     
-    
-    
     # average across rings, dates, and depths, unit: mg/kg PO4
     myDF1.m <- summaryBy(P_mineralisation~date+ring,data=myDF1,FUN=mean,keep.names=T,na.rm=T)
     
@@ -27,27 +25,29 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1.out <- myDF1.m[,c("date", "ring", "p_mineralization_g_m2_d")]
     
     # plotting time series
-    #with(myDF1.out, plot(p_mineralization_g_m2_d~date, col=ring,
-    #                     ylim=c(-0.01, 0.01)))
-    #legend("topright", col=rainbow(6), legend=c(1:6), pch = 1)
+    pdf("plots_tables/soil_p_mineralization_over_time.pdf")
+    with(myDF1.out, plot(p_mineralization_g_m2_d~date, 
+                         ylim=c(-0.005, 0.005)))
 
-    #require(lattice)
-    #xyplot(p_mineralization_g_m2_d ~ date, group=ring, data=myDF1.out, 
-    #       auto.key=list(space="right"), 
-    #       jitter.x=TRUE, jitter.y=TRUE)
+    require(lattice)
+    xyplot(p_mineralization_g_m2_d ~ date, group=ring, data=myDF1.out, 
+           auto.key=list(space="right"), 
+           jitter.x=TRUE, jitter.y=TRUE)
     
     # compare eCO2 and aCO2 treatment
-    #myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
-    #myDF1.out[myDF1.out$ring == 4, "CO2"] <- "eCO2"
-    #myDF1.out[myDF1.out$ring == 5, "CO2"] <- "eCO2"
+    myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
+    myDF1.out[myDF1.out$ring == 4, "CO2"] <- "eCO2"
+    myDF1.out[myDF1.out$ring == 5, "CO2"] <- "eCO2"
     
-    #myDF1.out[myDF1.out$ring == 2, "CO2"] <- "aCO2"
-    #myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
-    #myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
+    myDF1.out[myDF1.out$ring == 2, "CO2"] <- "aCO2"
+    myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
+    myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
     
-    #boxplot(p_mineralization_g_m2_d~CO2*date, data=myDF1.out,
-    #        col=c("gold", "green"))
-    #legend("topright", c("eCO2", "aCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
+    boxplot(p_mineralization_g_m2_d~CO2*date, data=myDF1.out,
+            col=c("gold", "green"))
+    legend("topright", c("aCO2", "eCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
     
-    return(myDF1.out)
+    dev.off()
+    
+    return(myDF1.out[,1:3])
 }
