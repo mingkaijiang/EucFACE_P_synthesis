@@ -64,9 +64,6 @@ fineroot_p_production <- make_fineroot_p_production()
 #### Understorey P pool, assume both species contributed equally
 understorey_p_pool <- make_understorey_p_pool()
 
-#### Understorey P pool, using S. Power's data
-understorey_p_pool_2 <- make_understorey_p_pool_2()
-
 #### Leaching P flux - we have Shun's data, but needs drainage value
 
 #### Hedley fractionation data will be available in early January
