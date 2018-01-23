@@ -1,4 +1,4 @@
-make_wood_p_pool <- function() {
+make_wood_p_concentration <- function() {
     ### download the data
     download_canopy_p_data()
     
@@ -16,12 +16,7 @@ make_wood_p_pool <- function() {
     df.wood.p$month <- month(df.wood.p$Date)
     df.wood.p$year <- year(df.wood.p$Date)
     
-    ### Wood c, average across rings and date, unit = %
-    df.wood.c <- summaryBy(PercC~Ring+Date,
-                           data=df.wood,FUN=mean,keep.names=T,na.rm=T)
-    df.wood.c$month <- month(df.wood.c$Date)
-    df.wood.c$year <- year(df.wood.c$Date)
+    return(df.wood.p[,1:3])
     
-    ### incomplete. Need to have additional files for wood mass calculations.
-    
+
 }

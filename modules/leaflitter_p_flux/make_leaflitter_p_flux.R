@@ -6,16 +6,18 @@ make_leaflitter_p_flux <- function() {
     df$Date <- paste0("1-", as.character(df$Campaign))
     df$Date <- as.Date(df$Date, "%d-%b-%y")
     df.litter <- subset(df, Type == "Leaf litter")
+    df.dead <- subset(df, Type == "sceneced leaf")
+    myDF <- rbind(df.litter, df.dead)
     
     ### Leaf litter p, average across rings and date, unit = %
     df.litter.p <- summaryBy(PercP~Ring+Date,
-                             data=df.litter,FUN=mean,keep.names=T,na.rm=T)
+                             data=myDF,FUN=mean,keep.names=T,na.rm=T)
     df.litter.p$month <- month(df.litter.p$Date)
     df.litter.p$year <- year(df.litter.p$Date)
     
     ### Leaf litter c, average across rings and date, unit = %
     df.litter.c <- summaryBy(PercC~Ring+Date,
-                             data=df.litter,FUN=mean,keep.names=T,na.rm=T)
+                             data=myDF,FUN=mean,keep.names=T,na.rm=T)
     df.litter.c$month <- month(df.litter.c$Date)
     df.litter.c$year <- year(df.litter.c$Date)
     

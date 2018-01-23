@@ -42,7 +42,10 @@ leaf_litter_p_concentration <- make_leaflitter_p_concentration()
 leaf_litter_p_flux <- make_leaflitter_p_flux()  
 
 #### Wood P pool   - use tree id!!!
-# wood_p_pool <- make_wood_p_pool()
+wood_p_concentration <- make_wood_p_concentration()
+# for wood p pool, still missing year 2012 wood measurement data
+# to make John's code working. 
+
 
 #### leaf p retranslocation coefficient
 #### currently based on green and senesced leaves,
