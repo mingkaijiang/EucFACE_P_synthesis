@@ -7,7 +7,8 @@ make_summary_table_by_treatment <- function() {
     ### Define concentration variable names
     conc.terms <- c("Wood P Conc", "Canopy P Conc", "Fine Root P Conc",
                     "Leaflitter P Conc","Understorey P Conc", "Frass P Conc",
-                    "Microbial P Conc", "Soil P Conc", "Mycorrhizal P Conc")
+                    "Microbial P Conc", "Soil P Conc", "Soil Phosphate P Conc",
+                    "Mycorrhizal P Conc")
     
     treatDF <- data.frame(conc.terms)
     treatDF$R1 <- rep(NA, length(treatDF$conc.terms))
@@ -92,6 +93,13 @@ make_summary_table_by_treatment <- function() {
     treatDF$timepoint[treatDF$conc.terms == "Soil P Conc"] <- length(unique(soil_p_concentration$Date))  
     treatDF$notes[treatDF$conc.terms == "Soil P Conc"] <- "Averaged across all P forms"
     
+    ### Soil Phosphate P concentration
+    out <- summaryBy(PercP~Ring,data=soil_phosphate_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Phosphate P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Phosphate P Conc"] <- min(year(soil_phosphate_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Phosphate P Conc"] <- max(year(soil_phosphate_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Phosphate P Conc"] <- length(unique(soil_phosphate_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc"] <- "Averaged across all P forms"
     
     ### Mycorrhizal P concentration
     treatDF$notes[treatDF$conc.terms == "Mycorrhizal P Conc"] <- "Data not yet available"

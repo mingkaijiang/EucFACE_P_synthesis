@@ -20,6 +20,9 @@ soil_p_concentration <- make_soil_p_concentration()
 soil_p_content <- make_soil_p_content(soil_bulk_density)
 
 #### Soil phosphate production flux 
+#### This returns % of P, not % of PO4!
+soil_phosphate_concentration <- make_soil_phosphate_concentration()
+
 #### Not sure whether the unit is already per day or not
 #### Currently assuming it is, because PO4 is rapidly turning over, 
 #### so the infrequent measurement is indicative of the accumulation of the previous 1 day
