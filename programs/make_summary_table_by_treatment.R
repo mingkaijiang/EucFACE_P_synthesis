@@ -104,11 +104,13 @@ make_summary_table_by_treatment <- function() {
     ### Mycorrhizal P concentration
     treatDF$notes[treatDF$conc.terms == "Mycorrhizal P Conc"] <- "Data not yet available"
     
-#    
-#    ##### output tables
-#    return(list(inout = data.table(inout), 
-#                npp = data.table(npp), 
-#                pool = data.table(pool)))
-#    
+    ### calculate treatment averages
+    treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
+    treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)
+    
+    
+    ##### output tables
+    return(treatDF)
+      
 }
 

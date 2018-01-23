@@ -81,11 +81,14 @@ understorey_p_pool <- make_understorey_p_pool()
 
 ###### ---------------- Making other important variables -------------------- ######
 
+### P concentration by treatment and ring
+summary_table_treatment <- make_summary_table_by_treatment()
+
+
 #### leaf p retranslocation coefficient
 leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
-### Standing P stock
-summary_table_treatment <- make_summary_table_by_treatment()
+
 
 
 ### P requirements

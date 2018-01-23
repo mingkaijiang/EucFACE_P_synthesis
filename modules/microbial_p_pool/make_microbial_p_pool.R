@@ -8,6 +8,8 @@ make_microbial_p_pool <- function(bk_density){
     df <- read.csv(file.path(getToPath(), 
                              "FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130.csv"))
 
+    df$date <- as.Date(df$date, format="%m/%d/%Y")
+    
     # average across rings and depths, unit: mg/kg
     df.m <- summaryBy(Pmic~ring+date,
                       data=df,FUN=mean,keep.names=T,na.rm=T)
