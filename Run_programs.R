@@ -15,7 +15,8 @@ options(warn=-1)
 #### Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
 
-#### Soil P pools
+#### Soil P concentrations and pools
+soil_p_concentration <- make_soil_p_concentration(soil_bulk_density)
 soil_p_content <- make_soil_p_content(soil_bulk_density)
 
 #### Soil phosphate production flux - not in per day unit yet
@@ -28,7 +29,6 @@ soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
 #### Canopy P pool - return a data list - green leaf and dead leaf
-####                 Question: how much leaf is green and how much is dead?
 canopy_p_pool <- make_canopy_p_pool()
 
 #### Litter P flux
@@ -38,6 +38,8 @@ leaf_litter_p_flux <- make_leaflitter_p_flux()
 # wood_p_pool <- make_wood_p_pool()
 
 #### leaf p retranslocation coefficient
+#### currently based on green and senesced leaves,
+#### it was suggested to group senesced leaf together with leaflitter
 leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
 #### Frass P production
@@ -50,7 +52,7 @@ fineroot_p_pool <- make_fineroot_p_pool()
 fineroot_p_production <- make_fineroot_p_production()
 
 #### Understorey P pool, assume both species contributed equally
-
+understorey_p_pool <- make_understorey_p_pool()
 
 #### Understorey P pool, using S. Power's data
 understorey_p_pool_2 <- make_understorey_p_pool_2()
