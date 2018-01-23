@@ -49,7 +49,53 @@ make_summary_table_by_treatment <- function() {
     treatDF$year_end[treatDF$conc.terms == "Fine Root P Conc"] <- max(year(fineroot_P_concentration$Date))    
     treatDF$timepoint[treatDF$conc.terms == "Fine Root P Conc"] <- length(unique(fineroot_P_concentration$Date))  
     treatDF$notes[treatDF$conc.terms == "Fine Root P Conc"] <- "Averaged over depths of 0-10cm and 10-30cm"
+    
+    
+    ### Leaf litter P concentration
+    out <- summaryBy(PercP~Ring,data=leaf_litter_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Leaflitter P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Leaflitter P Conc"] <- min(year(leaf_litter_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Leaflitter P Conc"] <- max(year(leaf_litter_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Leaflitter P Conc"] <- length(unique(leaf_litter_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Leaflitter P Conc"] <- "Considered both senecsed leaf and leaf litter"
 
+    
+    ### Understorey P concentration
+    out <- summaryBy(PercP~Ring,data=understorey_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Understorey P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Understorey P Conc"] <- min(year(understorey_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Understorey P Conc"] <- max(year(understorey_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Understorey P Conc"] <- length(unique(understorey_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Understorey P Conc"] <- "Assumed Cymbopogon and Microlaena contributed equally"
+
+    ### Frass P concentration
+    out <- summaryBy(PercP~Ring,data=frass_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Frass P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Frass P Conc"] <- min(year(frass_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Frass P Conc"] <- max(year(frass_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Frass P Conc"] <- length(unique(frass_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Frass P Conc"] <- "Direct measurement"
+    
+    ### Microbial P concentration
+    out <- summaryBy(PercP~Ring,data=microbial_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Microbial P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Microbial P Conc"] <- min(year(microbial_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Microbial P Conc"] <- max(year(microbial_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Microbial P Conc"] <- length(unique(microbial_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Microbial P Conc"] <- "Averaged across depths"
+    
+    ### Soil P concentration
+    out <- summaryBy(PercP~Ring,data=soil_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil P Conc"] <- min(year(soil_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Soil P Conc"] <- max(year(soil_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil P Conc"] <- length(unique(soil_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Soil P Conc"] <- "Averaged across all P forms"
+    
+    
+    ### Mycorrhizal P concentration
+    treatDF$notes[treatDF$conc.terms == "Mycorrhizal P Conc"] <- "Data not yet available"
+    
 #    
 #    ##### output tables
 #    return(list(inout = data.table(inout), 

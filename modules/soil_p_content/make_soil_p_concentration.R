@@ -3,8 +3,7 @@ make_soil_p_concentration <- function(){
     # return ring-specific, time series data of soil P content 
     # need to read in multiple P data sources
     # and soil bulk density data
-    # bk_density is the ring-specific soil density data (kg/m3) across depths
-    
+
     # download the data
     download_soil_p_data()
     
@@ -41,8 +40,13 @@ make_soil_p_concentration <- function(){
     
     myDF.m$totP_ppm <- as.numeric(myDF.m$totP_ppm)
     
-    myDF.out <- myDF.m[complete.cases(myDF.m),]
+    myDF.m$PercP <- myDF.m$totP_ppm / 10000
+    
+    myDF.m <- myDF.m[complete.cases(myDF.m),]
 
+    myDF.out <- myDF.m[,c("Date", "ring", "PercP")]
+    colnames(myDF.out) <- c("Date", "Ring", "PercP")
+    
     return(myDF.out)
     
 }

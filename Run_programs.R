@@ -53,6 +53,7 @@ wood_p_concentration <- make_wood_p_concentration()
 leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
 #### Frass P production
+frass_p_concentration <- make_frass_p_concentration()
 frass_p_production <- make_frass_p_production_flux()
 
 #### Fine root P biomass pool
@@ -63,6 +64,7 @@ fineroot_p_pool <- make_fineroot_p_pool()
 fineroot_p_production <- make_fineroot_p_production()
 
 #### Understorey P pool, assume both species contributed equally
+understorey_p_concentration <- make_understorey_p_concentration()
 understorey_p_pool <- make_understorey_p_pool()
 
 #### Leaching P flux - we have Shun's data, but needs drainage value
