@@ -34,9 +34,11 @@ microbial_p_concentration <- make_microbial_p_concentration()
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
 #### Canopy P pool - return a data list - green leaf and dead leaf
+canopy_p_concentration <- make_canopy_p_concentration()
 canopy_p_pool <- make_canopy_p_pool()
 
-#### Litter P flux
+#### Litter P flux and concentration
+leaf_litter_p_concentration <- make_leaflitter_p_concentration()
 leaf_litter_p_flux <- make_leaflitter_p_flux()  
 
 #### Wood P pool   - use tree id!!!
