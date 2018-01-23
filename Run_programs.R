@@ -78,8 +78,10 @@ understorey_p_pool <- make_understorey_p_pool()
 #### leaf p retranslocation coefficient
 leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
-
 ### Standing P stock
+summary_table_treatment <- make_summary_table_by_treatment()
+
+
 ### P requirements
 ### P uptake from soil
 ### Uptake/requirement
@@ -96,12 +98,15 @@ leaf_p_retranslocation <- make_leaf_p_retranslocation()
 #### Ring-specific table
 #make_EucFACE_ring_table()
 
+###### ---------------- Output results -------------------- ######
+if (rmarkdown = TRUE) {
+    
+} else {
+    #### clear wk space
+    rm(list=ls(all=TRUE))
+    options(war=0)
+}
+
 ###### ---------------- End -------------------- ######
-#### clear wk space
-rm(list=ls(all=TRUE))
-options(war=0)
-
-
-
 
 
