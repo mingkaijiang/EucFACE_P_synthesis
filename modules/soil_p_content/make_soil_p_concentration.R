@@ -1,5 +1,5 @@
 #- Make the soil P concentration
-make_soil_p_concentration <- function(bk_density){
+make_soil_p_concentration <- function(){
     # return ring-specific, time series data of soil P content 
     # need to read in multiple P data sources
     # and soil bulk density data

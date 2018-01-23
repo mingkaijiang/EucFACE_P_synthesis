@@ -16,7 +16,7 @@ options(warn=-1)
 soil_bulk_density <- make_soil_bulk_density()
 
 #### Soil P concentrations and pools
-soil_p_concentration <- make_soil_p_concentration(soil_bulk_density)
+soil_p_concentration <- make_soil_p_concentration()
 soil_p_content <- make_soil_p_content(soil_bulk_density)
 
 #### Soil phosphate production flux 
@@ -29,7 +29,8 @@ soil_phosphate_production <- make_soil_phosphate_production(soil_bulk_density)
 #### Soil P mienralization flux
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
-#### Microbial P pool
+#### Microbial P pool and concentration
+microbial_p_concentration <- make_microbial_p_concentration()
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
 #### Canopy P pool - return a data list - green leaf and dead leaf
