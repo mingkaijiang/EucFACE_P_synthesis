@@ -34,10 +34,21 @@ make_summary_table_by_treatment <- function() {
 
     
     ### Wood P concentration
+    out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Wood P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Wood P Conc"] <- min(year(wood_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Wood P Conc"] <- max(year(wood_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Wood P Conc"] <- length(unique(wood_p_concentration$Date)) 
+    treatDF$notes[treatDF$conc.terms == "Wood P Conc"] <- "Only one data point per ring"
     
     
     ### Fine root P concentration
-    
+    out <- summaryBy(Fineroot_P_concentration~Ring,data=fineroot_P_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Fine Root P Conc", 2:7] <- out$Fineroot_P_concentration
+    treatDF$year_start[treatDF$conc.terms == "Fine Root P Conc"] <- min(year(fineroot_P_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Fine Root P Conc"] <- max(year(fineroot_P_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Fine Root P Conc"] <- length(unique(fineroot_P_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Fine Root P Conc"] <- "Averaged over depths of 0-10cm and 10-30cm"
 
 #    
 #    ##### output tables

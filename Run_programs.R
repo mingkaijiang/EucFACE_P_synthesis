@@ -56,7 +56,7 @@ leaf_p_retranslocation <- make_leaf_p_retranslocation()
 frass_p_production <- make_frass_p_production_flux()
 
 #### Fine root P biomass pool
-fineroot_P_concentration <- make_fine_root_p_concentration()
+fineroot_P_concentration <- make_fineroot_p_concentration()
 fineroot_p_pool <- make_fineroot_p_pool()
 
 #### Fine root P production flux
