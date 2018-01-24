@@ -1,5 +1,5 @@
 #- Make the retranslocation coefficient
-make_leaf_p_retranslocation <- function(){
+make_leaf_p_retranslocation_coefficient <- function(){
  
     df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
     

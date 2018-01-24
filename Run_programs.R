@@ -85,7 +85,7 @@ source("programs/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
 
 ### leaf p retranslocation coefficient
-leaf_p_retranslocation <- make_leaf_p_retranslocation()
+leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
 
 
 ### standing P stock, i.e. canopy P + wood P + fine root P pools
@@ -93,8 +93,11 @@ leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
 
 
-### P requirements, i.e. NPP * P conc for canopy, wood and fine root, no data on twig and branch
-
+### P requirements, i.e. NPP * P conc for canopy, wood, twig and fine root, no data on understorey yet
+p_requirement_table <- make_p_requirement_table(summary_table_concentration_by_treatment)
+    
+preqDF$aCO2[preqDF$terms == "total"] <- sum(preqDF$aCO2)
+preqDF$eCO2[preqDF$terms == "total"] <- sum(preqDF$eCO2)
 
 ### total P retranslocation, i.e. canopy P - litterfall P + wood P increment
 
