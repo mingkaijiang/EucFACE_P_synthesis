@@ -9,8 +9,12 @@ setToken(tokenfile="tokenfile.txt", quiet=TRUE)
 setToPath("download")
 
 if(!require(pacman))install.packages("pacman")
-pacman::p_load(dplyr, doBy, readxl, lubridate,
-               gdata) # add other packages needed to this list
+pacman::p_load(dplyr, 
+               doBy, 
+               readxl, 
+               lubridate,
+               gdata,
+               ggplot2) # add other packages needed to this list
 
 
 # Loading constants

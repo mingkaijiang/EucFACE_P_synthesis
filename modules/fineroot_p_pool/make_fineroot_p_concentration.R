@@ -2,7 +2,7 @@
 make_fineroot_p_concentration <- function(){
     
     ### download the data
-    download_fineroot_p_data()
+    #download_fineroot_p_data()
     
     ### read in the csv
     myDF <- read.csv("download/EucFACE_FineRootData.csv")
@@ -28,7 +28,7 @@ make_fineroot_p_concentration <- function(){
     
     #- format dataframe to return
     frp.out <- frp.1[,c("date","Ring.ID","frp_0_30cm_percent")]
-    names(frp.out) <- c("Date", "Ring", "Fineroot_P_concentration")
+    names(frp.out) <- c("Date", "Ring", "PercP")
     
     return(frp.out)
 }

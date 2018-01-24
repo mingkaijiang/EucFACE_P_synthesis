@@ -1,0 +1,183 @@
+---
+title: "EucFACE P Synthesis"
+author: "Mingkai Jiang"
+date: "1/24/2018"
+output: html_document
+---
+
+
+# 1. Description
+
+This is the progress report of the EucFACE phosphorus (P) synthesis project. All results presented in this report is automatically linked with the code and the data. 
+
+This file attempts to summarize P-related pools, fluxes, concentrations, their treatment and inter-ring variability, and their temporal patterns. 
+
+The objective of this project is to have a proper account of the P balance for the EucFACE experiment, and to investigate the P by CO2 interactions over time (if enough data is available).
+
+All the data used in this study are available at HIEv (at least that's the goal). 
+
+
+# 2. Methods
+### 2.1 Procedure
+This procedure is a snapshot of the work. It might be easier just to follow the codes. 
+
+    - Create a list of variables for the P synthesis.
+    - For each variable, only consider ring, date, and sometimes depth as independent factors.
+    - Calculate P concentrations first.
+    - With Carbon balance project, calculate P pools and fluxes.
+    - Calculate P budgeting variables, e.g. total standing P stock, P retranslocation coefficient, etc.
+    - Make summary tables.
+    - Interpret data, e.g. time-series trend, treatment effect, extreme response point, etc. 
+
+### 2.2 Variables
+Here, I am summarizing all the P-related pool, flux and concentration variables. 
+Currently, this list is in-comprehensive. Will update continuously as the project proceeds. 
+
+    - Soil P concentration and pool (different chemical forms and accessibilities)
+    - Microbial P concentration and pool
+    - Mycorrhizal P concentration and pool
+    - Canopy P concentration, production and pool
+    - Wood P concentration, production and pool
+    - Fineroot P concentration, production and pool
+    - Litterfall P concentration and production
+    - P mineralization rate
+    - Frass P concentration and production
+    - Understorey P concentration, production and pool
+    - Standing P stock
+    - P requirement
+    - Total P retranslocation 
+    - Leaf P retranslocation coefficient
+    - P uptake
+    - P uptake / requirement
+    - MRT
+    - Standing PUE
+    
+
+# 3. P concentration calculations. 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+### source the functions to start the calculations.
+source("programs/prepare.R")
+
+### assign aco2 and eco2 rings
+aCO2_rings <- c(2,3,6)
+eCO2_rings <- c(1,4,5)
+
+```
+
+### 3.1 Canopy P concentration
+Canopy P concentration summarized by ring over the experimental period:
+``` {r, echo=FALSE}
+### calculate the variable
+canopy_p_concentration <- make_canopy_p_concentration()
+
+### make the ring over date plot
+p <- ggplot(canopy_p_concentration,
+            aes(Date, PercP, color=factor(Ring))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("Canopy P Concentration (%)")
+plot(p)
+
+```
+
+Canopy P concentration summarized by CO2 treatment over the experimental period:
+``` {r, echo=FALSE}
+### assign CO2 treatment labels
+for (i in aCO2_rings) {
+    canopy_p_concentration[canopy_p_concentration$Ring == i, "CO2"] <- "aCO2"
+}
+for (i in eCO2_rings) {
+    canopy_p_concentration[canopy_p_concentration$Ring == i, "CO2"] <- "eCO2"
+}
+
+### make the treatment over date plot
+p <- ggplot(canopy_p_concentration,
+            aes(Date, PercP, color=factor(CO2))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("Canopy P Concentration (%)")
+plot(p)
+
+```
+
+Visually, there is **no** CO2 treatment effect. 
+
+
+
+### 3.2 Wood P concentration
+Wood P concentration summarized by treatment, and we only have one date:
+
+``` {r, echo=FALSE}
+### calculate the variable
+wood_p_concentration <- make_wood_p_concentration()
+
+### assign CO2 treatment labels
+for (i in aCO2_rings) {
+    wood_p_concentration[wood_p_concentration$Ring == i, "CO2"] <- "aCO2"
+}
+for (i in eCO2_rings) {
+    wood_p_concentration[wood_p_concentration$Ring == i, "CO2"] <- "eCO2"
+}
+
+### make the ring over date plot
+p <- ggplot(wood_p_concentration,
+            aes(CO2, PercP)) +   
+        geom_point(size = 5) +
+        xlab("Treatment") + ylab("Wood P Concentration (%)")
+plot(p)
+
+```
+
+Visually, we can't distinguish the difference between CO2 treatment.
+
+
+
+### 3.3 Fine root P concentration
+
+There are multiple depths (i.e. 0-10cm, 10-30cm), currently we are averaging the concentrations over depths. 
+
+Fineroot P concentration summarized by treatment over time:
+
+``` {r, echo=FALSE}
+### calculate the variable
+fineroot_p_concentration <- make_fineroot_p_concentration()
+
+### assign CO2 treatment labels
+for (i in aCO2_rings) {
+    fineroot_p_concentration[fineroot_p_concentration$Ring == i, "CO2"] <- "aCO2"
+}
+for (i in eCO2_rings) {
+    fineroot_p_concentration[fineroot_p_concentration$Ring == i, "CO2"] <- "eCO2"
+}
+
+### make the treatment over date plot
+p <- ggplot(fineroot_p_concentration,
+            aes(Date, PercP, color=factor(CO2))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("Fineroot P Concentration (%)")
+plot(p)
+
+```
+
+
+### 3.4 Leaflitter P concentration
+
+### 3.5 Understorey P concentration
+
+### 3.6 Frass P concentration
+
+### 3.7 Microbial P concentration
+
+### 3.8 Soil P concentration
+
+### 3.9 Soil Phosphate P concentration
+
+### 3.10 Mycorrhizal P concentration
+
+
+
+```{r, echo=FALSE}
+
+```
+
+
+
+# The end
