@@ -50,12 +50,6 @@ make_soil_phosphate_production <- function(bk_density) {
     # output table
     myDF.out <- myDF[,c("date", "ring", "P_g_m2")]
     
-    # plotting time series
-    pdf("plots_tables/soil_phosphate_concentration_over_time.pdf")
-    with(myDF.out, plot(P_g_m2~date, group_by="ring", col=rainbow(6), 
-                         ylim=c(0, 1)))
-    legend("topright", col=rainbow(6), legend=c(1:6), pch = 1)
-
     # compare eCO2 and aCO2 treatment
     myDF.out[myDF.out$ring == 1, "CO2"] <- "eCO2"
     myDF.out[myDF.out$ring == 4, "CO2"] <- "eCO2"
@@ -65,10 +59,15 @@ make_soil_phosphate_production <- function(bk_density) {
     myDF.out[myDF.out$ring == 3, "CO2"] <- "aCO2"
     myDF.out[myDF.out$ring == 6, "CO2"] <- "aCO2"
     
-    boxplot(P_g_m2~CO2*date, data=myDF.out,
-            col=c("gold", "green"), ylab="PO4-P (g m-2)")
-    legend("topright", c("aCO2", "eCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
-
+    # plotting time series
+    pdf("plots_tables/soil_phosphate_concentration_over_time.pdf")
+    
+    p <- ggplot(myDF.out, aes(date, P_g_m2, color=factor(CO2))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("Soil PO4-P (g m-2)") + 
+        ggtitle("Soil phosphate P production") 
+    plot(p)
+    
     boxplot(P_g_m2~CO2, data=myDF.out,
             col=c("gold", "green"), ylab="PO4-P (g m-2)")
     legend("topright", c("aCO2", "eCO2"), col=c("gold", "green"),  fill=c("gold", "green"))

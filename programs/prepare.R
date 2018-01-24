@@ -20,6 +20,8 @@ source("definitions/constants.R")
 sourcefiles <- dir("modules", pattern="[.]R$", recursive = TRUE, full.names = TRUE)
 for(z in sourcefiles)source(z)
 
-
+# CO2 treatment
+# aCO2 <- c(1,4,5)
+# eCO2 <- c(2,3,6)
 
 

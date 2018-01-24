@@ -26,13 +26,6 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     
     # plotting time series
     pdf("plots_tables/soil_p_mineralization_over_time.pdf")
-    with(myDF1.out, plot(p_mineralization_g_m2_d~date, 
-                         ylim=c(-0.005, 0.005)))
-
-    require(lattice)
-    xyplot(p_mineralization_g_m2_d ~ date, group=ring, data=myDF1.out, 
-           auto.key=list(space="right"), 
-           jitter.x=TRUE, jitter.y=TRUE)
     
     # compare eCO2 and aCO2 treatment
     myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
@@ -43,10 +36,12 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
     myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
     
-    boxplot(p_mineralization_g_m2_d~CO2*date, data=myDF1.out,
-            col=c("gold", "green"))
-    legend("topright", c("aCO2", "eCO2"), col=c("gold", "green"),  fill=c("gold", "green"))
     
+    p <- ggplot(myDF1.out, aes(date, p_mineralization_g_m2_d, color=factor(CO2))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("P mineralization rate (g m-2 d-1)") + 
+        ggtitle("P mineralization rate over time") 
+    plot(p)
     dev.off()
     
     return(myDF1.out[,1:3])

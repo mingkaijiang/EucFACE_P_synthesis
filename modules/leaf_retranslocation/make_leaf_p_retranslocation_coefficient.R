@@ -45,16 +45,16 @@ make_leaf_p_retranslocation_coefficient <- function(){
     retransDF <- cbind(df.green.p, df.dead.p$PercP)
     colnames(retransDF) <- c("Ring", "green", "dead")
     retransDF$percent_diff <- retransDF$green - retransDF$dead
-    retransDF$retrans_coef <- retransDF$percent_diff/retransDF$green
+    retransDF$retrans_coef <- 1 - (retransDF$percent_diff/retransDF$green)
     
     ### Plot eCO2 effect on retranslocation coefficient
     retransDF$CO2 <- c("eCO2", "aCO2", "aCO2", "eCO2", "eCO2", "aCO2")
-    
+
     pdf("plots_tables/CO2_effect_on_P_retranslocation_coefficient.pdf")
-    p <- ggplot(retransDF, aes(CO2, retrans_coef)) +   
-        geom_boxplot() +
-        xlab("Ring") + ylab("Leaf P retranslocation coefficient (%)") + 
-        ggtitle("CO2_effect_on_P_retranslocation_coefficient")
+    p <- ggplot(retransDF, aes(CO2, retrans_coef, color=factor(Ring))) +   
+        geom_point(size = 5) +
+        xlab("Treatment") + ylab("Leaf P retranslocation coefficient (%)") + 
+        ggtitle("CO2 effect on P retranslocation coefficient") 
     plot(p)
     dev.off()
     
