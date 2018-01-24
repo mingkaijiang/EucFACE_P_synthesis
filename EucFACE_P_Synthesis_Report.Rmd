@@ -54,47 +54,47 @@ Currently, this list is in-comprehensive. Will update continuously as the projec
     
 
 # 3. P concentration calculations. 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-### source the functions to start the calculations.
-source("programs/prepare.R")
-
-### assign aco2 and eco2 rings
-aCO2_rings <- c(2,3,6)
-eCO2_rings <- c(1,4,5)
+``` {r, echo=FALSE, message=FALSE, warning=FALSE}
+    ### source the functions to start the calculations.
+    source("programs/prepare.R")
+    
+    ### assign aco2 and eco2 rings
+    aCO2_rings <- c(2,3,6)
+    eCO2_rings <- c(1,4,5)
 
 ```
 
 ### 3.1 Canopy P concentration
 Canopy P concentration summarized by ring over the experimental period:
 ``` {r, echo=FALSE}
-### calculate the variable
-canopy_p_concentration <- make_canopy_p_concentration()
-
-### make the ring over date plot
-p <- ggplot(canopy_p_concentration,
-            aes(Date, PercP, color=factor(Ring))) +   
-        geom_point(size = 5) +
-        xlab("Date") + ylab("Canopy P Concentration (%)")
-plot(p)
+    ### calculate the variable
+    canopy_p_concentration <- make_canopy_p_concentration()
+    
+    ### make the ring over date plot
+    p <- ggplot(canopy_p_concentration,
+                aes(Date, PercP, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Canopy P Concentration (%)")
+    plot(p)
 
 ```
 
 Canopy P concentration summarized by CO2 treatment over the experimental period:
 ``` {r, echo=FALSE}
-### assign CO2 treatment labels
-for (i in aCO2_rings) {
-    canopy_p_concentration[canopy_p_concentration$Ring == i, "CO2"] <- "aCO2"
-}
-for (i in eCO2_rings) {
-    canopy_p_concentration[canopy_p_concentration$Ring == i, "CO2"] <- "eCO2"
-}
-
-### make the treatment over date plot
-p <- ggplot(canopy_p_concentration,
-            aes(Date, PercP, color=factor(CO2))) +   
-        geom_point(size = 5) +
-        xlab("Date") + ylab("Canopy P Concentration (%)")
-plot(p)
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        canopy_p_concentration[canopy_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        canopy_p_concentration[canopy_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the treatment over date plot
+    p <- ggplot(canopy_p_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Canopy P Concentration (%)")
+    plot(p)
 
 ```
 
@@ -106,23 +106,23 @@ Visually, there is **no** CO2 treatment effect.
 Wood P concentration summarized by treatment, and we only have one date:
 
 ``` {r, echo=FALSE}
-### calculate the variable
-wood_p_concentration <- make_wood_p_concentration()
-
-### assign CO2 treatment labels
-for (i in aCO2_rings) {
-    wood_p_concentration[wood_p_concentration$Ring == i, "CO2"] <- "aCO2"
-}
-for (i in eCO2_rings) {
-    wood_p_concentration[wood_p_concentration$Ring == i, "CO2"] <- "eCO2"
-}
-
-### make the ring over date plot
-p <- ggplot(wood_p_concentration,
-            aes(CO2, PercP)) +   
-        geom_point(size = 5) +
-        xlab("Treatment") + ylab("Wood P Concentration (%)")
-plot(p)
+    ### calculate the variable
+    wood_p_concentration <- make_wood_p_concentration()
+    
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        wood_p_concentration[wood_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        wood_p_concentration[wood_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the ring over date plot
+    p <- ggplot(wood_p_concentration,
+                aes(CO2, PercP)) +   
+            geom_point(size = 5) +
+            xlab("Treatment") + ylab("Wood P Concentration (%)")
+    plot(p)
 
 ```
 
@@ -137,30 +137,116 @@ There are multiple depths (i.e. 0-10cm, 10-30cm), currently we are averaging the
 Fineroot P concentration summarized by treatment over time:
 
 ``` {r, echo=FALSE}
-### calculate the variable
-fineroot_p_concentration <- make_fineroot_p_concentration()
-
-### assign CO2 treatment labels
-for (i in aCO2_rings) {
-    fineroot_p_concentration[fineroot_p_concentration$Ring == i, "CO2"] <- "aCO2"
-}
-for (i in eCO2_rings) {
-    fineroot_p_concentration[fineroot_p_concentration$Ring == i, "CO2"] <- "eCO2"
-}
-
-### make the treatment over date plot
-p <- ggplot(fineroot_p_concentration,
-            aes(Date, PercP, color=factor(CO2))) +   
-        geom_point(size = 5) +
-        xlab("Date") + ylab("Fineroot P Concentration (%)")
-plot(p)
+    ### calculate the variable
+    fineroot_p_concentration <- make_fineroot_p_concentration()
+    
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        fineroot_p_concentration[fineroot_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        fineroot_p_concentration[fineroot_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the treatment over date plot
+    p <- ggplot(fineroot_p_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Fineroot P Concentration (%)")
+    plot(p)
 
 ```
 
 
 ### 3.4 Leaflitter P concentration
+Measurements are taken for both scenesced leaves and leaflitter. 
+Scenesced leaves are defined as those that are still (barely) attached to the tree, so there is a tree ID associated with each measurement. 
+Leaflitter are those collected from the litter baskets.
+
+Note, these samples were not taken on the same date; nor were they taken on the same dates as the fresh green leaves. 
+
+We firstly need to distinguish the difference between the two. 
+
+``` {r, echo=FALSE, warning=FALSE}
+    df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
+    
+    ### setting up the date
+    df$Date <- paste0("1-", as.character(df$Campaign))
+    df$Date <- as.Date(df$Date, "%d-%b-%y")
+    df.litter <- subset(df, Type == "Leaf litter")
+    df.dead <- subset(df, Type == "sceneced leaf")
+    myDF <- rbind(df.litter, df.dead)
+
+    ### plot
+    p <- ggplot(myDF,
+                aes(Date, PercP, color=factor(Type))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Leaflitter P Concentration (%)")
+    plot(p)
+```
+
+Next, both leaflitter and senesced leaves were grouped together as leaflitter. 
+The CO2 by date plot is:
+``` {r, echo=FALSE}
+    ### calculate the variable
+    leaflitter_p_concentration <- make_leaflitter_p_concentration()
+    
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        leaflitter_p_concentration[leaflitter_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        leaflitter_p_concentration[leaflitter_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the treatment over date plot
+    p <- ggplot(leaflitter_p_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Leaflitter P Concentration (%)")
+    plot(p)
+
+```
+
 
 ### 3.5 Understorey P concentration
+There are two understorey species: Cymbopogon refractus and Microlaena stipoides. We need to differentiate P concentration difference between the two, as we don't have their relative abundance information. 
+
+``` {r, echo=FALSE} 
+    ### read in the file
+    df <- read.csv("download/FACE_P0019_RA_leafP-understory_20130509-20151030_L1.csv")
+    
+    ### Assign date format
+    df$Date <- as.Date(df$Date, "%d-%b-%y")
+    
+    ### Plot species comparisons
+    p <- ggplot(df,
+            aes(Date, PercP, color=factor(Species))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("Understorey P Concentration (%)")
+    plot(p)
+```
+
+Now, we can group both species together and plot understorey P concentration over time.
+``` {r, echo=FALSE} 
+    understorey_p_concentration <- make_understorey_p_concentration()
+
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        understorey_p_concentration[understorey_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        understorey_p_concentration[understorey_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+
+    ### make the treatment over date plot
+    p <- ggplot(understorey_p_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Understorey P Concentration (%)")
+    plot(p)
+
+```
 
 ### 3.6 Frass P concentration
 
@@ -173,11 +259,9 @@ plot(p)
 ### 3.10 Mycorrhizal P concentration
 
 
-
-```{r, echo=FALSE}
-
-```
-
+# 4. Important concentration related calculations. 
+### 4.1 Leaf P retranslocation coefficient
+We need to think about data collected from the same time point. 
 
 
 # The end

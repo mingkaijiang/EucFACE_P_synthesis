@@ -12,7 +12,6 @@ make_understorey_p_concentration <- function(){
     
     ### Plot species average comparisons
     pdf("plots_tables/Understorey_species_percent_p.pdf")
-    require(ggplot2)
     p <- ggplot(df, aes(Species, PercP)) +   
         geom_boxplot() +
         xlab("Species") + ylab("Leaf P concentration (%)") + 

@@ -1,5 +1,7 @@
 make_leaflitter_p_concentration <- function() {
     
+    #download_leaflitter()
+    
     df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
     
     ### setting up the date
