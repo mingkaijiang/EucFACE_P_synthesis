@@ -80,35 +80,47 @@ understorey_p_pool <- make_understorey_p_pool()
 
 
 ###### ---------------- Making other important variables -------------------- ######
-
 ### P concentration by treatment and ring
-summary_table_treatment <- make_summary_table_by_treatment()
+source("programs/make_conc_summary_table_by_treatment.R")
+summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
 
-
-#### leaf p retranslocation coefficient
+### leaf p retranslocation coefficient
 leaf_p_retranslocation <- make_leaf_p_retranslocation()
 
 
+### standing P stock, i.e. canopy P + wood P + fine root P pools
+### not able to produce due to incomplete of wood P pool
 
 
-### P requirements
-### P uptake from soil
+
+### P requirements, i.e. NPP * P conc for canopy, wood and fine root, no data on twig and branch
+
+
+### total P retranslocation, i.e. canopy P - litterfall P + wood P increment
+
+
+
+### P uptake from soil, i.e. P requirement - P retranslocation
+
+
 ### Uptake/requirement
-### MRT
-### Standing PUE
-### P turnover rate in root, branch
+
+
+### MRT, i.e. Standing P / Uptake
+
+
+### Standing PUE, i.e. NPP / P Uptake
+
+
+### P pools and fluxes by treatment and ring
 
 
 
-
-#### Source the functions
-#source("programs/make_tables.R")
-
-#### Ring-specific table
-#make_EucFACE_ring_table()
 
 ###### ---------------- Output results -------------------- ######
 if (rmarkdown = TRUE) {
+    ### Create a R markdown summary report
+    
     
 } else {
     #### clear wk space
