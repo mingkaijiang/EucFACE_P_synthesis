@@ -50,11 +50,6 @@ wood_p_concentration <- make_wood_p_concentration()
 # to make John's code working. 
 
 
-#### leaf p retranslocation coefficient
-#### currently based on green and senesced leaves,
-#### it was suggested to group senesced leaf together with leaflitter
-leaf_p_retranslocation <- make_leaf_p_retranslocation()
-
 #### Frass P production
 frass_p_concentration <- make_frass_p_concentration()
 frass_p_production <- make_frass_p_production_flux()
