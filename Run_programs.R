@@ -94,20 +94,20 @@ leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
 
 
 ### P requirements, i.e. NPP * P conc for canopy, wood, twig and fine root, no data on understorey yet
+source("programs/make_p_requirement.R")
 p_requirement_table <- make_p_requirement_table(summary_table_concentration_by_treatment)
-    
-preqDF$aCO2[preqDF$terms == "total"] <- sum(preqDF$aCO2)
-preqDF$eCO2[preqDF$terms == "total"] <- sum(preqDF$eCO2)
+
 
 ### total P retranslocation, i.e. canopy P - litterfall P + wood P increment
-
-
+source("programs/make_total_p_retranslocation.R")
+total_p_retranslocation <- make_total_p_retranslocation(summary_table_concentration_by_treatment)
 
 ### P uptake from soil, i.e. P requirement - P retranslocation
-
+temDF <- rbind(p_requirement_table[5,2:3], total_p_retranslocation)
+pupDF <- temDF[1,] - temDF[2,]
 
 ### Uptake/requirement
-
+up_over_req <- pupDF/temDF[1,]
 
 ### MRT, i.e. Standing P / Uptake
 

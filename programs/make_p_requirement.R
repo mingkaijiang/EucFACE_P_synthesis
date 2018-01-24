@@ -53,6 +53,15 @@ make_p_requirement_table <- function(sumDF) {
     preqDF$aCO2 <- (pconcDF$aCO2 * nppDF$aCO2) / 100 
     preqDF$eCO2 <- (pconcDF$eCO2 * nppDF$eCO2) / 100
     
+    ### total requirement
+    aCO2 <- sum(preqDF$aCO2)
+    eCO2 <- sum(preqDF$eCO2)
+    
+    preqDF$terms <- as.character(preqDF$terms)
+    preqDF[5,"terms"] <- "total"
+    preqDF[5,"aCO2"] <- aCO2
+    preqDF[5,"eCO2"] <- eCO2
+    
     return(preqDF)
     
 }
