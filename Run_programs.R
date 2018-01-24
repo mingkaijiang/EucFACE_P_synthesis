@@ -121,9 +121,9 @@ up_over_req <- pupDF/temDF[1,]
 
 
 ###### ---------------- Output results -------------------- ######
-if (rmarkdown = TRUE) {
-    ### Create a R markdown summary report
-    
+if (create_markdown_report = TRUE) {
+    ### use r markdown script to run this sheet, so do nothing here
+    ### the purpose is the skip the rm() function
     
 } else {
     #### clear wk space

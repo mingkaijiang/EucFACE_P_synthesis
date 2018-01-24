@@ -1,0 +1,81 @@
+---
+title: "EucFACE P Synthesis"
+author: "Mingkai Jiang"
+date: "1/24/2018"
+output: html_document
+---
+
+
+# 1. Description
+
+This is the progress report of the EucFACE phosphorus (P) synthesis project. All results presented in this report is automatically linked with the code and the data. 
+
+This file attempts to summarize P-related pools, fluxes, concentrations, their treatment and inter-ring variability, and their temporal patterns. 
+
+The objective of this project is to have a proper account of the P balance for the EucFACE experiment, and to investigate the P by CO2 interactions over time (if enough data is available).
+
+All the data used in this study are available at HIEv (at least that's the goal). 
+
+
+# 2. Methods
+### 2.1 Procedure
+    - Create a list of variables for the P synthesis.
+    - For each variable, only consider ring, date, and sometimes depth as independent factors.
+    - Calculate P concentrations first.
+    - With Carbon balance project, calculate P pools and fluxes.
+    - Calculate P budgeting variables, e.g. total standing P stock, P retranslocation coefficient, etc.
+    - Make summary tables.
+    - Interpret data, e.g. time-series trend, treatment effect, extreme response point, etc. 
+
+### 2.2 Variables
+    - Soil P concentration and pool (different chemical forms and accessibilities)
+    - Microbial P concentration and pool
+    - Mycorrhizal P concentration and pool
+    - Canopy P concentration, production and pool
+    - Wood P concentration, production and pool
+    - Fineroot P concentration, production and pool
+    - Litterfall P concentration and production
+    - P mineralization rate
+    - Frass P concentration and production
+    - Understorey P concentration, production and pool
+    - Standing P stock
+    - P requirement
+    - Total P retranslocation 
+    - Leaf P retranslocation coefficient
+    - P uptake
+    - P uptake / requirement
+    - MRT
+    - Standing PUE
+    
+
+# 3. P concentration calculations. 
+
+### 3.1 Canopy P concentration
+
+### 3.2 Wood P concentration
+
+### 3.3 Fine root P concentration
+
+### 3.4 Leaflitter P concentration
+
+### 3.5 Understorey P concentration
+
+### 3.6 Frass P concentration
+
+### 3.7 Microbial P concentration
+
+### 3.8 Soil P concentration
+
+### 3.9 Soil Phosphate P concentration
+
+### 3.10 Mycorrhizal P concentration
+
+
+
+```{r, echo=FALSE}
+
+```
+
+
+
+# The end
