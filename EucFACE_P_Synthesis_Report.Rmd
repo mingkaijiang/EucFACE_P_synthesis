@@ -249,14 +249,113 @@ Now, we can group both species together and plot understorey P concentration ove
 ```
 
 ### 3.6 Frass P concentration
+Frass production 
+
+``` {r, echo=FALSE}
+    ### calculate the variable
+    frass_p_concentration <- make_frass_p_concentration()
+    
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        frass_p_concentration[frass_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        frass_p_concentration[frass_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the ring over date plot
+    p <- ggplot(frass_p_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Frass P Concentration (%)")
+    plot(p)
+
+```
+
+Frass production has a great time-series record of P concentration data available. We may be able to compute its CO2 by time trend and check its statistical significance. 
+
+
 
 ### 3.7 Microbial P concentration
+``` {r, echo=FALSE}
+    ### calculate the variable
+    microbial_p_concentration <- make_microbial_p_concentration()
+    
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        microbial_p_concentration[microbial_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        microbial_p_concentration[microbial_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the ring over date plot
+    p <- ggplot(microbial_p_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Microbial P Concentration (%)")
+    plot(p)
+
+```
+
 
 ### 3.8 Soil P concentration
+``` {r, echo=FALSE}
+    ### calculate the variable
+    soil_p_concentration <- make_soil_p_concentration()
+    
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        soil_p_concentration[soil_p_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        soil_p_concentration[soil_p_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the ring over date plot
+    p <- ggplot(soil_p_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil P Concentration (%)")
+    plot(p)
+
+```
+Data record for soil P concentration is look quite good. 
+
 
 ### 3.9 Soil Phosphate P concentration
+Averaged across multiple depths, without consideration of assigning relative weight score. Need to update this calculation later. 
+
+Also, soil phosphate P is the PO4-P, not PO4 concentration. 
+
+Further, phosphate measurements were taken at quarterly timestep, but it should not reflect the accumulation of phosphate production over time time frame (I think). But this needs to be confirmed by soil people, as I am not sure whether the measurements excluded plants and mycorrhizaes. Even with exclusion, we still can't be sure this concentration reflects the total soil phosphate production over time period, as rainfall and hence leaching may also affect the concentration. 
+
+``` {r, echo=FALSE}
+    ### calculate the variable
+    soil_phosphate_concentration <- make_soil_phosphate_concentration()
+    
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        soil_phosphate_concentration[soil_phosphate_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        soil_phosphate_concentration[soil_phosphate_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+    
+    ### make the ring over date plot
+    p <- ggplot(soil_phosphate_concentration,
+                aes(Date, PercP, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil P Concentration (%)")
+    plot(p)
+
+```
+
+What happens at that time point after 2015? Is it a leaching-induced event?
+
 
 ### 3.10 Mycorrhizal P concentration
+We currently don't have mycorrhizal data available yet. 
 
 
 # 4. Important concentration related calculations. 

@@ -1,9 +1,9 @@
 #- Make the microbial P concentration
-make_microbial_p_concentration <- function(){
+make_microbial_p_concentration <- function() {
     # return ring-specific, continuous microbial P concentration
 
     # download the data
-    download_microbial_p_data()
+    # download_microbial_p_data()
     
     df <- read.csv(file.path(getToPath(), 
                              "FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130.csv"))
