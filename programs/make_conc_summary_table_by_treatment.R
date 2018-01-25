@@ -44,20 +44,20 @@ make_conc_summary_table_by_treatment <- function() {
     
     
     ### Fine root P concentration
-    out <- summaryBy(PercP~Ring,data=fineroot_P_concentration,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(PercP~Ring,data=fineroot_p_concentration,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$conc.terms == "Fine Root P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Fine Root P Conc"] <- min(year(fineroot_P_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Fine Root P Conc"] <- max(year(fineroot_P_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Fine Root P Conc"] <- length(unique(fineroot_P_concentration$Date))  
+    treatDF$year_start[treatDF$conc.terms == "Fine Root P Conc"] <- min(year(fineroot_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Fine Root P Conc"] <- max(year(fineroot_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Fine Root P Conc"] <- length(unique(fineroot_p_concentration$Date))  
     treatDF$notes[treatDF$conc.terms == "Fine Root P Conc"] <- "Averaged over depths of 0-10cm and 10-30cm"
     
     
     ### Leaf litter P concentration
-    out <- summaryBy(PercP~Ring,data=leaf_litter_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(PercP~Ring,data=leaflitter_p_concentration,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$conc.terms == "Leaflitter P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Leaflitter P Conc"] <- min(year(leaf_litter_p_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Leaflitter P Conc"] <- max(year(leaf_litter_p_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Leaflitter P Conc"] <- length(unique(leaf_litter_p_concentration$Date))  
+    treatDF$year_start[treatDF$conc.terms == "Leaflitter P Conc"] <- min(year(leaflitter_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Leaflitter P Conc"] <- max(year(leaflitter_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Leaflitter P Conc"] <- length(unique(leaflitter_p_concentration$Date))  
     treatDF$notes[treatDF$conc.terms == "Leaflitter P Conc"] <- "Considered both senecsed leaf and leaf litter"
 
     

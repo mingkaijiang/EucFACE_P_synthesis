@@ -41,8 +41,8 @@ canopy_p_concentration <- make_canopy_p_concentration()
 canopy_p_pool <- make_canopy_p_pool()
 
 #### Litter P flux and concentration
-leaf_litter_p_concentration <- make_leaflitter_p_concentration()
-leaf_litter_p_flux <- make_leaflitter_p_flux()  
+leaflitter_p_concentration <- make_leaflitter_p_concentration()
+leaflitter_p_flux <- make_leaflitter_p_flux()  
 
 #### Wood P pool   - use tree id!!!
 wood_p_concentration <- make_wood_p_concentration()
@@ -55,7 +55,7 @@ frass_p_concentration <- make_frass_p_concentration()
 frass_p_production <- make_frass_p_production_flux()
 
 #### Fine root P biomass pool
-fineroot_P_concentration <- make_fineroot_p_concentration()
+fineroot_p_concentration <- make_fineroot_p_concentration()
 fineroot_p_pool <- make_fineroot_p_pool()
 
 #### Fine root P production flux
