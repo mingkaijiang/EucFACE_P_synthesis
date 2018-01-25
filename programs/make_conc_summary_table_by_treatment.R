@@ -44,8 +44,8 @@ make_conc_summary_table_by_treatment <- function() {
     
     
     ### Fine root P concentration
-    out <- summaryBy(Fineroot_P_concentration~Ring,data=fineroot_P_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Fine Root P Conc", 2:7] <- out$Fineroot_P_concentration
+    out <- summaryBy(PercP~Ring,data=fineroot_P_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Fine Root P Conc", 2:7] <- out$PercP
     treatDF$year_start[treatDF$conc.terms == "Fine Root P Conc"] <- min(year(fineroot_P_concentration$Date))    
     treatDF$year_end[treatDF$conc.terms == "Fine Root P Conc"] <- max(year(fineroot_P_concentration$Date))    
     treatDF$timepoint[treatDF$conc.terms == "Fine Root P Conc"] <- length(unique(fineroot_P_concentration$Date))  
