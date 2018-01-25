@@ -11,58 +11,93 @@ source("programs/prepare.R")
 #### turn warnings off globally
 options(warn=-1)
 
-###### ---------------- Generating stuffs -------------------- ######
+###### ---------------- Generating P concentrations -------------------- ######
+#### Soil P concentrations
+soil_p_concentration <- make_soil_p_concentration()
+
+#### Soil phosphate conc, this returns % of P, not % of PO4!
+soil_phosphate_concentration <- make_soil_phosphate_concentration()
+
+#### Microbial P conc.
+microbial_p_concentration <- make_microbial_p_concentration()
+
+#### Canopy P conc.
+canopy_p_concentration <- make_canopy_p_concentration()
+
+#### Leaf litter P conc. 
+leaflitter_p_concentration <- make_leaflitter_p_concentration()
+
+#### Wood P conc. 
+wood_p_concentration <- make_wood_p_concentration()
+
+#### Frass P conc.
+frass_p_concentration <- make_frass_p_concentration()
+
+#### Fineroot P conc.
+fineroot_p_concentration <- make_fineroot_p_concentration()
+
+#### Understorey P conc.
+understorey_p_concentration <- make_understorey_p_concentration()
+
+#### Mycorrhizal P conc.
+### Data not available yet.
+
+
+###### --- Preparing C and other variables for P pools and fluxes --- ######
+#### For all C pools, output annual biomass (year, ring, biomass)
+#### For all C fluxes, output rate in unit of mg C m-2 d-1, and the period over which this rate applies
+#### Then assign the P concentration to C pools and fluxes. 
+#### Note: % P of total dry biomass should not be directly applied to C result, 
+#### as amount of C is not amount of dry weight !!!
+
+#### First, output all C pools and fluxes. 
+#### For now, copy and paste all C-related codes. 
+#### In the future, consider sourcing the code from the online repository.
+
+
+
+
+
 #### Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
 
-#### Soil P concentrations and pools
-soil_p_concentration <- make_soil_p_concentration()
+#### Soil P pools
 soil_p_content <- make_soil_p_content(soil_bulk_density)
 
-#### Soil phosphate production flux 
-#### This returns % of P, not % of PO4!
-soil_phosphate_concentration <- make_soil_phosphate_concentration()
-
-#### Not sure whether the unit is already per day or not
-#### Currently assuming it is, because PO4 is rapidly turning over, 
-#### so the infrequent measurement is indicative of the accumulation of the previous 1 day
-#### But this assumption may be entirely incorrect!
+#### Soil phosphate production
+### Not sure whether the unit is already per day or not
+### Currently assuming it is, because PO4 is rapidly turning over, 
+### so the infrequent measurement is indicative of the accumulation of the previous 1 day
+### But this assumption may be entirely incorrect!
 soil_phosphate_production <- make_soil_phosphate_production(soil_bulk_density)
 
 #### Soil P mienralization flux
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
-#### Microbial P pool and concentration
-microbial_p_concentration <- make_microbial_p_concentration()
+#### Microbial P pool 
 microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
 
 #### Canopy P pool - return a data list - green leaf and dead leaf
-canopy_p_concentration <- make_canopy_p_concentration()
 canopy_p_pool <- make_canopy_p_pool()
 
-#### Litter P flux and concentration
-leaflitter_p_concentration <- make_leaflitter_p_concentration()
+#### Litter P production flux 
 leaflitter_p_flux <- make_leaflitter_p_flux()  
 
 #### Wood P pool   - use tree id!!!
-wood_p_concentration <- make_wood_p_concentration()
 # for wood p pool, still missing year 2012 wood measurement data
 # to make John's code working. 
 
 
 #### Frass P production
-frass_p_concentration <- make_frass_p_concentration()
 frass_p_production <- make_frass_p_production_flux()
 
 #### Fine root P biomass pool
-fineroot_p_concentration <- make_fineroot_p_concentration()
 fineroot_p_pool <- make_fineroot_p_pool()
 
 #### Fine root P production flux
 fineroot_p_production <- make_fineroot_p_production()
 
 #### Understorey P pool, assume both species contributed equally
-understorey_p_concentration <- make_understorey_p_concentration()
 understorey_p_pool <- make_understorey_p_pool()
 
 #### Leaching P flux - we have Shun's data, but needs drainage value
@@ -70,8 +105,6 @@ understorey_p_pool <- make_understorey_p_pool()
 #### Hedley fractionation data will be available in early January
 
 ### mycorrhizal P content
-
-
 
 
 ###### ---------------- Making other important variables -------------------- ######

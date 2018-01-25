@@ -5,7 +5,9 @@ Synthesizing the phosphorus-related (P) pools and fluxes for the Eucalyptus Free
 <br/> The **Run_programs.R** script: master script that calls in all the functions and scripts. 
 <br/> The **definitions** folder: all pre-defined constants and coefficients.
 <br/> The **download** folder: stores downloaded data from HIEv. 
-<br/> The **modules** folder: sub-folders contain all scripts for processing individual variables. 
+<br/> The **p_modules** folder: sub-folders contain all scripts for processing individual P variables. 
+<br/> The **c_modules** folder: sub-folders contain all scripts for processing individual C variables. 
+
 <br/> The **plots_tables** folder: stores output tables and plots. 
 <br/> The **programs** folder: pre- and post-processing scripts. 
 

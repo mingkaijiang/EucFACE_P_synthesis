@@ -21,7 +21,7 @@ pacman::p_load(dplyr,
 source("definitions/constants.R")
 
 # Sourcing all R files in the modules subdirectory
-sourcefiles <- dir("modules", pattern="[.]R$", recursive = TRUE, full.names = TRUE)
+sourcefiles <- dir("p_modules", pattern="[.]R$", recursive = TRUE, full.names = TRUE)
 for(z in sourcefiles)source(z)
 
 # CO2 treatment
