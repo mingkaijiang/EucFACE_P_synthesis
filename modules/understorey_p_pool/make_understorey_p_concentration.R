@@ -2,7 +2,7 @@
 make_understorey_p_concentration <- function(){
     ### download the data 
     # currently there is a data format issue, so read in data from local directory
-    # download_understorey_p_data()
+    download_understorey_p_data()
     
     ### read in the file
     df <- read.csv("download/FACE_P0019_RA_leafP-understory_20130509-20151030_L1.csv")

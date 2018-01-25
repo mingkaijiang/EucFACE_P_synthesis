@@ -2,8 +2,8 @@
 make_fineroot_p_concentration <- function(){
     
     ### download the data
-    #download_fineroot_p_data()
-    
+    download_fineroot_p_data()
+
     ### read in the csv
     myDF <- read.csv("download/EucFACE_FineRootData.csv")
 

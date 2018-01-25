@@ -1,7 +1,7 @@
 
 make_soil_phosphate_concentration <- function() {
     # download the data
-    # download_soil_phosphate_data()
+    download_soil_phosphate_data()
     
     ## read in data - extractable NP data
     myDF1 <- read.csv(file.path(getToPath(), 

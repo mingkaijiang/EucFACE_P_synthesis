@@ -120,7 +120,7 @@ up_over_req <- pupDF/temDF[1,]
 
 
 ###### ---------------- Output results -------------------- ######
-if (create_markdown_report = TRUE) {
+if (create_markdown_report == TRUE) {
     ### use r markdown script to run this sheet, so do nothing here
     ### the purpose is the skip the rm() function
     

@@ -1,5 +1,11 @@
 make_leaflitter_p_flux <- function() {
     
+    infile <- "download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv"
+    
+    if(!file.exists(infile)) {
+        download_leaflitter()
+    }
+    
     df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
     
     ### setting up the date

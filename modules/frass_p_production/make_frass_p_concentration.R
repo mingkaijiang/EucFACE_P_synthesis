@@ -2,7 +2,7 @@
 make_frass_p_concentration <- function(){
     
     # download the data. 
-    #download_frass_data()
+    download_frass_data()
     
     # read in the data - frass chemistry data (for P, in unit of mg/g)
     inDF2 <- read.csv(file.path(getToPath(), 

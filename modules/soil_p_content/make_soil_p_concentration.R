@@ -5,7 +5,7 @@ make_soil_p_concentration <- function(){
     # and soil bulk density data
 
     # download the data
-    # download_soil_p_data()
+    download_soil_p_data()
     
     ## read in data - soil property data
     myDF2 <- read.csv(file.path(getToPath(), 
