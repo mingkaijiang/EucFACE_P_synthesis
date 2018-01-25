@@ -54,7 +54,10 @@ understorey_p_concentration <- make_understorey_p_concentration()
 #### For now, copy and paste all C-related codes. 
 #### In the future, consider sourcing the code from the online repository.
 
+#### Source all C related functions.
+source("programs/prepare_c_modules.R")
 
+#### Generate all the C related variables (output by year for pools)
 
 
 
@@ -113,6 +116,7 @@ source("programs/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
 
 ### leaf p retranslocation coefficient
+source("programs/make_leaf_p_retranslocation_coefficient.R")
 leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
 
 
