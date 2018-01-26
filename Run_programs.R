@@ -54,10 +54,12 @@ understorey_p_concentration <- make_understorey_p_concentration()
 #### For now, copy and paste all C-related codes. 
 #### In the future, consider sourcing the code from the online C repository (stored in bitbucket).
 
-#### Canopy C related variables (SLA, LAI, Canopy C)
+#### Canopy related variables (SLA, LAI, Canopy biomass)
 lai_variable <- make_lai_variable()
 sla_variable <- make_sla_variable()
-leaf_c_pool <- make_leaf_pool(lai_variable, sla_variable)
+canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
+
+#### Wood related variables
 
 
 #### Ring-specific bulk density
