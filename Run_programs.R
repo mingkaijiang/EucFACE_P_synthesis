@@ -64,8 +64,11 @@ canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
 # wood_biomass_pool <- make_wood_c_pool()
 
 #### Fineroot pools and production
-
-
+# this is total fineroot biomass for 0-30cm
+# currently implemented whole plant C fraction
+# need to update with fineroot specific C fraction value
+fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
+fineroot_c_production_flux <- make_fineroot_c_production_flux(c_fraction_fr)
 
 #### Understorey aboveground biomass
 
