@@ -6,7 +6,7 @@ allom_agb <- function(diamcm) {
 }
 
 #- Make the live wood C pool
-make_wood_pool <- function(ring_area, c_fraction, return_tree_level=FALSE){
+make_wood_c_pool <- function(ring_area, c_fraction, return_tree_level=FALSE){
     
     #- download the data from HIEv
     download_diameter_data()

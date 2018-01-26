@@ -43,7 +43,7 @@ understorey_p_concentration <- make_understorey_p_concentration()
 ### Data not available yet.
 
 
-###### --- Preparing C and other variables for P pools and fluxes --- ######
+###### ----------- Preparing C and other variables  ----------- ######
 #### For all C pools, output annual biomass (year, ring, biomass)
 #### For all C fluxes, output rate in unit of mg C m-2 d-1, and the period over which this rate applies
 #### Then assign the P concentration to C pools and fluxes. 
@@ -59,11 +59,42 @@ lai_variable <- make_lai_variable()
 sla_variable <- make_sla_variable()
 canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
 
-#### Wood related variables
+#### Wood C pool
+# still waiting for year 2011-12 data
+# wood_biomass_pool <- make_wood_c_pool()
+
+#### Fineroot pools and production
+
+
+
+#### Understorey aboveground biomass
+
+
+
+#### Frass production
+
+
+
+#### Leaf litter production
+
+
+
+#### Soil C content
+
+
+
+#### Microbial C pool
+
+
+
+
 
 
 #### Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
+
+
+###### ----------- Generating P pools and fluxes  ----------- ######
 
 #### Soil P pools
 soil_p_content <- make_soil_p_content(soil_bulk_density)
@@ -87,9 +118,8 @@ canopy_p_pool <- make_canopy_p_pool()
 #### Litter P production flux 
 leaflitter_p_flux <- make_leaflitter_p_flux()  
 
-#### Wood P pool   - use tree id!!!
-# for wood p pool, still missing year 2012 wood measurement data
-# to make John's code working. 
+#### Wood P pool   
+
 
 
 #### Frass P production
@@ -111,7 +141,7 @@ understorey_p_pool <- make_understorey_p_pool()
 ### mycorrhizal P content
 
 
-###### ---------------- Making other important variables -------------------- ######
+###### ---------------- Making P budgeting variables and tables -------------------- ######
 ### P concentration by treatment and ring
 source("programs/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
@@ -157,17 +187,10 @@ up_over_req <- pupDF/temDF[1,]
 
 
 
-###### ---------------- Output results -------------------- ######
-if (create_markdown_report == TRUE) {
-    ### use r markdown script to run this sheet, so do nothing here
-    ### the purpose is the skip the rm() function
-    
-} else {
-    #### clear wk space
-    rm(list=ls(all=TRUE))
-    options(war=0)
-}
+
 
 ###### ---------------- End -------------------- ######
-
+#### clear wk space
+rm(list=ls(all=TRUE))
+options(war=0)
 

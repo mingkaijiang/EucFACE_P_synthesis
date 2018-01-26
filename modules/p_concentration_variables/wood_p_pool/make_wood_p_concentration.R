@@ -1,8 +1,13 @@
 make_wood_p_concentration <- function() {
-    ### download the data
-    download_canopy_p_data()
     
-    df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
+    ### download the data
+    infile <- "download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv"
+    if(!file.exists(infile)) {
+        download_canopy_p_data()
+        
+    }
+
+    df <- read.csv(infile)
     
     ### setting up the date
     df$Date <- paste0("1-", as.character(df$Campaign))
