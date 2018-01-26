@@ -298,7 +298,7 @@ Frass production has a great time-series record of P concentration data availabl
     plot(p)
 
 ```
-
+Note, this is based on 0-10cm data only, as this is the only depth with data available. It's not consistent with any other soil related variables (0-30cm). 
 
 ### 3.8 Soil P concentration
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -376,23 +376,40 @@ Below, I summarize the per ring, per treatment table for all P concentration var
 Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings. 
 
 ``` {r, echo=FALSE} 
-source("programs/make_conc_summary_table_by_treatment.R")
-summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
-
-# make the table looks nicer
-colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
-summary_table_concentration_by_treatment[,2:7] <- round(summary_table_concentration_by_treatment[,2:7], 3)
-
-library(knitr)
-kable(summary_table_concentration_by_treatment)
+    source("programs/make_conc_summary_table_by_treatment.R")
+    summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
+    
+    # make the table looks nicer
+    colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
+    summary_table_concentration_by_treatment[,2:7] <- round(summary_table_concentration_by_treatment[,2:7], 3)
+    
+    library(knitr)
+    kable(summary_table_concentration_by_treatment)
 
 ```
 
 <br/>
 <br/>
 
-# 5. Important concentration related calculations. 
-### 5.1 Leaf P retranslocation coefficient
+# 5. Important variables. 
+
+### 5.1 Soil bulk density across depths
+``` {r, echo=FALSE, warning=FALSE}
+
+    soil_bulk_density <- make_soil_bulk_density()
+
+    ### make the plot
+    p <- ggplot(soil_bulk_density,
+                aes(ring, bulk_density_kg_m3, color=factor(Depth))) +   
+            geom_point(size = 5) +
+            xlab("Ring") + ylab("Bulk density (kg m-3)")
+    plot(p)
+
+
+```
+
+
+### 5.2 Leaf P retranslocation coefficient
 We need to think about data collected from the same time point. 
 
 <br/>

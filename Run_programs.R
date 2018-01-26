@@ -86,21 +86,20 @@ twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twi
 barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date")]
 seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date")]
 
+#### Ring-specific bulk density
+soil_bulk_density <- make_soil_bulk_density()
 
 #### Soil C content
 # incomplete, as we need to figure out what to do for depth-extrapolation
+# haven't add soil bulk density calculations in yet. 
 soil_c_pool <- make_soil_c_pool()
 
 
 #### Microbial C pool
+# this pool has data only at 0-10cm depth
+microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 
-
-
-
-
-#### Ring-specific bulk density
-soil_bulk_density <- make_soil_bulk_density()
 
 
 ###### ----------- Generating P pools and fluxes  ----------- ######

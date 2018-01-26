@@ -1,6 +1,6 @@
 #- Make the soil bulk density variable
 make_soil_bulk_density <- function(){
-    # return ring-specific soil density data
+    # return ring-specific soil density data for top 3 depths
 
     # download the data
     download_soil_bulk_density_data()
@@ -19,12 +19,15 @@ make_soil_bulk_density <- function(){
     # unit conversion: g/cm3 to kg/m3
     df.m$bulk_density_kg_m3 <- df.m$bulk_density * g_to_kg / cm3_to_m3
     
+    # only include depths at 0-10, 10-20 and 20-30
+    df.out <- subset(df.m, Depth == "0-10" | Depth == " 10-20" | Depth == "20-30")
+    
     # update variables to output
-    df.out <- df.m[,c("ring", "Depth", "bulk_density_kg_m3")]
+    out <- df.out[,c("ring", "Depth", "bulk_density_kg_m3")]
     
     # change factor names to match with soil factor names
-    df.out$Depth <- plyr::revalue(df.out$Depth, c("0-10"="0-10cm", " 10-20"="10-20cm", "20-30"="20-30cm"))
+    out$Depth <- plyr::revalue(out$Depth, c("0-10"="0-10cm", " 10-20"="10-20cm", "20-30"="20-30cm"))
     
-    return(df.out)
+    return(out)
     
 }
