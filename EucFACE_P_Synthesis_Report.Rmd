@@ -321,8 +321,20 @@ Frass production has a great time-series record of P concentration data availabl
     plot(p)
 
 ```
-Data record for soil P concentration is look quite good. 
 
+Note, soil data are available at various depths (0-10, 10-20 and 20-30cm), and data were not collected for all depths at different time points. 
+``` {r, echo=FALSE} 
+
+    soil_c_pool <- make_soil_c_pool()
+    ### make the depth over date plot
+    p <- ggplot(soil_c_pool,
+                aes(Date, TotC, color=factor(Depth))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil C Pool at various depth")
+    plot(p)
+```
+
+It is observed from the above C pool at various depths that, only two dates have C pool measured over three depths. We need to come up with a way to either extrapolate based on depth profile or to remove dates without 3-depth measurements. 
 
 ### 3.9 Soil Phosphate P concentration
 Averaged across multiple depths, without consideration of assigning relative weight score. Need to update this calculation later. 

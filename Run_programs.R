@@ -88,7 +88,8 @@ seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "see
 
 
 #### Soil C content
-
+# incomplete, as we need to figure out what to do for depth-extrapolation
+soil_c_pool <- make_soil_c_pool()
 
 
 #### Microbial C pool

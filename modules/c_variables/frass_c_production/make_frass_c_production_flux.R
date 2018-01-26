@@ -13,7 +13,6 @@ make_frass_c_production_flux <- function() {
     #- download the data
     if(!file.exists(paste0("download/", infile))) {
         download_frass_data()
-        
     }
 
     #- read in the data - frassfall data (in unit of g/0.1979 m2)
@@ -47,16 +46,23 @@ make_frass_c_production_flux <- function() {
     
     #- convert into mg m-2 d-1
     outDF$ndays <- rep(b, each = 6)
-    outDF$frass_production_flux <- outDF$frass_production/outDF$ndays * g_to_mg
     
-    # add start and end date
-    outDF$End_date <- rep(d[1:length(d)], each=6)
-    outDF$Start_date <- outDF$End_date
-    outDF[7:174, "Start_date"] <- rep(d[1:(length(d)-1)], each=6)
-    outDF$Start_date[1:6] <- NA
+    out <- dplyr::mutate(outDF, 
+                         Date = as.Date(outDF$DATE, format = "%d/%m/%Y"),
+                         Start_date = Date - ndays,
+                         End_date = Date,
+                         frass_production_flux = frass_production * g_to_mg / ndays)
+    
+    # outDF$frass_production_flux <- outDF$frass_production/outDF$ndays * g_to_mg
+    # 
+    # # add start and end date
+    # outDF$End_date <- rep(d[1:length(d)], each=6)
+    # outDF$Start_date <- outDF$End_date
+    # outDF[7:174, "Start_date"] <- rep(d[1:(length(d)-1)], each=6)
+    # outDF$Start_date[1:6] <- NA
     
     #- drop NA rows
-    outDF <- outDF[complete.cases(outDF),]
+    out <- out[complete.cases(out),]
     
     #- format dataframe to return
     out <- outDF[,c("Start_date", "End_date", "RING","frass_production_flux")]
