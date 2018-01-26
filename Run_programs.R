@@ -52,13 +52,12 @@ understorey_p_concentration <- make_understorey_p_concentration()
 
 #### First, output all C pools and fluxes. 
 #### For now, copy and paste all C-related codes. 
-#### In the future, consider sourcing the code from the online repository.
+#### In the future, consider sourcing the code from the online C repository (stored in bitbucket).
 
-#### Source all C related functions.
-source("programs/prepare_c_modules.R")
-
-#### Generate all the C related variables (output by year for pools)
-
+#### Canopy C related variables (SLA, LAI, Canopy C)
+lai_variable <- make_lai_variable()
+sla_variable <- make_sla_variable()
+leaf_c_pool <- make_leaf_pool(lai_variable, sla_variable)
 
 
 #### Ring-specific bulk density
