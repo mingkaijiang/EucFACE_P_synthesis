@@ -11,6 +11,9 @@ c_fraction_fr <- 0.5
 # lerp C content (from Andrew)
 c_fraction_lp <- 0.78
 
+# understorey biomass C fraction
+c_fraction_ud <- 0.5
+
 # g to mg
 g_to_mg <- 1000.0
 
@@ -41,3 +44,6 @@ cm3_to_m3 <- 1e-6
 
 # g/cm3 to ppm
 g_per_cm3_to_ppm <- 1000000
+
+# understorey biomass harvest strip area m2
+strip_area <- 0.1

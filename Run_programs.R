@@ -70,16 +70,21 @@ canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
 fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
 fineroot_c_production_flux <- make_fineroot_c_production_flux(c_fraction_fr)
 
-#### Understorey aboveground biomass
-
-
+#### Understorey aboveground biomass and production
+understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
+                                                          strip_area)
+# no production calculation yet. 
 
 #### Frass production
+frass_c_production_flux <- make_frass_c_production_flux()
 
+#### Litter production (leaf, twig, bark, seed)
+litter_c_production_flux <- make_litter_c_flux(c_fraction)
 
-
-#### Leaf litter production
-
+leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date")]
+twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date")]
+barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date")]
+seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date")]
 
 
 #### Soil C content
