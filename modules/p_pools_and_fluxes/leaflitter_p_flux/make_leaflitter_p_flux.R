@@ -1,38 +1,38 @@
-make_leaflitter_p_flux <- function() {
-    
-    infile <- "download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv"
-    
-    if(!file.exists(infile)) {
-        download_leaflitter()
-    }
-    
-    df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
-    
-    ### setting up the date
-    df$Date <- paste0("1-", as.character(df$Campaign))
-    df$Date <- as.Date(df$Date, "%d-%b-%y")
-    df.litter <- subset(df, Type == "Leaf litter")
-    df.dead <- subset(df, Type == "sceneced leaf")
-    myDF <- rbind(df.litter, df.dead)
-    
-    ### Leaf litter p, average across rings and date, unit = %
-    df.litter.p <- summaryBy(PercP~Ring+Date,
-                             data=myDF,FUN=mean,keep.names=T,na.rm=T)
-    df.litter.p$month <- month(df.litter.p$Date)
-    df.litter.p$year <- year(df.litter.p$Date)
-    
-    ### Leaf litter c, average across rings and date, unit = %
-    df.litter.c <- summaryBy(PercC~Ring+Date,
-                             data=myDF,FUN=mean,keep.names=T,na.rm=T)
-    df.litter.c$month <- month(df.litter.c$Date)
-    df.litter.c$year <- year(df.litter.c$Date)
-    
+make_leaflitter_p_flux <- function(p_conc) {
     
     ### Leaf litter flux in unit of mg m-2 d-1 of leaf, not C!!!
     litter_flux <- make_leaflitter_flux()
     
-    ### assign percentage to litter P production flux
-    out <- assign_percent_to_flux(df.litter.p, litter_flux)
+    ### prepare output df
+    out <- litter_flux
     
-    return(out)
+    ### prepare out df dates
+    out$s.diff <- difftime(out$Start_date, "2010-01-01", units="days")
+    out$e.diff <- difftime(out$End_date, "2010-01-01", units="days")
+    p_conc$numd <- difftime(p_conc$Date, "2010-01-01", units="days")
+    
+    
+    ### find the common month and year
+    for (i in c(1:6)) {
+        mydf1 <- subset(p_conc, Ring == i)
+        
+        for (j in mydf1$numd) {
+            
+            mydf2 <- subset(mydf1, numd == j)
+            
+            out[out$Ring == i & out$s.diff <= j & out$e.diff >= j, "PercP"] <- mydf2$PercP
+            out[out$Ring == i & out$s.diff <= j & out$e.diff >= j, "date"] <- difftime(mydf2$Date, "2010-01-01", units="days")
+            
+        }
+    }
+    
+    outDF <- out[complete.cases(out),]
+    
+    ### calculate leaflitter P flux mg P m-2 d-1
+    
+    outDF$leaflitter_p_flux_mg_m2_d <- outDF$leaf_flux*outDF$PercP/100
+    
+    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "leaflitter_p_flux_mg_m2_d")]
+    
+    return(outDF)
 }

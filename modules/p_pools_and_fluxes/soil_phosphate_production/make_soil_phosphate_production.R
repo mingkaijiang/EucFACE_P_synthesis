@@ -13,10 +13,10 @@ make_soil_phosphate_production_flux <- function(p_conc,
     # calculate total P in top 10cm of soil (hence the * 0.1), unit kg m-2
     p_conc$soil_p_kg_m2 <- p_conc$PercP * p_conc$bk_kg_m3 * 0.1 / 100
     
-    # return in unit of g/m2
-    p_conc$soil_phosphate_p_g_m2 <-p_conc$soil_p_kg_m2 * 1000.0
+    # return in unit of mg/m2
+    p_conc$soil_phosphate_p_mg_m2 <-p_conc$soil_p_kg_m2 * 10^6
     
-    myDF.out <- p_conc[,c("Date", "Ring", "soil_phosphate_p_g_m2")]
+    myDF.out <- p_conc[,c("Date", "Ring", "soil_phosphate_p_mg_m2")]
     
     ### Note sure of the final unit yet! 
     

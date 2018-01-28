@@ -1,7 +1,7 @@
 assign_percent_to_flux <- function(input1, input2) {
     
     ### input1 <- leaf % p
-    ### input2 <- liter flux
+    ### input2 <- flux
 
     out <- input2
     out$s.diff <- difftime(out$Start_date, "2010-01-01", units="days")
@@ -9,7 +9,7 @@ assign_percent_to_flux <- function(input1, input2) {
     input1$numd <- difftime(input1$Date, "2010-01-01", units="days")
     
     
-    ### find the common month and year for dead leaf
+    ### find the common month and year
     for (i in c(1:6)) {
         mydf1 <- subset(input1, Ring == i)
 

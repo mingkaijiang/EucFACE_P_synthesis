@@ -8,7 +8,7 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1 <- read.csv(file.path(getToPath(), 
                                 "FACE_RA_P0023_SOILMINERALISATION_L3_20120724-20140124.csv"))
     
-    # average across rings, dates, and depths, unit: mg/kg 
+    # average across rings, dates, and depths, unit: mg/kg/d 
     myDF1.m <- summaryBy(P_mineralisation~date+ring,data=myDF1,FUN=mean,keep.names=T,na.rm=T)
     
 
@@ -20,10 +20,11 @@ make_soil_p_mineralization_flux <- function(bk_density) {
         myDF1.m[myDF1.m$ring == i, "bk_density"] <- bk_density[bk_density$ring == i, "bulk_density_kg_m3"] 
     }
     
-    myDF1.m$p_mineralization_g_m2_d <- myDF1.m$P_mineralisation * myDF1.m$bk_density * 0.1 / g_to_mg
+    # from mg kg-1 d-1 to mg m-2 d-1
+    myDF1.m$p_mineralization_mg_m2_d <- myDF1.m$P_mineralisation * myDF1.m$bk_density * 0.1 
 
     # output table
-    myDF1.out <- myDF1.m[,c("date", "ring", "p_mineralization_g_m2_d")]
+    myDF1.out <- myDF1.m[,c("date", "ring", "p_mineralization_mg_m2_d")]
     
     # plotting time series
     pdf("plots_tables/soil_p_mineralization_over_time.pdf")
@@ -38,9 +39,9 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
     
     
-    p <- ggplot(myDF1.out, aes(date, p_mineralization_g_m2_d, color=factor(CO2))) +   
+    p <- ggplot(myDF1.out, aes(date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
         geom_point(size = 5) +
-        xlab("Date") + ylab("P mineralization rate (g m-2 d-1)") + 
+        xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") + 
         ggtitle("P mineralization rate over time") 
     plot(p)
     dev.off()
