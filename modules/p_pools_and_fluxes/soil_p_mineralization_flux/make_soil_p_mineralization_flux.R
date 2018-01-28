@@ -1,5 +1,6 @@
 
 make_soil_p_mineralization_flux <- function(bk_density) {
+    
     # download the data
     download_soil_p_mineralization_data()
     
@@ -7,7 +8,7 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1 <- read.csv(file.path(getToPath(), 
                                 "FACE_RA_P0023_SOILMINERALISATION_L3_20120724-20140124.csv"))
     
-    # average across rings, dates, and depths, unit: mg/kg PO4
+    # average across rings, dates, and depths, unit: mg/kg 
     myDF1.m <- summaryBy(P_mineralisation~date+ring,data=myDF1,FUN=mean,keep.names=T,na.rm=T)
     
 

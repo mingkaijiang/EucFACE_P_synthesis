@@ -1,7 +1,7 @@
 ---
 title: "EucFACE P Synthesis"
 author: "Mingkai Jiang"
-date: "1/24/2018"
+date: "1/29/2018"
 output:
   html_document: default
 ---
@@ -363,6 +363,7 @@ Further, phosphate measurements were taken at quarterly timestep, but it should 
     plot(p)
 
 ```
+Note: Soil PO4 data is only available for top 0-10 cm of the soil!
 
 What happens at that time point after 2015? Is it a leaching-induced event?
 
@@ -408,8 +409,32 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
 
 ```
 
+### 5.2 Soil P mineralization rate
+``` {r, echo=FALSE, warning=FALSE}
 
-### 5.2 Leaf P retranslocation coefficient
+    soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
+
+    ### make the plot
+    # compare eCO2 and aCO2 treatment
+    soil_p_mineralization[soil_p_mineralization$ring == 1, "CO2"] <- "eCO2"
+    soil_p_mineralization[soil_p_mineralization$ring == 4, "CO2"] <- "eCO2"
+    soil_p_mineralization[soil_p_mineralization$ring == 5, "CO2"] <- "eCO2"
+    
+    soil_p_mineralization[soil_p_mineralization$ring == 2, "CO2"] <- "aCO2"
+    soil_p_mineralization[soil_p_mineralization$ring == 3, "CO2"] <- "aCO2"
+    soil_p_mineralization[soil_p_mineralization$ring == 6, "CO2"] <- "aCO2"
+    
+    
+    p <- ggplot(soil_p_mineralization, aes(date, p_mineralization_g_m2_d, color=factor(CO2))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("P mineralization rate (g m-2 d-1)") + 
+        ggtitle("P mineralization rate over time") 
+    plot(p)
+
+
+```
+
+### 5.3 Leaf P retranslocation coefficient
 We need to think about data collected from the same time point. 
 
 
@@ -432,6 +457,28 @@ We need to think about data collected from the same time point.
 
 
 ```
+
+### 6.2 Soil PO4-P flux 
+
+Note, at this stage in time, not sure whether this quarterly measured value should has the unit of /d, or /quarter. 
+I think it should not be a quarterly cumulative value, but neither should it be a daily value. 
+``` {r, echo=FALSE, warning=FALSE}
+
+    soil_phosphate_production <- make_soil_phosphate_production_flux(p_conc=soil_phosphate_concentration,
+                                                                     bk_density=soil_bulk_density)
+
+    ### make the plot
+    p <- ggplot(soil_phosphate_production,
+                aes(Date, soil_phosphate_p_g_m2, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil PO4-P production (g m-2)")
+    plot(p)
+
+
+```
+
+
+# 7. C:P ratios
 
 <br/>
 <br/>

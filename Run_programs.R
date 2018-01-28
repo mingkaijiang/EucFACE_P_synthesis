@@ -16,9 +16,11 @@ options(warn=-1)
 soil_p_concentration <- make_soil_p_concentration()
 
 #### Soil phosphate conc, this returns % of P, not % of PO4!
+#### Only top 10 cm!
 soil_phosphate_concentration <- make_soil_phosphate_concentration()
 
 #### Microbial P conc.
+#### Only top 10 cm!
 microbial_p_concentration <- make_microbial_p_concentration()
 
 #### Canopy P conc.
@@ -113,9 +115,11 @@ soil_p_content <- make_soil_p_pool(p_conc=soil_p_concentration,
 ### Currently assuming it is, because PO4 is rapidly turning over, 
 ### so the infrequent measurement is indicative of the accumulation of the previous 1 day
 ### But this assumption may be entirely incorrect!
-soil_phosphate_production <- make_soil_phosphate_production(soil_bulk_density)
+soil_phosphate_production <- make_soil_phosphate_production_flux(p_conc=soil_phosphate_concentration,
+                                                                 bk_density=soil_bulk_density)
 
 #### Soil P mienralization flux
+#### It is assumed that the mineralization data is for top 10 cm only!
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
 #### Microbial P pool 
@@ -148,6 +152,12 @@ understorey_p_pool <- make_understorey_p_pool()
 #### Hedley fractionation data will be available in early January
 
 ### mycorrhizal P content
+
+
+
+
+###### ---------------- Generating CP ratios -------------------- ######
+
 
 
 ###### ---------------- Making P budgeting variables and tables -------------------- ######
