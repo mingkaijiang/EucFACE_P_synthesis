@@ -1,5 +1,8 @@
 
 make_soil_phosphate_concentration <- function() {
+    
+    # phosphate:	Phosphate-P concentrations in kg dry soil (mg/kg) 
+    
     # download the data
     download_soil_phosphate_data()
     
@@ -17,14 +20,13 @@ make_soil_phosphate_concentration <- function() {
     myDF3 <- rbind(myDF1, myDF2)
     myDF3$date <- dmy(myDF3$date)
     
-    # average across rings, dates, and depths, unit: mg/kg PO4
+    # average across rings, dates, and depths, unit: mg/kg PO4-P
     myDF3.m <- summaryBy(phosphate~date+ring+depth,data=myDF3,FUN=mean,keep.names=T,na.rm=T)
     
     myDF3.m <- myDF3.m[which(myDF3.m$depth %in% " 0_10cm"),]
     myDF3.m <- myDF3.m[,c("date", "ring", "phosphate")]
     
     myDF3.m <- myDF3.m[-c(1:6),]
-    
     
     # read in Shun's data to expand the temporal coverages of the previous data
     myDF4 <- read.csv(file.path(getToPath(), 
@@ -36,11 +38,8 @@ make_soil_phosphate_concentration <- function() {
     # combine both dataframes
     myDF <- rbind(myDF4.m, myDF3.m)
     
-    # convert PO4 to P (mg/kg)
-    myDF$P_ppm <- myDF$phosphate * 31/(31+16*4)
-    
-    # convert P in mg/kg to %
-    myDF$PercP <- myDF$P_ppm / 10000
+    # convert PO4-P in mg/kg to %
+    myDF$PercP <- myDF$phosphate / 10000
     
     # output table
     myDF.out <- myDF[,c("date", "ring", "PercP")]

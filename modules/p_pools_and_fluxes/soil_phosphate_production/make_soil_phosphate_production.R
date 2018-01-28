@@ -7,7 +7,7 @@ make_soil_phosphate_production_flux <- function(p_conc,
     
     # assign bulk density onto each ring and each depth
     for (i in 1:6) {
-        p_conc[p_conc$Ring == i, "bk_kg_m3"] <- bk[bk$ring == i, "bulk_density_kg_m3"] 
+        p_conc[p_conc$Ring == i, "bk_kg_m3"] <- bk_density[bk_density$ring == i, "bulk_density_kg_m3"] 
     }
     
     # calculate total P in top 10cm of soil (hence the * 0.1), unit kg m-2
