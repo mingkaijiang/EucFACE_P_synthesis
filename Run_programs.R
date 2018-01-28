@@ -104,8 +104,9 @@ microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 ###### ----------- Generating P pools and fluxes  ----------- ######
 
-#### Soil P pools
-soil_p_content <- make_soil_p_content(soil_bulk_density)
+#### Soil P pool
+soil_p_content <- make_soil_p_pool(p_conc=soil_p_concentration,
+                                   bk_density=soil_bulk_density)
 
 #### Soil phosphate production
 ### Not sure whether the unit is already per day or not

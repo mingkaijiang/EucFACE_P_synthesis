@@ -412,9 +412,33 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
 ### 5.2 Leaf P retranslocation coefficient
 We need to think about data collected from the same time point. 
 
+
+
+
+# 6. P pools and fluxes
+
+### 6.1 Soil P pool
+``` {r, echo=FALSE, warning=FALSE}
+
+    soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
+                                    bk_density=soil_bulk_density)
+
+    ### make the plot
+    p <- ggplot(soil_p_pool,
+                aes(Date, soil_p_g_m2, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil P pool (g m-2)")
+    plot(p)
+
+
+```
+
 <br/>
 <br/>
 <br/>
 <br/>
+
+
+
 
 # The end.

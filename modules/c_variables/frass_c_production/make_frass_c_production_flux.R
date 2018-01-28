@@ -65,8 +65,8 @@ make_frass_c_production_flux <- function() {
     out <- out[complete.cases(out),]
     
     #- format dataframe to return
-    out <- outDF[,c("Start_date", "End_date", "RING","frass_production_flux")]
-    colnames(out) <- c("Start_date", "End_date", "Ring", "frass_production_flux")
+    out <- out[,c("Start_date", "End_date", "DATE", "RING","frass_production_flux")]
+    colnames(out) <- c("Start_date", "End_date", "Date", "Ring", "frass_production_flux")
     
     return(out)
 }
