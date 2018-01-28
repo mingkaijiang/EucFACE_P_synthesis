@@ -4,17 +4,17 @@ make_microbial_p_pool <- function(p_conc, bk_density){
     bk.r<-with(bk_density, tapply(bulk_density_kg_m3, ring, mean))
     
     for (i in 1:6) {
-        df.m[df.m$ring == i, "bk_density"] <- bk.r[i]
+        p_conc[p_conc$Ring == i, "bk_density"] <- bk.r[i]
     }
         
-    # unit conversion: mg/kg to g/m2
-    df.m$Pmic_g_m2 <- df.m$bk_density * df.m$Pmic * 0.3 / g_to_mg
+    # calculate total P in top 10cm of soil (hence the * 0.1), unit kg m-2
+    p_conc$microbial_p_kg_m2 <- p_conc$PercP * p_conc$bk_density * 0.1 / 100
     
-    # update variables to output Pmic in unit g m-2
-    df.out <- df.m[,c("ring", "date", "Pmic_g_m2")]
+    # return in unit of g/m2
+    p_conc$microbial_p_g_m2 <-p_conc$microbial_p_kg_m2 * 1000.0
     
-    df.out <- df.out[complete.cases(df.out),]
+    myDF.out <- p_conc[,c("Date", "Ring", "microbial_p_g_m2")]
     
-    return(df.out)
+    return(myDF.out)
     
 }

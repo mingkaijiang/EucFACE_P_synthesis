@@ -477,6 +477,23 @@ I think it should not be a quarterly cumulative value, but neither should it be 
 
 ```
 
+### 6.3 Microbial P pool
+Note, this is for top 10 cm of the soil. 
+
+``` {r, echo=FALSE, warning=FALSE}
+
+    microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
+                                              bk_density=soil_bulk_density)
+
+    ### make the plot
+    p <- ggplot(microbial_p_pool,
+                aes(Date, microbial_p_g_m2, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil PO4-P production (g m-2)")
+    plot(p)
+
+
+```
 
 # 7. C:P ratios
 

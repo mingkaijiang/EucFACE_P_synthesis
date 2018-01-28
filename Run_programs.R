@@ -123,10 +123,13 @@ soil_phosphate_production <- make_soil_phosphate_production_flux(p_conc=soil_pho
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
 #### Microbial P pool 
-microbial_p_pool <- make_microbial_p_pool(soil_bulk_density)
+#### Top 10 cm
+microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
+                                          bk_density=soil_bulk_density)
 
-#### Canopy P pool - return a data list - green leaf and dead leaf
-canopy_p_pool <- make_canopy_p_pool()
+#### Canopy P pool - only for green leaves
+canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
+                                    biom=canopy_biomass_pool)
 
 #### Litter P production flux 
 leaflitter_p_flux <- make_leaflitter_p_flux()  
