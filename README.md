@@ -5,11 +5,14 @@ Synthesizing the phosphorus-related (P) pools and fluxes for the Eucalyptus Free
 <br/> The **Run_programs.R** script: master script that calls in all the functions and scripts. 
 <br/> The **definitions** folder: all pre-defined constants and coefficients.
 <br/> The **download** folder: stores downloaded data from HIEv. 
-<br/> The **p_modules** folder: sub-folders contain all scripts for processing individual P variables. 
-<br/> The **c_modules** folder: sub-folders contain all scripts for processing individual C variables. 
-
+<br/> The **modules** folder: sub-folders contain all scripts for processing individual variables. 
+<br/>                         The **c_variables** folder: contains all carbon related scripts.
+<br/>                         The **p_concentration_variables** folder: contains all P concentration related scripts.
+<br/>                         The **p_pools_and_fluxes** folder: contains all P flux and pool related scripts.
+<br/>                         The **soil_bulk_density** folder: contains script for calculating soil bulk density.
 <br/> The **plots_tables** folder: stores output tables and plots. 
 <br/> The **programs** folder: pre- and post-processing scripts. 
+<br/> The **Markdown_reports** folder: contains R markdown script for reporting purposes. 
 
 # How to run:
 <br/> To initiate the project, you need to firstly have access to HIEv (the Hawkesbury Institute for the Environment online data portal), because all the data will be accessed from HIEv. A token file is required, and you can place your token file in the name of **tokenfile.txt** in the master directory (i.e. the same directory as the **Run_programs.R** script).
