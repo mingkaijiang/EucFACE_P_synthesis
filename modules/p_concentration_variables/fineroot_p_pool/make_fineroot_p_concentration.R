@@ -20,8 +20,9 @@ make_fineroot_p_concentration <- function(){
     frp.2$date <- as.character(frp.2$date)
 
     ### averaging concentration across depth
+    ### asign weight by depth
     frp.1$frp_10_30cm <- frp.2$P.ppm30
-    frp.1$frp_0_30cm <- (frp.1$frp_10_30cm + frp.1$P.ppm.0)/2
+    frp.1$frp_0_30cm <- (frp.1$frp_10_30cm * 2/3) + (frp.1$P.ppm.0 * 1/3)
     
     ### converting from ppm to %
     frp.1$frp_0_30cm_percent <- frp.1$frp_0_30cm * 10^-4

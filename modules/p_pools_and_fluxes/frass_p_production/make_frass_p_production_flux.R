@@ -1,6 +1,7 @@
 #- Make the frass P flux
 make_frass_p_production_flux <- function(p_conc,
-                                         c_flux){
+                                         c_flux,
+                                         c_frac){
     
     # Fo use frassfall data and frass carbon content data to obtain frass production flux.
     # Frassfall data has longer temporal coverage,
@@ -37,8 +38,16 @@ make_frass_p_production_flux <- function(p_conc,
     #- drop NA rows
     outDF <- out[complete.cases(out),]
     
+    # averaging c_fraction by ring
+    c_frac_df <- summaryBy(frass_c_fraction~Ring, data=c_frac, FUN=mean, keep.names=T, na.rm=T)
+    
     ### calculate leaflitter P flux mg P m-2 d-1
-    outDF$frass_p_flux_mg_m2_d <- outDF$frass_production_flux/c_fraction_fr*outDF$PercP/100
+    for (i in c(1:6)) {
+        outDF[outDF$Ring == i, "c_frac"] <- c_frac_df[c_frac_df$Ring == i, "frass_c_fraction"]
+        
+    }
+    
+    outDF$frass_p_flux_mg_m2_d <- outDF$frass_production_flux/outDF$c_frac*outDF$PercP/100
     
     outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "frass_p_flux_mg_m2_d")]
 

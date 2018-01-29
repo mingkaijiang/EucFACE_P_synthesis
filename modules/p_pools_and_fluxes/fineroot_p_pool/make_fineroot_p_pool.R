@@ -2,7 +2,10 @@
 make_fineroot_p_pool <- function(){
     
     ### download the data
-    download_fineroot_p_data()
+    infile <- "FACE_P0083_RA_FR-BIOMASS_L1_20140201-20150915.csv"
+    if(!file.exists(paste0("download/", infile))) {
+        download_fineroot_p_data()
+    }
     
     ### read in the csv
     myDF <- read.csv("download/EucFACE_FineRootData.csv")

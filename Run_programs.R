@@ -141,11 +141,14 @@ leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)
 
 #### Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass
+frass_c_fraction <- make_frass_c_fraction()
 frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
-                                                   c_flux=frass_c_production_flux)
+                                                   c_flux=frass_c_production_flux,
+                                                   c_frac=frass_c_fraction)
 
 #### Fine root P biomass pool
-fineroot_p_pool <- make_fineroot_p_pool()
+fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
+                                        c_pool=fineroot_c_pool)
 
 #### Fine root P production flux
 fineroot_p_production <- make_fineroot_p_production()
