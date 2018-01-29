@@ -87,12 +87,12 @@ make_flux_summary_table_by_treatment <- function() {
     
     
     ### Other aboveground litter flux
-    # out <- summaryBy(soil_p_g_m2~Ring,data=soil_p_production,FUN=mean,keep.names=T,na.rm=T)
-    # treatDF[treatDF$terms == "Other litter P flux", 2:7] <- out$soil_p_g_m2
-    # treatDF$year_start[treatDF$terms == "Other litter P flux"] <- min(year(soil_p_production$Date))    
-    # treatDF$year_end[treatDF$terms == "Other litter P flux"] <- max(year(soil_p_production$Date))    
-    # treatDF$timepoint[treatDF$terms == "Other litter P flux"] <- length(unique(soil_p_production$Date))  
-    treatDF$notes[treatDF$terms == "Other litter P flux"] <- "Not processed yet"
+    out <- summaryBy(other_litter_p_flux_mg_m2_d~Ring,data=other_litter_p_flux,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Other litter P flux", 2:7] <- out$other_litter_p_flux_mg_m2_d
+    treatDF$year_start[treatDF$terms == "Other litter P flux"] <- min(year(other_litter_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Other litter P flux"] <- max(year(other_litter_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Other litter P flux"] <- length(unique(other_litter_p_flux$Date))  
+    treatDF$notes[treatDF$terms == "Other litter P flux"] <- "Assume wood P concentration applies to twig, bark and seed"
     
     
     ### calculate treatment averages

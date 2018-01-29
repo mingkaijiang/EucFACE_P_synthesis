@@ -143,6 +143,10 @@ canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
 #### Literfall biomass (not C) will be calculated within the function
 leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
 
+#### Other litterfall
+other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
+
+
 #### Wood P pool   
 #### Data not available yet (2011-12)
 

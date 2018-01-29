@@ -17,6 +17,8 @@ The objective of this project is to have a proper account of the P balance for t
 
 All the data used in this study are available at HIEv (at least that's the goal). 
 
+Here I am summarizing the time by treatment effect, for each individual variable. I will summarize the ring-specific result separately. 
+
 
 # 2. Methods
 ### 2.1 Procedure
@@ -371,30 +373,9 @@ What happens at that time point after 2015? Is it a leaching-induced event?
 ### 3.10 Mycorrhizal P concentration
 We currently don't have mycorrhizal data available yet. 
 
+# 4. Important variables. 
 
-# 4. P concentration summary table
-Below, I summarize the per ring, per treatment table for all P concentration variables. 
-Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings. 
-
-``` {r, echo=FALSE} 
-    source("programs/make_conc_summary_table_by_treatment.R")
-    summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
-    
-    # make the table looks nicer
-    colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
-    summary_table_concentration_by_treatment[,2:7] <- round(summary_table_concentration_by_treatment[,2:7], 3)
-    
-    library(knitr)
-    kable(summary_table_concentration_by_treatment)
-
-```
-
-<br/>
-<br/>
-
-# 5. Important variables. 
-
-### 5.1 Soil bulk density across depths
+### 4.1 Soil bulk density across depths
 ``` {r, echo=FALSE, warning=FALSE}
 
     soil_bulk_density <- make_soil_bulk_density()
@@ -409,7 +390,7 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
 
 ```
 
-### 5.2 Soil P mineralization rate
+### 4.2 Soil P mineralization rate
 ``` {r, echo=FALSE, warning=FALSE}
 
     soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
@@ -425,20 +406,20 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
     soil_p_mineralization[soil_p_mineralization$ring == 6, "CO2"] <- "aCO2"
     
     
-    p <- ggplot(soil_p_mineralization, aes(date, p_mineralization_g_m2_d, color=factor(CO2))) +   
+    p <- ggplot(soil_p_mineralization, aes(date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
         geom_point(size = 5) +
-        xlab("Date") + ylab("P mineralization rate (g m-2 d-1)") + 
+        xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") + 
         ggtitle("P mineralization rate over time") 
     plot(p)
 
 
 ```
 
-### 5.3 Leaf P retranslocation coefficient
+### 4.3 Leaf P retranslocation coefficient
 We need to think about data collected from the same time point. 
 
 
-### 5.4 C fraction for frass production
+### 4.4 C fraction for frass production
 ``` {r, echo=FALSE, warning=FALSE}
 
     frass_c_fraction <- make_frass_c_fraction()
@@ -456,9 +437,61 @@ We need to think about data collected from the same time point.
 
 
 
-# 6. P pools and fluxes
+# 5. P pools and fluxes
 
-### 6.1 Soil P pool
+``` {r, echo = FALSE, warning=FALSE, message=FALSE}
+    # hidden variables
+    #### Canopy related variables (SLA, LAI, Canopy biomass)
+    lai_variable <- make_lai_variable()
+    sla_variable <- make_sla_variable()
+    canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
+    
+    #### Canopy C production
+    
+    #### Wood C pool
+    # still waiting for year 2011-12 data
+    # wood_biomass_pool <- make_wood_c_pool()
+    
+    
+    #### Wood C production
+    
+    #### Fineroot pools and production
+    # this is total fineroot biomass for 0-30cm
+    # currently implemented whole plant C fraction
+    # need to update with fineroot specific C fraction value
+    fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
+    fineroot_c_production_flux <- make_fineroot_c_production_flux(c_fraction_fr)
+    
+    #### Understorey aboveground biomass 
+    understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
+                                                              strip_area)
+    
+    #### Understorey production flux
+    
+    
+    #### Frass production
+    frass_c_production_flux <- make_frass_c_production_flux()
+    
+    #### Litter production (leaf, twig, bark, seed)
+    litter_c_production_flux <- make_litter_c_flux(c_fraction)
+    
+    leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date")]
+    twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date")]
+    barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date")]
+    seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date")]
+
+    #### Soil C content
+    # incomplete, as we need to figure out what to do for depth-extrapolation
+    # haven't add soil bulk density calculations in yet. 
+    soil_c_pool <- make_soil_c_pool()
+    
+    
+    #### Microbial C pool
+    # this pool has data only at 0-10cm depth
+    microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
+```
+
+### 5.1 Soil P pool
 ``` {r, echo=FALSE, warning=FALSE}
 
     soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
@@ -474,7 +507,7 @@ We need to think about data collected from the same time point.
 
 ```
 
-### 6.2 Soil PO4-P pool
+### 5.2 Soil PO4-P pool
 
 Note, this pool is more readily available to plants as the microbial p pool needs one extra step when extracting.
 ``` {r, echo=FALSE, warning=FALSE}
@@ -492,7 +525,7 @@ Note, this pool is more readily available to plants as the microbial p pool need
 
 ```
 
-### 6.3 Microbial P pool
+### 5.3 Microbial P pool
 Note, this is for top 10 cm of the soil. 
 
 ``` {r, echo=FALSE, warning=FALSE}
@@ -510,8 +543,202 @@ Note, this is for top 10 cm of the soil.
 
 ```
 
+### 5.4 Canopy P pool
+``` {r, echo=FALSE, warning=FALSE}
+
+    canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
+                                        biom=canopy_biomass_pool)
+
+    ### make the plot
+    p <- ggplot(canopy_p_pool,
+                aes(Date, leaf_p_pool, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Canopy P (g m-2)")
+    plot(p)
+
+
+```
+
+### 5.5 Wood P pool
+
+Data incomplete at this stage in time.
+
+### 5.6 Fine root P pool
+``` {r, echo=FALSE, warning=FALSE}
+
+    fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
+                                            c_pool=fineroot_c_pool)
+
+    ### make the plot
+    p <- ggplot(fineroot_p_pool,
+                aes(Date, fineroot_p_pool, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Fineroot P (g m-2)")
+    plot(p)
+
+
+```
+
+
+### 5.7 Understorey aboveground P pool
+Still need to process Mathias's data.
+
+
+### 5.8 Mycorrhizal P pool
+Data still not available. 
+
+
+### 5.9 Canopy P flux
+Need to take into consideration leaf turnover. 
+
+### 5.10 Wood P flux
+Data incomplete. 
+
+### 5.11 Fineroot production P flux
+``` {r, echo=FALSE, warning=FALSE}
+
+    fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
+                                                        c_flux=fineroot_c_production_flux)
+    ### make the plot
+    p <- ggplot(fineroot_p_production,
+                aes(Date, fineroot_p_flux_mg_m2_d, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Fineroot P production (,g m-2 d-1)")
+    plot(p)
+
+
+```
+
+### 5.12 Leaflitter P flux
+``` {r, echo=FALSE, warning=FALSE, message = FALSE}
+
+    leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
+
+    ### make the plot
+    p <- ggplot(leaflitter_p_flux,
+                aes(Date, leaflitter_p_flux_mg_m2_d, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Leaf litter P (mg m-2 d-1)")
+    plot(p)
+
+
+```
+
+### 5.13 other aboveground litter P flux
+``` {r, echo=FALSE, warning=FALSE, message = FALSE}
+
+    other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
+
+    ### make the plot
+    p <- ggplot(other_litter_p_flux,
+                aes(Date, other_litter_p_flux_mg_m2_d, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Other litter P (mg m-2 d-1)")
+    plot(p)
+
+
+```
+
+### 5.14 Frass production P flux
+``` {r, echo=FALSE, warning=FALSE}
+
+    frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
+                                                   c_flux=frass_c_production_flux,
+                                                   c_frac=frass_c_fraction)
+
+    ### make the plot
+    p <- ggplot(frass_p_production,
+                aes(Date, frass_p_flux_mg_m2_d, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Frass P production (mg m-2 d-1)")
+    plot(p)
+
+
+```
+
+### 5.15 Understorey production P flux
+
+
+### 5.16 Soil mineralization P flux
+``` {r, echo=FALSE, warning=FALSE}
+
+    soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
+
+    ### make the plot
+    p <- ggplot(soil_p_mineralization,
+                aes(date, p_mineralization_mg_m2_d, color=factor(ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil P mineralization (mg m-2 d-1)")
+    plot(p)
+
+
+```
+
+Positive values indicate minerlization, negative indicate immobilization. 
+
+# 6. Summary tables
+``` {r, echo=FALSE, message=FALSE, warning=FALSE}
+    library(knitr)
+
+```
+Below, I summarize the per ring, per treatment table for all P concentration variables. 
+Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings. 
+
+``` {r, echo=FALSE} 
+    source("programs/make_conc_summary_table_by_treatment.R")
+    summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
+    
+    # make the table looks nicer
+    colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
+    summary_table_concentration_by_treatment[,2:7] <- round(summary_table_concentration_by_treatment[,2:7], 3)
+    
+    kable(summary_table_concentration_by_treatment)
+
+```
+<br/>
+<br/>
+<br/>
+<br/>
+
+Next, I summarize all pool variables:
+``` {r, echo = FALSE} 
+    source("programs/make_pool_summary_table_by_treatment.R")
+    summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
+    
+    # make the table looks nicer
+    colnames(summary_table_pool_by_treatment)[1] <- "Variable"
+    summary_table_pool_by_treatment[,2:7] <- round(summary_table_pool_by_treatment[,2:7], 3)
+    
+    kable(summary_table_pool_by_treatment)
+
+```
+<br/>
+<br/>
+<br/>
+<br/>
+
+Finally, I summarize all flux variables:
+``` {r, echo = FALSE} 
+    source("programs/make_flux_summary_table_by_treatment.R")
+    summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
+    
+    # make the table looks nicer
+    colnames(summary_table_flux_by_treatment)[1] <- "Variable"
+    summary_table_flux_by_treatment[,2:7] <- round(summary_table_flux_by_treatment[,2:7], 3)
+    
+    kable(summary_table_flux_by_treatment)
+
+```
+<br/>
+<br/>
+<br/>
+<br/>
+
+
 # 7. C:P ratios
 
+<br/>
+<br/>
 <br/>
 <br/>
 <br/>
