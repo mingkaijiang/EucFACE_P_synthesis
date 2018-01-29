@@ -151,7 +151,8 @@ fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
                                         c_pool=fineroot_c_pool)
 
 #### Fine root P production flux
-fineroot_p_production <- make_fineroot_p_production()
+fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
+                                                    c_flux=fineroot_c_production_flux)
 
 #### Understorey P pool, assume both species contributed equally
 understorey_p_pool <- make_understorey_p_pool()

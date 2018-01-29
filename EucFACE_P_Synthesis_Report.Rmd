@@ -438,6 +438,22 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
 We need to think about data collected from the same time point. 
 
 
+### 5.4 C fraction for frass production
+``` {r, echo=FALSE, warning=FALSE}
+
+    frass_c_fraction <- make_frass_c_fraction()
+
+
+    ### make the plot
+    p <- ggplot(frass_c_fraction,
+                aes(Date, frass_c_fraction, color=factor(Ring))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Fraction of C in Frass (%)")
+    plot(p)
+
+
+```
+
 
 
 # 6. P pools and fluxes
