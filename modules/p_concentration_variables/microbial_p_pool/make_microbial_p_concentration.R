@@ -2,6 +2,8 @@
 make_microbial_p_concentration <- function() {
     # return ring-specific, continuous microbial P concentration
 
+    #Pmic,ug g-1,"Fumigation extraction with Bray P AQ2 determination of PO4.
+    
     # download the data
     download_microbial_p_data()
     
@@ -11,7 +13,7 @@ make_microbial_p_concentration <- function() {
     df$date <- as.Date(df$date, format="%m/%d/%Y")
         
         
-    # averaged across rings and depths, unit: mg/kg
+    # averaged across rings and depths, unit: ug g-1
     df.m <- summaryBy(Pmic~ring+date,
                       data=df,FUN=mean,keep.names=T,na.rm=T)
     

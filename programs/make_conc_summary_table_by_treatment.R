@@ -49,7 +49,7 @@ make_conc_summary_table_by_treatment <- function() {
     treatDF$year_start[treatDF$conc.terms == "Fine Root P Conc"] <- min(year(fineroot_p_concentration$Date))    
     treatDF$year_end[treatDF$conc.terms == "Fine Root P Conc"] <- max(year(fineroot_p_concentration$Date))    
     treatDF$timepoint[treatDF$conc.terms == "Fine Root P Conc"] <- length(unique(fineroot_p_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Fine Root P Conc"] <- "Averaged over depths of 0-10cm and 10-30cm"
+    treatDF$notes[treatDF$conc.terms == "Fine Root P Conc"] <- "Depth 0 - 30 cm"
     
     
     ### Leaf litter P concentration
@@ -83,7 +83,7 @@ make_conc_summary_table_by_treatment <- function() {
     treatDF$year_start[treatDF$conc.terms == "Microbial P Conc"] <- min(year(microbial_p_concentration$Date))    
     treatDF$year_end[treatDF$conc.terms == "Microbial P Conc"] <- max(year(microbial_p_concentration$Date))    
     treatDF$timepoint[treatDF$conc.terms == "Microbial P Conc"] <- length(unique(microbial_p_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Microbial P Conc"] <- "Averaged across depths"
+    treatDF$notes[treatDF$conc.terms == "Microbial P Conc"] <- "Top 10 cm"
     
     ### Soil P concentration
     out <- summaryBy(PercP~Ring,data=soil_p_concentration,FUN=mean,keep.names=T,na.rm=T)
@@ -99,7 +99,7 @@ make_conc_summary_table_by_treatment <- function() {
     treatDF$year_start[treatDF$conc.terms == "Soil Phosphate P Conc"] <- min(year(soil_phosphate_concentration$Date))    
     treatDF$year_end[treatDF$conc.terms == "Soil Phosphate P Conc"] <- max(year(soil_phosphate_concentration$Date))    
     treatDF$timepoint[treatDF$conc.terms == "Soil Phosphate P Conc"] <- length(unique(soil_phosphate_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc"] <- "Averaged across all P forms"
+    treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc"] <- "Top 10 cm"
     
     ### Mycorrhizal P concentration
     treatDF$notes[treatDF$conc.terms == "Mycorrhizal P Conc"] <- "Data not yet available"

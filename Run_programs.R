@@ -115,8 +115,8 @@ microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 ###### ----------- Generating P pools and fluxes  ----------- ######
 
 #### Soil P pool
-soil_p_content <- make_soil_p_pool(p_conc=soil_p_concentration,
-                                   bk_density=soil_bulk_density)
+soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
+                                bk_density=soil_bulk_density)
 
 #### Soil phosphate production
 ### Not sure whether the unit is already per day or not
@@ -177,12 +177,8 @@ understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration
 
 #### Hedley fractionation data will be available in early January
 
+
 ### mycorrhizal P content
-
-
-
-
-###### ---------------- Generating CP ratios -------------------- ######
 
 
 
@@ -190,6 +186,12 @@ understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration
 ### P concentration by treatment and ring
 source("programs/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
+
+
+### P pools by treatment and ring
+source("programs/make_pool_summary_table_by_treatment.R")
+summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
+
 
 ### leaf p retranslocation coefficient
 source("programs/make_leaf_p_retranslocation_coefficient.R")
@@ -224,6 +226,11 @@ up_over_req <- pupDF/temDF[1,]
 
 
 ### P pools and fluxes by treatment and ring
+
+
+###### ---------------- Generating CP ratios -------------------- ######
+
+
 
 ###### ---------------- Import local met data -------------------- ######
 

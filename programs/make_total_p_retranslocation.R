@@ -24,7 +24,7 @@ make_total_p_retranslocation <- function(sumDF) {
     
     ### read in leaf P data and calculate the difference
     canDF <- summaryBy(leaf_p_pool~Ring,
-                       data=canopy_p_pool$greenleaf,FUN=mean,keep.names=T,na.rm=T) 
+                       data=canopy_p_pool,FUN=mean,keep.names=T,na.rm=T) 
     
     aCO2 <- mean(as.numeric(canDF[2,2]), as.numeric(canDF[3,2]), as.numeric(canDF[6,2]))
     eCO2 <- mean(as.numeric(canDF[1,2]), as.numeric(canDF[4,2]), as.numeric(canDF[5,2]))
