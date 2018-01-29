@@ -474,17 +474,16 @@ We need to think about data collected from the same time point.
 
 ```
 
-### 6.2 Soil PO4-P flux 
+### 6.2 Soil PO4-P pool
 
-Note, at this stage in time, not sure whether this quarterly measured value should has the unit of /d, or /quarter. 
-I think it should not be a quarterly cumulative value, but neither should it be a daily value. 
+Note, this pool is more readily available to plants as the microbial p pool needs one extra step when extracting.
 ``` {r, echo=FALSE, warning=FALSE}
 
-    soil_phosphate_production <- make_soil_phosphate_production_flux(p_conc=soil_phosphate_concentration,
-                                                                     bk_density=soil_bulk_density)
+    soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentration,
+                                                    bk_density=soil_bulk_density)
 
     ### make the plot
-    p <- ggplot(soil_phosphate_production,
+    p <- ggplot(soil_phosphate_pool,
                 aes(Date, soil_phosphate_p_g_m2, color=factor(Ring))) +   
             geom_point(size = 5) +
             xlab("Date") + ylab("Soil PO4-P production (g m-2)")

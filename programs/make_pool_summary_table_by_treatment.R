@@ -7,8 +7,9 @@ make_pool_summary_table_by_treatment <- function() {
     
     ### Define pool variable names
     terms <- c("Wood P Pool", "Canopy P Pool", "Fine Root P Pool",
-                "Understorey P Pool", "Microbial P Pool", "Soil P Pool", 
-                "Mycorrhizal P Pool")
+               "Understorey P Pool", 
+               "Microbial P Pool", "Soil Phosphate P Pool",
+               "Soil P Pool", "Mycorrhizal P Pool")
     
     treatDF <- data.frame(terms)
     treatDF$R1 <- rep(NA, length(treatDF$terms))
@@ -68,6 +69,14 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$year_end[treatDF$terms == "Microbial P Pool"] <- max(year(microbial_p_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Microbial P Pool"] <- length(unique(microbial_p_pool$Date))  
     treatDF$notes[treatDF$terms == "Microbial P Pool"] <- "Top 10 cm"
+    
+    ### Soil Phosphate P pool
+    out <- summaryBy(soil_phosphate_p_g_m2~Ring,data=soil_phosphate_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Soil Phosphate P Pool", 2:7] <- out$soil_phosphate_p_g_m2
+    treatDF$year_start[treatDF$terms == "Soil Phosphate P Pool"] <- min(year(soil_phosphate_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Soil Phosphate P Pool"] <- max(year(soil_phosphate_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Soil Phosphate P Pool"] <- length(unique(soil_phosphate_pool$Date))  
+    treatDF$notes[treatDF$terms == "Soil Phosphate P Pool"] <- "Top 10 cm"
     
     ### Soil P pool
     out <- summaryBy(soil_p_g_m2~Ring,data=soil_p_pool,FUN=mean,keep.names=T,na.rm=T)

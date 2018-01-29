@@ -110,21 +110,18 @@ soil_c_pool <- make_soil_c_pool()
 microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 
-
-
 ###### ----------- Generating P pools and fluxes  ----------- ######
 
 #### Soil P pool
 soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
                                 bk_density=soil_bulk_density)
 
-#### Soil phosphate production
-### Not sure whether the unit is already per day or not
-### Currently assuming it is, because PO4 is rapidly turning over, 
-### so the infrequent measurement is indicative of the accumulation of the previous 1 day
-### But this assumption may be entirely incorrect!
-soil_phosphate_production <- make_soil_phosphate_production_flux(p_conc=soil_phosphate_concentration,
-                                                                 bk_density=soil_bulk_density)
+#### Soil phosphate pool
+### This is additional to the microbial PO4-P pool
+### The microbial pool needs to have one step further to break the cell when extracting
+### So this pool is more readily available to plants. 
+soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentration,
+                                                bk_density=soil_bulk_density)
 
 #### Soil P mienralization flux
 #### It is assumed that the mineralization data is for top 10 cm only!
@@ -191,6 +188,11 @@ summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment
 ### P pools by treatment and ring
 source("programs/make_pool_summary_table_by_treatment.R")
 summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
+
+### P fluxes by treatment and ring
+source("programs/make_flux_summary_table_by_treatment.R")
+summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
+
 
 
 ### leaf p retranslocation coefficient
