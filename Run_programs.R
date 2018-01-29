@@ -136,11 +136,13 @@ canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
 leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
 
 #### Wood P pool   
-
+#### Data not available yet (2011-12)
 
 
 #### Frass P production
-frass_p_production <- make_frass_p_production_flux()
+#### Used C fraction for frass to convert c production back to frass biomass
+frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
+                                                   c_flux=frass_c_production_flux)
 
 #### Fine root P biomass pool
 fineroot_p_pool <- make_fineroot_p_pool()
