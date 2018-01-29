@@ -76,7 +76,7 @@ Canopy P concentration summarized by ring over the experimental period:
     ### make the ring over date plot
     p <- ggplot(canopy_p_concentration,
                 aes(Date, PercP, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Canopy P Concentration (%)")
     plot(p)
 
@@ -95,7 +95,7 @@ Canopy P concentration summarized by CO2 treatment over the experimental period:
     ### make the treatment over date plot
     p <- ggplot(canopy_p_concentration,
                 aes(Date, PercP, color=factor(CO2))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + 
             xlab("Date") + ylab("Canopy P Concentration (%)")
     plot(p)
 
@@ -154,7 +154,7 @@ Fineroot P concentration summarized by treatment over time:
     ### make the treatment over date plot
     p <- ggplot(fineroot_p_concentration,
                 aes(Date, PercP, color=factor(CO2))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + 
             xlab("Date") + ylab("Fineroot P Concentration (%)")
     plot(p)
 
@@ -205,7 +205,7 @@ The CO2 by date plot is:
     ### make the treatment over date plot
     p <- ggplot(leaflitter_p_concentration,
                 aes(Date, PercP, color=factor(CO2))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + 
             xlab("Date") + ylab("Leaflitter P Concentration (%)")
     plot(p)
 
@@ -300,6 +300,7 @@ Frass production has a great time-series record of P concentration data availabl
     plot(p)
 
 ```
+
 Note, this is based on 0-10cm data only, as this is the only depth with data available. It's not consistent with any other soil related variables (0-30cm). 
 
 ### 3.8 Soil P concentration
@@ -325,6 +326,7 @@ Note, this is based on 0-10cm data only, as this is the only depth with data ava
 ```
 
 Note, soil data are available at various depths (0-10, 10-20 and 20-30cm), and data were not collected for all depths at different time points. 
+
 ``` {r, echo=FALSE} 
 
     soil_c_pool <- make_soil_c_pool()
@@ -365,6 +367,7 @@ Further, phosphate measurements were taken at quarterly timestep, but it should 
     plot(p)
 
 ```
+
 Note: Soil PO4 data is only available for top 0-10 cm of the soil!
 
 What happens at that time point after 2015? Is it a leaching-induced event?
@@ -428,33 +431,79 @@ We need to think about data collected from the same time point.
     ### make the plot
     p <- ggplot(frass_c_fraction,
                 aes(Date, frass_c_fraction, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Fraction of C in Frass (%)")
     plot(p)
 
 
 ```
 
-
-
-# 5. P pools and fluxes
-
+### 4.5 Aboveground leaf biomass, litterfall and frass production
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE}
-    # hidden variables
+   # hidden variables
     #### Canopy related variables (SLA, LAI, Canopy biomass)
     lai_variable <- make_lai_variable()
     sla_variable <- make_sla_variable()
     canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
     
-    #### Canopy C production
+    ### make the plot
+    p <- ggplot(canopy_biomass_pool,
+                aes(Date, leaf_pool, color=factor(Ring))) +   
+            geom_point(size = 0.5) + geom_line() + 
+            xlab("Date") + ylab("Canopy biomass (g m-2)")
+    plot(p)
     
-    #### Wood C pool
-    # still waiting for year 2011-12 data
-    # wood_biomass_pool <- make_wood_c_pool()
+
+```
+
+The above figure is a time-series canopy biomass plot, derived based on SLA and LAI measurements. 
+
+Assuming C fraction of 0.5, we can derive the canopy C pool, as:
+``` {r, echo=FALSE}
     
+    ### make the plot
+    p <- ggplot(canopy_biomass_pool,
+                aes(Date, leaf_pool*0.5, color=factor(Ring))) +   
+            geom_point(size = 0.5) + geom_line() + 
+            xlab("Date") + ylab("Canopy C pool (g C m-2)")
+    plot(p)
+
+```
+
+Next, I calculate litter fall fluxes:
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+    #### Litter production (leaf, twig, bark, seed)
+    litter_c_production_flux <- make_litter_c_flux(c_fraction)
     
-    #### Wood C production
+    plotDF <- melt(litter_c_production_flux, id.vars = 1:2, measure= 3:6)
     
+    ### make the plot
+    p <- ggplot(plotDF,
+                aes(Date, value, color=factor(variable))) +   
+            geom_point(size = 0.5, aes(color=factor(Ring))) + geom_smooth() + 
+            xlab("Date") + ylab("Litterfall (mg C m-2 d-1)")
+    plot(p)
+    
+```
+
+Finally, frass production flux is:
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+ 
+    #### Frass production
+    frass_c_production_flux <- make_frass_c_production_flux()
+
+    ### make the plot
+    p <- ggplot(frass_c_production_flux,
+                aes(Date, frass_production_flux, color=factor(Ring))) +   
+            geom_point(size = 0.5) + geom_line() + 
+            xlab("Date") + ylab("Frass C production (mg C m-2 d-1)")
+    plot(p)
+    
+```
+
+
+### 4.6 Fineroot biomass and production
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     #### Fineroot pools and production
     # this is total fineroot biomass for 0-30cm
     # currently implemented whole plant C fraction
@@ -462,34 +511,39 @@ We need to think about data collected from the same time point.
     fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
     fineroot_c_production_flux <- make_fineroot_c_production_flux(c_fraction_fr)
     
+    ### make the plot
+    p <- ggplot(fineroot_c_pool,
+                aes(Date, fineroot_pool, color=factor(Ring))) +   
+            geom_point(size = 0.5) + geom_line() + 
+            xlab("Date") + ylab("Fineroot C pool (g C m-2)")
+    plot(p)
+    
+```
+
+Fineroot production flux is:
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+
+    ### make the plot
+    p <- ggplot(fineroot_c_production_flux,
+                aes(Date, fineroot_production_flux, color=factor(Ring))) +   
+            geom_point(size = 0.5) + geom_line() + 
+            xlab("Date") + ylab("Fineroot C production (mg C m-2 d-1)")
+    plot(p)
+    
+```
+
+
+### 4.7 Understorey C pool
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+    
     #### Understorey aboveground biomass 
     understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
                                                               strip_area)
     
-    #### Understorey production flux
-    
-    
-    #### Frass production
-    frass_c_production_flux <- make_frass_c_production_flux()
-    
-    #### Litter production (leaf, twig, bark, seed)
-    litter_c_production_flux <- make_litter_c_flux(c_fraction)
-    
-    leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date")]
-    twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date")]
-    barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date")]
-    seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date")]
 
-    #### Soil C content
-    # incomplete, as we need to figure out what to do for depth-extrapolation
-    # haven't add soil bulk density calculations in yet. 
-    soil_c_pool <- make_soil_c_pool()
-    
-    
-    #### Microbial C pool
-    # this pool has data only at 0-10cm depth
-    microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 ```
+
+# 5. P pools and fluxes
 
 ### 5.1 Soil P pool
 ``` {r, echo=FALSE, warning=FALSE}
@@ -500,7 +554,7 @@ We need to think about data collected from the same time point.
     ### make the plot
     p <- ggplot(soil_p_pool,
                 aes(Date, soil_p_g_m2, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() +
             xlab("Date") + ylab("Soil P pool (g m-2)")
     plot(p)
 
@@ -518,7 +572,7 @@ Note, this pool is more readily available to plants as the microbial p pool need
     ### make the plot
     p <- ggplot(soil_phosphate_pool,
                 aes(Date, soil_phosphate_p_g_m2, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Soil PO4-P production (g m-2)")
     plot(p)
 
@@ -536,7 +590,7 @@ Note, this is for top 10 cm of the soil.
     ### make the plot
     p <- ggplot(microbial_p_pool,
                 aes(Date, microbial_p_g_m2, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Soil PO4-P production (g m-2)")
     plot(p)
 
@@ -552,7 +606,7 @@ Note, this is for top 10 cm of the soil.
     ### make the plot
     p <- ggplot(canopy_p_pool,
                 aes(Date, leaf_p_pool, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Canopy P (g m-2)")
     plot(p)
 
@@ -572,7 +626,7 @@ Data incomplete at this stage in time.
     ### make the plot
     p <- ggplot(fineroot_p_pool,
                 aes(Date, fineroot_p_pool, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Fineroot P (g m-2)")
     plot(p)
 
@@ -602,7 +656,7 @@ Data incomplete.
     ### make the plot
     p <- ggplot(fineroot_p_production,
                 aes(Date, fineroot_p_flux_mg_m2_d, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Fineroot P production (,g m-2 d-1)")
     plot(p)
 
@@ -617,7 +671,7 @@ Data incomplete.
     ### make the plot
     p <- ggplot(leaflitter_p_flux,
                 aes(Date, leaflitter_p_flux_mg_m2_d, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Leaf litter P (mg m-2 d-1)")
     plot(p)
 
@@ -632,7 +686,7 @@ Data incomplete.
     ### make the plot
     p <- ggplot(other_litter_p_flux,
                 aes(Date, other_litter_p_flux_mg_m2_d, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Other litter P (mg m-2 d-1)")
     plot(p)
 
@@ -649,7 +703,7 @@ Data incomplete.
     ### make the plot
     p <- ggplot(frass_p_production,
                 aes(Date, frass_p_flux_mg_m2_d, color=factor(Ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("Frass P production (mg m-2 d-1)")
     plot(p)
 
@@ -657,7 +711,7 @@ Data incomplete.
 ```
 
 ### 5.15 Understorey production P flux
-
+Needs more understorey biomass data to proceed. 
 
 ### 5.16 Soil mineralization P flux
 ``` {r, echo=FALSE, warning=FALSE}
@@ -667,7 +721,7 @@ Data incomplete.
     ### make the plot
     p <- ggplot(soil_p_mineralization,
                 aes(date, p_mineralization_mg_m2_d, color=factor(ring))) +   
-            geom_point(size = 5) +
+            geom_point(size = 5) + 
             xlab("Date") + ylab("Soil P mineralization (mg m-2 d-1)")
     plot(p)
 
@@ -695,6 +749,7 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
     kable(summary_table_concentration_by_treatment)
 
 ```
+
 <br/>
 <br/>
 <br/>
@@ -712,6 +767,7 @@ Next, I summarize all pool variables:
     kable(summary_table_pool_by_treatment)
 
 ```
+
 <br/>
 <br/>
 <br/>
@@ -729,6 +785,7 @@ Finally, I summarize all flux variables:
     kable(summary_table_flux_by_treatment)
 
 ```
+
 <br/>
 <br/>
 <br/>
