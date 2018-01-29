@@ -61,9 +61,15 @@ lai_variable <- make_lai_variable()
 sla_variable <- make_sla_variable()
 canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
 
+
+#### Canopy C production
+
 #### Wood C pool
 # still waiting for year 2011-12 data
 # wood_biomass_pool <- make_wood_c_pool()
+
+
+#### Wood C production
 
 #### Fineroot pools and production
 # this is total fineroot biomass for 0-30cm
@@ -72,10 +78,12 @@ canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
 fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
 fineroot_c_production_flux <- make_fineroot_c_production_flux(c_fraction_fr)
 
-#### Understorey aboveground biomass and production
+#### Understorey aboveground biomass 
 understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
                                                           strip_area)
-# no production calculation yet. 
+
+#### Understorey production flux
+
 
 #### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()
@@ -131,12 +139,18 @@ microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
 canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
                                     biom=canopy_biomass_pool)
 
+#### Canopy production flux
+
+
 #### Litter P production flux 
 #### Literfall biomass (not C) will be calculated within the function
 leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
 
 #### Wood P pool   
 #### Data not available yet (2011-12)
+
+
+#### Wood production flux
 
 
 #### Frass P production
@@ -155,9 +169,11 @@ fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentrat
                                                     c_flux=fineroot_c_production_flux)
 
 #### Understorey P pool, assume both species contributed equally
-understorey_p_pool <- make_understorey_p_pool()
+understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
+                                              c_pool=understorey_c_pool)
 
-#### Leaching P flux - we have Shun's data, but needs drainage value
+#### Understorey production flux
+
 
 #### Hedley fractionation data will be available in early January
 
