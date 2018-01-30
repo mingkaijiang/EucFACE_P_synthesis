@@ -33,9 +33,12 @@ make_soil_c_pool <- function(bk_density){
     myDF <- rbind(myDF2, myDF3, myDF4, myDF5)
     myDF$Date <- dmy(myDF$Date)
     
-    #- get rid of spaces in the variable "Depth"
+    ### get rid of spaces in the variable "Depth"
     myDF$depth <- as.character(myDF$depth)
     myDF$depth <- factor(gsub(" ", "", myDF$depth, fixed = TRUE)) 
+    
+    ### note that all data in 2015 are missing. Remove them.
+    myDF <- subset(myDF,Date<as.Date("2015-01-01"))
     
     ### merge soil C with bulk density
     myDF <- merge(myDF,bk_density,by.x=c("depth", "ring"), by.y=c("Depth", "ring"))
