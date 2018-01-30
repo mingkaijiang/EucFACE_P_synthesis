@@ -65,7 +65,7 @@ make_wood_c_pool <- function(ring_area, c_frac, return_tree_level){
     if(return_tree_level)return(data)
     
     #- sum across rings and dates
-    data.m <- summaryBy(biom~Date+Ring,data=data,FUN=sum,keep.names=T)
+    data.m <- summaryBy(biom~Date+Ring,data=data,FUN=sum,keep.names=T,na.rm=T)
     
     # divide by ring area to get biomass per m2
     data.m$wood_pool <- data.m$biom / ring_area

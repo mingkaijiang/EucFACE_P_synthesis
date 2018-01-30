@@ -72,6 +72,7 @@ wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
 
 
 #### Wood C production
+wood_c_production <- make_wood_production_flux(wood_c_pool)
 
 #### Fineroot pools and production
 # this is total fineroot biomass for 0-30cm
@@ -154,7 +155,8 @@ wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
 
 
 #### Wood production flux
-
+wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
+                                      c_pool=wood_c_pool)
 
 #### Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass
