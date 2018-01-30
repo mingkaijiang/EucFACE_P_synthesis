@@ -86,7 +86,7 @@ understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
                                                           strip_area)
 
 #### Understorey production flux
-
+understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 
 #### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()
@@ -183,7 +183,9 @@ understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration
                                               c_frac=c_fraction_ud)
 
 #### Understorey production flux
-
+understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
+                                              c_flux=understorey_c_flux,
+                                              c_frac=c_fraction_ud)
 
 #### Hedley fractionation data will be available in early January
 

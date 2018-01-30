@@ -268,8 +268,6 @@ Now, we can group both species together and plot understorey P concentration ove
 ```
 
 ### 3.6 Frass P concentration
-Frass production 
-
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
     ### calculate the variable
     frass_p_concentration <- make_frass_p_concentration()
@@ -514,7 +512,7 @@ Next, I calculate litter fall fluxes:
     
 ```
 
-
+<br/>
 Finally, frass production flux is:
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
  
@@ -553,7 +551,7 @@ Finally, frass production flux is:
     
 ```
 
-
+<br/>
 Fineroot production flux is:
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -579,6 +577,7 @@ Fineroot production flux is:
 
 ```
 
+
 ### 4.8 wood C pool
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     
@@ -591,8 +590,31 @@ Fineroot production flux is:
     #### Wood C production
     wood_c_production <- make_wood_production_flux(wood_c_pool)
     
+        ### make the plot
+    p <- ggplot(wood_c_pool,
+                aes(Date, wood_pool, color=factor(Ring))) +   
+            geom_point(size = 0.5) + geom_line() + 
+            xlab("Date") + ylab("Wood C (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
 
 ```
+
+Next, wood C production is:
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+    ### make the plot
+    p <- ggplot(wood_c_production,
+                aes(Date, wood_production_flux, color=factor(Ring))) +   
+            geom_point(size = 0.5) + geom_line() + 
+            xlab("Date") + ylab("Wood C production (mg C m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+```
+
+
 # 5. P pools and fluxes
 
 ### 5.1 Soil P pool

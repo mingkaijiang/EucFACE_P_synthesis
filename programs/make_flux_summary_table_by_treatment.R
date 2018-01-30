@@ -8,7 +8,7 @@ make_flux_summary_table_by_treatment <- function() {
     ### Define production variable names
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
                "Leaflitter P flux", "Other litter P flux", "Frass P flux",
-               "Understorey P Flux", "Mineralization P flux")
+               "Understorey P flux", "Mineralization P flux")
     
     treatDF <- data.frame(terms)
     treatDF$R1 <- rep(NA, length(treatDF$terms))
@@ -53,12 +53,12 @@ make_flux_summary_table_by_treatment <- function() {
     
     
     ### Understorey P flux
-    # out <- summaryBy(PercP~Ring,data=understorey_p_production,FUN=mean,keep.names=T,na.rm=T)
-    # treatDF[treatDF$terms == "Understorey P flux", 2:7] <- out$PercP
-    # treatDF$year_start[treatDF$terms == "Understorey P flux"] <- min(year(understorey_p_production$Date))    
-    # treatDF$year_end[treatDF$terms == "Understorey P flux"] <- max(year(understorey_p_production$Date))    
-    # treatDF$timepoint[treatDF$terms == "Understorey P flux"] <- length(unique(understorey_p_production$Date))  
-    treatDF$notes[treatDF$terms == "Understorey P flux"] <- "Data incomplete"
+    out <- summaryBy(understorey_p_flux~Ring,data=understorey_p_flux,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Understorey P flux", 2:7] <- out$understorey_p_flux
+    treatDF$year_start[treatDF$terms == "Understorey P flux"] <- min(year(understorey_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey P flux"] <- max(year(understorey_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey P flux"] <- length(unique(understorey_p_flux$Date))  
+    treatDF$notes[treatDF$terms == "Understorey P flux"] <- "Used Varsha's harvest data"
     
 
     ### Mineralization flux
