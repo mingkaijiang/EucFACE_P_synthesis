@@ -1,39 +1,17 @@
 #- Make the understorey P pool
-make_understorey_p_pool <- function(p_conc, c_pool){
+make_understorey_p_pool <- function(p_conc, c_pool, c_frac){
     
     ### obtaining month and year information 
-    p_conc$month <- month(p_conc$Date)
-    p_conc$year <- year(p_conc$Date)
+    p_avg <- summaryBy(PercP~Ring, data=p_conc, FUN=mean, na.rm=T, keep.names=T)
     
-    ### obtaining month and year information 
-    c_pool$month <- month(c_pool$Date)
-    c_pool$year <- year(c_pool$Date)
-    
-    ### prepare output df
-    out <- c_pool
-    
-    ### find the common month and year 
     for (i in c(1:6)) {
-        mydf1 <- subset(p_conc, Ring == i)
-        
-        for (j in unique(mydf1$year)) {
-            mydf2 <- subset(mydf1, year == j)
-            
-            for (k in unique(mydf2$month)) {
-                mydf3 <- subset(mydf2, month == k)
-                
-                out[out$Ring == i & out$year == j & out$month == k, "PercP"] <- mydf3$PercP
-            }
-        }
+        c_pool[c_pool$Ring == i, "PercP"] <- p_avg[p_avg$Ring == i, "PercP"]
     }
     
-    outDF <- out[complete.cases(out),]
+    ### calculate P pool g P m-2
+    c_pool$understorey_p_pool <- c_pool$Total_g_C_m2 / c_frac * c_pool$PercP / 100
     
-    
-    ### calculate leaf P pool g P m-2
-    outDF$understorey_p_pool <- outDF$Total_g_C_m2 / c_fraction_ud * outDF$PercP / 100
-    
-    outDF <- outDF[,c("Date", "Ring", "understorey_p_pool")]
+    outDF <- c_pool[,c("Date", "Ring", "understorey_p_pool")]
     
     
     return(outDF)

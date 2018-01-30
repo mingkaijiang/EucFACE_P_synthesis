@@ -54,12 +54,12 @@ make_pool_summary_table_by_treatment <- function() {
     
     
     ### Understorey P pool
-    # out <- summaryBy(PercP~Ring,data=understorey_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    # treatDF[treatDF$terms == "Understorey P Pool", 2:7] <- out$PercP
-    # treatDF$year_start[treatDF$terms == "Understorey P Pool"] <- min(year(understorey_p_pool$Date))    
-    # treatDF$year_end[treatDF$terms == "Understorey P Pool"] <- max(year(understorey_p_pool$Date))    
-    # treatDF$timepoint[treatDF$terms == "Understorey P Pool"] <- length(unique(understorey_p_pool$Date))  
-    treatDF$notes[treatDF$terms == "Understorey P Pool"] <- "Data incomplete"
+    out <- summaryBy(understorey_p_pool~Ring,data=understorey_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Understorey P Pool", 2:7] <- out$understorey_p_pool
+    treatDF$year_start[treatDF$terms == "Understorey P Pool"] <- min(year(understorey_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey P Pool"] <- max(year(understorey_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey P Pool"] <- length(unique(understorey_p_pool$Date))  
+    treatDF$notes[treatDF$terms == "Understorey P Pool"] <- "Awaiting for Matthias's continuous C data"
 
     
     ### Microbial P pool

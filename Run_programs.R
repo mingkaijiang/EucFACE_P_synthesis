@@ -174,8 +174,13 @@ fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentrat
                                                     c_flux=fineroot_c_production_flux)
 
 #### Understorey P pool, assume both species contributed equally
+#### Also because p_conc and c_pool do not match in time,
+#### we are taking the average of p_conc and apply it to c_pool
+#### When Mathias's continuous c_pool data becomes available, 
+#### we can update this calculation.
 understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
-                                              c_pool=understorey_c_pool)
+                                              c_pool=understorey_c_pool,
+                                              c_frac=c_fraction_ud)
 
 #### Understorey production flux
 
