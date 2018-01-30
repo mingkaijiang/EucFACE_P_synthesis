@@ -100,9 +100,8 @@ seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "see
 soil_bulk_density <- make_soil_bulk_density()
 
 #### Soil C content
-# incomplete, as we need to figure out what to do for depth-extrapolation
-# haven't add soil bulk density calculations in yet. 
-soil_c_pool <- make_soil_c_pool()
+### return sum of all depths
+soil_c_pool <- make_soil_c_pool(soil_bulk_density)
 
 
 #### Microbial C pool

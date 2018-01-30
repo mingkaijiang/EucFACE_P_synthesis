@@ -1,13 +1,13 @@
 #- Make the soil C pool
-make_soil_c_pool <- function(){
+make_soil_c_pool <- function(bk_density){
 
-    # download the data
+    ### download the data
     infile <- "FACE_P0014_ALL_BasicSoilProperties_L1_2012.csv"
     if(!file.exists(paste0("download/", infile))) {
         download_soil_p_data()
     }
 
-    ## read in data - soil property data
+    ### read in data - soil property data
     myDF2 <- read.csv(file.path(getToPath(), 
                                 "FACE_P0014_ALL_BasicSoilProperties_L1_2012.csv"))
     
@@ -33,19 +33,49 @@ make_soil_c_pool <- function(){
     myDF <- rbind(myDF2, myDF3, myDF4, myDF5)
     myDF$Date <- dmy(myDF$Date)
     
-    # average across rings, dates, and depths, unit: ppm which is mg/kg
-    myDF.m <- summaryBy(totC~Date+ring+depth,data=myDF,FUN=mean,keep.names=T,na.rm=T)
-    myDF.m <- data.frame(lapply(myDF.m, trimws), stringsAsFactors = FALSE)
-    myDF.m$totC <- as.numeric(myDF.m$totC)
-    myDF.m$Date <- as.Date(myDF.m$Date)
-    myDF.m <- myDF.m[!(is.nan(myDF.m$totC)), ]
+    #- get rid of spaces in the variable "Depth"
+    myDF$depth <- as.character(myDF$depth)
+    myDF$depth <- factor(gsub(" ", "", myDF$depth, fixed = TRUE)) 
     
-    myDF.out <- myDF.m[,c("Date", "ring", "depth", "totC")]
-    colnames(myDF.out) <- c("Date", "Ring", "Depth", "TotC")
+    ### merge soil C with bulk density
+    myDF <- merge(myDF,bk_density,by.x=c("depth", "ring"), by.y=c("Depth", "ring"))
 
     
-    # incomplete, as we need to sum across all three depths!
+    ### calculate soil C content of each layer. Units of g C m-2 for each 10-cm long depth increment
+    ###  Note that the 10-20cm and 20-30cm layers were only measured on 3 of the 15 dates.
+    ###   These deeper layers have less C than the 0-10cm layer.
+    myDF$totC_g_m2 <- with(myDF,totC/100*bulk_density_kg_m3*0.1*1000) # convert to gC m-2
     
-    return(myDF.out)
+    ### get averages for the deeper depths
+    dat.m.deep <- summaryBy(totC_g_m2~ring+plot+depth,data=myDF,FUN=mean,keep.names=T,na.rm=T)
+    
+    ### set up an empty dataframe with all potential levels of Date, Plot, Ring, and Depth in "dat"
+    dat.empty <- expand.grid(Depth=levels(myDF$depth),Plot=levels(as.factor(myDF$plot)),
+                             Ring=levels(as.factor(myDF$ring)),Date=levels(as.factor(myDF$Date)))
+    myDF <- merge(myDF,dat.empty,by.x=c("depth","plot","ring","Date"),by.y=c("Depth","Plot","Ring","Date"))
+    
+    ### loop over the data, if deeper data are missing, gapfill with the average for that plot
+    naflag <- NA
+    for (i in 1:nrow(myDF)){
+        naflag <- is.na(myDF[i,"totC_g_m2"]) # is the datum missing?
+        if(naflag){
+            Depth_id <- myDF[i,"depth"]
+            Ring_id <- myDF[i,"ring"]
+            Plot_id <- myDF[i,"plot"]
+            
+            id <- which(dat.m.deep$depth==Depth_id & dat.m.deep$ring==Ring_id & dat.m.deep$plot==Plot_id)
+            myDF[i,"totC_g_m2"] <- dat.m.deep[id,"totC_g_m2"]
+        }
+    }
+    
+    ### sum across layers on each date
+    dat.s <- summaryBy(totC_g_m2~plot+ring+Date,data=myDF,FUN=sum,keep.names=T)
+    names(dat.s)[4] <- "soil_carbon_pool"
+
+    ### average across plots within each ring
+    dat.s.m <- summaryBy(soil_carbon_pool~Date+ring,data=dat.s,FUN=mean,keep.names=T)
+    dat.s.m$Ring <- as.numeric(dat.s.m$ring)
+    
+    return(dat.s.m)
     
 }

@@ -345,7 +345,7 @@ Note, soil data are available at various depths (0-10, 10-20 and 20-30cm), and d
 
 ``` {r, echo=FALSE} 
 
-    soil_c_pool <- make_soil_c_pool()
+    soil_c_pool <- make_soil_c_pool(soil_bulk_density)
     ### make the depth over date plot
     p <- ggplot(soil_c_pool,
                 aes(Date, TotC, color=factor(Depth))) +   
