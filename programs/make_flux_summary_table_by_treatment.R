@@ -35,12 +35,12 @@ make_flux_summary_table_by_treatment <- function() {
 
     
     ### Wood P 
-    # out <- summaryBy(wood_p_production~Ring,data=wood_p_production,FUN=mean,keep.names=T,na.rm=T)
-    # treatDF[treatDF$terms == "Wood P flux", 2:7] <- out$wood_p_production
-    # treatDF$year_start[treatDF$terms == "Wood P flux"] <- min(year(wood_p_production$Date))    
-    # treatDF$year_end[treatDF$terms == "Wood P flux"] <- max(year(wood_p_production$Date))    
-    # treatDF$timepoint[treatDF$terms == "Wood P flux"] <- length(unique(wood_p_production$Date)) 
-    treatDF$notes[treatDF$terms == "Wood P flux"] <- "Data incomplete"
+    out <- summaryBy(wood_p_flux~Ring,data=wood_p_flux,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Wood P flux", 2:7] <- out$wood_p_flux
+    treatDF$year_start[treatDF$terms == "Wood P flux"] <- min(year(wood_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Wood P flux"] <- max(year(wood_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Wood P flux"] <- length(unique(wood_p_flux$Date)) 
+    treatDF$notes[treatDF$terms == "Wood P flux"] <- "Based on single time point measurement"
     
     
     ### Fine root P flux

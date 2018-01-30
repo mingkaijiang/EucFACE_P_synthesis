@@ -36,12 +36,12 @@ make_pool_summary_table_by_treatment <- function() {
 
     
     ### Wood P 
-    # out <- summaryBy(wood_p_pool~Ring,data=wood_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    # treatDF[treatDF$terms == "Wood P Pool", 2:7] <- out$wood_p_pool
-    # treatDF$year_start[treatDF$terms == "Wood P Pool"] <- min(year(wood_p_pool$Date))    
-    # treatDF$year_end[treatDF$terms == "Wood P Pool"] <- max(year(wood_p_pool$Date))    
-    # treatDF$timepoint[treatDF$terms == "Wood P Pool"] <- length(unique(wood_p_pool$Date)) 
-    treatDF$notes[treatDF$terms == "Wood P Pool"] <- "Data incomplete"
+    out <- summaryBy(wood_p_pool~Ring,data=wood_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Wood P Pool", 2:7] <- out$wood_p_pool
+    treatDF$year_start[treatDF$terms == "Wood P Pool"] <- min(year(wood_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Wood P Pool"] <- max(year(wood_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Wood P Pool"] <- length(unique(wood_p_pool$Date)) 
+    treatDF$notes[treatDF$terms == "Wood P Pool"] <- "Based on single time point concentration measurement"
     
     
     ### Fine root P pool
