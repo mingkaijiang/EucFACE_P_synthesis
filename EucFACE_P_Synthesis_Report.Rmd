@@ -480,6 +480,7 @@ We need to think about data collected from the same time point.
 
 ```
 
+
 The above figure is a time-series canopy biomass plot, derived based on SLA and LAI measurements. 
 
 Assuming C fraction of 0.5, we can derive the canopy C pool, as:
@@ -496,6 +497,7 @@ Assuming C fraction of 0.5, we can derive the canopy C pool, as:
 
 ```
 
+
 Next, I calculate litter fall fluxes:
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     #### Litter production (leaf, twig, bark, seed)
@@ -511,6 +513,7 @@ Next, I calculate litter fall fluxes:
     plot(p)
     
 ```
+
 
 Finally, frass production flux is:
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -549,6 +552,7 @@ Finally, frass production flux is:
     plot(p)
     
 ```
+
 
 Fineroot production flux is:
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
