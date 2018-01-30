@@ -847,7 +847,25 @@ Need to take into consideration leaf turnover.
 ```
 
 ### 5.15 Understorey production P flux
-Needs more understorey biomass data to proceed. 
+``` {r, echo=FALSE, warning=FALSE}
+
+    understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
+                                              c_flux=understorey_c_flux,
+                                              c_frac=c_fraction_ud)
+
+    ### make the plot
+    p <- ggplot(understorey_p_flux,
+                aes(Date, understorey_p_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() +
+            xlab("Date") + ylab("Understorey P production (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
+
+Used Varsha's harvest data to extrapolate. 
 
 ### 5.16 Soil mineralization P flux
 ``` {r, echo=FALSE, warning=FALSE}
