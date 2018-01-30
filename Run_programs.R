@@ -156,7 +156,7 @@ wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
 
 #### Wood production flux
 wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
-                                      c_pool=wood_c_pool)
+                                      c_flux=wood_c_production)
 
 #### Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass

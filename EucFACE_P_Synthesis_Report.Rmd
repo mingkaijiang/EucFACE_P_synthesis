@@ -343,14 +343,18 @@ Note, this is based on 0-10cm data only, as this is the only depth with data ava
 
 Note, soil data are available at various depths (0-10, 10-20 and 20-30cm), and data were not collected for all depths at different time points. 
 
-``` {r, echo=FALSE} 
+``` {r, echo=FALSE, warning=FALSE, message=FALSE} 
 
+    soil_bulk_density <- make_soil_bulk_density()
     soil_c_pool <- make_soil_c_pool(soil_bulk_density)
+
     ### make the depth over date plot
     p <- ggplot(soil_c_pool,
-                aes(Date, TotC, color=factor(Depth))) +   
-            geom_point(size = 5) +
-            xlab("Date") + ylab("Soil C Pool at various depth")
+                aes(Date, soil_carbon_pool, color=factor(ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Soil C Pool (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
     plot(p)
 ```
 
@@ -571,6 +575,20 @@ Fineroot production flux is:
 
 ```
 
+### 4.8 wood C pool
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+    
+    # year 2011-12 data on local directory
+    wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
+                                    c_frac=c_fraction,
+                                    return_tree_level=FALSE)
+    
+    
+    #### Wood C production
+    wood_c_production <- make_wood_production_flux(wood_c_pool)
+    
+
+```
 # 5. P pools and fluxes
 
 ### 5.1 Soil P pool
@@ -648,7 +666,6 @@ Note, this is for top 10 cm of the soil.
 ```
 
 ### 5.5 Wood P pool
-
 ``` {r, echo=FALSE, warning=FALSE}
 
     wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
@@ -700,7 +717,22 @@ Data still not available.
 Need to take into consideration leaf turnover. 
 
 ### 5.10 Wood P flux
-Data incomplete. 
+``` {r, echo=FALSE, warning=FALSE}
+
+    wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
+                                    c_flux=wood_c_production)
+
+    ### make the plot
+    p <- ggplot(wood_p_flux,
+                aes(Date, wood_p_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Wood P production (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
 
 ### 5.11 Fineroot production P flux
 ``` {r, echo=FALSE, warning=FALSE}
