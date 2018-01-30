@@ -574,7 +574,7 @@ Fineroot production flux is:
     understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
                                                               strip_area)
     
-
+    understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 ```
 
 
