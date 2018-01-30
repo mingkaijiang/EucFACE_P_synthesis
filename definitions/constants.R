@@ -27,7 +27,7 @@ frass_basket_area <- 0.1979
 ring_diameter <- 25
 
 # ring ground area m2
-ring_area <- pi * (ring_diameter/2)^2
+FACE_ring_area <- pi * (ring_diameter/2)^2
 
 # Wood density (g cm-3), average of 10 entries in global wood density 
 # database of Zanne et al. (SD = 0.1)

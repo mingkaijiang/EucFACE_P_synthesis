@@ -65,8 +65,10 @@ canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
 #### Canopy C production
 
 #### Wood C pool
-# still waiting for year 2011-12 data
-# wood_biomass_pool <- make_wood_c_pool()
+# year 2011-12 data on local directory
+wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
+                                c_frac=c_fraction,
+                                return_tree_level=FALSE)
 
 
 #### Wood C production
@@ -147,7 +149,8 @@ other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)
 
 
 #### Wood P pool   
-#### Data not available yet (2011-12)
+wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
+                                c_pool=wood_c_pool)
 
 
 #### Wood production flux
