@@ -3,8 +3,7 @@ make_fineroot_c_production_flux <- function(c_fraction){
     
     # returns fine root production flux (mg m-2 d-1)
     # 5 time points, possibly measured at quarterly timesteps
-    # start and end dates not included yet
-    
+
     infile <- "FACE_P0083_RA_FR-PRODUCTION_L1_20140601-20150915.csv"
     
     #- download the data
