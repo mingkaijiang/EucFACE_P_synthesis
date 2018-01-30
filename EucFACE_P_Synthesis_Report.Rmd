@@ -904,13 +904,21 @@ Finally, I summarize all flux variables:
 
 # 8. To-do list
 - Continuous understorey C data (Matthias)
-- Hedley Fractionation (Cat)
+- Hedley Fractionation, in 2-3 weeks (Cat)
 - Microbial turnover rate (Cat and Johanna, but may not be available soon)
-- Mycorrhizal data (Jeff)
-- Fine root mortality and turnover (Juan)
+- Mycorrhizal data for both C and P project (Jeff)
+- Fine root mortality and turnover for both C and P project (Juan)
 - Canopy turnover 
 - Meteorological data, including soil moisture (HIEv)
 - Summarize P concentration using min and max
 - Calculate P budgeting variables and interpret the results. 
 - Possibly look at 2015 to see CO2 treatment effect. 
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
 # The end.
