@@ -154,7 +154,6 @@ leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_
 #### Used wood P concentration to extrapolate
 other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
 
-
 #### Wood P pool   
 wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
                                 c_pool=wood_c_pool)
@@ -166,6 +165,7 @@ wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
 
 #### Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass
+#### We have more p conc than c flux so no need to gap fill. 
 frass_c_fraction <- make_frass_c_fraction()
 frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
                                                    c_flux=frass_c_production_flux,
@@ -176,6 +176,7 @@ fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
                                         c_pool=fineroot_c_pool)
 
 #### Fine root P production flux
+#### We have more p_conc than c_flux so no need to gap fill.
 fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
                                                     c_flux=fineroot_c_production_flux)
 
