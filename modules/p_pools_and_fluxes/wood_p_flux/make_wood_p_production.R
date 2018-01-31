@@ -8,9 +8,9 @@ make_wood_p_production <- function(p_conc, c_flux) {
     out$wood_p_flux <- out$wood_production_flux / c_fraction * out$PercP / 100
     
     outDF <- out[complete.cases(out),]
-    
-    outDF <- outDF[, c("Date.x", "Ring", "wood_p_flux")]
-    names(outDF) <- c("Date", "Ring", "wood_p_flux") 
+
+    outDF <- outDF[, c("Date.x", "Start_date", "End_date", "Ring", "wood_p_flux", "Days")]
+    names(outDF) <- c("Date", "Start_date", "End_date", "Ring", "wood_p_flux", "Days") 
     
     return(outDF)
 }

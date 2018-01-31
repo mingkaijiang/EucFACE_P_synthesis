@@ -65,9 +65,6 @@ For fluxes, we also need to see if the concentration is variable over time or no
 
 The other way to treat the complexity of variable P concentration over time is make a **sensitivity test**. We can use average P concentration, minimum and maximum P concentrations to respectively calculate the P pools and fluxes. This way we are probably more certain with regard to the range of uncertainties. 
 
-### 2.4 Treatment of canopy biomass
-Canopy biomass varies over time. At the same time, P concentration in canopy also varies. 
-
 
 
 # 3. P concentration calculations. 
@@ -482,6 +479,7 @@ We need to think about data collected from the same time point.
 The above figure is a time-series canopy biomass plot, derived based on SLA and LAI measurements. 
 
 Assuming C fraction of 0.5, we can derive the canopy C pool, as:
+
 ``` {r, echo=FALSE}
     
     ### make the plot
@@ -497,6 +495,7 @@ Assuming C fraction of 0.5, we can derive the canopy C pool, as:
 
 
 Next, I calculate litter fall fluxes:
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     #### Litter production (leaf, twig, bark, seed)
     litter_c_production_flux <- make_litter_c_flux(c_fraction)
@@ -514,6 +513,7 @@ Next, I calculate litter fall fluxes:
 
 <br/>
 Finally, frass production flux is:
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
  
     #### Frass production
@@ -553,6 +553,7 @@ Finally, frass production flux is:
 
 <br/>
 Fineroot production flux is:
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
 
     ### make the plot
@@ -602,6 +603,7 @@ Fineroot production flux is:
 ```
 
 Next, wood C production is:
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     ### make the plot
     p <- ggplot(wood_c_production,
@@ -636,7 +638,6 @@ Next, wood C production is:
 ```
 
 ### 5.2 Soil PO4-P pool
-
 Note, this pool is more readily available to plants as the microbial p pool needs one extra step when extracting.
 ``` {r, echo=FALSE, warning=FALSE}
 
@@ -657,7 +658,6 @@ Note, this pool is more readily available to plants as the microbial p pool need
 
 ### 5.3 Microbial P pool
 Note, this is for top 10 cm of the soil. 
-
 ``` {r, echo=FALSE, warning=FALSE}
 
     microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
@@ -749,7 +749,8 @@ Check, why inconsistent time points.
 
 
 ```
- Understorey P pool, assume both species contributed equally. Also because p_conc and c_pool do not match in time, we are taking the average of p_conc and apply it to c_pool. When Mathias's continuous c_pool data becomes available, we can update this calculation.
+
+Understorey P pool, assume both species contributed equally. Also because p_conc and c_pool do not match in time, we are taking the average of p_conc and apply it to c_pool. When Mathias's continuous c_pool data becomes available, we can update this calculation.
 
 ### 5.8 Mycorrhizal P pool
 Data still not available. 

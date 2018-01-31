@@ -30,7 +30,7 @@ make_fineroot_p_production <- function(p_conc,
     # calculate p flux
     outDF$fineroot_p_flux_mg_m2_d <- outDF$fineroot_production_flux / c_fraction_fr * outDF$PercP / 100
     
-    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "fineroot_p_flux_mg_m2_d")]
+    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "fineroot_p_flux_mg_m2_d", "Days")]
     
     return(outDF)
 }

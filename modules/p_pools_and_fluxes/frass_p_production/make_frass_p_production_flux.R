@@ -41,7 +41,7 @@ make_frass_p_production_flux <- function(p_conc,
     # averaging c_fraction by ring
     c_frac_df <- summaryBy(frass_c_fraction~Ring, data=c_frac, FUN=mean, keep.names=T, na.rm=T)
     
-    ### calculate leaflitter P flux mg P m-2 d-1
+    ### calculate frass P flux mg P m-2 d-1
     for (i in c(1:6)) {
         outDF[outDF$Ring == i, "c_frac"] <- c_frac_df[c_frac_df$Ring == i, "frass_c_fraction"]
         
@@ -49,7 +49,7 @@ make_frass_p_production_flux <- function(p_conc,
     
     outDF$frass_p_flux_mg_m2_d <- outDF$frass_production_flux/outDF$c_frac*outDF$PercP/100
     
-    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "frass_p_flux_mg_m2_d")]
+    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "frass_p_flux_mg_m2_d", "Days")]
 
     return(outDF)
 }

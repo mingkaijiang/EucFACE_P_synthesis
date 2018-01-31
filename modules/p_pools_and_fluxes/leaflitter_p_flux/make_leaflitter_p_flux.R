@@ -29,10 +29,11 @@ make_leaflitter_p_flux <- function(p_conc) {
     outDF <- out[complete.cases(out),]
     
     ### calculate leaflitter P flux mg P m-2 d-1
-    
     outDF$leaflitter_p_flux_mg_m2_d <- outDF$leaf_flux*outDF$PercP/100
     
-    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "leaflitter_p_flux_mg_m2_d")]
+    outDF$Days <- as.numeric(with(outDF, End_date - Start_date))
+    
+    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "leaflitter_p_flux_mg_m2_d", "Days")]
     
     return(outDF)
 }

@@ -111,6 +111,9 @@ soil_c_pool <- make_soil_c_pool(soil_bulk_density)
 microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 
+
+
+
 ###### ----------- Generating P pools and fluxes  ----------- ######
 #### Soil P pool
 soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
@@ -125,6 +128,7 @@ soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentrat
 
 #### Soil P mienralization flux
 #### It is assumed that the mineralization data is for top 10 cm only!
+#### This flux rate should have a start and end date!
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
 #### Microbial P pool 
@@ -141,9 +145,13 @@ canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
 
 #### Litter P production flux 
 #### Literfall biomass (not C) will be calculated within the function
+#### for data points where we have C but not P, we can create a separte script
+#### and gap-fill P concentration based on average values
 leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
+leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_p_concentration)  
 
 #### Other litterfall
+#### Used wood P concentration to extrapolate
 other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
 
 
