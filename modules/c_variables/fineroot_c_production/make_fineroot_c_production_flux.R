@@ -1,5 +1,5 @@
 #- Make the fineroot c production flux
-make_fineroot_c_production_flux <- function(c_fraction){
+make_fineroot_c_production_flux <- function(c_frac){
     
     # returns fine root production flux (mg m-2 d-1)
     # 5 time points, possibly measured at quarterly timesteps
@@ -26,7 +26,7 @@ make_fineroot_c_production_flux <- function(c_fraction){
     frp.m <- summaryBy(frp_tot~Date+Ring,data=frp1,FUN=mean,keep.names=T,na.rm=T)
     
     #- convert to mg C m-2 day-1
-    frp.m$fineroot_production_flux <- frp.m$frp_tot*c_fraction*1000
+    frp.m$fineroot_production_flux <- frp.m$frp_tot*c_frac*1000
     
     #- add 3 months before the first date
     frp.m$End_date <- frp.m$Date
@@ -39,8 +39,10 @@ make_fineroot_c_production_flux <- function(c_fraction){
     frp.m$Start_date <- as.Date(frp.m$Start_date)
     frp.m$End_date <- as.Date(frp.m$End_date)
     
+    frp.m$Days <- as.numeric(with(frp.m, End_date - Start_date))
+    
     #- format dataframe to return
-    frp.out <- frp.m[,c("Date","Start_date", "End_date", "Ring","fineroot_production_flux")]
+    frp.out <- frp.m[,c("Date","Start_date", "End_date", "Ring", "fineroot_production_flux", "Days")]
     return(frp.out)
     
 }

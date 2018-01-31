@@ -42,11 +42,11 @@ fineroot_p_concentration <- make_fineroot_p_concentration()
 understorey_p_concentration <- make_understorey_p_concentration()
 
 #### Mycorrhizal P conc.
-### Data not available yet.
+### Check back with Jeff in 2 weeks' time. 
 
 
 ###### ----------- Preparing C and other variables  ----------- ######
-#### For all C pools, output annual biomass (year, ring, biomass)
+#### For all C pools, unit in g C m-2,
 #### For all C fluxes, output rate in unit of mg C m-2 d-1, and the period over which this rate applies
 #### Then assign the P concentration to C pools and fluxes. 
 #### Note: % P of total dry biomass should not be directly applied to C result, 
@@ -54,7 +54,7 @@ understorey_p_concentration <- make_understorey_p_concentration()
 
 #### First, output all C pools and fluxes. 
 #### For now, copy and paste all C-related codes. 
-#### In the future, consider sourcing the code from the online C repository (stored in bitbucket).
+#### This version of C code is different to the BitBucket code!!!
 
 #### Canopy related variables (SLA, LAI, Canopy biomass)
 lai_variable <- make_lai_variable()
@@ -74,11 +74,10 @@ wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
 #### Wood C production
 wood_c_production <- make_wood_production_flux(wood_c_pool)
 
-#### Fineroot pools and production
-# this is total fineroot biomass for 0-30cm
-# currently implemented whole plant C fraction
-# need to update with fineroot specific C fraction value
+#### Fineroot pool
 fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
+
+#### Fineroot production
 fineroot_c_production_flux <- make_fineroot_c_production_flux(c_fraction_fr)
 
 #### Understorey aboveground biomass 
@@ -94,10 +93,10 @@ frass_c_production_flux <- make_frass_c_production_flux()
 #### Litter production (leaf, twig, bark, seed)
 litter_c_production_flux <- make_litter_c_flux(c_fraction)
 
-leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date")]
-twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date")]
-barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date")]
-seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date")]
+leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date", "Days")]
+twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date", "Days")]
+barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date", "Days")]
+seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date", "Days")]
 
 #### Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
@@ -113,7 +112,6 @@ microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 
 ###### ----------- Generating P pools and fluxes  ----------- ######
-
 #### Soil P pool
 soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
                                 bk_density=soil_bulk_density)

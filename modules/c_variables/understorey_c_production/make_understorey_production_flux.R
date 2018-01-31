@@ -60,7 +60,8 @@ make_understorey_aboveground_production_flux <- function(c_frac) {
     df <- out[Reduce(`&`, lapply(out, is.finite)),]
     
     #- format dataframe to return
-    out <-df[,c("Start_date", "End_date", "Date", "Ring","understorey_production_flux")]
+    out <-df[,c("Start_date", "End_date", "Date", "Ring","understorey_production_flux", "ndays")]
+    colnames(out) <- c("Start_date", "End_date", "Date", "Ring", "understorey_production_flux", "Days")
     
     return(out)
 }

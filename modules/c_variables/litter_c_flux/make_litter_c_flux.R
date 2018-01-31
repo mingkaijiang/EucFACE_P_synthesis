@@ -1,4 +1,4 @@
-make_litter_c_flux <- function(c_fraction){
+make_litter_c_flux <- function(c_frac){
     
     litter_raw <- download_leaflitter()  
     
@@ -29,6 +29,8 @@ make_litter_c_flux <- function(c_fraction){
                                             bark_flux = Bark,
                                             seed_flux = Seed,
                                             leaf_flux = Leaf))
+    
+    litter_a$Days <- as.numeric(with(litter_a, End_date - Start_date))
     
     return(litter_a)
 }
