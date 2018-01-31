@@ -531,7 +531,9 @@ Finally, frass production flux is:
 ```
 
 
-### 4.6 Fineroot biomass and production
+### 4.6 Root biomass and production
+First, we calculate fine root c pool: 
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     #### Fineroot pools and production
     # this is total fineroot biomass for 0-30cm
@@ -566,6 +568,44 @@ Fineroot production flux is:
     plot(p)
     
 ```
+
+Now, I am comparing coarse root c pools based on two methods. 
+
+Method 1:
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+
+    coarse_root_c_pool_1 <- make_coarse_root_pool_1(c_fraction, FACE_ring_area) 
+    coarse_root_c_pool_2 <- make_coarse_root_pool_2(c_fraction, FACE_ring_area) 
+    coarse_root_c_flux_1 <- make_coarse_root_production_flux(coarse_root_c_pool_1) 
+    coarse_root_c_flux_2 <- make_coarse_root_production_flux(coarse_root_c_pool_2) 
+    
+    ### make the plot
+    p <- ggplot(coarse_root_c_pool_1,
+                aes(Date, coarse_root_pool, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Coarse root C pool (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+    
+```
+
+Method 2:
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+
+    ### make the plot
+    p <- ggplot(coarse_root_c_pool_2,
+                aes(Date, coarse_root_pool, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Coarse root C pool (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+    
+```
+
+Method 2 has slightly higher C pools than method 1. But, method 1 is based on both height and diameter and based on Eucalyptus nitens, whereas method 1 is based on diameter information of P. radiata. Hence, here I adopted method 1. 
 
 
 ### 4.7 Understorey C pool
@@ -730,8 +770,30 @@ Check, why inconsistent time points.
 
 ```
 
+### 5.7 Coarse root P pool
+``` {r, echo=FALSE, warning=FALSE}
 
-### 5.7 Understorey aboveground P pool
+    coarse_root_p_pool_1 <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
+                                                c_pool=coarse_root_c_pool_1,
+                                                c_frac=c_fraction)
+
+    coarse_root_p_pool_2 <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
+                                                c_pool=coarse_root_c_pool_2,
+                                                c_frac=c_fraction)
+
+    ### make the plot
+    p <- ggplot(coarse_root_p_pool_1,
+                aes(Date, coarse_root_p_pool, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Coarse root P (g m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
+
+### 5.8 Understorey aboveground P pool
 ``` {r, echo=FALSE, warning=FALSE}
 
     understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
@@ -752,14 +814,14 @@ Check, why inconsistent time points.
 
 Understorey P pool, assume both species contributed equally. Also because p_conc and c_pool do not match in time, we are taking the average of p_conc and apply it to c_pool. When Mathias's continuous c_pool data becomes available, we can update this calculation.
 
-### 5.8 Mycorrhizal P pool
+### 5.9 Mycorrhizal P pool
 Data still not available. 
 
 
-### 5.9 Canopy P flux
+### 5.10 Canopy P flux
 Need to take into consideration leaf turnover. 
 
-### 5.10 Wood P flux
+### 5.11 Wood P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
@@ -777,7 +839,7 @@ Need to take into consideration leaf turnover.
 
 ```
 
-### 5.11 Fineroot production P flux
+### 5.12 Fineroot production P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
@@ -786,7 +848,7 @@ Need to take into consideration leaf turnover.
     p <- ggplot(fineroot_p_production,
                 aes(Date, fineroot_p_flux_mg_m2_d, color=factor(Ring))) +   
             geom_point(size = 5) + geom_line() + 
-            xlab("Date") + ylab("Fineroot P production (,g m-2 d-1)") + 
+            xlab("Date") + ylab("Fineroot P production (mg m-2 d-1)") + 
             scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
                                         "#FF4040", "#8B0000", "#0000FF"))
     plot(p)
@@ -794,7 +856,31 @@ Need to take into consideration leaf turnover.
 
 ```
 
-### 5.12 Leaflitter P flux
+### 5.13 Coarse root production P flux
+``` {r, echo=FALSE, warning=FALSE}
+
+    coarse_root_p_flux_1 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
+                                                c_flux=coarse_root_c_flux_1,
+                                                c_frac=c_fraction)
+
+    coarse_root_p_flux_2 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
+                                                c_flux=coarse_root_c_flux_2,
+                                                c_frac=c_fraction)
+
+    ### make the plot
+    p <- ggplot(coarse_root_p_flux_1,
+                aes(Date, coarse_root_p_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Coarse P production (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
+
+
+### 5.14 Leaflitter P flux
 ``` {r, echo=FALSE, warning=FALSE, message = FALSE}
 
     leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
@@ -811,7 +897,7 @@ Need to take into consideration leaf turnover.
 
 ```
 
-### 5.13 other aboveground litter P flux
+### 5.15 other aboveground litter P flux
 ``` {r, echo=FALSE, warning=FALSE, message = FALSE}
 
     other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
@@ -828,7 +914,7 @@ Need to take into consideration leaf turnover.
 
 ```
 
-### 5.14 Frass production P flux
+### 5.16 Frass production P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
@@ -847,7 +933,7 @@ Need to take into consideration leaf turnover.
 
 ```
 
-### 5.15 Understorey production P flux
+### 5.17 Understorey production P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
@@ -868,7 +954,7 @@ Need to take into consideration leaf turnover.
 
 Used Varsha's harvest data to extrapolate. 
 
-### 5.16 Soil mineralization P flux
+### 5.18 Soil mineralization P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
@@ -886,6 +972,8 @@ Used Varsha's harvest data to extrapolate.
 ```
 
 Positive values indicate minerlization, negative indicate immobilization. 
+
+
 
 # 6. Summary tables
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -964,7 +1052,7 @@ Finally, I summarize all flux variables:
 - Hedley Fractionation, in 2-3 weeks (Cat)
 - Microbial turnover rate (Cat and Johanna, but may not be available soon)
 - Mycorrhizal data for both C and P project (Jeff)
-- Fine root mortality and turnover for both C and P project (Juan)
+- Root mortality and turnover for both C and P project (Juan)
 - Canopy turnover 
 - Meteorological data, including soil moisture (HIEv)
 - Summarize P concentration using min and max

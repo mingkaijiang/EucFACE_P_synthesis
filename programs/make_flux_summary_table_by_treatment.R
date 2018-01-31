@@ -7,6 +7,7 @@ make_flux_summary_table_by_treatment <- function() {
     
     ### Define production variable names
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
+               "Coarse Root P flux",
                "Leaflitter P flux", "Other litter P flux", "Frass P flux",
                "Understorey P flux", "Mineralization P flux")
     
@@ -51,6 +52,13 @@ make_flux_summary_table_by_treatment <- function() {
     treatDF$timepoint[treatDF$terms == "Fine Root P flux"] <- length(unique(fineroot_p_production$Date))  
     treatDF$notes[treatDF$terms == "Fine Root P flux"] <- "Top 30 cm"
     
+    ### Coarse root P flux
+    out <- summaryBy(coarse_root_p_flux~Ring,data=coarse_root_p_flux_1,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Coarse Root P flux", 2:7] <- out$coarse_root_p_flux
+    treatDF$year_start[treatDF$terms == "Coarse Root P flux"] <- min(year(coarse_root_p_flux_1$Date))    
+    treatDF$year_end[treatDF$terms == "Coarse Root P flux"] <- max(year(coarse_root_p_flux_1$Date))    
+    treatDF$timepoint[treatDF$terms == "Coarse Root P flux"] <- length(unique(coarse_root_p_flux_1$Date))  
+    treatDF$notes[treatDF$terms == "Coarse Root P flux"] <- "Allometric rlt with DBH"
     
     ### Understorey P flux
     out <- summaryBy(understorey_p_flux~Ring,data=understorey_p_flux,FUN=mean,keep.names=T,na.rm=T)
