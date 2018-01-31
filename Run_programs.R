@@ -111,7 +111,13 @@ soil_c_pool <- make_soil_c_pool(soil_bulk_density)
 microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 
+#### Coarse root C pool 
+coarse_root_c_pool_1 <- make_coarse_root_pool_1(c_fraction, FACE_ring_area) 
+coarse_root_c_pool_2 <- make_coarse_root_pool_2(c_fraction, FACE_ring_area) 
 
+#### Coarse root C production
+coarse_root_c_flux_1 <- make_coarse_root_production_flux(coarse_root_c_pool_1) 
+coarse_root_c_flux_2 <- make_coarse_root_production_flux(coarse_root_c_pool_2) 
 
 
 ###### ----------- Generating P pools and fluxes  ----------- ######
@@ -193,6 +199,25 @@ understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration
 understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
                                               c_flux=understorey_c_flux,
                                               c_frac=c_fraction_ud)
+
+### Coarse root P pool
+coarse_root_p_pool_1 <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
+                                                c_pool=coarse_root_c_pool_1,
+                                                c_frac=c_fraction)
+
+coarse_root_p_pool_2 <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
+                                                c_pool=coarse_root_c_pool_2,
+                                                c_frac=c_fraction)
+
+### Coarse root P flux
+coarse_root_p_flux_1 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
+                                                c_flux=coarse_root_c_flux_1,
+                                                c_frac=c_fraction)
+
+coarse_root_p_flux_2 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
+                                                c_flux=coarse_root_c_flux_2,
+                                                c_frac=c_fraction)
+
 
 #### Hedley fractionation data will be available in early January
 
