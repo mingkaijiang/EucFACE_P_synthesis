@@ -32,5 +32,12 @@ make_litter_c_flux <- function(c_frac){
     
     litter_a$Days <- as.numeric(with(litter_a, End_date - Start_date))
     
-    return(litter_a)
+    # delete the data entry where a big branch fall into the litter bascket. 
+    line.num <- which.max(litter_a$twig_flux)
+    out <- litter_a[-line.num,]
+    
+    line.num <- which.max(out$twig_flux)
+    out <- out[-line.num,]
+    
+    return(out)
 }

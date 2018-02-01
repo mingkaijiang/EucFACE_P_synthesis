@@ -1,7 +1,7 @@
 ---
 title: "EucFACE P Synthesis"
 author: "Mingkai Jiang"
-date: "1/29/2018"
+date: "2/2/2018"
 output:
   html_document: default
 ---
@@ -9,15 +9,13 @@ output:
 
 # 1. Description
 
-This is the progress report of the EucFACE phosphorus (P) synthesis project. All results presented in this report is automatically linked with the code and the data. 
+This is a progress report of the EucFACE phosphorus (P) synthesis project. All results presented in this report are linked with the code and the data. 
 
 This file attempts to summarize P-related pools, fluxes, concentrations, their treatment and inter-ring variability, and their temporal patterns. 
 
-The objective of this project is to have a proper account of the P balance for the EucFACE experiment, and to investigate the P by CO2 interactions over time (if enough data is available).
+The objective of this project is to have a proper account of the P balance for the EucFACE experiment, and to investigate the P by CO2 interaction over time (if enough data is available).
 
 All the data used in this study are available at HIEv (at least that's the goal). 
-
-Here I am summarizing the time by treatment effect, for each individual variable. I will summarize the ring-specific result separately. 
 
 
 # 2. Methods
@@ -27,7 +25,7 @@ This procedure is a snapshot of the work. It might be easier just to follow the 
     - Create a list of variables for the P synthesis.
     - For each variable, only consider ring, date, and sometimes depth as independent factors.
     - Calculate P concentrations first.
-    - With Carbon balance output, calculate P pools and fluxes.
+    - With carbon/biomass related variables, calculate P pools and fluxes.
     - Calculate P budgeting variables, e.g. total standing P stock, P retranslocation coefficient, etc.
     - Make summary tables.
     - Interpret data, e.g. time-series trend, treatment effect, extreme response point, etc. 
@@ -42,6 +40,7 @@ Currently, this list is in-comprehensive. Will update continuously as the projec
     - Canopy P concentration, production and pool
     - Wood P concentration, production and pool
     - Fineroot P concentration, production and pool
+    - Coarse root P concentration, production and pool
     - Litterfall P concentration and production
     - P mineralization rate
     - Frass P concentration and production
@@ -52,16 +51,16 @@ Currently, this list is in-comprehensive. Will update continuously as the projec
     - Leaf P retranslocation coefficient
     - P uptake
     - P uptake / requirement
-    - MRT
+    - Mean residence time for P in plants
     - Standing PUE
     
 ### 2.3 How to derive P pools and fluxes based on concentration
 
 The challenges with the P synthesis project is that, the P concentration measurements are sporadic and infrequent, we cannot simply taking the averages of concentration measurements and multiply it with the biomass data to obtain a P flux. 
 
-For pool variables, i.e. wood P pool, we may be able to get away with using just one concentration measurement, given that the concentration of this pool is rather static and we only have one measurement in time avaiable after all. Taking this into consideration, we need to firstly check if the P concentration for a particular vegetation/soil component is static or not over time. If the P concentration is most likely to be static, then we are fine with using average values to extrapolate. On the other hand, for pools that have rather fluctuating P concentration over time, we probably want to establish some sort of relationship with meteorological data for extrapolation purpose, or try to find the biomass peak and the P concentration associated with this time point, assuming that the product of biomass peak and P concentration returns the highest P pool within this year.  
+For pool variables, i.e. wood P pool, we may be able to get away with using just one concentration measurement, given that the concentration of this pool is rather static and we only have one measurement in time avaiable after all. Taking this into consideration, we need to firstly check if the P concentration for a particular vegetation/soil component is static or not over time. If the P concentration is more or less static, we are fine with using average values to extrapolate. On the other hand, for pools that have rather fluctuating P concentration over time, we probably want to establish some sort of relationship with meteorological data for extrapolation purpose, or try to find the biomass peak and the P concentration associated with this time point, assuming that the product of biomass peak and P concentration returns the highest P pool within this year.  
 
-For fluxes, we also need to see if the concentration is variable over time or not. For those that are more fluctuating with good data coverage, e.g. frass P concentration, we can simply calculate a monthly/quarterly P concentration value and use this value to exrtapolate with C production for its corresponding P fluxes. For those that are fluctuating but with relatively less data coverage and with infrequent measurement frequency, e.g. leaflitter fall P concentration (4 time points over 3 years), we will have to assume the one time point is reflecting the annual P concentration, or otherwise we wouldn't be able to proceed. 
+For fluxes, we also need to see if the concentration is variable over time or not. For those that are more fluctuating with good data coverage, e.g. frass P concentration, we can simply calculate a monthly/quarterly P concentration value and use this value to exrtapolate with biomass changes for its corresponding P fluxes. For those that are fluctuating but with relatively less data coverage and with infrequent measurement frequency, e.g. leaflitter fall P concentration (4 time points over 3 years), we will have to assume the one time point is reflecting the annual P concentration, or otherwise we wouldn't be able to proceed. 
 
 The other way to treat the complexity of variable P concentration over time is make a **sensitivity test**. We can use average P concentration, minimum and maximum P concentrations to respectively calculate the P pools and fluxes. This way we are probably more certain with regard to the range of uncertainties. 
 
@@ -730,6 +729,8 @@ Note, this is for top 10 cm of the soil.
 
 
 ```
+
+This pool seems very large, especially consideration its concentration is very small (compared to wood for example). It implies that the biomass is enormous. Checking data description on HIEv, the microbial P concentration was "Fumigation extraction with Bray P AQ2 determination of PO4", in the unit og ug g-1. Essentially, the calculation was done by P conc * soil bulk, not P conc by biomass. Check with Cat to see if this makes sense. 
 
 ### 5.4 Canopy P pool
 ``` {r, echo=FALSE, warning=FALSE}
