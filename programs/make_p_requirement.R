@@ -6,7 +6,7 @@ make_p_requirement_table <- function(sumDF) {
     #### Just focus on aCO2 and eCO2 for now.
     
     ### total requirement
-    sumDF <- sumDF[-c(2, 9), ]
+    sumDF <- sumDF[-c(5, 9), ]
     tot <- colSums(sumDF[,2:7])
 
     out <- matrix(NA, nrow=1, ncol=8)

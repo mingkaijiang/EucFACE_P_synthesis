@@ -61,8 +61,17 @@ lai_variable <- make_lai_variable()
 sla_variable <- make_sla_variable()
 canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
 
+#### Litter production (leaf, twig, bark, seed)
+litter_c_production_flux <- make_litter_c_flux(c_fraction)
+
+leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date", "Days")]
+twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date", "Days")]
+barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date", "Days")]
+seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date", "Days")]
 
 #### Canopy C production
+#### assume it's the same as litterfall C production
+canopy_c_production_flux <- leaflitter_c_production_flux
 
 #### Wood C pool
 # year 2011-12 data on local directory
@@ -89,14 +98,6 @@ understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud
 
 #### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()
-
-#### Litter production (leaf, twig, bark, seed)
-litter_c_production_flux <- make_litter_c_flux(c_fraction)
-
-leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date", "Days")]
-twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date", "Days")]
-barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date", "Days")]
-seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date", "Days")]
 
 #### Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
@@ -147,7 +148,9 @@ canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
                                     biom=canopy_biomass_pool)
 
 #### Canopy production flux
-
+canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
+                                          c_flux=canopy_c_production_flux,
+                                          c_frac=c_fraction)
 
 #### Litter P production flux 
 #### Literfall biomass (not C) will be calculated within the function
@@ -263,22 +266,25 @@ p_requirement_table <- make_p_requirement_table(summary_table_flux_by_treatment)
 
 ### total P retranslocation, i.e. canopy P - litterfall P + wood P increment
 source("programs/make_total_p_retranslocation.R")
-total_p_retranslocation <- make_total_p_retranslocation(summary_table_concentration_by_treatment)
+total_p_retranslocation <- make_total_p_retranslocation(summary_table_flux_by_treatment)
 
 ### P uptake from soil, i.e. P requirement - P retranslocation
-temDF <- rbind(p_requirement_table[5,2:3], total_p_retranslocation)
-pupDF <- temDF[1,] - temDF[2,]
+source("programs/make_p_uptake_from_soil.R")
+total_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=p_requirement_table,
+                                                    p_retrans=total_p_retranslocation)
 
 ### Uptake/requirement
-up_over_req <- pupDF/temDF[1,]
-
+source("programs/make_p_uptake_over_requirement.R")
+p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=total_p_uptake_from_soil,
+                                                            p_req=p_requirement_table)
+    
+    
 ### MRT, i.e. Standing P / Uptake
-
+source("programs/make_p_MRT.R")
+P_mean_residence_time <- make_p_MRT(p_stand=standing_p_stock,
+                                    p_up=total_p_uptake_from_soil)
 
 ### Standing PUE, i.e. NPP / P Uptake
-
-
-### P pools and fluxes by treatment and ring
 
 
 ###### ---------------- Generating CP ratios -------------------- ######

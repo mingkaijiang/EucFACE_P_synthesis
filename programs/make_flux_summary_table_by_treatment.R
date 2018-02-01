@@ -30,11 +30,13 @@ make_flux_summary_table_by_treatment <- function() {
     treatDF$notes <- rep(NA, length(treatDF$terms))
     
     ### Canopy P flux
-    # out <- summaryBy(leaf_p_production~Ring,data=canopy_p_production,FUN=mean,keep.names=T,na.rm=T)
-    # treatDF[treatDF$terms == "Canopy P flux", 2:7] <- out$leaf_p_production
-    # treatDF$year_start[treatDF$terms == "Canopy P flux"] <- min(year(canopy_p_production$Date))    
-    # treatDF$year_end[treatDF$terms == "Canopy P flux"] <- max(year(canopy_p_production$Date))    
-    # treatDF$timepoint[treatDF$terms == "Canopy P flux"] <- length(unique(canopy_p_production$Date))  
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Canopy P flux", i+1] <- with(canopy_p_flux[canopy_p_flux$Ring ==i,],
+                                                              sum(canopy_p_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Canopy P flux"] <- min(year(canopy_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Canopy P flux"] <- max(year(canopy_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Canopy P flux"] <- length(unique(canopy_p_flux$Date))  
     treatDF$notes[treatDF$terms == "Canopy P flux"] <- "need to consider leaf turnover"
 
     
