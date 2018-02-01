@@ -18,9 +18,9 @@ make_coarse_root_production_flux <- function(cr_pool) {
     prod$cr_production_flux <- (prod$coarse_root_pool - prod$prev_biom) * 1000/prod$length
     
     # format dataframe to return
-    cr.out <- prod[,c("Start_date", "Date", "Date", "Ring", "cr_production_flux")]
+    cr.out <- prod[,c("Start_date", "Date", "Date", "Ring", "cr_production_flux", "length")]
     
-    names(cr.out) <- c("Start_date", "End_date", "Date", "Ring", "coarse_root_production_flux")
+    names(cr.out) <- c("Start_date", "End_date", "Date", "Ring", "coarse_root_production_flux", "Days")
     
     return(cr.out)
     

@@ -5,63 +5,18 @@ make_p_requirement_table <- function(sumDF) {
     #### Also, ignoring inter-annual variability and ring variability
     #### Just focus on aCO2 and eCO2 for now.
     
-    ### create npp dataframe (biomass increment data)
-    terms <- c("foliage", "wood", "fineroot", "understorey")
-    nppDF <- data.frame(terms)
-    nppDF$aCO2 <- rep(NA, length(nppDF$terms))
-    nppDF$eCO2 <- rep(NA, length(nppDF$terms))
-    
-    ### create P concentration dataframe
-    pconcDF <- nppDF
-    
-    ### create P requirement dataframe
-    preqDF <- pconcDF
-    
-    ### assign npp values
-    ### currently hardwired the data, 
-    ### need to later incorporate with C balance results
-    nppDF$aCO2[nppDF$terms == "foliage"] <- 291.4
-    nppDF$eCO2[nppDF$terms == "foliage"] <- 278.9
-    
-    nppDF$aCO2[nppDF$terms == "wood"] <- 61.7
-    nppDF$eCO2[nppDF$terms == "wood"] <- 58.2
-    
-    nppDF$aCO2[nppDF$terms == "fineroot"] <- 119.7
-    nppDF$eCO2[nppDF$terms == "fineroot"] <- 119.4
-    
-    nppDF$aCO2[nppDF$terms == "understorey"] <- 0.0
-    nppDF$eCO2[nppDF$terms == "understorey"] <- 0.0
-    
-    ### assign p concentration values
-    ### note: foliage biomass includes leaf and twig and bark
-    ### here, I am using foliage P concentration to apply to all these
-    ### also note: NPP is amount of C increased, not biomass!
-    ### Right now, I am simply multiplying %P with C increment. 
-    pconcDF$aCO2[pconcDF$terms == "foliage"] <- sumDF$aCO2[sumDF$conc.terms == "Canopy P Conc"]
-    pconcDF$eCO2[pconcDF$terms == "foliage"] <- sumDF$eCO2[sumDF$conc.terms == "Canopy P Conc"]
-    
-    pconcDF$aCO2[pconcDF$terms == "wood"] <- sumDF$aCO2[sumDF$conc.terms == "Wood P Conc"]
-    pconcDF$eCO2[pconcDF$terms == "wood"] <- sumDF$eCO2[sumDF$conc.terms == "Wood P Conc"]
-    
-    pconcDF$aCO2[pconcDF$terms == "fineroot"] <- sumDF$aCO2[sumDF$conc.terms == "Fine Root P Conc"]
-    pconcDF$eCO2[pconcDF$terms == "fineroot"] <- sumDF$eCO2[sumDF$conc.terms == "Fine Root P Conc"]
-    
-    pconcDF$aCO2[pconcDF$terms == "understorey"] <- sumDF$aCO2[sumDF$conc.terms == "Understorey P Conc"]
-    pconcDF$eCO2[pconcDF$terms == "understorey"] <- sumDF$eCO2[sumDF$conc.terms == "Understorey P Conc"]
-    
-    ### make the calculations
-    preqDF$aCO2 <- (pconcDF$aCO2 * nppDF$aCO2) / 100 
-    preqDF$eCO2 <- (pconcDF$eCO2 * nppDF$eCO2) / 100
-    
     ### total requirement
-    aCO2 <- sum(preqDF$aCO2)
-    eCO2 <- sum(preqDF$eCO2)
+    sumDF <- sumDF[-c(2, 9), ]
+    tot <- colSums(sumDF[,2:7])
+
+    out <- matrix(NA, nrow=1, ncol=8)
+    out <- as.data.frame(out)
+    colnames(out) <- c("R1", "R2", "R3", "R4", "R5", "R6", "aCO2", "eCO2")
+    out[1,1:6] <- tot
     
-    preqDF$terms <- as.character(preqDF$terms)
-    preqDF[5,"terms"] <- "total"
-    preqDF[5,"aCO2"] <- aCO2
-    preqDF[5,"eCO2"] <- eCO2
+    out$aCO2 <- mean(out$R2, out$R3, out$R6)
+    out$eCO2 <- mean(out$R1, out$R4, out$R5)
     
-    return(preqDF)
+    return(out)
     
 }

@@ -434,7 +434,19 @@ We currently don't have mycorrhizal data available yet.
 ```
 
 ### 4.3 Leaf P retranslocation coefficient
-We need to think about data collected from the same time point. 
+We need to think about data collected from the same time point. For now, because dates don't match, we just take the averages. 
+
+``` {r, echo=FALSE, warning=FALSE}
+
+    source("programs/make_leaf_p_retranslocation_coefficient.R")
+    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
+
+    p <- ggplot(leaf_p_retrans_coefficient, aes(CO2, retrans_coef, color=factor(Ring))) +   
+                geom_point(size = 5) +
+                xlab("Treatment") + ylab("Leaf P retranslocation coefficient (%)") 
+    plot(p)
+
+```
 
 
 ### 4.4 C fraction for frass production
@@ -592,6 +604,7 @@ Method 1:
 ```
 
 Method 2:
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
 
     ### make the plot
@@ -605,7 +618,7 @@ Method 2:
     
 ```
 
-Method 2 has slightly higher C pools than method 1. But, method 1 is based on both height and diameter and based on Eucalyptus nitens, whereas method 1 is based on diameter information of P. radiata. Hence, here I adopted method 1. 
+Method 2 has slightly higher C pools than method 1. And the inter-ring relationships are not the same. Method 1 is based on both height and diameter and based on Eucalyptus nitens, whereas method 1 is based on diameter information of P. radiata. Hence, here I adopted method 1. 
 
 
 ### 4.7 Understorey C pool
@@ -1028,6 +1041,26 @@ Finally, I summarize all flux variables:
     summary_table_flux_by_treatment[,2:7] <- round(summary_table_flux_by_treatment[,2:7], 3)
     
     kable(summary_table_flux_by_treatment)
+
+```
+
+
+Now, I calculate total standing P stocks
+
+``` {r, echo = FALSE} 
+    source("programs/make_standing_p_stock.R")
+    standing_p_stock <- make_standing_p_stock(leaf=canopy_p_pool, 
+                                              wood=wood_p_pool, 
+                                              froot=fineroot_p_pool, 
+                                              croot=coarse_root_p_pool_1)
+
+    
+    ### make the plot
+    p <- ggplot(standing_p_stock[,c("Ring", "Year", "total")],
+                aes(Ring, total)) +   
+            geom_bar(stat = "identity", aes(fill = as.factor(Year)), position = "dodge") + 
+            xlab("Ring") + ylab("Standing P stock (g P m-2)")
+    plot(p)
 
 ```
 

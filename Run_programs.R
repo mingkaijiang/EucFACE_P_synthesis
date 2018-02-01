@@ -248,13 +248,17 @@ leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
 
 
 ### standing P stock, i.e. canopy P + wood P + fine root P pools
-### not able to produce due to incomplete of wood P pool
+### summarize according to year
+source("programs/make_standing_p_stock.R")
+standing_p_stock <- make_standing_p_stock(leaf=canopy_p_pool, 
+                                          wood=wood_p_pool, 
+                                          froot=fineroot_p_pool, 
+                                          croot=coarse_root_p_pool_1)
 
 
-
-### P requirements, i.e. NPP * P conc for canopy, wood, twig and fine root, no data on understorey yet
+### P requirements, i.e. using plant P fluxes 
 source("programs/make_p_requirement.R")
-p_requirement_table <- make_p_requirement_table(summary_table_concentration_by_treatment)
+p_requirement_table <- make_p_requirement_table(summary_table_flux_by_treatment)
 
 
 ### total P retranslocation, i.e. canopy P - litterfall P + wood P increment

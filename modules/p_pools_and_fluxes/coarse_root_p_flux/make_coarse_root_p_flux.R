@@ -9,7 +9,9 @@ make_coarse_root_p_flux <- function(p_conc, c_flux, c_frac){
     ### calculate P flux mg P m-2
     c_flux$coarse_root_p_flux <- c_flux$coarse_root_production_flux / c_frac * c_flux$PercP / 100
     
-    outDF <- c_flux[,c("Date", "Ring", "coarse_root_p_flux")]
+    outDF <- c_flux[,c("Start_date", "End_date", "Date", "Ring", "coarse_root_p_flux", "Days")]
+    
+    
     
     return(outDF)
     

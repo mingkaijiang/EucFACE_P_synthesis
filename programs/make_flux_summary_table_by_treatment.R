@@ -5,6 +5,9 @@
 
 make_flux_summary_table_by_treatment <- function() {
     
+    ### convert daily flux in mg P m2 d-1 to g P m-2 yr-1
+    conv <- 365 / 1000
+    
     ### Define production variable names
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
                "Coarse Root P flux",
@@ -36,33 +39,40 @@ make_flux_summary_table_by_treatment <- function() {
 
     
     ### Wood P 
-    out <- summaryBy(wood_p_flux~Ring,data=wood_p_flux,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Wood P flux", 2:7] <- out$wood_p_flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Wood P flux", i+1] <- with(wood_p_flux[wood_p_flux$Ring ==i,],
+                                                             sum(wood_p_flux*Days)/sum(Days)) * conv
+    }
     treatDF$year_start[treatDF$terms == "Wood P flux"] <- min(year(wood_p_flux$Date))    
     treatDF$year_end[treatDF$terms == "Wood P flux"] <- max(year(wood_p_flux$Date))    
     treatDF$timepoint[treatDF$terms == "Wood P flux"] <- length(unique(wood_p_flux$Date)) 
     treatDF$notes[treatDF$terms == "Wood P flux"] <- "Based on single time point measurement"
     
-    
     ### Fine root P flux
-    out <- summaryBy(fineroot_p_flux_mg_m2_d~Ring,data=fineroot_p_production,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Fine Root P flux", 2:7] <- out$fineroot_p_flux_mg_m2_d
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Fine Root P flux", i+1] <- with(fineroot_p_production[fineroot_p_production$Ring ==i,],
+                                                             sum(fineroot_p_flux_mg_m2_d*Days)/sum(Days)) * conv
+    }
     treatDF$year_start[treatDF$terms == "Fine Root P flux"] <- min(year(fineroot_p_production$Date))    
     treatDF$year_end[treatDF$terms == "Fine Root P flux"] <- max(year(fineroot_p_production$Date))    
     treatDF$timepoint[treatDF$terms == "Fine Root P flux"] <- length(unique(fineroot_p_production$Date))  
     treatDF$notes[treatDF$terms == "Fine Root P flux"] <- "Top 30 cm"
     
     ### Coarse root P flux
-    out <- summaryBy(coarse_root_p_flux~Ring,data=coarse_root_p_flux_1,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Coarse Root P flux", 2:7] <- out$coarse_root_p_flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Coarse Root P flux", i+1] <- with(coarse_root_p_flux_1[coarse_root_p_flux_1$Ring ==i,],
+                                                                  sum(coarse_root_p_flux*Days)/sum(Days)) * conv
+    }
     treatDF$year_start[treatDF$terms == "Coarse Root P flux"] <- min(year(coarse_root_p_flux_1$Date))    
     treatDF$year_end[treatDF$terms == "Coarse Root P flux"] <- max(year(coarse_root_p_flux_1$Date))    
     treatDF$timepoint[treatDF$terms == "Coarse Root P flux"] <- length(unique(coarse_root_p_flux_1$Date))  
     treatDF$notes[treatDF$terms == "Coarse Root P flux"] <- "Allometric rlt with DBH"
     
     ### Understorey P flux
-    out <- summaryBy(understorey_p_flux~Ring,data=understorey_p_flux,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Understorey P flux", 2:7] <- out$understorey_p_flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Understorey P flux", i+1] <- with(understorey_p_flux[understorey_p_flux$Ring ==i,],
+                                                                    sum(understorey_p_flux*Days)/sum(Days)) * conv
+    }
     treatDF$year_start[treatDF$terms == "Understorey P flux"] <- min(year(understorey_p_flux$Date))    
     treatDF$year_end[treatDF$terms == "Understorey P flux"] <- max(year(understorey_p_flux$Date))    
     treatDF$timepoint[treatDF$terms == "Understorey P flux"] <- length(unique(understorey_p_flux$Date))  
@@ -71,23 +81,27 @@ make_flux_summary_table_by_treatment <- function() {
 
     ### Mineralization flux
     out <- summaryBy(p_mineralization_mg_m2_d~Ring,data=soil_p_mineralization,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Mineralization P flux", 2:7] <- out$p_mineralization_mg_m2_d
+    treatDF[treatDF$terms == "Mineralization P flux", 2:7] <- out$p_mineralization_mg_m2_d * conv
     treatDF$year_start[treatDF$terms == "Mineralization P flux"] <- min(year(soil_p_mineralization$date))    
     treatDF$year_end[treatDF$terms == "Mineralization P flux"] <- max(year(soil_p_mineralization$date))    
     treatDF$timepoint[treatDF$terms == "Mineralization P flux"] <- length(unique(soil_p_mineralization$date))  
     treatDF$notes[treatDF$terms == "Mineralization P flux"] <- "positive is mineralization, negative is immobilization"
     
     ### Frass production flux
-    out <- summaryBy(frass_p_flux_mg_m2_d~Ring,data=frass_p_production,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Frass P flux", 2:7] <- out$frass_p_flux_mg_m2_d
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Frass P flux", i+1] <- with(frass_p_production[frass_p_production$Ring ==i,],
+                                                                    sum(frass_p_flux_mg_m2_d*Days)/sum(Days)) * conv
+    }
     treatDF$year_start[treatDF$terms == "Frass P flux"] <- min(year(frass_p_production$Date))    
     treatDF$year_end[treatDF$terms == "Frass P flux"] <- max(year(frass_p_production$Date))    
     treatDF$timepoint[treatDF$terms == "Frass P flux"] <- length(unique(frass_p_production$Date))  
     treatDF$notes[treatDF$terms == "Frass P flux"] <- "NA"
     
     ### Leaf litter flux
-    out <- summaryBy(leaflitter_p_flux_mg_m2_d~Ring,data=leaflitter_p_flux,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Leaflitter P flux", 2:7] <- out$leaflitter_p_flux_mg_m2_d
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Leaflitter P flux", i+1] <- with(leaflitter_p_flux[leaflitter_p_flux$Ring ==i,],
+                                                              sum(leaflitter_p_flux_mg_m2_d*Days)/sum(Days)) * conv
+    }
     treatDF$year_start[treatDF$terms == "Leaflitter P flux"] <- min(year(leaflitter_p_flux$Date))    
     treatDF$year_end[treatDF$terms == "Leaflitter P flux"] <- max(year(leaflitter_p_flux$Date))    
     treatDF$timepoint[treatDF$terms == "Leaflitter P flux"] <- length(unique(leaflitter_p_flux$Date))  
@@ -95,8 +109,10 @@ make_flux_summary_table_by_treatment <- function() {
     
     
     ### Other aboveground litter flux
-    out <- summaryBy(other_litter_p_flux_mg_m2_d~Ring,data=other_litter_p_flux,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Other litter P flux", 2:7] <- out$other_litter_p_flux_mg_m2_d
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Other litter P flux", i+1] <- with(other_litter_p_flux[other_litter_p_flux$Ring ==i,],
+                                                                   sum(other_litter_p_flux_mg_m2_d*Days)/sum(Days)) * conv
+    }
     treatDF$year_start[treatDF$terms == "Other litter P flux"] <- min(year(other_litter_p_flux$Date))    
     treatDF$year_end[treatDF$terms == "Other litter P flux"] <- max(year(other_litter_p_flux$Date))    
     treatDF$timepoint[treatDF$terms == "Other litter P flux"] <- length(unique(other_litter_p_flux$Date))  
