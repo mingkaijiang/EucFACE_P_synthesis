@@ -511,6 +511,11 @@ Next, I calculate litter fall fluxes:
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     #### Litter production (leaf, twig, bark, seed)
     litter_c_production_flux <- make_litter_c_flux(c_fraction)
+
+    leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date", "Days")]
+    twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twig_flux", "Start_date", "End_date", "Days")]
+    barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date", "Days")]
+    seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date", "Days")]
     
     plotDF <- melt(litter_c_production_flux, id.vars = 1:2, measure= 3:6)
     
@@ -832,7 +837,25 @@ Data still not available.
 
 
 ### 5.10 Canopy P flux
-Need to take into consideration leaf turnover. 
+``` {r, echo=FALSE, warning=FALSE}
+
+    canopy_c_production_flux <- leaflitter_c_production_flux
+
+    canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
+                                          c_flux=canopy_c_production_flux,
+                                          c_frac=c_fraction)
+
+    ### make the plot
+    p <- ggplot(canopy_p_flux,
+                aes(Date, canopy_p_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Wood P production (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
 
 ### 5.11 Wood P flux
 ``` {r, echo=FALSE, warning=FALSE}
