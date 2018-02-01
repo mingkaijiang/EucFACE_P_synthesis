@@ -8,6 +8,13 @@ make_litter_c_flux <- function(c_frac){
     litter_raw$Ring[is.na(litter_raw$Ring)] <- litter_raw$RING[is.na(litter_raw$Ring)]
     litter_raw$TRAP[is.na(litter_raw$Ring)] <- litter_raw$RING[is.na(litter_raw$Ring)]
     
+    # remove two data points where big branches fall into litter bascket
+    line.num <- which.max(litter_raw$Twig)
+    litter_raw <- litter_raw[-line.num,]
+    
+    line.num <- which.max(litter_raw$Twig)
+    litter_raw <- litter_raw[-line.num,]
+    
     # Conversion factor from g basket-1 to mg m-2
     conv <- c_fraction * 1000 / frass_basket_area
     
@@ -32,12 +39,5 @@ make_litter_c_flux <- function(c_frac){
     
     litter_a$Days <- as.numeric(with(litter_a, End_date - Start_date))
     
-    # delete the data entry where a big branch fall into the litter bascket. 
-    line.num <- which.max(litter_a$twig_flux)
-    out <- litter_a[-line.num,]
-    
-    line.num <- which.max(out$twig_flux)
-    out <- out[-line.num,]
-    
-    return(out)
+    return(litter_a)
 }
