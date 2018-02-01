@@ -244,48 +244,9 @@ source("programs/make_flux_summary_table_by_treatment.R")
 summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
 
 
-
-### leaf p retranslocation coefficient
-source("programs/make_leaf_p_retranslocation_coefficient.R")
-leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
-
-
-### standing P stock, i.e. canopy P + wood P + fine root P pools
-### summarize according to year
-source("programs/make_standing_p_stock.R")
-standing_p_stock <- make_standing_p_stock(leaf=canopy_p_pool, 
-                                          wood=wood_p_pool, 
-                                          froot=fineroot_p_pool, 
-                                          croot=coarse_root_p_pool_1)
-
-
-### P requirements, i.e. using plant P fluxes 
-source("programs/make_p_requirement.R")
-p_requirement_table <- make_p_requirement_table(summary_table_flux_by_treatment)
-
-
-### total P retranslocation, i.e. canopy P - litterfall P + wood P increment
-source("programs/make_total_p_retranslocation.R")
-total_p_retranslocation <- make_total_p_retranslocation(summary_table_flux_by_treatment)
-
-### P uptake from soil, i.e. P requirement - P retranslocation
-source("programs/make_p_uptake_from_soil.R")
-total_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=p_requirement_table,
-                                                    p_retrans=total_p_retranslocation)
-
-### Uptake/requirement
-source("programs/make_p_uptake_over_requirement.R")
-p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=total_p_uptake_from_soil,
-                                                            p_req=p_requirement_table)
-    
-    
-### MRT, i.e. Standing P / Uptake
-source("programs/make_p_MRT.R")
-P_mean_residence_time <- make_p_MRT(p_stand=standing_p_stock,
-                                    p_up=total_p_uptake_from_soil)
-
-### Standing PUE, i.e. NPP / P Uptake
-
+### Calculate all P budgeting variables
+source("programs/make_p_budgeting_variables.R")
+summary_table_p_budgets <- make_p_budgeting_variables()
 
 ###### ---------------- Generating CP ratios -------------------- ######
 
