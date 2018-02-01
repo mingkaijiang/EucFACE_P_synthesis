@@ -1,4 +1,4 @@
-make_standing_p_stock <- function(leaf, wood, froot, croot) {
+make_overstorey_standing_p_stock <- function(leaf, wood, froot, croot) {
     ### make standing p stock per year
     ### only include years with all 4 pools have data
     
