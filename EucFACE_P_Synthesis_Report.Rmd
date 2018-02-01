@@ -1088,6 +1088,20 @@ Now, I calculate total standing P stocks
 
 ```
 
+
+Here, I summarize all P budgeting variables, in a table:
+``` {r, echo = FALSE} 
+    source("programs/make_p_budgeting_variables.R")
+    summary_table_p_budgets <- make_p_budgeting_variables()
+    
+    # make the table looks nicer
+    colnames(summary_table_p_budgets)[1] <- "Variable"
+
+    kable(summary_table_p_budgets)
+
+```
+
+
 <br/>
 <br/>
 <br/>
