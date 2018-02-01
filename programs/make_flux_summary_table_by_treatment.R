@@ -82,7 +82,7 @@ make_flux_summary_table_by_treatment <- function() {
     
 
     ### Mineralization flux
-    out <- summaryBy(p_mineralization_mg_m2_d~Ring,data=soil_p_mineralization,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(p_mineralization_mg_m2_d~ring,data=soil_p_mineralization,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Mineralization P flux", 2:7] <- out$p_mineralization_mg_m2_d * conv
     treatDF$year_start[treatDF$terms == "Mineralization P flux"] <- min(year(soil_p_mineralization$date))    
     treatDF$year_end[treatDF$terms == "Mineralization P flux"] <- max(year(soil_p_mineralization$date))    
