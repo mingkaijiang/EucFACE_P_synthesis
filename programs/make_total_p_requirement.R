@@ -6,7 +6,6 @@ make_total_p_requirement_table <- function(sumDF) {
     #### Just focus on aCO2 and eCO2 for now.
     
     ### total requirement
-    # sumDF <- sumDF[-c(5, 9), ]
     myDF <- sumDF[sumDF$terms != "Leaflitter P flux",]
     myDF <- myDF[myDF$terms != "Mineralization P flux",]
     myDF <- myDF[myDF$terms != "Fineroot Litter P flux",]

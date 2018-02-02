@@ -1053,12 +1053,12 @@ Positive values indicate minerlization, negative indicate immobilization.
 Below, I summarize the per ring, per treatment table for all P concentration variables. 
 Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings. 
 
-``` {r, echo=FALSE} 
+``` {r, echo=FALSE, warning=FALSE, message=FALSE} 
     source("programs/make_conc_summary_table_by_treatment.R")
     summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
     
     # make the table looks nicer
-    colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
+    # colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
     summary_table_concentration_by_treatment[,2:7] <- round(summary_table_concentration_by_treatment[,2:7], 3)
     
     kable(summary_table_concentration_by_treatment)
@@ -1071,12 +1071,12 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
 <br/>
 
 Next, I summarize all pool variables:
-``` {r, echo = FALSE} 
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/make_pool_summary_table_by_treatment.R")
     summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
     
     # make the table looks nicer
-    colnames(summary_table_pool_by_treatment)[1] <- "Variable"
+    # colnames(summary_table_pool_by_treatment)[1] <- "Variable"
     summary_table_pool_by_treatment[,2:7] <- round(summary_table_pool_by_treatment[,2:7], 3)
     
     kable(summary_table_pool_by_treatment)
@@ -1088,47 +1088,30 @@ Next, I summarize all pool variables:
 <br/>
 <br/>
 
-Finally, I summarize all flux variables:
-``` {r, echo = FALSE} 
+Now, I summarize all flux variables:
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/make_flux_summary_table_by_treatment.R")
     summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
     
     # make the table looks nicer
-    colnames(summary_table_flux_by_treatment)[1] <- "term"
+    # colnames(summary_table_flux_by_treatment)[1] <- "terms"
     summary_table_flux_by_treatment[,2:7] <- round(summary_table_flux_by_treatment[,2:7], 3)
     
     kable(summary_table_flux_by_treatment)
 
 ```
-
-
-Now, I calculate overstorey standing P stocks
-
-``` {r, echo = FALSE} 
-    source("programs/make_overstorey_standing_p_stock.R")
-    standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
-                                              wood=wood_p_pool, 
-                                              froot=fineroot_p_pool, 
-                                              croot=coarse_root_p_pool_1)
-
-    
-    ### make the plot
-    p <- ggplot(standing_p_stock[,c("Ring", "Year", "total")],
-                aes(Ring, total)) +   
-            geom_bar(stat = "identity", aes(fill = as.factor(Year)), position = "dodge") + 
-            xlab("Ring") + ylab("Standing P stock (g P m-2)")
-    plot(p)
-
-```
-
+<br/>
+<br/>
+<br/>
+<br/>
 
 Here, I summarize all P budgeting variables, in a table:
-``` {r, echo = FALSE} 
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/make_p_budgeting_variables.R")
     summary_table_p_budgets <- make_p_budgeting_variables()
     
     # make the table looks nicer
-    colnames(summary_table_p_budgets)[1] <- "Variable"
+    # colnames(summary_table_p_budgets)[1] <- "terms"
 
     kable(summary_table_p_budgets)
 
@@ -1137,6 +1120,8 @@ Here, I summarize all P budgeting variables, in a table:
 Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment. It currently does not include any components of the understorey parts. So, the uptake/requirement ratio is high because we ignores understorey retranslocation. Or, we should only be calculating the overstorey P uptake and requirement. 
 
 There is no literature value on Microlaena P retranslocation. 
+
+Next, I am plotting all the P budgeting variables. 
 
 <br/>
 <br/>
@@ -1168,10 +1153,10 @@ There is no literature value on Microlaena P retranslocation.
     - Check microbial pool biomass data with Cat
     - Wood C production and pool over time, why negative
     - Create mortality pool, or standing dead pool
-    - summary diagrams for aCO2 and eCO2
-    - fraction of sapwood to extrapolate wood retranslocation coefficients
-    - fine root and coarse root P retranslocation coefficients
-    - understorey respiration from literature
+    - Summary diagrams for aCO2 and eCO2
+    - Fraction of sapwood to extrapolate wood retranslocation coefficients
+    - More valid fine root and coarse root P retranslocation coefficients
+    - Understorey respiration from literature
     - CH4 data
     - litter pool
     - split aboveground and belowground in summary table

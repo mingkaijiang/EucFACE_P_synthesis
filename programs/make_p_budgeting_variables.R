@@ -83,12 +83,12 @@ make_p_budgeting_variables <- function() {
     out[out$terms == "total p uptake from soil", 2:9] <- round(total_p_uptake_from_soil[1,],2)
     out[out$terms == "total uptake over requirement", 2:9] <- round(p_uptake_over_requirement[1,], 1)
     out[out$terms == "total P MRT in plant", 2:9] <- round(P_mean_residence_time[1,1:8],2)
-    out[out$terms == "total standing PUE", 2:7] <- round(standing_pue[1:6, "PUP_by_NPP"],2)
+    out[out$terms == "total standing PUE", 2:7] <- round(standing_pue[1:6, "PUP_by_NPP"],4)
     
     
     ### aCO2 and eCO2 averages
-    out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 2)
-    out$eCO2 <- round(rowMeans(data.frame(out$R1, out$R4, out$R5)) , 2)
+    out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)
+    out$eCO2 <- round(rowMeans(data.frame(out$R1, out$R4, out$R5)) , 4)
     
     ### notes
     out[out$terms == "overstorey leaf p retrans coef", "notes"] <- "P concentration leaf - leaflitter"
@@ -98,7 +98,7 @@ make_p_budgeting_variables <- function() {
     out[out$terms == "total p requirement", "notes"] <- "NPP by P conc"
     out[out$terms == "overstorey p requirement", "notes"] <- "leaf, wood, roots, frass and other litter"
     out[out$terms == "understorey p requirement", "notes"] <- "only aboveground"
-    out[out$terms == "total p retranslocated", "notes"] <- "only leaf, no info on wood and roots and understorey"
+    out[out$terms == "total p retranslocated", "notes"] <- "only leaf and root, no info on wood and understorey"
     out[out$terms == "total p uptake from soil", "notes"] <- "the diff between req and retrans"
     out[out$terms == "total uptake over requirement", "notes"] <- "very high uptake"
     out[out$terms == "total P MRT in plant", "notes"] <- "standing stock / uptake"
