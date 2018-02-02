@@ -84,12 +84,6 @@ wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
                                             c_frac=c_fraction,
                                             return_tree_level=FALSE)
 
-test1 <- subset(wood_c_pool, Ring == 6)
-with(test1, plot(wood_pool~Date, type="b"))
-
-test2 <- subset(wood_c_pool_total, Ring == 6)
-with(test2, plot(wood_pool~Date, type="b"))
-
 #### Wood C production
 wood_c_production <- make_wood_production_flux(wood_c_pool)
 
@@ -167,7 +161,15 @@ canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
 #### for data points where we have C but not P, we can create a separte script
 #### and gap-fill P concentration based on average values
 leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
-leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_p_concentration)  
+leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_p_concentration) 
+
+
+#### Fine root litter P production
+### assuming P retranslocation coefficient for fine root is 50%
+### and fine root c production flux is fine root c litter flux
+fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_concentration,
+                                                            c_flux=fineroot_c_production_flux,
+                                                            p_retrans=0.5)
 
 #### Other litterfall
 #### Used wood P concentration to extrapolate

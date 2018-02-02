@@ -10,8 +10,8 @@ make_flux_summary_table_by_treatment <- function() {
     
     ### Define production variable names
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
-               "Coarse Root P flux",
-               "Leaflitter P flux", "Other litter P flux", "Frass P flux",
+               "Coarse Root P flux","Leaflitter P flux", "Fineroot Litter P flux",
+               "Other litter P flux", "Frass P flux",
                "Understorey P flux", "Mineralization P flux")
     
     treatDF <- data.frame(terms)
@@ -108,6 +108,17 @@ make_flux_summary_table_by_treatment <- function() {
     treatDF$year_end[treatDF$terms == "Leaflitter P flux"] <- max(year(leaflitter_p_flux$Date))    
     treatDF$timepoint[treatDF$terms == "Leaflitter P flux"] <- length(unique(leaflitter_p_flux$Date))  
     treatDF$notes[treatDF$terms == "Leaflitter P flux"] <- "Only leaves, exclude twig, barks and seeds"
+    
+    ### Fine Root litter flux
+    # assume it's the same as fine root production flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Fineroot Litter P flux", i+1] <- with(fineroot_litter_p_flux[fineroot_litter_p_flux$Ring ==i,],
+                                                                  sum(fineroot_litter_p_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Fineroot Litter P flux"] <- min(year(fineroot_litter_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Fineroot Litter P flux"] <- max(year(fineroot_litter_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Fineroot Litter P flux"] <- length(unique(fineroot_litter_p_flux$Date))  
+    treatDF$notes[treatDF$terms == "Fineroot Litter P flux"] <- "Assuming fineroot production = fineroot litter production"
     
     
     ### Other aboveground litter flux

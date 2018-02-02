@@ -945,7 +945,29 @@ Data still not available.
 
 ```
 
-### 5.15 other aboveground litter P flux
+### 5.15 Fineroot litter P flux
+
+This is estimated based on fine root c production flux, fineroot p concentration, and an bulk estimate of fine root P retranslocation coefficient. 
+
+``` {r, echo=FALSE, warning=FALSE}
+
+    fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_concentration,
+                                                            c_flux=fineroot_c_production_flux,
+                                                            p_retrans=0.5)
+    ### make the plot
+    p <- ggplot(fineroot_litter_p_flux,
+                aes(Date, fineroot_litter_p_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Fineroot Litter P production (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
+
+
+### 5.16 other aboveground litter P flux
 ``` {r, echo=FALSE, warning=FALSE, message = FALSE}
 
     other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
@@ -962,7 +984,7 @@ Data still not available.
 
 ```
 
-### 5.16 Frass production P flux
+### 5.17 Frass production P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
@@ -981,7 +1003,7 @@ Data still not available.
 
 ```
 
-### 5.17 Understorey production P flux
+### 5.18 Understorey production P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
@@ -1002,7 +1024,7 @@ Data still not available.
 
 Used Varsha's harvest data to extrapolate. 
 
-### 5.18 Soil mineralization P flux
+### 5.19 Soil mineralization P flux
 ``` {r, echo=FALSE, warning=FALSE}
 
     soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
