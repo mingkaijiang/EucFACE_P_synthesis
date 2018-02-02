@@ -79,6 +79,16 @@ wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
                                 c_frac=c_fraction,
                                 return_tree_level=FALSE)
 
+# wood c without excluding mortality
+wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
+                                            c_frac=c_fraction,
+                                            return_tree_level=FALSE)
+
+test1 <- subset(wood_c_pool, Ring == 6)
+with(test1, plot(wood_pool~Date, type="b"))
+
+test2 <- subset(wood_c_pool_total, Ring == 6)
+with(test2, plot(wood_pool~Date, type="b"))
 
 #### Wood C production
 wood_c_production <- make_wood_production_flux(wood_c_pool)

@@ -504,7 +504,7 @@ Assuming C fraction of 0.5, we can derive the canopy C pool, as:
 
 ```
 
-
+<br/>
 Next, I calculate litter fall fluxes:
 
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -585,6 +585,8 @@ Fineroot production flux is:
     
 ```
 
+<br/>
+
 Now, I am comparing coarse root c pools based on two methods. 
 
 Method 1:
@@ -606,6 +608,8 @@ Method 1:
     plot(p)
     
 ```
+
+<br/>
 
 Method 2:
 
@@ -651,7 +655,7 @@ Method 2 has slightly higher C pools than method 1. And the inter-ring relations
         ### make the plot
     p <- ggplot(wood_c_pool,
                 aes(Date, wood_pool, color=factor(Ring))) +   
-            geom_point(size = 0.5) + geom_line() + 
+            geom_point(size = 2.5) + geom_line() + 
             xlab("Date") + ylab("Wood C (g C m-2)") + 
             scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
                                         "#FF4040", "#8B0000", "#0000FF"))
@@ -659,13 +663,19 @@ Method 2 has slightly higher C pools than method 1. And the inter-ring relations
 
 ```
 
+<br/>
+
+Wood pool decreases over certain periods for certain rings (e.g. ring 6, 5, 2). I investigated this by looking at the raw diameter data. Notably, only 1 tree was marked as mortality in ring 6 (tree 608); however, we don't know when it died. Raw diameter data indicates that, decrease in diameter is common in the measurements. Hence, mortality is not driving this decrease in wood pool pattern. 
+
+On the other hand, we still need to properly account for mortality, or standing dead pool. Because the data only marked one tree as dead, we need to 1) check if any additional death data is avaialble, and 2) make them a separate pool as dead wood, and make an additional total wood pool. 
+
 Next, wood C production is:
 
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     ### make the plot
     p <- ggplot(wood_c_production,
                 aes(Date, wood_production_flux, color=factor(Ring))) +   
-            geom_point(size = 0.5) + geom_line() + 
+            geom_point(size = 2.5) + geom_line() + 
             xlab("Date") + ylab("Wood C production (mg C m-2 d-1)") + 
             scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
                                         "#FF4040", "#8B0000", "#0000FF"))
@@ -673,6 +683,7 @@ Next, wood C production is:
 
 ```
 
+Because wood pool may either increase or decrease over a certain measurement period, wood production can be either positive or negative. 
 
 # 5. P pools and fluxes
 
