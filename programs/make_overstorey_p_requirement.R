@@ -6,8 +6,11 @@ make_overstorey_p_requirement_table <- function(sumDF) {
     #### Just focus on aCO2 and eCO2 for now.
     
     ### total requirement
-    sumDF <- sumDF[c(1, 2, 3, 4, 6, 7), ]
-    tot <- colSums(sumDF[,2:7])
+    myDF <- rbind(sumDF[sumDF$terms == "Wood P flux",], sumDF[sumDF$terms == "Canopy P flux",],
+                  sumDF[sumDF$terms == "Fine Root P flux",], sumDF[sumDF$terms == "Coarse Root P flux",],
+                  sumDF[sumDF$terms == "Other litter P flux",], sumDF[sumDF$terms == "Frass P flux",])
+    
+    tot <- colSums(myDF[,2:7])
 
     out <- matrix(NA, nrow=1, ncol=8)
     out <- as.data.frame(out)

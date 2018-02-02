@@ -6,7 +6,7 @@ make_understorey_p_requirement_table <- function(sumDF) {
     #### Just focus on aCO2 and eCO2 for now.
     
     ### total requirement
-    sumDF <- sumDF[8, ]
+    sumDF <- sumDF[sumDF$terms == "Understorey P flux",]
     tot <- colSums(sumDF[,2:7])
 
     out <- matrix(NA, nrow=1, ncol=8)
