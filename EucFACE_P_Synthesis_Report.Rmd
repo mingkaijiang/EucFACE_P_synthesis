@@ -1061,7 +1061,7 @@ Finally, I summarize all flux variables:
     summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
     
     # make the table looks nicer
-    colnames(summary_table_flux_by_treatment)[1] <- "Variable"
+    colnames(summary_table_flux_by_treatment)[1] <- "term"
     summary_table_flux_by_treatment[,2:7] <- round(summary_table_flux_by_treatment[,2:7], 3)
     
     kable(summary_table_flux_by_treatment)
