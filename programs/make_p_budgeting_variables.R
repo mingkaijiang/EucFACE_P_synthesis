@@ -54,6 +54,8 @@ make_p_budgeting_variables <- function() {
                                         p_up=total_p_uptake_from_soil)
     
     ### Standing PUE, i.e. NPP / P Uptake
+    source("programs/make_standing_pue.R")
+    standing_pue <- make_standing_pue(p_up=total_p_uptake_from_soil)
     
     
     ### out df
@@ -81,6 +83,7 @@ make_p_budgeting_variables <- function() {
     out[out$terms == "total p uptake from soil", 2:9] <- round(total_p_uptake_from_soil[1,],2)
     out[out$terms == "total uptake over requirement", 2:9] <- round(p_uptake_over_requirement[1,], 1)
     out[out$terms == "total P MRT in plant", 2:9] <- round(P_mean_residence_time[1,1:8],2)
+    out[out$terms == "total standing PUE", 2:7] <- round(standing_pue[1:6, "PUP_by_NPP"],2)
     
     
     ### aCO2 and eCO2 averages

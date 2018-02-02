@@ -1134,6 +1134,9 @@ Here, I summarize all P budgeting variables, in a table:
 
 ```
 
+Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment. It currently does not include any components of the understorey parts. So, the uptake/requirement ratio is high because we ignores understorey retranslocation. Or, we should only be calculating the overstorey P uptake and requirement. 
+
+There is no literature value on Microlaena P retranslocation. 
 
 <br/>
 <br/>
