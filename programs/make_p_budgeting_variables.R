@@ -21,6 +21,8 @@ make_p_budgeting_variables <- function() {
     source("programs/make_understorey_standing_p_stock.R")
     understorey_standing_p_stock <- make_understorey_standing_p_stock(abg=understorey_p_pool)
     
+    total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$understorey_p_pool
+    
     ### P requirements, i.e. using plant P fluxes 
     source("programs/make_total_p_requirement.R")
     total_p_requirement_table <- make_total_p_requirement_table(summary_table_flux_by_treatment)
@@ -37,22 +39,19 @@ make_p_budgeting_variables <- function() {
     
     ### P uptake from soil, i.e. P requirement - P retranslocation
     source("programs/make_p_uptake_from_soil.R")
-    total_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=p_requirement_table,
+    total_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=total_p_requirement_table,
                                                         p_retrans=total_p_retranslocation)
     
     ### Uptake/requirement
     source("programs/make_p_uptake_over_requirement.R")
     p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=total_p_uptake_from_soil,
-                                                                p_req=p_requirement_table)
+                                                                p_req=total_p_requirement_table)
     
     
     ### MRT, i.e. Standing P / Uptake
     source("programs/make_p_MRT.R")
-    P_mean_residence_time <- make_p_MRT(p_stand=standing_p_stock,
+    P_mean_residence_time <- make_p_MRT(p_stand=total_standing_p_stock,
                                         p_up=total_p_uptake_from_soil)
-    
-    ### averaging
-    P_mean_residence_time_avg <- colMeans(P_mean_residence_time)
     
     ### Standing PUE, i.e. NPP / P Uptake
     
@@ -81,7 +80,7 @@ make_p_budgeting_variables <- function() {
     out[out$terms == "total p retranslocated", 2:9] <- round(total_p_retranslocation[1,],3)
     out[out$terms == "total p uptake from soil", 2:9] <- round(total_p_uptake_from_soil[1,],2)
     out[out$terms == "total uptake over requirement", 2:9] <- round(p_uptake_over_requirement[1,], 1)
-    out[out$terms == "total P MRT in plant", 2:9] <- round(P_mean_residence_time[1,2:8],2)
+    out[out$terms == "total P MRT in plant", 2:9] <- round(P_mean_residence_time[1,1:8],2)
     
     
     ### aCO2 and eCO2 averages

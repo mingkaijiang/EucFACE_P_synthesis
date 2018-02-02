@@ -1069,11 +1069,11 @@ Finally, I summarize all flux variables:
 ```
 
 
-Now, I calculate total standing P stocks
+Now, I calculate overstorey standing P stocks
 
 ``` {r, echo = FALSE} 
-    source("programs/make_standing_p_stock.R")
-    standing_p_stock <- make_standing_p_stock(leaf=canopy_p_pool, 
+    source("programs/make_overstorey_standing_p_stock.R")
+    standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
                                               wood=wood_p_pool, 
                                               froot=fineroot_p_pool, 
                                               croot=coarse_root_p_pool_1)
@@ -1119,16 +1119,26 @@ Here, I summarize all P budgeting variables, in a table:
 
 
 # 8. To-do list
-- Continuous understorey C data (Matthias)
-- Hedley Fractionation, in 2-3 weeks (Cat)
-- Microbial turnover rate (Cat and Johanna, but may not be available soon)
-- Mycorrhizal data for both C and P project (Jeff)
-- Root mortality and turnover for both C and P project (Juan)
-- Canopy turnover 
-- Meteorological data, including soil moisture (HIEv)
-- Summarize P concentration using min and max
-- Calculate P budgeting variables and interpret the results. 
-- Possibly look at 2015 to see CO2 treatment effect. 
+
+    - Continuous understorey C data (Matthias)
+    - Hedley Fractionation, in 2-3 weeks (Cat)
+    - Microbial turnover rate (Cat and Johanna, but may not be available soon)
+    - Mycorrhizal data for both C and P project (Jeff)
+    - Root mortality and turnover for both C and P project (Juan)
+    - Canopy turnover 
+    - Meteorological data, including soil moisture (HIEv)
+    - Summarize P concentration using min and max
+    - Possibly look at 2015 to see CO2 treatment effect. 
+    - Check microbial pool biomass data with Cat
+    - Wood C production and pool over time, why negative
+    - Create mortality pool, or standing dead pool
+    - summary diagrams for aCO2 and eCO2
+    - fraction of sapwood to extrapolate wood retranslocation coefficients
+    - fine root and coarse root P retranslocation coefficients
+    - understorey respiration from literature
+    - CH4 data
+    - litter pool
+    - split aboveground and belowground in summary table
 
 <br/>
 <br/>
