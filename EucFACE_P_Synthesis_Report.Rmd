@@ -1100,6 +1100,7 @@ Now, I summarize all flux variables:
     kable(summary_table_flux_by_treatment)
 
 ```
+
 <br/>
 <br/>
 <br/>
