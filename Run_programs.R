@@ -266,6 +266,9 @@ summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
 source("programs/make_c_pool_summary_table_by_treatment.R")
 summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
 
+### C fluxes by treatment and ring
+source("programs/make_c_flux_summary_table_by_treatment.R")
+summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
 
 ### Calculate all P budgeting variables
 source("programs/make_p_budgeting_variables.R")
