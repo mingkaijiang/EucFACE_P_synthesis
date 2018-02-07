@@ -44,8 +44,8 @@ make_leaf_p_retranslocation_coefficient <- function(){
     ### calculate leaf P retranslocation rate based on dead and green leaf
     retransDF <- cbind(df.green.p, df.dead.p$PercP)
     colnames(retransDF) <- c("Ring", "green", "dead")
-    retransDF$percent_diff <- retransDF$green - retransDF$dead
-    retransDF$retrans_coef <- 1 - (retransDF$percent_diff/retransDF$green)
+    retransDF$retrans_coef <- (retransDF$green - retransDF$dead) / retransDF$green 
+    #retransDF$retrans_coef <- 1 - (retransDF$percent_diff/retransDF$green)
     
     ### Plot eCO2 effect on retranslocation coefficient
     retransDF$CO2 <- c("eCO2", "aCO2", "aCO2", "eCO2", "eCO2", "aCO2")
