@@ -44,6 +44,9 @@ understorey_p_concentration <- make_understorey_p_concentration()
 #### Mycorrhizal P conc.
 ### Check back with Jeff in 2 weeks' time. 
 
+#### Soil mineral P conc. 
+### It's almost ready!
+
 
 ###### ----------- Preparing C and other variables  ----------- ######
 #### For all C pools, unit in g C m-2,
@@ -80,6 +83,8 @@ wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
                                 return_tree_level=FALSE)
 
 # wood c without excluding mortality
+# mortality is not a big issue here as only one tree was marked dead!
+# missing data? Tree shrinking? Measurement error?
 wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
                                             c_frac=c_fraction,
                                             return_tree_level=FALSE)
@@ -123,6 +128,8 @@ coarse_root_c_pool_2 <- make_coarse_root_pool_2(c_fraction, FACE_ring_area)
 #### Coarse root C production
 coarse_root_c_flux_1 <- make_coarse_root_production_flux(coarse_root_c_pool_1) 
 coarse_root_c_flux_2 <- make_coarse_root_production_flux(coarse_root_c_pool_2) 
+
+
 
 
 ###### ----------- Generating P pools and fluxes  ----------- ######
@@ -254,6 +261,10 @@ summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
 ### P fluxes by treatment and ring
 source("programs/make_flux_summary_table_by_treatment.R")
 summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
+
+### C pools by treatment and ring
+source("programs/make_c_pool_summary_table_by_treatment.R")
+summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
 
 
 ### Calculate all P budgeting variables

@@ -1088,6 +1088,27 @@ Next, I summarize all pool variables:
 <br/>
 <br/>
 
+Here I am summarizing all the C pools used for P calculations:
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    # first, compute the microbial c pool as we will need it for summary purpose
+    microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
+
+    # now make the summary
+    source("programs/make_c_pool_summary_table_by_treatment.R")
+    summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
+    
+    # make the table looks nicer
+    # colnames(summary_table_c_pool_by_treatment)[1] <- "Variable"
+    summary_table_c_pool_by_treatment[,2:7] <- round(summary_table_c_pool_by_treatment[,2:7], 1)
+    
+    kable(summary_table_c_pool_by_treatment)
+
+```
+
+<br/>
+<br/>
+<br/>
+<br/>
 Now, I summarize all flux variables:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/make_flux_summary_table_by_treatment.R")

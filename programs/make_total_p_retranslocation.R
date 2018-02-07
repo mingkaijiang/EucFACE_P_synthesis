@@ -12,3 +12,7 @@ make_total_p_retranslocation <- function(sumDF) {
     
     return(retranDF)
 }
+
+
+test <- summary_table_flux_by_treatment[2, 2:9] - summary_table_flux_by_treatment[5,2:9]
+test2 <- test/summary_table_flux_by_treatment[2, 2:9] * 100

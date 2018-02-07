@@ -51,10 +51,12 @@ make_leaf_p_retranslocation_coefficient <- function(){
     retransDF$CO2 <- c("eCO2", "aCO2", "aCO2", "eCO2", "eCO2", "aCO2")
 
     pdf("plots_tables/CO2_effect_on_P_retranslocation_coefficient.pdf")
-    p <- ggplot(retransDF, aes(CO2, retrans_coef, color=factor(Ring))) +   
+    p <- ggplot(retransDF, aes(CO2, retrans_coef*100, color=factor(Ring))) +   
         geom_point(size = 5) +
         xlab("Treatment") + ylab("Leaf P retranslocation coefficient (%)") + 
-        ggtitle("CO2 effect on P retranslocation coefficient") 
+        ggtitle("CO2 effect on P retranslocation coefficient") + 
+        scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                    "#FF4040", "#8B0000", "#0000FF"))
     plot(p)
     dev.off()
     
