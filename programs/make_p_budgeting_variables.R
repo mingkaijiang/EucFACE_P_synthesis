@@ -124,15 +124,27 @@ make_p_budgeting_variables <- function() {
     
     ### notes
     out[out$terms == "overstorey leaf p retrans coef", "notes"] <- "P concentration leaf - leaflitter"
+    
     out[out$terms == "total standing p stock", "notes"] <- "overstorey + understorey"
     out[out$terms == "overstorey standing p stock", "notes"] <- "canopy, wood, fineroot & coarse root"
     out[out$terms == "understorey standing p stock", "notes"] <- "no data on understorey belowground"
+    
     out[out$terms == "total p requirement", "notes"] <- "NPP by P conc"
     out[out$terms == "overstorey p requirement", "notes"] <- "leaf, wood, roots, frass and other litter"
     out[out$terms == "understorey p requirement", "notes"] <- "only aboveground"
-    out[out$terms == "total p retranslocated", "notes"] <- "only leaf and root, no info on wood and understorey"
+    
+    out[out$terms == "total p retranslocated", "notes"] <- "guess value for understorey"
+    out[out$terms == "overstorey p retranslocated", "notes"] <- "wood increment included, no consideration of coarse root"
+    out[out$terms == "understorey p retranslocated", "notes"] <- "50% retranslocated"
+    
     out[out$terms == "total p uptake from soil", "notes"] <- "the diff between req and retrans"
-    out[out$terms == "total uptake over requirement", "notes"] <- "very high uptake"
+    out[out$terms == "overstorey p uptake from soil", "notes"] <- "the diff between req and retrans"
+    out[out$terms == "understorey p uptake from soil", "notes"] <- "the diff between req and retrans"
+    
+    out[out$terms == "total uptake over requirement", "notes"] <- "uncertainty in wood and understorey"
+    out[out$terms == "overstorey uptake over requirement", "notes"] <- "no consideration of coarse root"
+    out[out$terms == "understorey uptake over requirement", "notes"] <- "50% retranslocation"
+    
     out[out$terms == "total P MRT in plant", "notes"] <- "standing stock / uptake"
     out[out$terms == "total standing PUE", "notes"] <- "NPP / uptake"
     

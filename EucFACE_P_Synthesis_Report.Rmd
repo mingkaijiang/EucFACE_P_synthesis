@@ -766,7 +766,8 @@ This pool seems very large, especially consideration its concentration is very s
 ``` {r, echo=FALSE, warning=FALSE}
 
     wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                    c_pool=wood_c_pool)
+                                    c_pool=wood_c_pool,
+                                    case_consideration="sapwood")
 
     ### make the plot
     p <- ggplot(wood_p_pool,
@@ -1160,9 +1161,7 @@ Here, I summarize all P budgeting variables, in a table:
 
 ```
 
-Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment. It currently does not include any components of the understorey parts. So, the uptake/requirement ratio is high because we ignores understorey retranslocation. Or, we should only be calculating the overstorey P uptake and requirement. 
-
-There is no literature value on Microlaena P retranslocation. 
+Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment and understorey. Understorey part is a guess retranslocation coefficient, as there is no literature value on Microlaena P retranslocation. 
 
 <br/>
 <br/>
@@ -1186,11 +1185,9 @@ High priorities:
 
     - Summarize P concentration using min and max
     - Possibly look at 2015 to see CO2 treatment effect. 
-    - Check microbial pool biomass data with Cat
+    - Cat re-check microbial extraction procedure
     - Wood C production and pool over time, why negative
     - Create mortality pool, or standing dead pool
-    - Summary diagrams for aCO2 and eCO2
-    - Fraction of sapwood to extrapolate wood retranslocation coefficients
 
 <br/> 
 
