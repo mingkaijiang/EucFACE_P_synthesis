@@ -47,3 +47,6 @@ g_per_cm3_to_ppm <- 1000000
 
 # understorey biomass harvest strip area m2
 strip_area <- 0.1
+
+# understorey P retranslocation coefficient
+retrans_ud <- 0.5

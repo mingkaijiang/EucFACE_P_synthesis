@@ -184,7 +184,8 @@ other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)
 
 #### Wood P pool   
 wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                c_pool=wood_c_pool)
+                                c_pool=wood_c_pool,
+                                case_consideration = "sapwood")
 
 
 #### Wood production flux

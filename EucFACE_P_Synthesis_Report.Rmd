@@ -685,6 +685,7 @@ Next, wood C production is:
 
 Because wood pool may either increase or decrease over a certain measurement period, wood production can be either positive or negative. 
 
+
 # 5. P pools and fluxes
 
 ### 5.1 Soil P pool
@@ -1162,8 +1163,6 @@ Here, I summarize all P budgeting variables, in a table:
 Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment. It currently does not include any components of the understorey parts. So, the uptake/requirement ratio is high because we ignores understorey retranslocation. Or, we should only be calculating the overstorey P uptake and requirement. 
 
 There is no literature value on Microlaena P retranslocation. 
-
-Next, I am plotting all the P budgeting variables. 
 
 <br/>
 <br/>
