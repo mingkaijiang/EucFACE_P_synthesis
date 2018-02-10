@@ -276,8 +276,9 @@ source("programs/summary_variables/make_p_budgeting_variables.R")
 summary_table_p_budgets <- make_p_budgeting_variables()
 
 ###### ---------------- Generating CP ratios -------------------- ######
-source("programs/summary_variables/generate_cp_ratios.R")
-summary_cp_ratios <- make_cp_ratios()
+source("programs/summary_tables/generate_cp_ratios.R")
+summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
+                                    p_pool=summary_table_pool_by_treatment)
 
 
 ###### ---------------- Import local met data -------------------- ######
