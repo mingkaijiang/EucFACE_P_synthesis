@@ -56,6 +56,18 @@ make_wood_c_pool <- function(ring_area, c_frac,
     ### add biomass to long-form dataframe
     long$biom <- allom_agb(long$diam)  # in kg DM
     
+    ### calculate heartwood height,
+    ### based on Morais and Pereira. 2007. Annals of forest science
+    long$heart_height <- 0.957 * as.numeric(long$Height) - 2.298
+    
+    ### calculate heartwood diameter,
+    ### based on Morais and Pereira, 2007, Annals of Forest Science
+    long$heart_diam <- -1.411 + 0.809 * long$diam
+    
+    ### calculate biomass of heartwood and sapwood
+    long$heart_biom <- allom_agb(long$heart_diam)
+    long$sap_biom <- long$biom - long$heart_biom
+    
     ### The bark removal affects the diameters mid-year. 
     ### Hence, just calculate biomass once per year 
     ### Specify dates here - may update this to March in future
@@ -66,33 +78,26 @@ make_wood_c_pool <- function(ring_area, c_frac,
     if(return_tree_level)return(data)
     
     ### sum across rings and dates
-    data.m <- summaryBy(biom~Date+Ring,data=data,FUN=sum,keep.names=T,na.rm=T)
-    
-    ### sapwood to heartwood ratio:
-    ### This is based on Table 3 of 
-    ### Morais and Pereira, 2012. Wood Sci. Technol. Vol 46.
-    ### in the future, we need to consider rlt between 
-    ### tree diameter and heartwood height, and 
-    ### tree diameter and heartwood diameter. 
-    ### for now, this is an easy approach
-    sap_to_heart <- 1.6
-    
+    data.tot <- summaryBy(biom~Date+Ring,data=data,FUN=sum,keep.names=T,na.rm=T)
+    data.heart <- summaryBy(heart_biom~Date+Ring,data=data,FUN=sum,keep.names=T,na.rm=T)
+    data.sap <- summaryBy(sap_biom~Date+Ring,data=data,FUN=sum,keep.names=T,na.rm=T)
+
     ### calculate sapwood and heartwood biomass
-    data.m$sap_biom <- data.m$biom * sap_to_heart / (sap_to_heart + 1.0)
-    data.m$hea_biom <- data.m$biom - data.m$sap_biom
+    out.dat <- cbind(data.tot, data.heart$heart_biom, data.sap$sap_biom)
+    colnames(out.dat) <- c("Date", "Ring", "Tot_biom", "Heart_biom", "Sap_biom")
     
     ## divide by ring area to get biomass per m2
-    data.m$wood_pool <- data.m$biom / ring_area
-    data.m$sap_pool <- data.m$sap_biom /ring_area
-    data.m$heart_pool <- data.m$hea_biom /ring_area
+    out.dat$wood_pool <- out.dat$Tot_biom / ring_area
+    out.dat$sap_pool <- out.dat$Sap_biom /ring_area
+    out.dat$heart_pool <- out.dat$Heart_biom /ring_area
     
     ### convert from kg DM m-2 to g C m-2
-    data.m$wood_pool <- data.m$wood_pool * c_frac * 1000
-    data.m$sap_pool <- data.m$sap_pool * c_frac * 1000
-    data.m$heart_pool <- data.m$heart_pool * c_frac * 1000
+    out.dat$wood_pool <- out.dat$wood_pool * c_frac * 1000
+    out.dat$sap_pool <- out.dat$sap_pool * c_frac * 1000
+    out.dat$heart_pool <- out.dat$heart_pool * c_frac * 1000
     
     ### format dataframe to return
-    wood_pool <- data.m[,c("Date", "Ring", "wood_pool", "sap_pool", "heart_pool")]
+    wood_pool <- out.dat[,c("Date", "Ring", "wood_pool", "sap_pool", "heart_pool")]
     
     return(wood_pool)
 }
