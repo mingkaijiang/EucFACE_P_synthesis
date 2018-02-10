@@ -1173,15 +1173,22 @@ Note: total P retranslocation includes leaf and fineroot retranslocation, plus w
 
 # 7. C:P ratios
 
-<br/>
-<br/>
-<br/>
-<br/>
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_tables/make_cp_ratios.R")
+    summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
+                                        p_pool=summary_table_pool_by_treatment)
+    
+    kable(summary_cp_ratios)
+
+```
+
 <br/>
 <br/>
 
 
 # 8. To-do list
+
+This list is a continuous update of the to-do items for both EucFACE C and P projects. It includes both high and less priority items. 
 
 High priorities:
 
@@ -1192,20 +1199,21 @@ High priorities:
     - Create mortality pool, or standing dead pool
     - Create error bars
     - Canopy P conc. for all year
+    - Met data (including soil moisture)
+    - Understorey respiration rate scaled with temperature
+    - Understorey continuous C estimates based on Stereo cameras
+    - GPP data from Maespa
 
 <br/> 
 
 Less priorities:
 
-    - Continuous understorey C data (Matthias) - Calibration checked and more data coming shortly, maybe useful for understorey turnover.
     - Hedley Fractionation (Cat) - almost done
     - Microbial turnover rate (Cat and Johanna, but may not be available soon)
     - Mycorrhizal data for both C and P project (Jeff)
     - Root mortality and turnover for both C and P project (Juan)
-    - Meteorological data, including soil moisture (HIEv)
     - More valid fine root and coarse root P retranslocation coefficients
-    - understorey P retranslocation coefficient
-    - Understorey respiration from literature, but without a relationship to temperature
+    - understorey P retranslocation coefficient verification
     - CH4 data
     - litter pool
 

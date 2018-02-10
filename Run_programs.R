@@ -254,7 +254,6 @@ coarse_root_p_flux_2 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
 source("programs/summary_tables/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
 
-
 ### P pools by treatment and ring
 source("programs/summary_tables/make_pool_summary_table_by_treatment.R")
 summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
@@ -276,7 +275,7 @@ source("programs/summary_variables/make_p_budgeting_variables.R")
 summary_table_p_budgets <- make_p_budgeting_variables()
 
 ###### ---------------- Generating CP ratios -------------------- ######
-source("programs/summary_tables/generate_cp_ratios.R")
+source("programs/summary_tables/make_cp_ratios.R")
 summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
                                     p_pool=summary_table_pool_by_treatment)
 
