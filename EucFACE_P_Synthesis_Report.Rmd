@@ -437,7 +437,7 @@ We need to think about data collected from the same time point. For now, because
 
 ``` {r, echo=FALSE, warning=FALSE}
 
-    source("programs/make_leaf_p_retranslocation_coefficient.R")
+    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient.R")
     leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
 
     p <- ggplot(leaf_p_retrans_coefficient, aes(CO2, retrans_coef, color=factor(Ring))) +   
@@ -784,6 +784,8 @@ This pool seems very large, especially consideration its concentration is very s
 We have only concentration measurement for one point in time. Assume this rate applies to all biomass. 
 Check, why inconsistent time points. 
 
+Also, we only took sapwood to calculate wood p, assuming that all heartwood P is retranslocated (i.e. zero P concentration).
+
 ### 5.6 Fine root P pool
 ``` {r, echo=FALSE, warning=FALSE}
 
@@ -1056,7 +1058,7 @@ Below, I summarize the per ring, per treatment table for all P concentration var
 Rings 2, 3, 6 are ambient CO2 rings, and rings 1, 4, 5 are elevated CO2 rings. 
 
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_conc_summary_table_by_treatment.R")
+    source("programs/summary_tables/make_conc_summary_table_by_treatment.R")
     summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
     
     # make the table looks nicer
@@ -1074,7 +1076,7 @@ Rings 2, 3, 6 are ambient CO2 rings, and rings 1, 4, 5 are elevated CO2 rings.
 
 Next, I summarize all P pool variables:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_pool_summary_table_by_treatment.R")
+    source("programs/summary_tables/make_pool_summary_table_by_treatment.R")
     summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
     
     # make the table looks nicer
@@ -1096,7 +1098,7 @@ Here I am summarizing all the C pools used for P calculations:
     microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
     # now make the summary
-    source("programs/make_c_pool_summary_table_by_treatment.R")
+    source("programs/summary_tables/make_c_pool_summary_table_by_treatment.R")
     summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
     
     # make the table looks nicer
@@ -1114,7 +1116,7 @@ Here I am summarizing all the C pools used for P calculations:
 
 Now, I summarize all P flux variables:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_flux_summary_table_by_treatment.R")
+    source("programs/summary_tables/make_flux_summary_table_by_treatment.R")
     summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
     
     # make the table looks nicer
@@ -1132,7 +1134,7 @@ Now, I summarize all P flux variables:
 
 Now, we need all the C flux variables to make reference of:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_c_flux_summary_table_by_treatment.R")
+    source("programs/summary_tables/make_c_flux_summary_table_by_treatment.R")
     summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
     
     # make the table looks nicer
@@ -1151,7 +1153,7 @@ Now, we need all the C flux variables to make reference of:
 
 Here, I summarize all P budgeting variables, in a table:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_p_budgeting_variables.R")
+    source("programs/summary_variables/make_p_budgeting_variables.R")
     summary_table_p_budgets <- make_p_budgeting_variables()
     
     # make the table looks nicer

@@ -251,32 +251,33 @@ coarse_root_p_flux_2 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
 
 ###### ---------------- Making P budgeting variables and tables -------------------- ######
 ### P concentration by treatment and ring
-source("programs/make_conc_summary_table_by_treatment.R")
+source("programs/summary_tables/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
 
 
 ### P pools by treatment and ring
-source("programs/make_pool_summary_table_by_treatment.R")
+source("programs/summary_tables/make_pool_summary_table_by_treatment.R")
 summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
 
 ### P fluxes by treatment and ring
-source("programs/make_flux_summary_table_by_treatment.R")
+source("programs/summary_tables/make_flux_summary_table_by_treatment.R")
 summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
 
 ### C pools by treatment and ring
-source("programs/make_c_pool_summary_table_by_treatment.R")
+source("programs/summary_tables/make_c_pool_summary_table_by_treatment.R")
 summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
 
 ### C fluxes by treatment and ring
-source("programs/make_c_flux_summary_table_by_treatment.R")
+source("programs/summary_tables/make_c_flux_summary_table_by_treatment.R")
 summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
 
 ### Calculate all P budgeting variables
-source("programs/make_p_budgeting_variables.R")
+source("programs/summary_variables/make_p_budgeting_variables.R")
 summary_table_p_budgets <- make_p_budgeting_variables()
 
 ###### ---------------- Generating CP ratios -------------------- ######
-
+source("programs/summary_variables/generate_cp_ratios.R")
+summary_cp_ratios <- make_cp_ratios()
 
 
 ###### ---------------- Import local met data -------------------- ######
