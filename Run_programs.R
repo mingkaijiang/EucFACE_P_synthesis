@@ -272,6 +272,8 @@ coarse_root_p_flux_2 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
 source("programs/summary_tables/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
 
+### We can also compute P conc. min and max
+
 ### P pools by treatment and ring
 source("programs/summary_tables/make_pool_summary_table_by_treatment.R")
 summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
@@ -297,8 +299,11 @@ source("programs/summary_tables/make_cp_ratios.R")
 summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
                                     p_pool=summary_table_pool_by_treatment)
 
+### check - has CP ratio changed over time?
 
-###### ---------------- Import local met data -------------------- ######
+###### ---------------- Import met data -------------------- ######
+
+
 
 
 ###### ---------- Compute statistical analyses ----------------- ######

@@ -28,7 +28,6 @@ This procedure is a snapshot of the work. It might be easier just to follow the 
     - With carbon/biomass related variables, calculate P pools and fluxes.
     - Calculate P budgeting variables, e.g. total standing P stock, P retranslocation coefficient, etc.
     - Make summary tables.
-    - Interpret data, e.g. time-series trend, treatment effect, extreme response point, etc. 
 
 ### 2.2 Variables
 Here, I am summarizing all the P-related pool, flux and concentration variables. 
@@ -1073,6 +1072,8 @@ Positive values indicate minerlization, negative indicate immobilization.
     library(knitr)
 
 ```
+
+### P concentration table
 Below, I summarize the per ring, per treatment table for all P concentration variables. 
 Rings 2, 3, 6 are ambient CO2 rings, and rings 1, 4, 5 are elevated CO2 rings. 
 
@@ -1082,7 +1083,7 @@ Rings 2, 3, 6 are ambient CO2 rings, and rings 1, 4, 5 are elevated CO2 rings.
     
     # make the table looks nicer
     # colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
-    summary_table_concentration_by_treatment[,2:7] <- round(summary_table_concentration_by_treatment[,2:7], 3)
+    summary_table_concentration_by_treatment[,2:7] <-  round(summary_table_concentration_by_treatment[,2:7], 3)
     
     kable(summary_table_concentration_by_treatment)
 
@@ -1093,7 +1094,7 @@ Rings 2, 3, 6 are ambient CO2 rings, and rings 1, 4, 5 are elevated CO2 rings.
 <br/>
 <br/>
 
-Next, I summarize all P pool variables:
+### P pool table
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/summary_tables/make_pool_summary_table_by_treatment.R")
     summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
@@ -1106,10 +1107,7 @@ Next, I summarize all P pool variables:
 
 ```
 
-<br/>
-<br/>
-<br/>
-<br/>
+### C pool table
 
 Here I am summarizing all the C pools used for P calculations:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
@@ -1128,11 +1126,7 @@ Here I am summarizing all the C pools used for P calculations:
 
 ```
 
-<br/>
-<br/>
-<br/>
-<br/>
-
+### P flux table
 Now, I summarize all P flux variables:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/summary_tables/make_flux_summary_table_by_treatment.R")
@@ -1146,10 +1140,7 @@ Now, I summarize all P flux variables:
 
 ```
 
-<br/>
-<br/>
-<br/>
-<br/>
+### C flux table
 
 Now, we need all the C flux variables to make reference of:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
@@ -1170,7 +1161,7 @@ Now, we need all the C flux variables to make reference of:
 <br/>
 
 
-Here, I summarize all P budgeting variables, in a table:
+### P budget
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/summary_variables/make_p_budgeting_variables.R")
     summary_table_p_budgets <- make_p_budgeting_variables()
@@ -1184,13 +1175,8 @@ Here, I summarize all P budgeting variables, in a table:
 
 Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment and understorey. Understorey part is a guess retranslocation coefficient, as there is no literature value on Microlaena P retranslocation. 
 
-<br/>
-<br/>
-<br/>
-<br/>
 
-
-# 7. C:P ratios
+### CP ratios for all pools
 
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/summary_tables/make_cp_ratios.R")
@@ -1201,8 +1187,9 @@ Note: total P retranslocation includes leaf and fineroot retranslocation, plus w
 
 ```
 
-<br/>
-<br/>
+
+# 7. Has anything changed over time?
+Here, I will check if there's anything changed over time and if there's any CO2 effect or not. Results will be summarized as per ring and per treatment, for each variable respectively. This is because variables don't share common start and end dates. 
 
 
 # 8. To-do list
@@ -1220,7 +1207,7 @@ High priorities:
     - Met data (including soil moisture)
     - Understorey respiration rate scaled with temperature
     - Understorey continuous C estimates based on Stereo cameras
-    - GPP data from Maespa
+    - GPP data from Maespa - need to reconcile CUE issues for both overstorey and understorey
 
 <br/> 
 
