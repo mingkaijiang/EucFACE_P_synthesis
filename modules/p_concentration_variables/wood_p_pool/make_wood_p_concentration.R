@@ -1,4 +1,4 @@
-make_wood_p_concentration <- function() {
+make_wood_p_concentration <- function(func) {
     
     ### download the data
     infile <- "download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv"
@@ -17,7 +17,7 @@ make_wood_p_concentration <- function() {
     
     ### Wood p, average across rings and date, unit = %
     df.wood.p <- summaryBy(PercP~Ring+Date,
-                           data=df.wood,FUN=mean,keep.names=T,na.rm=T)
+                           data=df.wood,FUN=func,keep.names=T,na.rm=T)
     df.wood.p$month <- month(df.wood.p$Date)
     df.wood.p$year <- year(df.wood.p$Date)
     

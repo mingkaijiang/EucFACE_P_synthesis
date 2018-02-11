@@ -81,8 +81,10 @@ The other way to treat the complexity of variable P concentration over time is m
 Canopy P concentration summarized by ring over the experimental period:
 ``` {r, echo=FALSE}
     ### calculate the variable
-    canopy_p_concentration <- make_canopy_p_concentration()
-    
+    canopy_p_concentration <- make_canopy_p_concentration(func=mean)
+    canopy_p_concentration_min <- make_canopy_p_concentration(func=min)
+    canopy_p_concentration_max <- make_canopy_p_concentration(func=max)
+
     ### make the ring over date plot
     p <- ggplot(canopy_p_concentration,
                 aes(Date, PercP, color=factor(Ring))) +   
@@ -122,7 +124,9 @@ Wood P concentration summarized by treatment, and we only have one date:
 
 ``` {r, echo=FALSE}
     ### calculate the variable
-    wood_p_concentration <- make_wood_p_concentration()
+    wood_p_concentration <- make_wood_p_concentration(func=mean)
+    wood_p_concentration_min <- make_wood_p_concentration(func=min)
+    wood_p_concentration_max <- make_wood_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -153,7 +157,9 @@ Fineroot P concentration summarized by treatment over time:
 
 ``` {r, echo=FALSE}
     ### calculate the variable
-    fineroot_p_concentration <- make_fineroot_p_concentration()
+    fineroot_p_concentration <- make_fineroot_p_concentration(func=mean)
+    fineroot_p_concentration_min <- make_fineroot_p_concentration(func=min)
+    fineroot_p_concentration_max <- make_fineroot_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -204,7 +210,10 @@ Next, both leaflitter and senesced leaves were grouped together as leaflitter.
 The CO2 by date plot is:
 ``` {r, echo=FALSE}
     ### calculate the variable
-    leaflitter_p_concentration <- make_leaflitter_p_concentration()
+    leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
+    leaflitter_p_concentration_min <- make_leaflitter_p_concentration(func=min)
+    leaflitter_p_concentration_max <- make_leaflitter_p_concentration(func=max)
+
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -244,7 +253,9 @@ There are two understorey species: Cymbopogon refractus and Microlaena stipoides
 
 Now, we can group both species together and plot understorey P concentration over time.
 ``` {r, echo=FALSE} 
-    understorey_p_concentration <- make_understorey_p_concentration()
+    understorey_p_concentration <- make_understorey_p_concentration(func=mean)
+    understorey_p_concentration_min <- make_understorey_p_concentration(func=min)
+    understorey_p_concentration_max <- make_understorey_p_concentration(func=max)
 
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -266,7 +277,9 @@ Now, we can group both species together and plot understorey P concentration ove
 ### 3.6 Frass P concentration
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
     ### calculate the variable
-    frass_p_concentration <- make_frass_p_concentration()
+    frass_p_concentration <- make_frass_p_concentration(func=mean)
+    frass_p_concentration_min <- make_frass_p_concentration(func=min)
+    frass_p_concentration_max <- make_frass_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -292,7 +305,9 @@ Frass production has a great time-series record of P concentration data availabl
 ### 3.7 Microbial P concentration
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
     ### calculate the variable
-    microbial_p_concentration <- make_microbial_p_concentration()
+    microbial_p_concentration <- make_microbial_p_concentration(func=mean)
+    microbial_p_concentration_min <- make_microbial_p_concentration(func=min)
+    microbial_p_concentration_max <- make_microbial_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -316,7 +331,9 @@ Note, this is based on 0-10cm data only, as this is the only depth with data ava
 ### 3.8 Soil P concentration
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
     ### calculate the variable
-    soil_p_concentration <- make_soil_p_concentration()
+    soil_p_concentration <- make_soil_p_concentration(func=mean)
+    soil_p_concentration_min <- make_soil_p_concentration(func=min)
+    soil_p_concentration_max <- make_soil_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -363,7 +380,9 @@ Further, phosphate measurements were taken at quarterly timestep, but it should 
 
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
     ### calculate the variable
-    soil_phosphate_concentration <- make_soil_phosphate_concentration()
+    soil_phosphate_concentration <- make_soil_phosphate_concentration(func=mean)
+    soil_phosphate_concentration_min <- make_soil_phosphate_concentration(func=min)
+    soil_phosphate_concentration_max <- make_soil_phosphate_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -1198,7 +1217,6 @@ High priorities:
     - Wood C production and pool over time, why negative
     - Create mortality pool, or standing dead pool
     - Create error bars
-    - Canopy P conc. for all year
     - Met data (including soil moisture)
     - Understorey respiration rate scaled with temperature
     - Understorey continuous C estimates based on Stereo cameras
@@ -1211,6 +1229,7 @@ Less priorities:
     - Hedley Fractionation (Cat) - almost done
     - Microbial turnover rate (Cat and Johanna, but may not be available soon)
     - Mycorrhizal data for both C and P project (Jeff)
+    - Canopy P conc. for all year
     - Root mortality and turnover for both C and P project (Juan)
     - More valid fine root and coarse root P retranslocation coefficients
     - understorey P retranslocation coefficient verification

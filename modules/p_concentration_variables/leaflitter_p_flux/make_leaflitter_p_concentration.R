@@ -1,4 +1,4 @@
-make_leaflitter_p_concentration <- function() {
+make_leaflitter_p_concentration <- function(func) {
     
     infile <- "download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv"
     
@@ -17,7 +17,7 @@ make_leaflitter_p_concentration <- function() {
     
     ### Leaf litter p, average across rings and date, unit = %
     df.litter.p <- summaryBy(PercP~Ring+Date,
-                             data=myDF,FUN=mean,keep.names=T,na.rm=T)
+                             data=myDF,FUN=func,keep.names=T,na.rm=T)
     df.litter.p$month <- month(df.litter.p$Date)
     df.litter.p$year <- year(df.litter.p$Date)
 

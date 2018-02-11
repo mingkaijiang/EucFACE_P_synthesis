@@ -1,5 +1,5 @@
 #- Make the soil P concentration
-make_soil_p_concentration <- function(){
+make_soil_p_concentration <- function(func){
     # return ring-specific, time series data of soil P content 
     # need to read in multiple P data sources
     # and soil bulk density data
@@ -33,8 +33,12 @@ make_soil_p_concentration <- function(){
     myDF <- rbind(myDF2, myDF3, myDF4, myDF5)
     myDF$Date <- dmy(myDF$Date)
     
-    # average across rings, dates, and depths, unit: ppm which is mg/kg
-    myDF.m <- summaryBy(totP_ppm~Date+ring+depth,data=myDF,FUN=mean,keep.names=T,na.rm=T)
+    # average across depths first, unit: ppm which is mg/kg
+    myDF2 <- summaryBy(totP_ppm~Date+ring+plot,data=myDF,FUN=mean,keep.names=T,na.rm=T)
+    
+    # then checking the mean, min or max across date and ring
+    myDF.m <- summaryBy(totP_ppm~Date+ring,data=myDF2,FUN=func,keep.names=T,na.rm=T)
+    
     
     myDF.m <- data.frame(lapply(myDF.m, trimws), stringsAsFactors = FALSE)
     

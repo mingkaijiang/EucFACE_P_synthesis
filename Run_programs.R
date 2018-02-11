@@ -12,34 +12,52 @@ source("programs/prepare.R")
 options(warn=-1)
 
 ###### ---------------- Generating P concentrations -------------------- ######
-#### Soil P concentrations
-soil_p_concentration <- make_soil_p_concentration()
+#### Soil P concentrations 
+soil_p_concentration <- make_soil_p_concentration(func=mean)
+soil_p_concentration_min <- make_soil_p_concentration(func=min)
+soil_p_concentration_max <- make_soil_p_concentration(func=max)
 
 #### Soil phosphate conc, this returns % of P, not % of PO4!
 #### Only top 10 cm!
-soil_phosphate_concentration <- make_soil_phosphate_concentration()
+soil_phosphate_concentration <- make_soil_phosphate_concentration(func=mean)
+soil_phosphate_concentration_min <- make_soil_phosphate_concentration(func=min)
+soil_phosphate_concentration_max <- make_soil_phosphate_concentration(func=max)
 
 #### Microbial P conc.
 #### Only top 10 cm!
-microbial_p_concentration <- make_microbial_p_concentration()
+microbial_p_concentration <- make_microbial_p_concentration(func=mean)
+microbial_p_concentration_min <- make_microbial_p_concentration(func=min)
+microbial_p_concentration_max <- make_microbial_p_concentration(func=max)
 
 #### Canopy P conc.
-canopy_p_concentration <- make_canopy_p_concentration()
+canopy_p_concentration <- make_canopy_p_concentration(func=mean)
+canopy_p_concentration_min <- make_canopy_p_concentration(func=min)
+canopy_p_concentration_max <- make_canopy_p_concentration(func=max)
 
 #### Leaf litter P conc. 
-leaflitter_p_concentration <- make_leaflitter_p_concentration()
+leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
+leaflitter_p_concentration_min <- make_leaflitter_p_concentration(func=min)
+leaflitter_p_concentration_max <- make_leaflitter_p_concentration(func=max)
 
 #### Wood P conc. 
-wood_p_concentration <- make_wood_p_concentration()
+wood_p_concentration <- make_wood_p_concentration(func=mean)
+wood_p_concentration_min <- make_wood_p_concentration(func=min)
+wood_p_concentration_max <- make_wood_p_concentration(func=max)
 
 #### Frass P conc.
-frass_p_concentration <- make_frass_p_concentration()
+frass_p_concentration <- make_frass_p_concentration(func=mean)
+frass_p_concentration_min <- make_frass_p_concentration(func=min)
+frass_p_concentration_max <- make_frass_p_concentration(func=max)
 
 #### Fineroot P conc.
-fineroot_p_concentration <- make_fineroot_p_concentration()
+fineroot_p_concentration <- make_fineroot_p_concentration(func=mean)
+fineroot_p_concentration_min <- make_fineroot_p_concentration(func=min)
+fineroot_p_concentration_max <- make_fineroot_p_concentration(func=max)
 
 #### Understorey P conc.
-understorey_p_concentration <- make_understorey_p_concentration()
+understorey_p_concentration <- make_understorey_p_concentration(func=mean)
+understorey_p_concentration_min <- make_understorey_p_concentration(func=min)
+understorey_p_concentration_max <- make_understorey_p_concentration(func=max)
 
 #### Mycorrhizal P conc.
 ### Check back with Jeff in 2 weeks' time. 

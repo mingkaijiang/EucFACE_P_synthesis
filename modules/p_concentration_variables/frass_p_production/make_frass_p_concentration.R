@@ -1,5 +1,5 @@
 #- Make the frass P concentration
-make_frass_p_concentration <- function(){
+make_frass_p_concentration <- function(func){
     
     # download the data. 
     download_frass_data()
@@ -10,7 +10,7 @@ make_frass_p_concentration <- function(){
     inDF2$DATE <- as.Date(inDF2$DATE)
 
     # average across rings and dates
-    outDF2 <- summaryBy(PHOSPHORUS~DATE+RING,data=inDF2,FUN=mean,keep.names=T)
+    outDF2 <- summaryBy(PHOSPHORUS~DATE+RING,data=inDF2,FUN=func,keep.names=T)
     
     # convert unit from mg/g to %
     outDF2$PercP <- outDF2$PHOSPHORUS / 1000

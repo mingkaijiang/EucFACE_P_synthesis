@@ -1,5 +1,5 @@
 #- Make the understorey P concentration
-make_understorey_p_concentration <- function(){
+make_understorey_p_concentration <- function(func){
     ### download the data 
     # currently there is a data format issue, so read in data from local directory
     download_understorey_p_data()
@@ -21,7 +21,7 @@ make_understorey_p_concentration <- function(){
     
     ### ring and date specific data
     outDF <- summaryBy(PercP~Ring+Date,
-                             data=df,FUN=mean,keep.names=T,na.rm=T)
+                             data=df,FUN=func,keep.names=T,na.rm=T)
 
     return(outDF)
     

@@ -1,5 +1,5 @@
 
-make_soil_phosphate_concentration <- function() {
+make_soil_phosphate_concentration <- function(func) {
     
     # phosphate:	Phosphate-P concentrations in kg dry soil (mg/kg) 
     
@@ -20,19 +20,21 @@ make_soil_phosphate_concentration <- function() {
     myDF3 <- rbind(myDF1, myDF2)
     myDF3$date <- dmy(myDF3$date)
     
+    # get only top 10 cm
+    myDF3 <- myDF3[which(myDF3$depth %in% " 0_10cm"),]
+
     # average across rings, dates, and depths, unit: mg/kg PO4-P
-    myDF3.m <- summaryBy(phosphate~date+ring+depth,data=myDF3,FUN=mean,keep.names=T,na.rm=T)
+    myDF3.m <- summaryBy(phosphate~date+ring+depth,data=myDF3,FUN=func,keep.names=T,na.rm=T)
     
-    myDF3.m <- myDF3.m[which(myDF3.m$depth %in% " 0_10cm"),]
     myDF3.m <- myDF3.m[,c("date", "ring", "phosphate")]
     
-    myDF3.m <- myDF3.m[-c(1:6),]
+    #myDF3.m <- myDF3.m[-c(1:6),]
     
     # read in Shun's data to expand the temporal coverages of the previous data
     myDF4 <- read.csv(file.path(getToPath(), 
                                 "FACE_RA_P0023_SOILEXTRACTABLENUTRIENTS_L3_20120613-20140310.csv"))
     
-    myDF4.m <- summaryBy(phosphate~date+ring,data=myDF4,FUN=mean,keep.names=T,na.rm=T)
+    myDF4.m <- summaryBy(phosphate~date+ring,data=myDF4,FUN=func,keep.names=T,na.rm=T)
     myDF4.m$date <- as.Date(myDF4.m$date)
     
     # combine both dataframes
