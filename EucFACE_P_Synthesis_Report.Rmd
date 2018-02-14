@@ -703,6 +703,7 @@ Stereo Camera estimate:
 Ring averaged comparison:
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
+    source("programs/summary_variables/make_understorey_pool_size_comparison.R")
 
     plotDF <- make_understorey_pool_size_comparison(understorey_c_pool,
                                                     understorey_c_pool_2,
