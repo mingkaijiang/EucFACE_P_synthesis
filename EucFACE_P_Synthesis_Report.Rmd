@@ -147,7 +147,6 @@ Wood P concentration summarized by treatment, and we only have one date:
 Visually, we can't distinguish the difference between CO2 treatment.
 
 
-
 ### 3.3 Fine root P concentration
 
 There are multiple depths (i.e. 0-10cm, 10-30cm), currently we are averaging the concentrations over depths. 
@@ -207,6 +206,7 @@ We firstly need to distinguish the difference between the two.
 
 Next, both leaflitter and senesced leaves were grouped together as leaflitter. 
 The CO2 by date plot is:
+
 ``` {r, echo=FALSE}
     ### calculate the variable
     leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
@@ -251,6 +251,7 @@ There are two understorey species: Cymbopogon refractus and Microlaena stipoides
 ```
 
 Now, we can group both species together and plot understorey P concentration over time.
+
 ``` {r, echo=FALSE} 
     understorey_p_concentration <- make_understorey_p_concentration(func=mean)
     understorey_p_concentration_min <- make_understorey_p_concentration(func=min)
@@ -504,7 +505,6 @@ We need to think about data collected from the same time point. For now, because
 
 ```
 
-
 The above figure is a time-series canopy biomass plot, derived based on SLA and LAI measurements. 
 
 Assuming C fraction of 0.5, we can derive the canopy C pool, as:
@@ -648,6 +648,9 @@ Method 2 has slightly higher C pools than method 1. And the inter-ring relations
 
 
 ### 4.7 Understorey C pool
+
+Here, understorey C biomass is estimated based on Varsha's clip data. 
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     
     #### Understorey aboveground biomass 
@@ -657,6 +660,66 @@ Method 2 has slightly higher C pools than method 1. And the inter-ring relations
     understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 ```
 
+
+Now, I am making a different estimate of understorey C biomass, based on Matthias's stereo camera estimate of height.
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+    
+    #### Understorey aboveground biomass 
+    understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
+    
+    understorey_c_flux_2 <- make_understorey_aboveground_production_flux(c_fraction_ud)
+```
+
+Now, we need to compare the two estimates:
+
+Harvest estimate:
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+
+    p1 <- ggplot(understorey_c_pool_2,
+                aes(Date, Total_g_C_m2, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C pool (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p1)
+    
+```
+
+Stereo Camera estimate:
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+    p2 <- ggplot(understorey_c_pool,
+                aes(Date, Total_g_C_m2, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C pool (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p2)
+    
+```
+
+
+Ring averaged comparison:
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+    plotDF <- make_understorey_pool_size_comparison(understorey_c_pool,
+                                                    understorey_c_pool_2,
+                                                    plotting = F)
+
+    p <- ggplot(plotDF, aes(Date,value)) + 
+        geom_point() + 
+        stat_smooth() +
+        facet_wrap(~variable)
+    
+    plot(p)
+   
+```
+
+DF1 is Varsha's clip harvest and DF2 is Matthias's stereo camera estimates. 
+
+The general temporal pattern is similar, but the biomass size is different. 
 
 ### 4.8 wood C pool
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -1208,6 +1271,8 @@ High priorities:
     - Understorey respiration rate scaled with temperature
     - Understorey continuous C estimates based on Stereo cameras
     - GPP data from Maespa - need to reconcile CUE issues for both overstorey and understorey
+    - Look at per ring result and interpret based on ring-specific patterns
+    - Has C:P ratio change over time?
 
 <br/> 
 

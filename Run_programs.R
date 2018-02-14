@@ -116,12 +116,20 @@ fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
 #### Fineroot production
 fineroot_c_production_flux <- make_fineroot_c_production_flux(c_fraction_fr)
 
-#### Understorey aboveground biomass 
+#### Understorey aboveground biomass - 1: Varsha's clipping; 2: Matthias's stereo camera
 understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
                                                           strip_area)
 
-#### Understorey production flux
+understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
+
+#### Understorey production flux - 1: Varsha's clipping; 2: Matthias's stereo camera
 understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
+
+understorey_c_flux_2 <- make_understorey_aboveground_production_flux(c_fraction_ud)
+
+make_understorey_pool_size_comparison(understorey_c_pool,
+                                      understorey_c_pool_2,
+                                      plotting = T)
 
 #### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()

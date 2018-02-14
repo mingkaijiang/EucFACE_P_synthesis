@@ -1,7 +1,8 @@
 make_understorey_aboveground_c_pool <- function(c_frac,
                                                 strip_area) {
     
-    ### currently only Varsha's harvest data on HIEv
+    
+    ### download data
     download_understorey_aboveground_data()
     
     ### read in the data 
