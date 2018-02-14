@@ -132,6 +132,8 @@ make_understorey_pool_size_comparison(understorey_c_pool,
                                       understorey_c_pool_2,
                                       plotting = T)
 
+make_understorey_aboveground_growth_estimate(plotting = T)
+
 #### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()
 
