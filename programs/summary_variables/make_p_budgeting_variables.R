@@ -53,10 +53,10 @@ make_p_budgeting_variables <- function() {
                                                         p_retrans=total_p_retranslocation)
     
     overstorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=overstorey_p_requirement_table,
-                                                                        p_retrans=overstorey_p_retranslocation)
+                                                             p_retrans=overstorey_p_retranslocation)
 
     understorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=understorey_p_requirement_table,
-                                                                        p_retrans=understorey_p_retranslocation)
+                                                              p_retrans=understorey_p_retranslocation)
     
     ### Uptake/requirement
     source("programs/summary_variables/make_p_uptake_over_requirement.R")
@@ -64,10 +64,10 @@ make_p_budgeting_variables <- function() {
                                                                 p_req=total_p_requirement_table)
     
     overstorey_p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=overstorey_p_uptake_from_soil,
-                                                                                     p_req=overstorey_p_requirement_table)
+                                                                          p_req=overstorey_p_requirement_table)
     
     understorey_p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=understorey_p_uptake_from_soil,
-                                                                p_req=understorey_p_requirement_table)
+                                                                            p_req=understorey_p_requirement_table)
     
     ### MRT, i.e. Standing P / Uptake
     source("programs/summary_variables/make_p_MRT.R")

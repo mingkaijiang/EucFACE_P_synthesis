@@ -17,7 +17,7 @@ make_understorey_p_budgeting_variables <- function() {
     source("programs/summary_variables/make_p_uptake_from_soil.R")
     
     understorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=understorey_p_requirement_table,
-                                                                        p_retrans=understorey_p_retranslocation)
+                                                              p_retrans=understorey_p_retranslocation)
     
     ### Uptake/requirement
     source("programs/summary_variables/make_p_uptake_over_requirement.R")
@@ -41,7 +41,7 @@ make_understorey_p_budgeting_variables <- function() {
 
     out[out$terms == "understorey p requirement", 2:9] <- round(understorey_p_requirement_table[1,],2)
 
-    out[out$terms == "understorey p retranslocated", 2:9] <- round(understorey_p_retranslocation[1,],3)
+    out[out$terms == "understorey p retranslocated", 2:9] <- round(understorey_p_retranslocation[1,],2)
 
     out[out$terms == "understorey p uptake from soil", 2:9] <- round(understorey_p_uptake_from_soil[1,],2)
  

@@ -737,6 +737,7 @@ Varsha's clipping data provides % of live and % of dead biomass information. We 
         
 
 ```
+
 To look at growth estimate based on % cover change over a 15-d window, we can evaluate whether biomass estimated based on quarterly harvest is indicative of the mature biomass or not. 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
@@ -991,7 +992,7 @@ Also, we only took sapwood to calculate wood p, assuming that all heartwood P is
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
-                                              c_pool=understorey_c_pool_2,
+                                              c_pool=understorey_c_pool,
                                               c_frac=c_fraction_ud)
 
     ### make the plot
@@ -1171,7 +1172,7 @@ This is estimated based on fine root c production flux, fineroot p concentration
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
-                                              c_flux=understorey_c_flux_2,
+                                              c_flux=understorey_c_flux,
                                               c_frac=c_fraction_ud)
 
     ### make the plot
@@ -1345,6 +1346,8 @@ Note: total P retranslocation includes leaf and fineroot retranslocation, plus w
 
 ### CP ratios for all pools
 
+This time-invariant CP ratio based on all data. 
+
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
     source("programs/summary_tables/make_cp_ratios.R")
     summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
@@ -1370,7 +1373,6 @@ High priorities:
     - Diagrams by rings
     - Create mortality pool, or standing dead pool
     - Mineralization P data - why eCO2 is lower? Beyond 2014?
-    - Understorey production - should use Varsha's data.
     - Look at N pools and fluxes, in particular, N retranslocation
     - Has C:P ratio change over time?
     - EucFACE C project - data notes and summary report.
@@ -1405,6 +1407,7 @@ Less priorities:
 Completed with clarifications:
 
     - Wood pool - check why decreasing? wood pool is not decreasing if only considers live trees!
+    - Understorey production - now using Varsha's harvest data. 
 
 
 <br/>
