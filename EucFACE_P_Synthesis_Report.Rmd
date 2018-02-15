@@ -1286,24 +1286,49 @@ Now, we need all the C flux variables to make reference of:
 
 <br/>
 <br/>
-<br/>
-<br/>
-
 
 ### P budget
-``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/summary_variables/make_p_budgeting_variables.R")
-    summary_table_p_budgets <- make_p_budgeting_variables()
-    
-    # make the table looks nicer
-    # colnames(summary_table_p_budgets)[1] <- "terms"
 
-    kable(summary_table_p_budgets)
+Below is total P budget, based on both overstorey and understorey data:
+
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_variables/make_total_p_budgeting_variables.R")
+    summary_table_total_p_budgets <- make_total_p_budgeting_variables()
+
+    kable(summary_table_total_p_budgets)
 
 ```
 
 Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment and understorey. Understorey part is a guess retranslocation coefficient, as there is no literature value on Microlaena P retranslocation. 
 
+<br/>
+<br/>
+
+Below is overstorey P budget:
+
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_variables/make_overstorey_p_budgeting_variables.R")
+    summary_table_overstorey_p_budgets <- make_overstorey_p_budgeting_variables()
+
+    kable(summary_table_overstorey_p_budgets)
+
+```
+
+<br/>
+<br/>
+
+Below is understorey P budget:
+
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_variables/make_understorey_p_budgeting_variables.R")
+    summary_table_understorey_p_budgets <- make_understorey_p_budgeting_variables()
+
+    kable(summary_table_understorey_p_budgets)
+
+```
+
+<br/>
+<br/>
 
 ### CP ratios for all pools
 

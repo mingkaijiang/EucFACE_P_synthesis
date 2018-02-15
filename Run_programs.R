@@ -307,8 +307,15 @@ source("programs/summary_tables/make_c_flux_summary_table_by_treatment.R")
 summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
 
 ### Calculate all P budgeting variables
-source("programs/summary_variables/make_p_budgeting_variables.R")
-summary_table_p_budgets <- make_p_budgeting_variables()
+source("programs/summary_variables/make_total_p_budgeting_variables.R")
+summary_table_total_p_budgets <- make_total_p_budgeting_variables()
+
+source("programs/summary_variables/make_overstorey_p_budgeting_variables.R")
+summary_table_overstorey_p_budgets <- make_overstorey_p_budgeting_variables()
+
+source("programs/summary_variables/make_understorey_p_budgeting_variables.R")
+summary_table_understorey_p_budgets <- make_understorey_p_budgeting_variables()
+
 
 ###### ---------------- Generating CP ratios -------------------- ######
 source("programs/summary_tables/make_cp_ratios.R")
