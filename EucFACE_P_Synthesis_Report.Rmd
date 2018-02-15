@@ -1379,6 +1379,11 @@ High priorities:
     - Look at per ring result and interpret based on ring-specific patterns
     - Has C:P ratio change over time?
     - Understorey P retranslocation coefficient - we have % live and % dead biomass info to play with.
+    - Diagrams by rings
+    - Look at N pools and fluxes, in particular, N retranslocation
+    - Wood pool - check why decreasing? - check 2015?
+    - Mineralization P data - why eCO2 is lower? Beyond 2014?
+    - EucFACE C project - data note.
 
 <br/> 
 
