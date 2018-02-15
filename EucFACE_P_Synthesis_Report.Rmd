@@ -747,7 +747,7 @@ Stereo camera estimates:
 
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
 
-    p1 <- ggplot(understorey_production_flux_2,
+    p1 <- ggplot(understorey_c_flux_2,
                 aes(Date, understorey_production_flux, color=factor(Ring))) +   
             geom_point(size = 2.5) + geom_line() + 
             xlab("Date") + ylab("Understorey C production (mg C m-2 d-1)") + 
@@ -761,7 +761,7 @@ Harvest flux:
 
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
 
-    p2 <- ggplot(understorey_production_flux,
+    p2 <- ggplot(understorey_c_flux,
                 aes(Date, understorey_production_flux, color=factor(Ring))) +   
             geom_point(size = 2.5) + geom_line() + 
             xlab("Date") + ylab("Understorey C production (mg C m-2 d-1)") + 
