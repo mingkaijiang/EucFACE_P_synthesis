@@ -1353,6 +1353,8 @@ Below is understorey P budget:
 
 ```
 
+<br/>
+<br/>
 
 # 7. Has anything changed over time?
 Here, I will check if there's anything changed over time and if there's any CO2 effect or not. Results will be summarized as per ring and per treatment, for each variable respectively. This is because variables don't share common start and end dates. 
