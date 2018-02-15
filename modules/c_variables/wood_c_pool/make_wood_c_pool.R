@@ -71,9 +71,10 @@ make_wood_c_pool <- function(ring_area, c_frac,
     ### The bark removal affects the diameters mid-year. 
     ### Hence, just calculate biomass once per year 
     ### Specify dates here - may update this to March in future
-    dates <- c(as.Date("2012-12-20"),as.Date("2013-12-20"),
-               as.Date("2014-12-23"),as.Date("2015-12-14"))
-    data <- long[long$Date %in% dates,]
+    #dates <- c(as.Date("2012-12-20"),as.Date("2013-12-20"),
+    #           as.Date("2014-12-23"),as.Date("2015-12-14"))
+    #data <- long[long$Date %in% dates,]
+    data <- long
     
     if(return_tree_level)return(data)
     

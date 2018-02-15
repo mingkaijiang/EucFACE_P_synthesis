@@ -9,7 +9,7 @@ rm(list=ls(all=TRUE))
 source("programs/prepare.R")
 
 #### turn warnings off globally
-options(warn=-1)
+# options(warn=-1)
 
 ###### ---------------- Generating P concentrations -------------------- ######
 #### Soil P concentrations 
