@@ -125,7 +125,7 @@ understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
 #### Understorey production flux - 1: Varsha's clipping; 2: Matthias's stereo camera
 understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 
-understorey_c_flux_2 <- make_understorey_aboveground_production_flux(c_fraction_ud)
+understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
 
 source("programs/summary_variables/make_understorey_pool_size_comparison.R")
 make_understorey_pool_size_comparison(understorey_c_pool,
@@ -241,15 +241,19 @@ fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentrat
 #### Understorey P pool, assume both species contributed equally
 #### Also because p_conc and c_pool do not match in time,
 #### we are taking the average of p_conc and apply it to c_pool
-#### When Mathias's continuous c_pool data becomes available, 
-#### we can update this calculation.
+#### Here we can use Matthias's stereo camera estimate (2) or 
+#### Varsha's harvest data (1) to extrapolate for p pool
+#### It makes more sense to use stereo camera at this stage in time!
 understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
-                                              c_pool=understorey_c_pool,
+                                              c_pool=understorey_c_pool_2,
                                               c_frac=c_fraction_ud)
 
 #### Understorey production flux
+#### Here we can use either stereo camera estimate of biomass (2) or
+#### Harvest biomass data (1) to calculate p flux
+#### Currently, we are using stereo camera estimate 
 understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
-                                              c_flux=understorey_c_flux,
+                                              c_flux=understorey_c_flux_2,
                                               c_frac=c_fraction_ud)
 
 ### Coarse root P pool

@@ -668,10 +668,10 @@ Now, I am making a different estimate of understorey C biomass, based on Matthia
     #### Understorey aboveground biomass 
     understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
     
-    understorey_c_flux_2 <- make_understorey_aboveground_production_flux(c_fraction_ud)
+    understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
 ```
 
-Now, we need to compare the two estimates:
+Now, we need to compare the two biomass estimates:
 
 Harvest estimate:
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -740,6 +740,37 @@ To look at growth estimate based on % cover change over a 15-d window, we can ev
 ```
 
 This result indicates, growth estimated based on percent coverage fluctuates within a range of 1 to -1 % on a daily basis. So the harvest data over a quarterly interval may not be indicative of the true biomass. However, question also remains, as to how good a representation the change in % coverage is for biomass growth. 
+
+Now, we need to look at understorey production flux estimates, to make sure they are at least in the same magnitude.
+
+Stereo camera estimates:
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+
+    p1 <- ggplot(understorey_production_flux_2,
+                aes(Date, understorey_production_flux, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C production (mg C m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p1)
+    
+```
+
+Harvest flux:
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+
+    p2 <- ggplot(understorey_production_flux,
+                aes(Date, understorey_production_flux, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C production (mg C m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p2)
+    
+```
+
 
 ### 4.8 wood C pool
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
