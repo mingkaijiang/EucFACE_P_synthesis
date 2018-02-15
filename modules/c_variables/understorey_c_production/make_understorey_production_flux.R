@@ -27,39 +27,46 @@ make_understorey_aboveground_production_flux <- function(c_frac) {
                           inDF2$LiveBiomassDW + inDF2$DeadBiomassDW)
     colnames(tempDF2) <- c("Ring", "Date", "Live_g", "Dead_g", "Total_g")
     
-    # combine data
+    ### combine data
     myDF <- rbind(tempDF1, tempDF2)
     
-    #- average across rings and dates
+    ### average across rings and dates
     liveDF <- summaryBy(Live_g~Date+Ring,data=myDF,FUN=mean,keep.names=T,na.rm=T)
     deadDF <- summaryBy(Dead_g~Date+Ring,data=myDF,FUN=mean,keep.names=T,na.rm=T)
     totDF <- summaryBy(Total_g~Date+Ring,data=myDF,FUN=mean,keep.names=T,na.rm=T)
     
-    # convert from g per 0.1 m-2 to g/m2, and make an assumption for C fraction
+    ### convert from g per 0.1 m-2 to g/m2, and make an assumption for C fraction
     outDF <- cbind(liveDF, deadDF$Dead_g, totDF$Total_g)
     names(outDF) <- c("Date", "Ring", "Live_g", "Dead_g", "Total_g")
     outDF$Live_g_C_m2 <- outDF$Live_g / strip_area * c_frac
     outDF$Dead_g_C_m2 <- outDF$Dead_g / strip_area * c_frac
     outDF$Total_g_C_m2 <- outDF$Live_g_C_m2 + outDF$Dead_g_C_m2
     
-    #- count number of days between two dates  
+    ### count number of days between two dates  
     d <- unique(outDF$Date)
     b <- count_ndays(d)
     
-    #- convert into mg m-2 d-1
+    ### convert into mg m-2 d-1
     outDF$ndays <- rep(b, each = 6)
+    
+    for (i in c(2:length(d))) {
+        for (j in c(1:6)) {
+            outDF[outDF$Date == d[i] & outDF$ring == j, "diff"] <- outDF[outDF$Date == d[i] & outDF$ring == j, "Total_g_C_m2"] -
+                outDF[outDF$Date == d[i-1] & outDF$ring == j, "Total_g_C_m2"]
+        }
+    }
     
     out <- dplyr::mutate(outDF, 
                          Date = as.Date(outDF$Date, format = "%d/%m/%Y"),
                          Start_date = Date - ndays,
                          End_date = Date,
-                         understorey_production_flux = Total_g_C_m2 * g_to_mg / ndays)
+                         understorey_production_flux = diff * g_to_mg / ndays)
     
-    #- drop NA rows
+    ### drop NA rows
     out <- out[complete.cases(out),]
-    df <- out[Reduce(`&`, lapply(out, is.finite)),]
+    df <- out[is.finite(out$understorey_production_flux),]
     
-    #- format dataframe to return
+    ### format dataframe to return
     out <-df[,c("Start_date", "End_date", "Date", "Ring","understorey_production_flux", "ndays")]
     colnames(out) <- c("Start_date", "End_date", "Date", "Ring", "understorey_production_flux", "Days")
     
