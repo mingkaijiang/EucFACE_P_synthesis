@@ -251,7 +251,7 @@ fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentrat
 #### Varsha's harvest data (1) to extrapolate for p pool
 #### It makes more sense to use stereo camera at this stage in time!
 understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
-                                              c_pool=understorey_c_pool_2,
+                                              c_pool=understorey_c_pool,
                                               c_frac=c_fraction_ud)
 
 #### Understorey production flux
@@ -259,7 +259,7 @@ understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration
 #### Harvest biomass data (1) to calculate p flux
 #### Currently, we are using stereo camera estimate 
 understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
-                                              c_flux=understorey_c_flux_2,
+                                              c_flux=understorey_c_flux,
                                               c_frac=c_fraction_ud)
 
 ### Coarse root P pool

@@ -61,12 +61,12 @@ make_c_pool_summary_table_by_treatment <- function() {
     treatDF$notes[treatDF$terms == "Coarse Root C Pool"] <- "Allometric relationship with DBH"
     
     ### Understorey C pool
-    out <- summaryBy(Total_g_C_m2~Ring,data=understorey_c_pool_2,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(Total_g_C_m2~Ring,data=understorey_c_pool,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Understorey C Pool", 2:7] <- out$Total_g_C_m2
-    treatDF$year_start[treatDF$terms == "Understorey C Pool"] <- min(year(understorey_c_pool_2$Date))    
-    treatDF$year_end[treatDF$terms == "Understorey C Pool"] <- max(year(understorey_c_pool_2$Date))    
-    treatDF$timepoint[treatDF$terms == "Understorey C Pool"] <- length(unique(understorey_c_pool_2$Date))  
-    treatDF$notes[treatDF$terms == "Understorey C Pool"] <- "used stereo camera estimates"
+    treatDF$year_start[treatDF$terms == "Understorey C Pool"] <- min(year(understorey_c_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey C Pool"] <- max(year(understorey_c_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey C Pool"] <- length(unique(understorey_c_pool$Date))  
+    treatDF$notes[treatDF$terms == "Understorey C Pool"] <- "harvest data"
 
     
     ### Microbial C pool
