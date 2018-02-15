@@ -34,7 +34,7 @@ make_standing_pue <- function(p_up) {
         nppDF[nppDF$Ring == i, "seed"] <- with(litter_c_production_flux[litter_c_production_flux$Ring == i, ],
                                                sum(seed_flux*Days)/sum(Days)) * conv
         
-        nppDF[nppDF$Ring == i, "understorey"] <- with(understorey_c_flux[understorey_c_flux$Ring == i, ],
+        nppDF[nppDF$Ring == i, "understorey"] <- with(understorey_c_flux_2[understorey_c_flux_2$Ring == i, ],
                                                sum(understorey_production_flux*Days)/sum(Days)) * conv
         
     }

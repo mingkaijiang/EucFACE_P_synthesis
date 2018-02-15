@@ -66,7 +66,7 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$year_start[treatDF$terms == "Understorey P Pool"] <- min(year(understorey_p_pool$Date))    
     treatDF$year_end[treatDF$terms == "Understorey P Pool"] <- max(year(understorey_p_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Understorey P Pool"] <- length(unique(understorey_p_pool$Date))  
-    treatDF$notes[treatDF$terms == "Understorey P Pool"] <- "Awaiting for Matthias's continuous C data"
+    treatDF$notes[treatDF$terms == "Understorey P Pool"] <- "Used stereo camera estimates of C pool"
 
     
     ### Microbial P pool

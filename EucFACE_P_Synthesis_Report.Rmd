@@ -771,6 +771,19 @@ Harvest flux:
     
 ```
 
+Huge difference for understorey production estimates. Harvest data is more static and does not reflect understorey mortality and turnover. 
+
+However, if we look at the total annual production, values don't differ that much.
+
+``` {r}
+test1 <- with(understorey_c_flux, sum(understorey_production_flux*Days)/sum(Days)) * 365/1000
+test2 <- with(understorey_c_flux_2, sum(understorey_production_flux*Days)/sum(Days)) * 365/1000
+
+print(test1)
+
+print(test2)
+
+```
 
 ### 4.8 wood C pool
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -965,7 +978,7 @@ Also, we only took sapwood to calculate wood p, assuming that all heartwood P is
 ``` {r, echo=FALSE, warning=FALSE}
 
     understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
-                                              c_pool=understorey_c_pool,
+                                              c_pool=understorey_c_pool_2,
                                               c_frac=c_fraction_ud)
 
     ### make the plot
@@ -1145,7 +1158,7 @@ This is estimated based on fine root c production flux, fineroot p concentration
 ``` {r, echo=FALSE, warning=FALSE}
 
     understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
-                                              c_flux=understorey_c_flux,
+                                              c_flux=understorey_c_flux_2,
                                               c_frac=c_fraction_ud)
 
     ### make the plot

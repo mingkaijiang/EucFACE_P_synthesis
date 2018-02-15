@@ -49,18 +49,11 @@ make_understorey_aboveground_production_flux <- function(c_frac) {
     ### convert into mg m-2 d-1
     outDF$ndays <- rep(b, each = 6)
     
-    for (i in c(2:length(d))) {
-        for (j in c(1:6)) {
-            outDF[outDF$Date == d[i] & outDF$ring == j, "diff"] <- outDF[outDF$Date == d[i] & outDF$ring == j, "Total_g_C_m2"] -
-                outDF[outDF$Date == d[i-1] & outDF$ring == j, "Total_g_C_m2"]
-        }
-    }
-    
     out <- dplyr::mutate(outDF, 
                          Date = as.Date(outDF$Date, format = "%d/%m/%Y"),
                          Start_date = Date - ndays,
                          End_date = Date,
-                         understorey_production_flux = diff * g_to_mg / ndays)
+                         understorey_production_flux = Total_g * g_to_mg / ndays)
     
     ### drop NA rows
     out <- out[complete.cases(out),]

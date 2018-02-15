@@ -71,13 +71,13 @@ make_c_flux_summary_table_by_treatment <- function() {
     
     ### Understorey C flux
     for (i in c(1:6)) {
-        treatDF[treatDF$terms == "Understorey C flux", i+1] <- with(understorey_c_flux[understorey_c_flux$Ring ==i,],
+        treatDF[treatDF$terms == "Understorey C flux", i+1] <- with(understorey_c_flux_2[understorey_c_flux_2$Ring ==i,],
                                                                     sum(understorey_production_flux*Days)/sum(Days)) * conv
     }
-    treatDF$year_start[treatDF$terms == "Understorey C flux"] <- min(year(understorey_c_flux$Date))    
-    treatDF$year_end[treatDF$terms == "Understorey C flux"] <- max(year(understorey_c_flux$Date))    
-    treatDF$timepoint[treatDF$terms == "Understorey C flux"] <- length(unique(understorey_c_flux$Date))  
-    treatDF$notes[treatDF$terms == "Understorey C flux"] <- "Used Varsha's harvest data"
+    treatDF$year_start[treatDF$terms == "Understorey C flux"] <- min(year(understorey_c_flux_2$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey C flux"] <- max(year(understorey_c_flux_2$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey C flux"] <- length(unique(understorey_c_flux_2$Date))  
+    treatDF$notes[treatDF$terms == "Understorey C flux"] <- "Stereo camera estimates, more fluctuating than harvest data"
     
     ### Frass production flux
     for (i in c(1:6)) {
