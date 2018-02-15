@@ -133,7 +133,12 @@ make_understorey_pool_size_comparison(understorey_c_pool,
                                       understorey_c_pool_2,
                                       plotting = T)
 
+### estimate biomass growth based on cover data
 make_understorey_aboveground_growth_estimate(plotting = T)
+
+### estimate % live and % dead
+source("programs/summary_variables/make_understorey_percent_live_estimate.R")
+understorey_live_percent <- make_understorey_percent_live_estimate()
 
 #### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()

@@ -724,6 +724,18 @@ The general temporal pattern is similar, but the biomass size is different. This
 
 Varsha's clipping data provides % of live and % of dead biomass information. We could assign % P data to live biomass only, and assume 100% P retranslocation before shoot tissue sceneced. This might lower the understorey P pool. But the exact extent of the retranslocation rate remains unclear, and there is really no literature value on this.
 
+``` {r, echo=F, warning=F, message=F}
+    source("programs/summary_variables/make_understorey_percent_live_estimate.R")
+    understorey_live_percent <- make_understorey_percent_live_estimate()
+
+    p <- ggplot(understorey_live_percent, aes(Date, percent_live, color=factor(Ring))) +
+        geom_line() + 
+        xlab("Date") + ylab("Understorey % live") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+        
+
+```
 To look at growth estimate based on % cover change over a 15-d window, we can evaluate whether biomass estimated based on quarterly harvest is indicative of the mature biomass or not. 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
