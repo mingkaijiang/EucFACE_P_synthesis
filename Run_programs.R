@@ -329,6 +329,12 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
 
 ### check - has CP ratio changed over time?
 
+
+###### ---------------- Data checking -------------------- ######
+source("programs/check_variables/check_wood_data.R")
+check_wood_data()
+
+
 ###### ---------------- Import met data -------------------- ######
 
 
