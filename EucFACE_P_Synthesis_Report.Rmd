@@ -1208,6 +1208,11 @@ Used Varsha's harvest data to extrapolate.
 
 Positive values indicate minerlization, negative indicate immobilization. 
 
+Shun's GCB paper indicates that P mineralization rate was higher under eCO2, but here it is lower. 
+
+However, the exact texts in Shun's paper were: "eCO2 was also associated with faster nutrient turnover rates in the first six months of the experiment, with higher N (+175%) and P (+211%) mineralization rates compared to ambient rings, ***although this difference did not persist***."
+
+Hence, CO2 treatment effct is only there for the first few points! 
 
 
 # 6. Summary tables
@@ -1377,8 +1382,7 @@ High priorities:
     - Has C:P ratio change over time?
     - EucFACE C project - data notes and summary report.
     - Check Doodle Poll responses and send reminders
-    - Check your calculations in summary table!
-    
+
 
     - Cat re-check microbial extraction procedure
     - Met data (including soil moisture)

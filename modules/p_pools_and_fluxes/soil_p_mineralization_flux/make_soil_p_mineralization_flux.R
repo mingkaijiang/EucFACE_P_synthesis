@@ -38,13 +38,29 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
     myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
     
+    # check CO2 treatment averages
+    test1 <- summaryBy(p_mineralization_mg_m2_d~CO2, 
+                       data=myDF1.out, FUN=mean, keep.names=T)
     
+    # plotting
     p <- ggplot(myDF1.out, aes(date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
         geom_point(size = 5) +
         xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") + 
-        ggtitle("P mineralization rate over time") 
-    plot(p)
+        annotate("text", x = "2013-10-22", y = 4, 
+                 label = paste0("aCO2 = ", round(test1[1,2], 2))) +
+        annotate("text", x = "2013-10-22", y = 3.8, 
+                 label = paste0("eCO2 = ", round(test1[2,2], 2)))
+    plot(p) 
     dev.off()
+    
+    # Shun's GCB paper indicates that P mineralization rate was higher
+    # under eCO2, but here it is lower. 
+    # However, the exact texts were:
+    # "eCO2 was also associated with faster nutrient turnover rates
+    # in the first six months of the experiment,
+    # with higher N (+175%) and P (+211%) mineralization rates compared to ambient rings, 
+    # although this difference did not persist."
+    # Hence, CO2 treatment effct is only there for the first few points! 
     
     return(myDF1.out[,1:3])
 }
