@@ -31,13 +31,13 @@ make_overstorey_p_budgeting_variables <- function() {
     source("programs/summary_variables/make_p_uptake_from_soil.R")
 
     overstorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=overstorey_p_requirement_table,
-                                                                        p_retrans=overstorey_p_retranslocation)
+                                                             p_retrans=overstorey_p_retranslocation)
 
     ### Uptake/requirement
     source("programs/summary_variables/make_p_uptake_over_requirement.R")
 
     overstorey_p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=overstorey_p_uptake_from_soil,
-                                                                                     p_req=overstorey_p_requirement_table)
+                                                                           p_req=overstorey_p_requirement_table)
     
     ### out df
     terms <- c("overstorey leaf p retrans coef", 
@@ -56,11 +56,11 @@ make_overstorey_p_budgeting_variables <- function() {
 
     out[out$terms == "overstorey p requirement", 2:9] <- round(overstorey_p_requirement_table[1,],2)
 
-    out[out$terms == "overstorey p retranslocated", 2:9] <- round(overstorey_p_retranslocation[1,],3)
+    out[out$terms == "overstorey p retranslocated", 2:9] <- round(overstorey_p_retranslocation[1,],2)
 
     out[out$terms == "overstorey p uptake from soil", 2:9] <- round(overstorey_p_uptake_from_soil[1,],2)
 
-    out[out$terms == "overstorey uptake over requirement", 2:9] <- round(overstorey_p_uptake_over_requirement[1,], 1)
+    out[out$terms == "overstorey uptake over requirement", 2:9] <- round(overstorey_p_uptake_over_requirement[1,], 2)
 
     ### aCO2 and eCO2 averages
     out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)

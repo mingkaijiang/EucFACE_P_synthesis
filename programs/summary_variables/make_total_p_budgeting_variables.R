@@ -69,11 +69,11 @@ make_total_p_budgeting_variables <- function() {
     
     out[out$terms == "total p requirement", 2:9] <- round(total_p_requirement_table[1,],2)
 
-    out[out$terms == "total p retranslocated", 2:9] <- round(total_p_retranslocation[1,],3)
+    out[out$terms == "total p retranslocated", 2:9] <- round(total_p_retranslocation[1,],2)
 
     out[out$terms == "total p uptake from soil", 2:9] <- round(total_p_uptake_from_soil[1,],2)
 
-    out[out$terms == "total uptake over requirement", 2:9] <- round(p_uptake_over_requirement[1,], 1)
+    out[out$terms == "total uptake over requirement", 2:9] <- round(p_uptake_over_requirement[1,], 2)
 
     out[out$terms == "total P MRT in plant", 2:9] <- round(P_mean_residence_time[1,1:8],2)
     out[out$terms == "total standing PUE", 2:7] <- round(standing_pue[1:6, "NPP_by_PUP"],4)

@@ -45,7 +45,7 @@ make_understorey_p_budgeting_variables <- function() {
 
     out[out$terms == "understorey p uptake from soil", 2:9] <- round(understorey_p_uptake_from_soil[1,],2)
  
-    out[out$terms == "understorey uptake over requirement", 2:9] <- round(understorey_p_uptake_over_requirement[1,], 1)
+    out[out$terms == "understorey uptake over requirement", 2:9] <- round(understorey_p_uptake_over_requirement[1,], 2)
  
     
     ### aCO2 and eCO2 averages
