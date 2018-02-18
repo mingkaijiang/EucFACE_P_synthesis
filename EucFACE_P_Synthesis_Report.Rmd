@@ -1441,7 +1441,6 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
 High priorities:
 
     - Diagrams by rings
-    - Create mortality pool, or standing dead pool
     - Look at N pools and fluxes, in particular, N retranslocation
     - Has C:P ratio change over time?
     - EucFACE C project - data notes and summary report.
@@ -1477,7 +1476,7 @@ Completed with clarifications:
     - Wood pool - check why decreasing? wood pool is not decreasing if only considers live trees!
     - Understorey production - now using Varsha's harvest data. 
     - total P requirement is the sum of canopy, frass, wood, root and understorey. 
-
+    - standing dead pool completed (not yet included in the C project). Currently only 1 tree in ring 6 was marked as dead, although there are NAs marked for other trees (possibly no measurement for some dates). The C and P pools and fluxes are properly coded, but hasn't been integrated in the summary table, as it affects ring 6 only and is a very tiny proportion of the entire budget. 
 
 <br/>
 <br/>
