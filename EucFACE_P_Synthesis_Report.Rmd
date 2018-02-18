@@ -845,6 +845,29 @@ Next, wood C production is:
 Because wood pool may either increase or decrease over a certain measurement period, wood production can be either positive or negative. 
 
 
+### 4.9 Standing dead wood pool and flux
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+    
+    # year 2011-12 data on local directory
+    standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
+                                                      c_frac=c_fraction)
+    
+    
+    #### Wood C production
+    standing_dead_c_flux <- make_standing_dead_c_flux(standing_dead_c_pool)
+    
+        ### make the plot
+    p <- ggplot(standing_dead_c_pool ,
+                aes(Date, wood_pool, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Standing dead wood C (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+```
+
+
 # 5. P pools and fluxes
 
 ### 5.1 Soil P pool

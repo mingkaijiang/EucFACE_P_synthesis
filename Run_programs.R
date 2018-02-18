@@ -107,8 +107,15 @@ wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
                                             c_frac=c_fraction,
                                             return_tree_level=FALSE)
 
+#### standing dead wood c pool
+standing_dead_wood_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
+                                                       c_frac=c_fraction)
+
 #### Wood C production
 wood_c_production <- make_wood_production_flux(wood_c_pool)
+
+#### standing dead wood c flux
+standing_dead_wood_c_flux <- make_standing_dead_c_flux(standing_dead_wood_c_pool)
 
 #### Fineroot pool
 fineroot_c_pool <- make_fineroot_c_pool(c_fraction_fr)
