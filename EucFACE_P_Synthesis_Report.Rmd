@@ -1238,6 +1238,48 @@ However, the exact texts in Shun's paper were: "eCO2 was also associated with fa
 Hence, CO2 treatment effct is only there for the first few points! 
 
 
+### 5.20 Standing dead p pool and fluxes
+
+Standing dead p pool
+
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
+
+    standing_dead_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
+                                         c_pool=standing_dead_c_pool,
+                                         case_consideration = "sapwood")
+
+    ### make the plot
+    p <- ggplot(standing_dead_p_pool,
+                aes(Date, wood_p_pool, color=factor(Ring))) +   
+            geom_point(size = 5) + 
+            xlab("Date") + ylab("Standing dead P (g m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
+
+Standing dead p flux
+
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
+
+    standing_dead_p_flux <- make_standing_dead_p_flux(p_conc=wood_p_concentration,
+                                               c_flux=standing_dead_c_flux)
+
+    ### make the plot
+    p <- ggplot(standing_dead_p_flux,
+                aes(Date, wood_p_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + 
+            xlab("Date") + ylab("Standing dead P flux (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
+
+
 # 6. Summary tables
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
     library(knitr)
