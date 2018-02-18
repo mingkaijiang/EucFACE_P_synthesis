@@ -1377,7 +1377,6 @@ High priorities:
 
     - Diagrams by rings
     - Create mortality pool, or standing dead pool
-    - Mineralization P data - why eCO2 is lower? Beyond 2014?
     - Look at N pools and fluxes, in particular, N retranslocation
     - Has C:P ratio change over time?
     - EucFACE C project - data notes and summary report.
