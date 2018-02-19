@@ -1,14 +1,15 @@
 ---
-title: "EucFACE P Synthesis"
+title: "EucFACE Phosphorus Synthesis"
 author: "Mingkai Jiang"
-date: "15/2/2018"
+date: "19/2/2018"
 output:
-  html_document: default
+  html_document:
+    toc: true
+    theme: united
 ---
 
-
-# 1. Description
-
+1. Description
+---------------
 This is a progress report of the EucFACE phosphorus (P) synthesis project. All results presented in this report are linked with the code and the data. 
 
 This file attempts to summarize P-related pools, fluxes, concentrations, their treatment and inter-ring variability, and their temporal patterns. 
@@ -17,9 +18,8 @@ The objective of this project is to have a proper account of the P balance for t
 
 All the data used in this study are available at HIEv (at least that's the goal). 
 
-
-# 2. Methods
-### 2.1 Procedure
+# 2. Methods 
+### 2.1 Procedure 
 This procedure is a snapshot of the work. It might be easier just to follow the codes. 
 
     - Create a list of variables for the P synthesis.
@@ -62,8 +62,6 @@ For pool variables, i.e. wood P pool, we may be able to get away with using just
 For fluxes, we also need to see if the concentration is variable over time or not. For those that are more fluctuating with good data coverage, e.g. frass P concentration, we can simply calculate a monthly/quarterly P concentration value and use this value to exrtapolate with biomass changes for its corresponding P fluxes. For those that are fluctuating but with relatively less data coverage and with infrequent measurement frequency, e.g. leaflitter fall P concentration (4 time points over 3 years), we will have to assume the one time point is reflecting the annual P concentration, or otherwise we wouldn't be able to proceed. 
 
 The other way to treat the complexity of variable P concentration over time is make a **sensitivity test**. We can use average P concentration, minimum and maximum P concentrations to respectively calculate the P pools and fluxes. This way we are probably more certain with regard to the range of uncertainties. 
-
-
 
 # 3. P concentration calculations. 
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -410,7 +408,7 @@ What happens at that time point after 2015? Is it a leaching-induced event?
 ### 3.10 Mycorrhizal P concentration
 We currently don't have mycorrhizal data available yet. 
 
-# 4. Important variables. 
+# 4. Related variables to compute P pools and fluxes. 
 
 ### 4.1 Soil bulk density across depths
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
@@ -1431,16 +1429,19 @@ This time-invariant CP ratio based on all data.
 <br/>
 
 # 7. Has anything changed over time?
-Here, I will check if there's anything changed over time and if there's any CO2 effect or not. Results will be summarized as per ring and per treatment, for each variable respectively. This is because variables don't share common start and end dates. 
+Here, I will check if there's anything changed over time and if there's any CO2 effect or not. This is quite challenging because:
+
+        1) we don't have common start and end dates across variables; 
+        2) variables are measured infrequently, so we cannot ignore seasonal fluctuations; 
+        3) biomass estimates and P concentration estimates often do not overlap, creating some range of uncertainties. 
 
 
 # 8. To-do list
 
 This list is a continuous update of the to-do items for both EucFACE C and P projects. It includes both high and less priority items. 
 
-High priorities:
+### High priorities
 
-    - Diagrams by rings
     - Look at N pools and fluxes, in particular, N retranslocation
     - Has C:P ratio change over time?
     - EucFACE C project - data notes and summary report.
@@ -1452,9 +1453,8 @@ High priorities:
     - Understorey respiration rate scaled with temperature
     - GPP data from Maespa - need to reconcile CUE issues for both overstorey and understorey
 
-<br/> 
 
-Less priorities:
+### Less priorities
 
     - Hedley Fractionation (Cat) - almost done
     - Microbial turnover rate (Cat and Johanna, but may not be available soon)
@@ -1471,7 +1471,7 @@ Less priorities:
 
     
     
-Completed with clarifications:
+### Completed with clarifications
 
     - Wood pool - check why decreasing? wood pool is not decreasing if only considers live trees!
     - Understorey production - now using Varsha's harvest data. 
@@ -1481,8 +1481,3 @@ Completed with clarifications:
 <br/>
 <br/>
 <br/>
-<br/>
-<br/>
-<br/>
-
-# The end.

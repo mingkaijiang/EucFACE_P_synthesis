@@ -1,14 +1,17 @@
 ---
-title: "EucFACE P Synthesis"
+title: "EucFACE Phosphorus Synthesis"
 author: "Mingkai Jiang"
-date: "2/2/2018"
+date: "19/2/2018"
 output:
-  html_document: default
+  html_document: 
+  toc: true
+  theme: united
 ---
 
 
-# 1. Description
 
+1. Description
+---------------
 This is a progress report of the EucFACE phosphorus (P) synthesis project. All results presented in this report are linked with the code and the data. 
 
 This file attempts to summarize P-related pools, fluxes, concentrations, their treatment and inter-ring variability, and their temporal patterns. 
@@ -17,9 +20,8 @@ The objective of this project is to have a proper account of the P balance for t
 
 All the data used in this study are available at HIEv (at least that's the goal). 
 
-
-# 2. Methods
-### 2.1 Procedure
+# 2. Methods 
+### 2.1 Procedure 
 This procedure is a snapshot of the work. It might be easier just to follow the codes. 
 
     - Create a list of variables for the P synthesis.
@@ -28,7 +30,6 @@ This procedure is a snapshot of the work. It might be easier just to follow the 
     - With carbon/biomass related variables, calculate P pools and fluxes.
     - Calculate P budgeting variables, e.g. total standing P stock, P retranslocation coefficient, etc.
     - Make summary tables.
-    - Interpret data, e.g. time-series trend, treatment effect, extreme response point, etc. 
 
 ### 2.2 Variables
 Here, I am summarizing all the P-related pool, flux and concentration variables. 
@@ -64,8 +65,6 @@ For fluxes, we also need to see if the concentration is variable over time or no
 
 The other way to treat the complexity of variable P concentration over time is make a **sensitivity test**. We can use average P concentration, minimum and maximum P concentrations to respectively calculate the P pools and fluxes. This way we are probably more certain with regard to the range of uncertainties. 
 
-
-
 # 3. P concentration calculations. 
 ``` {r, echo=FALSE, message=FALSE, warning=FALSE}
     ### source the functions to start the calculations.
@@ -79,10 +78,12 @@ The other way to treat the complexity of variable P concentration over time is m
 
 ### 3.1 Canopy P concentration
 Canopy P concentration summarized by ring over the experimental period:
-``` {r, echo=FALSE}
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    canopy_p_concentration <- make_canopy_p_concentration()
-    
+    canopy_p_concentration <- make_canopy_p_concentration(func=mean)
+    canopy_p_concentration_min <- make_canopy_p_concentration(func=min)
+    canopy_p_concentration_max <- make_canopy_p_concentration(func=max)
+
     ### make the ring over date plot
     p <- ggplot(canopy_p_concentration,
                 aes(Date, PercP, color=factor(Ring))) +   
@@ -95,7 +96,8 @@ Canopy P concentration summarized by ring over the experimental period:
 ```
 
 Canopy P concentration summarized by CO2 treatment over the experimental period:
-``` {r, echo=FALSE}
+
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
         canopy_p_concentration[canopy_p_concentration$Ring == i, "CO2"] <- "aCO2"
@@ -120,9 +122,11 @@ Visually, there is **no** CO2 treatment effect.
 ### 3.2 Wood P concentration
 Wood P concentration summarized by treatment, and we only have one date:
 
-``` {r, echo=FALSE}
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    wood_p_concentration <- make_wood_p_concentration()
+    wood_p_concentration <- make_wood_p_concentration(func=mean)
+    wood_p_concentration_min <- make_wood_p_concentration(func=min)
+    wood_p_concentration_max <- make_wood_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -144,16 +148,17 @@ Wood P concentration summarized by treatment, and we only have one date:
 Visually, we can't distinguish the difference between CO2 treatment.
 
 
-
 ### 3.3 Fine root P concentration
 
 There are multiple depths (i.e. 0-10cm, 10-30cm), currently we are averaging the concentrations over depths. 
 
 Fineroot P concentration summarized by treatment over time:
 
-``` {r, echo=FALSE}
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    fineroot_p_concentration <- make_fineroot_p_concentration()
+    fineroot_p_concentration <- make_fineroot_p_concentration(func=mean)
+    fineroot_p_concentration_min <- make_fineroot_p_concentration(func=min)
+    fineroot_p_concentration_max <- make_fineroot_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -182,7 +187,7 @@ Note, these samples were not taken on the same date; nor were they taken on the 
 
 We firstly need to distinguish the difference between the two. 
 
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
     df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
     
     ### setting up the date
@@ -202,9 +207,13 @@ We firstly need to distinguish the difference between the two.
 
 Next, both leaflitter and senesced leaves were grouped together as leaflitter. 
 The CO2 by date plot is:
-``` {r, echo=FALSE}
+
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    leaflitter_p_concentration <- make_leaflitter_p_concentration()
+    leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
+    leaflitter_p_concentration_min <- make_leaflitter_p_concentration(func=min)
+    leaflitter_p_concentration_max <- make_leaflitter_p_concentration(func=max)
+
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -227,7 +236,7 @@ The CO2 by date plot is:
 ### 3.5 Understorey P concentration
 There are two understorey species: Cymbopogon refractus and Microlaena stipoides. We need to differentiate P concentration difference between the two, as we don't have their relative abundance information. 
 
-``` {r, echo=FALSE} 
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"} 
     ### read in the file
     df <- read.csv("download/FACE_P0019_RA_leafP-understory_20130509-20151030_L1.csv")
     
@@ -243,8 +252,11 @@ There are two understorey species: Cymbopogon refractus and Microlaena stipoides
 ```
 
 Now, we can group both species together and plot understorey P concentration over time.
-``` {r, echo=FALSE} 
-    understorey_p_concentration <- make_understorey_p_concentration()
+
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"} 
+    understorey_p_concentration <- make_understorey_p_concentration(func=mean)
+    understorey_p_concentration_min <- make_understorey_p_concentration(func=min)
+    understorey_p_concentration_max <- make_understorey_p_concentration(func=max)
 
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -264,9 +276,11 @@ Now, we can group both species together and plot understorey P concentration ove
 ```
 
 ### 3.6 Frass P concentration
-``` {r, echo=FALSE, message=FALSE, warning=FALSE}
+``` {r, echo=FALSE, message=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    frass_p_concentration <- make_frass_p_concentration()
+    frass_p_concentration <- make_frass_p_concentration(func=mean)
+    frass_p_concentration_min <- make_frass_p_concentration(func=min)
+    frass_p_concentration_max <- make_frass_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -290,9 +304,11 @@ Frass production has a great time-series record of P concentration data availabl
 
 
 ### 3.7 Microbial P concentration
-``` {r, echo=FALSE, message=FALSE, warning=FALSE}
+``` {r, echo=FALSE, message=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    microbial_p_concentration <- make_microbial_p_concentration()
+    microbial_p_concentration <- make_microbial_p_concentration(func=mean)
+    microbial_p_concentration_min <- make_microbial_p_concentration(func=min)
+    microbial_p_concentration_max <- make_microbial_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -314,9 +330,11 @@ Frass production has a great time-series record of P concentration data availabl
 Note, this is based on 0-10cm data only, as this is the only depth with data available. It's not consistent with any other soil related variables (0-30cm). 
 
 ### 3.8 Soil P concentration
-``` {r, echo=FALSE, message=FALSE, warning=FALSE}
+``` {r, echo=FALSE, message=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    soil_p_concentration <- make_soil_p_concentration()
+    soil_p_concentration <- make_soil_p_concentration(func=mean)
+    soil_p_concentration_min <- make_soil_p_concentration(func=min)
+    soil_p_concentration_max <- make_soil_p_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -337,7 +355,7 @@ Note, this is based on 0-10cm data only, as this is the only depth with data ava
 
 Note, soil data are available at various depths (0-10, 10-20 and 20-30cm), and data were not collected for all depths at different time points. 
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE} 
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"} 
 
     soil_bulk_density <- make_soil_bulk_density()
     soil_c_pool <- make_soil_c_pool(soil_bulk_density)
@@ -361,9 +379,11 @@ Also, soil phosphate P is the PO4-P, not PO4 concentration.
 
 Further, phosphate measurements were taken at quarterly timestep, but it should not reflect the accumulation of phosphate production over time time frame (I think). But this needs to be confirmed by soil people, as I am not sure whether the measurements excluded plants and mycorrhizaes. Even with exclusion, we still can't be sure this concentration reflects the total soil phosphate production over time period, as rainfall and hence leaching may also affect the concentration. 
 
-``` {r, echo=FALSE, message=FALSE, warning=FALSE}
+``` {r, echo=FALSE, message=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    soil_phosphate_concentration <- make_soil_phosphate_concentration()
+    soil_phosphate_concentration <- make_soil_phosphate_concentration(func=mean)
+    soil_phosphate_concentration_min <- make_soil_phosphate_concentration(func=min)
+    soil_phosphate_concentration_max <- make_soil_phosphate_concentration(func=max)
     
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -393,7 +413,7 @@ We currently don't have mycorrhizal data available yet.
 # 4. Important variables. 
 
 ### 4.1 Soil bulk density across depths
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     soil_bulk_density <- make_soil_bulk_density()
 
@@ -408,7 +428,7 @@ We currently don't have mycorrhizal data available yet.
 ```
 
 ### 4.2 Soil P mineralization rate
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
@@ -435,9 +455,9 @@ We currently don't have mycorrhizal data available yet.
 ### 4.3 Leaf P retranslocation coefficient
 We need to think about data collected from the same time point. For now, because dates don't match, we just take the averages. 
 
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
-    source("programs/make_leaf_p_retranslocation_coefficient.R")
+    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient.R")
     leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
 
     p <- ggplot(leaf_p_retrans_coefficient, aes(CO2, retrans_coef, color=factor(Ring))) +   
@@ -449,7 +469,7 @@ We need to think about data collected from the same time point. For now, because
 
 
 ### 4.4 C fraction for frass production
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     frass_c_fraction <- make_frass_c_fraction()
 
@@ -467,7 +487,7 @@ We need to think about data collected from the same time point. For now, because
 ```
 
 ### 4.5 Aboveground leaf biomass, litterfall and frass production
-``` {r, echo = FALSE, warning=FALSE, message=FALSE}
+``` {r, echo = FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
    # hidden variables
     #### Canopy related variables (SLA, LAI, Canopy biomass)
     lai_variable <- make_lai_variable()
@@ -486,12 +506,11 @@ We need to think about data collected from the same time point. For now, because
 
 ```
 
-
 The above figure is a time-series canopy biomass plot, derived based on SLA and LAI measurements. 
 
 Assuming C fraction of 0.5, we can derive the canopy C pool, as:
 
-``` {r, echo=FALSE}
+``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
     
     ### make the plot
     p <- ggplot(canopy_biomass_pool,
@@ -507,7 +526,7 @@ Assuming C fraction of 0.5, we can derive the canopy C pool, as:
 <br/>
 Next, I calculate litter fall fluxes:
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
     #### Litter production (leaf, twig, bark, seed)
     litter_c_production_flux <- make_litter_c_flux(c_fraction)
 
@@ -530,7 +549,7 @@ Next, I calculate litter fall fluxes:
 <br/>
 Finally, frass production flux is:
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
  
     #### Frass production
     frass_c_production_flux <- make_frass_c_production_flux()
@@ -550,7 +569,7 @@ Finally, frass production flux is:
 ### 4.6 Root biomass and production
 First, we calculate fine root c pool: 
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
     #### Fineroot pools and production
     # this is total fineroot biomass for 0-30cm
     # currently implemented whole plant C fraction
@@ -572,7 +591,7 @@ First, we calculate fine root c pool:
 <br/>
 Fineroot production flux is:
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
 
     ### make the plot
     p <- ggplot(fineroot_c_production_flux,
@@ -591,7 +610,7 @@ Now, I am comparing coarse root c pools based on two methods.
 
 Method 1:
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
 
     coarse_root_c_pool_1 <- make_coarse_root_pool_1(c_fraction, FACE_ring_area) 
     coarse_root_c_pool_2 <- make_coarse_root_pool_2(c_fraction, FACE_ring_area) 
@@ -613,7 +632,7 @@ Method 1:
 
 Method 2:
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
 
     ### make the plot
     p <- ggplot(coarse_root_c_pool_2,
@@ -630,6 +649,9 @@ Method 2 has slightly higher C pools than method 1. And the inter-ring relations
 
 
 ### 4.7 Understorey C pool
+
+Here, understorey C biomass is estimated based on Varsha's clip data. 
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
     
     #### Understorey aboveground biomass 
@@ -640,8 +662,145 @@ Method 2 has slightly higher C pools than method 1. And the inter-ring relations
 ```
 
 
-### 4.8 wood C pool
+Now, I am making a different estimate of understorey C biomass, based on Matthias's stereo camera estimate of height.
+
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+    
+    #### Understorey aboveground biomass 
+    understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
+    
+    understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
+```
+
+Now, we need to compare the two biomass estimates:
+
+Harvest estimate:
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+
+    p1 <- ggplot(understorey_c_pool_2,
+                aes(Date, Total_g_C_m2, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C pool (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p1)
+    
+```
+
+Stereo Camera estimate:
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+    p2 <- ggplot(understorey_c_pool,
+                aes(Date, Total_g_C_m2, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C pool (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p2)
+    
+```
+
+
+Ring averaged comparison:
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+    source("programs/summary_variables/make_understorey_pool_size_comparison.R")
+
+    plotDF <- make_understorey_pool_size_comparison(understorey_c_pool,
+                                                    understorey_c_pool_2,
+                                                    plotting = F)
+
+    p <- ggplot(plotDF, aes(Date,value)) + 
+        geom_point() + 
+        stat_smooth() +
+        facet_wrap(~variable)
+    
+    plot(p)
+   
+```
+
+DF1 is Varsha's clip harvest and DF2 is Matthias's stereo camera estimates. 
+
+The general temporal pattern is similar, but the biomass size is different. This difference is possibly due to two factors: 1) Clipping harvest induces re-growth, and possibly the re-grown biomass is not at the mature stage; 2) Harvest data only include grasses and herbes, but stereo camera may additional include shrub data. 
+
+Varsha's clipping data provides % of live and % of dead biomass information. We could assign % P data to live biomass only, and assume 100% P retranslocation before shoot tissue sceneced. This might lower the understorey P pool. But the exact extent of the retranslocation rate remains unclear, and there is really no literature value on this.
+
+``` {r, echo=F, warning=F, message=F, fig.width = 7, fig.align="center"}
+    source("programs/summary_variables/make_understorey_percent_live_estimate.R")
+    understorey_live_percent <- make_understorey_percent_live_estimate()
+
+    p <- ggplot(understorey_live_percent, aes(Date, percent_live, color=factor(Ring))) +
+        geom_line() + 
+        xlab("Date") + ylab("Understorey % live") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+        
+
+```
+
+To look at growth estimate based on % cover change over a 15-d window, we can evaluate whether biomass estimated based on quarterly harvest is indicative of the mature biomass or not. 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+    plotDF <- make_understorey_aboveground_growth_estimate(plotting = F)
+
+    p <- ggplot(plotDF, aes(Date, Daily_growth, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Understorey Growth (% cover change / day)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+        
+    plot(p)
+    
+```
+
+This result indicates, growth estimated based on percent coverage fluctuates within a range of 1 to -1 % on a daily basis. So the harvest data over a quarterly interval may not be indicative of the true biomass. However, question also remains, as to how good a representation the change in % coverage is for biomass growth. 
+
+Now, we need to look at understorey production flux estimates, to make sure they are at least in the same magnitude.
+
+Stereo camera estimates:
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+
+    p1 <- ggplot(understorey_c_flux_2,
+                aes(Date, understorey_production_flux, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C production (mg C m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p1)
+    
+```
+
+Harvest flux:
+
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+
+    p2 <- ggplot(understorey_c_flux,
+                aes(Date, understorey_production_flux, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Understorey C production (mg C m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p2)
+    
+```
+
+Huge difference for understorey production estimates. Harvest data is more static and does not reflect understorey mortality and turnover. 
+
+However, if we look at the total annual production, values don't differ that much.
+
+``` {r}
+test1 <- with(understorey_c_flux, sum(understorey_production_flux*Days)/sum(Days)) * 365/1000
+test2 <- with(understorey_c_flux_2, sum(understorey_production_flux*Days)/sum(Days)) * 365/1000
+
+print(test1)
+
+print(test2)
+
+```
+
+### 4.8 wood C pool
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
     
     # year 2011-12 data on local directory
     wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
@@ -671,7 +830,7 @@ On the other hand, we still need to properly account for mortality, or standing 
 
 Next, wood C production is:
 
-``` {r, echo=FALSE, warning=FALSE, message=FALSE}
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
     ### make the plot
     p <- ggplot(wood_c_production,
                 aes(Date, wood_production_flux, color=factor(Ring))) +   
@@ -685,10 +844,34 @@ Next, wood C production is:
 
 Because wood pool may either increase or decrease over a certain measurement period, wood production can be either positive or negative. 
 
+
+### 4.9 Standing dead wood pool and flux
+``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
+    
+    # year 2011-12 data on local directory
+    standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
+                                                      c_frac=c_fraction)
+    
+    
+    #### Wood C production
+    standing_dead_c_flux <- make_standing_dead_c_flux(standing_dead_c_pool)
+    
+        ### make the plot
+    p <- ggplot(standing_dead_c_pool ,
+                aes(Date, wood_pool, color=factor(Ring))) +   
+            geom_point(size = 2.5) + geom_line() + 
+            xlab("Date") + ylab("Standing dead wood C (g C m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+```
+
+
 # 5. P pools and fluxes
 
 ### 5.1 Soil P pool
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
                                     bk_density=soil_bulk_density)
@@ -707,7 +890,7 @@ Because wood pool may either increase or decrease over a certain measurement per
 
 ### 5.2 Soil PO4-P pool
 Note, this pool is more readily available to plants as the microbial p pool needs one extra step when extracting.
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentration,
                                                     bk_density=soil_bulk_density)
@@ -725,8 +908,10 @@ Note, this pool is more readily available to plants as the microbial p pool need
 ```
 
 ### 5.3 Microbial P pool
+
 Note, this is for top 10 cm of the soil. 
-``` {r, echo=FALSE, warning=FALSE}
+
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
                                               bk_density=soil_bulk_density)
@@ -744,7 +929,7 @@ Note, this is for top 10 cm of the soil.
 This pool seems very large, especially consideration its concentration is very small (compared to wood for example). It implies that the biomass is enormous. Checking data description on HIEv, the microbial P concentration was "Fumigation extraction with Bray P AQ2 determination of PO4", in the unit og ug g-1. Essentially, the calculation was done by P conc * soil bulk, not P conc by biomass. Check with Cat to see if this makes sense. 
 
 ### 5.4 Canopy P pool
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
                                         biom=canopy_biomass_pool)
@@ -762,10 +947,11 @@ This pool seems very large, especially consideration its concentration is very s
 ```
 
 ### 5.5 Wood P pool
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                    c_pool=wood_c_pool)
+                                    c_pool=wood_c_pool,
+                                    case_consideration="sapwood")
 
     ### make the plot
     p <- ggplot(wood_p_pool,
@@ -782,8 +968,10 @@ This pool seems very large, especially consideration its concentration is very s
 We have only concentration measurement for one point in time. Assume this rate applies to all biomass. 
 Check, why inconsistent time points. 
 
+Also, we only took sapwood to calculate wood p, assuming that all heartwood P is retranslocated (i.e. zero P concentration).
+
 ### 5.6 Fine root P pool
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
                                             c_pool=fineroot_c_pool)
@@ -801,7 +989,7 @@ Check, why inconsistent time points.
 ```
 
 ### 5.7 Coarse root P pool
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     coarse_root_p_pool_1 <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
                                                 c_pool=coarse_root_c_pool_1,
@@ -824,7 +1012,7 @@ Check, why inconsistent time points.
 ```
 
 ### 5.8 Understorey aboveground P pool
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
                                               c_pool=understorey_c_pool,
@@ -849,7 +1037,7 @@ Data still not available.
 
 
 ### 5.10 Canopy P flux
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     canopy_c_production_flux <- leaflitter_c_production_flux
 
@@ -870,7 +1058,7 @@ Data still not available.
 ```
 
 ### 5.11 Wood P flux
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
                                     c_flux=wood_c_production)
@@ -888,7 +1076,7 @@ Data still not available.
 ```
 
 ### 5.12 Fineroot production P flux
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
                                                         c_flux=fineroot_c_production_flux)
@@ -905,7 +1093,7 @@ Data still not available.
 ```
 
 ### 5.13 Coarse root production P flux
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     coarse_root_p_flux_1 <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
                                                 c_flux=coarse_root_c_flux_1,
@@ -929,7 +1117,7 @@ Data still not available.
 
 
 ### 5.14 Leaflitter P flux
-``` {r, echo=FALSE, warning=FALSE, message = FALSE}
+``` {r, echo=FALSE, warning=FALSE, message = FALSE, fig.width = 7, fig.align="center"}
 
     leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
 
@@ -949,7 +1137,7 @@ Data still not available.
 
 This is estimated based on fine root c production flux, fineroot p concentration, and an bulk estimate of fine root P retranslocation coefficient. 
 
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_concentration,
                                                             c_flux=fineroot_c_production_flux,
@@ -968,7 +1156,7 @@ This is estimated based on fine root c production flux, fineroot p concentration
 
 
 ### 5.16 other aboveground litter P flux
-``` {r, echo=FALSE, warning=FALSE, message = FALSE}
+``` {r, echo=FALSE, warning=FALSE, message = FALSE, fig.width = 7, fig.align="center"}
 
     other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
 
@@ -985,7 +1173,7 @@ This is estimated based on fine root c production flux, fineroot p concentration
 ```
 
 ### 5.17 Frass production P flux
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
                                                    c_flux=frass_c_production_flux,
@@ -1004,7 +1192,7 @@ This is estimated based on fine root c production flux, fineroot p concentration
 ```
 
 ### 5.18 Understorey production P flux
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
                                               c_flux=understorey_c_flux,
@@ -1025,7 +1213,7 @@ This is estimated based on fine root c production flux, fineroot p concentration
 Used Varsha's harvest data to extrapolate. 
 
 ### 5.19 Soil mineralization P flux
-``` {r, echo=FALSE, warning=FALSE}
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
@@ -1043,6 +1231,53 @@ Used Varsha's harvest data to extrapolate.
 
 Positive values indicate minerlization, negative indicate immobilization. 
 
+Shun's GCB paper indicates that P mineralization rate was higher under eCO2, but here it is lower. 
+
+However, the exact texts in Shun's paper were: "eCO2 was also associated with faster nutrient turnover rates in the first six months of the experiment, with higher N (+175%) and P (+211%) mineralization rates compared to ambient rings, ***although this difference did not persist***."
+
+Hence, CO2 treatment effct is only there for the first few points! 
+
+
+### 5.20 Standing dead p pool and fluxes
+
+Standing dead p pool
+
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
+
+    standing_dead_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
+                                         c_pool=standing_dead_c_pool,
+                                         case_consideration = "sapwood")
+
+    ### make the plot
+    p <- ggplot(standing_dead_p_pool,
+                aes(Date, wood_p_pool, color=factor(Ring))) +   
+            geom_point(size = 5) + 
+            xlab("Date") + ylab("Standing dead P (g m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
+
+Standing dead p flux
+
+``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
+
+    standing_dead_p_flux <- make_standing_dead_p_flux(p_conc=wood_p_concentration,
+                                               c_flux=standing_dead_c_flux)
+
+    ### make the plot
+    p <- ggplot(standing_dead_p_flux,
+                aes(Date, wood_p_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + 
+            xlab("Date") + ylab("Standing dead P flux (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+
+```
 
 
 # 6. Summary tables
@@ -1050,16 +1285,18 @@ Positive values indicate minerlization, negative indicate immobilization.
     library(knitr)
 
 ```
+
+### P concentration table
 Below, I summarize the per ring, per treatment table for all P concentration variables. 
-Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings. 
+Rings 2, 3, 6 are ambient CO2 rings, and rings 1, 4, 5 are elevated CO2 rings. 
 
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_conc_summary_table_by_treatment.R")
+    source("programs/summary_tables/make_conc_summary_table_by_treatment.R")
     summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
     
     # make the table looks nicer
     # colnames(summary_table_concentration_by_treatment)[1] <- "Variable"
-    summary_table_concentration_by_treatment[,2:7] <- round(summary_table_concentration_by_treatment[,2:7], 3)
+    summary_table_concentration_by_treatment[,2:7] <-  round(summary_table_concentration_by_treatment[,2:7], 3)
     
     kable(summary_table_concentration_by_treatment)
 
@@ -1070,9 +1307,9 @@ Rings 2,3,6 are ambient CO2 rings, and rings 1,4,5 are elevated CO2 rings.
 <br/>
 <br/>
 
-Next, I summarize all pool variables:
+### P pool table
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_pool_summary_table_by_treatment.R")
+    source("programs/summary_tables/make_pool_summary_table_by_treatment.R")
     summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
     
     # make the table looks nicer
@@ -1083,14 +1320,29 @@ Next, I summarize all pool variables:
 
 ```
 
-<br/>
-<br/>
-<br/>
-<br/>
+### C pool table
 
-Now, I summarize all flux variables:
+Here I am summarizing all the C pools used for P calculations:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_flux_summary_table_by_treatment.R")
+    # first, compute the microbial c pool as we will need it for summary purpose
+    microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
+
+    # now make the summary
+    source("programs/summary_tables/make_c_pool_summary_table_by_treatment.R")
+    summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
+    
+    # make the table looks nicer
+    # colnames(summary_table_c_pool_by_treatment)[1] <- "Variable"
+    summary_table_c_pool_by_treatment[,2:9] <- round(summary_table_c_pool_by_treatment[,2:9], 1)
+    
+    kable(summary_table_c_pool_by_treatment)
+
+```
+
+### P flux table
+Now, I summarize all P flux variables:
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_tables/make_flux_summary_table_by_treatment.R")
     summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
     
     # make the table looks nicer
@@ -1100,79 +1352,132 @@ Now, I summarize all flux variables:
     kable(summary_table_flux_by_treatment)
 
 ```
-<br/>
-<br/>
-<br/>
-<br/>
 
-Here, I summarize all P budgeting variables, in a table:
+### C flux table
+
+Now, we need all the C flux variables to make reference of:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    source("programs/make_p_budgeting_variables.R")
-    summary_table_p_budgets <- make_p_budgeting_variables()
+    source("programs/summary_tables/make_c_flux_summary_table_by_treatment.R")
+    summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
     
     # make the table looks nicer
-    # colnames(summary_table_p_budgets)[1] <- "terms"
-
-    kable(summary_table_p_budgets)
+    # colnames(summary_table_flux_by_treatment)[1] <- "terms"
+    summary_table_c_flux_by_treatment[,2:9] <- round(summary_table_c_flux_by_treatment[,2:9], 3)
+    
+    kable(summary_table_c_flux_by_treatment)
 
 ```
 
-Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment. It currently does not include any components of the understorey parts. So, the uptake/requirement ratio is high because we ignores understorey retranslocation. Or, we should only be calculating the overstorey P uptake and requirement. 
-
-There is no literature value on Microlaena P retranslocation. 
-
-Next, I am plotting all the P budgeting variables. 
-
-<br/>
-<br/>
 <br/>
 <br/>
 
+### P budget
 
-# 7. C:P ratios
+#### total P budget
+
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_variables/make_total_p_budgeting_variables.R")
+    summary_table_total_p_budgets <- make_total_p_budgeting_variables()
+
+    kable(summary_table_total_p_budgets)
+
+```
+
+Note: total P retranslocation includes leaf and fineroot retranslocation, plus wood P increment and understorey. Understorey part is a guess retranslocation coefficient, as there is no literature value on Microlaena P retranslocation. 
 
 <br/>
 <br/>
+
+#### overstorey P budget
+
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_variables/make_overstorey_p_budgeting_variables.R")
+    summary_table_overstorey_p_budgets <- make_overstorey_p_budgeting_variables()
+
+    kable(summary_table_overstorey_p_budgets)
+
+```
+
 <br/>
 <br/>
+
+#### understorey P budget
+
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_variables/make_understorey_p_budgeting_variables.R")
+    summary_table_understorey_p_budgets <- make_understorey_p_budgeting_variables()
+
+    kable(summary_table_understorey_p_budgets)
+
+```
+
 <br/>
 <br/>
+
+### CP ratios for all pools
+
+This time-invariant CP ratio based on all data. 
+
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/summary_tables/make_cp_ratios.R")
+    summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
+                                        p_pool=summary_table_pool_by_treatment)
+    
+    kable(summary_cp_ratios)
+
+```
+
+<br/>
+<br/>
+
+# 7. Has anything changed over time?
+Here, I will check if there's anything changed over time and if there's any CO2 effect or not. Results will be summarized as per ring and per treatment, for each variable respectively. This is because variables don't share common start and end dates. 
 
 
 # 8. To-do list
 
-High priorities:
+This list is a continuous update of the to-do items for both EucFACE C and P projects. It includes both high and less priority items. 
 
-    - Summarize P concentration using min and max
-    - Possibly look at 2015 to see CO2 treatment effect. 
-    - Check microbial pool biomass data with Cat
-    - Wood C production and pool over time, why negative
-    - Create mortality pool, or standing dead pool
-    - Summary diagrams for aCO2 and eCO2
-    - Fraction of sapwood to extrapolate wood retranslocation coefficients
+### High priorities:
 
-<br/> 
+    - Look at N pools and fluxes, in particular, N retranslocation
+    - Has C:P ratio change over time?
+    - EucFACE C project - data notes and summary report.
+    - Check Doodle Poll responses and send reminders
 
-Less priorities:
 
-    - Continuous understorey C data (Matthias)
-    - Hedley Fractionation, in 2-3 weeks (Cat)
+    - Cat re-check microbial extraction procedure
+    - Met data (including soil moisture)
+    - Understorey respiration rate scaled with temperature
+    - GPP data from Maespa - need to reconcile CUE issues for both overstorey and understorey
+
+
+### Less priorities:
+
+    - Hedley Fractionation (Cat) - almost done
     - Microbial turnover rate (Cat and Johanna, but may not be available soon)
     - Mycorrhizal data for both C and P project (Jeff)
+    - Canopy P conc. for all year
     - Root mortality and turnover for both C and P project (Juan)
-    - Canopy turnover 
-    - Meteorological data, including soil moisture (HIEv)
     - More valid fine root and coarse root P retranslocation coefficients
-    - Understorey respiration from literature, but without a relationship to temperature
     - CH4 data
     - litter pool
-    - split aboveground and belowground in summary table
+    - Summarize P concentration using min and max
+    - Create error bars
+    - Possibly look at 2015 to see CO2 treatment effect. 
+
+
+    
+    
+### Completed with clarifications:
+
+    - Wood pool - check why decreasing? wood pool is not decreasing if only considers live trees!
+    - Understorey production - now using Varsha's harvest data. 
+    - total P requirement is the sum of canopy, frass, wood, root and understorey. 
+    - standing dead pool completed (not yet included in the C project). Currently only 1 tree in ring 6 was marked as dead, although there are NAs marked for other trees (possibly no measurement for some dates). The C and P pools and fluxes are properly coded, but hasn't been integrated in the summary table, as it affects ring 6 only and is a very tiny proportion of the entire budget. 
 
 <br/>
 <br/>
 <br/>
-<br/>
-<br/>
-<br/>
 
-# The end.
+
