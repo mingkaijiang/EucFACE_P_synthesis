@@ -1788,12 +1788,9 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
 
 ### High priorities
 
-    - Look at N pools and fluxes, in particular, N retranslocation
-    - Has C:P ratio change over time?
     - EucFACE C project - data notes and summary report.
     - Check Doodle Poll responses and send reminders
-
-
+    - Has C:P ratio change over time?
     - Cat re-check microbial extraction procedure
     - Met data (including soil moisture)
     - Understorey respiration rate scaled with temperature
@@ -1814,8 +1811,6 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
     - Create error bars
     - Possibly look at 2015 to see CO2 treatment effect. 
 
-
-    
     
 ### Completed with clarifications
 
@@ -1823,6 +1818,8 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
     - Understorey production - now using Varsha's harvest data. 
     - total P requirement is the sum of canopy, frass, wood, root and understorey. 
     - standing dead pool completed (not yet included in the C project). Currently only 1 tree in ring 6 was marked as dead, although there are NAs marked for other trees (possibly no measurement for some dates). The C and P pools and fluxes are properly coded, but hasn't been integrated in the summary table, as it affects ring 6 only and is a very tiny proportion of the entire budget. 
+    - N pools and fluxes - we don't have N retranslocation, but we do have some N:P ratios now
+    
 
 <br/>
 <br/>
