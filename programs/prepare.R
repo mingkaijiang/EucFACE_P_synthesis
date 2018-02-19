@@ -14,7 +14,8 @@ pacman::p_load(dplyr,
                readxl, 
                lubridate,
                gdata,
-               ggplot2) # add other packages needed to this list
+               ggplot2,
+               knitr) # add other packages needed to this list
 
 
 # Loading constants
