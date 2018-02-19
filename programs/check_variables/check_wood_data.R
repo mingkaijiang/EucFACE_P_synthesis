@@ -78,7 +78,7 @@ check_wood_data <- function() {
     ## Plot distribution of change in diameter
     hist(ck1$Coef, xlab="Coefficient", ylab = "Count",
          main="Linear fit curve coefficient Distribution for individual trees")
-    text(0.001, 35, labels=bquote(sigma == .(sigma)), size=2)
+    text(0.001, 35, labels=bquote(sigma == .(sigma)))
     
     p1 <- ggplot(long, aes(Date, diam, color=factor(Ring))) +
         geom_point(size = 0.5) + 

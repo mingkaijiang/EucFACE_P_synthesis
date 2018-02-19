@@ -44,7 +44,10 @@ make_standing_pue <- function(p_up) {
     
     ### calculate pup / npp per ring
     out <- nppDF[,c("Ring", "total")]
-    out[1:6, "pup"] <- p_up[,1:6]
+    for (i in 1:6) {
+        out[i, "pup"] <- p_up[,i]
+        
+    }
     colnames(out) <- c("Ring", "NPP", "PUP")    
     out$NPP_by_PUP <- out$NPP/out$PUP   
         
