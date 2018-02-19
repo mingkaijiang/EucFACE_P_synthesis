@@ -1528,11 +1528,11 @@ This time-invariant CP ratio based on all data.
 ### 7.2 Pools and fluxes
 #### Canopy N pool
 ``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
-    canopy_n_pool <- make_canopy_n_pool(p_conc=canopy_n_concentration,
+    canopy_n_pool <- make_canopy_n_pool(n_conc=canopy_n_concentration,
                                         biom=canopy_biomass_pool)
     ### make the plot
     p <- ggplot(canopy_n_pool,
-                aes(Date, canopy_n_pool, color=factor(Ring))) +   
+                aes(Date, leaf_n_pool, color=factor(Ring))) +   
             geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("canopy n pool (g m-2)") + 
             scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
@@ -1565,7 +1565,7 @@ This time-invariant CP ratio based on all data.
 
     ### make the plot
     p <- ggplot(frass_n_production,
-                aes(Date, frass_n_production, color=factor(Ring))) +   
+                aes(Date, frass_n_flux_mg_m2_d, color=factor(Ring))) +   
             geom_point(size = 5) + geom_line() + 
             xlab("Date") + ylab("frass n flux (mg m-2 d-1)") + 
             scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
@@ -1574,14 +1574,80 @@ This time-invariant CP ratio based on all data.
 ```
 
 #### Soil N pool
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    soil_n_pool <- make_soil_n_pool(n_conc=soil_n_concentration,
+                                bk_density=soil_bulk_density)
+
+    ### make the plot
+    p <- ggplot(soil_n_pool,
+                aes(Date, soil_n_g_m2, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Soil N Pool (g m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
+
+#### Soil Inorganic N pool
+
+This pool can be obtained based on three possible datasets:
+
+    - Lysimeter 
+    - Extractable
+    - IEM
+
+Not sure which to use, but to be consistent with phosphate P data, I decided to use the extractable dataset. 
+
+This pool includes nitrate-N, ammonia-N. 
+
 
 
 #### Understorey N pool
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    understorey_n_pool <- make_understorey_n_pool(n_conc=understorey_n_concentration,
+                                              c_pool=understorey_c_pool,
+                                              c_frac=c_fraction_ud,
+                                              live_or_total = "Live")
+    ### make the plot
+    p <- ggplot(understorey_n_pool,
+                aes(Date, understorey_n_pool, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Understorey N Pool (g m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
 
 #### Understorey N flux
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    understorey_n_flux <- make_understorey_n_flux(n_conc=understorey_n_concentration,
+                                              c_flux=understorey_c_flux,
+                                              c_frac=c_fraction_ud)
+    ### make the plot
+    p <- ggplot(understorey_n_flux,
+                aes(Date, understorey_n_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Understorey N Flux (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
 
-### 7.3 Canopy N retranslocation coefficient
+### 7.3 N-P limitation indicative variables
+#### Canopy N retranslocation coefficient
 
+#### Soil N:P ratios
+
+#### Overstorey canopy N:P ratios
+
+
+#### Frass N:P ratios
+
+
+#### Understorey N:P ratios
+
+
+#### Mineralization N:P ratios
 
 <br/>
 

@@ -265,7 +265,7 @@ fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentrat
 #### we are taking the average of p_conc and apply it to c_pool
 #### Here we can use Matthias's stereo camera estimate (2) or 
 #### Varsha's harvest data (1) to extrapolate for p pool
-#### It makes more sense to use stereo camera at this stage in time!
+#### It makes more sense to use harvest at this stage in time!
 #### Also, if use Varsha's harvest data, we can use either total or live part of biomass
 understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
                                               c_pool=understorey_c_pool,
@@ -275,7 +275,7 @@ understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration
 #### Understorey production flux
 #### Here we can use either stereo camera estimate of biomass (2) or
 #### Harvest biomass data (1) to calculate p flux
-#### Currently, we are using stereo camera estimate 
+#### Currently, we are using harvest estimate
 understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
                                               c_flux=understorey_c_flux,
                                               c_frac=c_fraction_ud)
@@ -377,14 +377,18 @@ frass_n_production <- make_frass_n_production_flux(n_conc=frass_n_concentration,
                                                    c_flux=frass_c_production_flux,
                                                    c_frac=frass_c_fraction)
 
-#### Fineroot N pool 
-
-#### Fineroot N flux
-
 #### Soil N pool
+soil_n_pool <- make_soil_n_pool(n_conc=soil_n_concentration,
+                                bk_density=soil_bulk_density)
 
-#### Soil nitrate N pool
-
+#### Soil Inorganic N pool
+### there are 3 possible data estimates:
+### IEM method
+### extractable method
+### Lysimeter (shallow and deep depth)
+### not sure which to use
+soil_nitrate_n_pool <- make_soil_nitrate_n_pool()
+    
 #### Soil ammonia N pool
 
 #### Soil nitrification flux
@@ -394,10 +398,31 @@ frass_n_production <- make_frass_n_production_flux(n_conc=frass_n_concentration,
     
 
 #### Understorey N pool
+understorey_n_pool <- make_understorey_n_pool(n_conc=understorey_n_concentration,
+                                              c_pool=understorey_c_pool,
+                                              c_frac=c_fraction_ud,
+                                              live_or_total = "Live")
 
 #### Understorey N flux
+understorey_n_flux <- make_understorey_n_flux(n_conc=understorey_n_concentration,
+                                              c_flux=understorey_c_flux,
+                                              c_frac=c_fraction_ud)
 
-####Canopy N retranslocation coefficient
+
+#### Canopy N retranslocation coefficient
+
+#### Soil N:P ratios
+
+#### Overstorey canopy N:P ratios
+
+
+#### Frass N:P ratios
+
+
+#### Understorey N:P ratios
+
+
+#### Mineralization N:P ratios
 
 
 
