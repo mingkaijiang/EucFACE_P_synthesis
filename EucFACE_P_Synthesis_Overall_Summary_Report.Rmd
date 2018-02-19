@@ -1482,20 +1482,96 @@ This time-invariant CP ratio based on all data.
 ```
 
 #### Soil N concentration
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    soil_n_concentration <- make_soil_n_concentration()
 
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        soil_n_concentration[soil_n_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        soil_n_concentration[soil_n_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+
+    ### make the treatment over date plot
+    p <- ggplot(soil_n_concentration,
+                aes(Date, PercN, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Soil N Concentration (%)")
+    plot(p)
+
+```
 
 #### Understorey N concentration
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    understorey_n_concentration <- make_understorey_n_concentration()
 
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        understorey_n_concentration[understorey_n_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        understorey_n_concentration[understorey_n_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+
+    ### make the treatment over date plot
+    p <- ggplot(understorey_n_concentration,
+                aes(Date, PercN, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Understorey N Concentration (%)")
+    plot(p)
+
+```
 
 <br/>
 
 ### 7.2 Pools and fluxes
 #### Canopy N pool
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    canopy_n_pool <- make_canopy_n_pool(p_conc=canopy_n_concentration,
+                                        biom=canopy_biomass_pool)
+    ### make the plot
+    p <- ggplot(canopy_n_pool,
+                aes(Date, canopy_n_pool, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("canopy n pool (g m-2)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
+
 
 #### Canopy N flux
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    canopy_n_flux <- make_canopy_n_production(n_conc=canopy_n_concentration,
+                                          c_flux=canopy_c_production_flux,
+                                          c_frac=c_fraction)
+    ### make the plot
+    p <- ggplot(canopy_n_flux,
+                aes(Date, canopy_n_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("canopy n flux (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
+
 
 #### Frass N production
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    frass_n_production <- make_frass_n_production_flux(n_conc=frass_n_concentration,
+                                                   c_flux=frass_c_production_flux,
+                                                   c_frac=frass_c_fraction)
 
+    ### make the plot
+    p <- ggplot(frass_n_production,
+                aes(Date, frass_n_production, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("frass n flux (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
 
 #### Soil N pool
 

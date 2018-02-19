@@ -348,7 +348,6 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
 ### check - has CP ratio changed over time?
 
 ###### ---------------- Nitrogen stuffs -------------------- ######
-rm(list=ls(all=TRUE))
 source("programs/prepare.R")
 
 #### Canopy N concentration
@@ -361,14 +360,26 @@ frass_n_concentration <- make_frass_n_concentration()
 soil_n_concentration <- make_soil_n_concentration()
 
 #### Understorey N concentration
-
+understorey_n_concentration <- make_understorey_n_concentration()
 
 #### Canopy N pool
+canopy_n_pool <- make_canopy_n_pool(n_conc=canopy_n_concentration,
+                                    biom=canopy_biomass_pool)
 
-#### Canopy N flux
+#### Canopy N production flux
+canopy_n_flux <- make_canopy_n_production(n_conc=canopy_n_concentration,
+                                          c_flux=canopy_c_production_flux,
+                                          c_frac=c_fraction)
+
 
 #### Frass N production
+frass_n_production <- make_frass_n_production_flux(n_conc=frass_n_concentration,
+                                                   c_flux=frass_c_production_flux,
+                                                   c_frac=frass_c_fraction)
 
+#### Fineroot N pool 
+
+#### Fineroot N flux
 
 #### Soil N pool
 
