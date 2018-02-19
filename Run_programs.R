@@ -348,85 +348,87 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
 ### check - has CP ratio changed over time?
 
 ###### ---------------- Nitrogen stuffs -------------------- ######
-source("programs/prepare.R")
-
-#### Canopy N concentration
+#### Concentrations
+### Canopy N concentration
 canopy_n_concentration <- make_canopy_n_concentration()
 
-#### Frass N concentration
+### Frass N concentration
 frass_n_concentration <- make_frass_n_concentration()
 
-#### Soil N concentration
+### Soil N concentration
 soil_n_concentration <- make_soil_n_concentration()
 
-#### Soil inorganic N concentration
+### Soil inorganic N concentration
 soil_inorganic_n_concentration <- make_soil_inorganic_n_concentration()
 
-#### Understorey N concentration
+### Understorey N concentration
 understorey_n_concentration <- make_understorey_n_concentration()
 
-#### Canopy N pool
+#### Pools and fluxes
+### Canopy N pool
 canopy_n_pool <- make_canopy_n_pool(n_conc=canopy_n_concentration,
                                     biom=canopy_biomass_pool)
 
-#### Canopy N production flux
+### Canopy N production flux
 canopy_n_flux <- make_canopy_n_production(n_conc=canopy_n_concentration,
                                           c_flux=canopy_c_production_flux,
                                           c_frac=c_fraction)
 
 
-#### Frass N production
+### Frass N production
 frass_n_production <- make_frass_n_production_flux(n_conc=frass_n_concentration,
                                                    c_flux=frass_c_production_flux,
                                                    c_frac=frass_c_fraction)
 
-#### Soil N pool
+### Soil N pool
 soil_n_pool <- make_soil_n_pool(n_conc=soil_n_concentration,
                                 bk_density=soil_bulk_density)
 
-#### Soil Inorganic N pool
-### there are 3 possible data estimates:
-### IEM method
-### extractable method
-### Lysimeter (shallow and deep depth)
-### not sure which to use
+### Soil Inorganic N pool
+## there are 3 possible data estimates:
+## IEM method
+## extractable method
+## Lysimeter (shallow and deep depth)
+## not sure which to use
 soil_inorganic_n_pool <- make_soil_inorganic_n_pool(n_conc=soil_inorganic_n_concentration,
                                                     bk_density=soil_bulk_density)
     
+### Soil nitrification flux
+soil_nitrification_n_flux <- make_soil_n_nitrification_flux(bk_density=soil_bulk_density)
+
+### Soil N mineralization flux
+soil_mineralization_n_flux <- make_soil_n_mineralization_flux(bk_density=soil_bulk_density)
 
 
-#### Soil nitrification flux
-
-
-#### Soil N mineralization flux
-    
-
-#### Understorey N pool
+### Understorey N pool
 understorey_n_pool <- make_understorey_n_pool(n_conc=understorey_n_concentration,
                                               c_pool=understorey_c_pool,
                                               c_frac=c_fraction_ud,
                                               live_or_total = "Live")
 
-#### Understorey N flux
+### Understorey N flux
 understorey_n_flux <- make_understorey_n_flux(n_conc=understorey_n_concentration,
                                               c_flux=understorey_c_flux,
                                               c_frac=c_fraction_ud)
 
+#### N:P limitation indicative variables
+### Canopy N retranslocation coefficient
 
-#### Canopy N retranslocation coefficient
+### Soil N:P ratios
 
-#### Soil N:P ratios
-
-#### Overstorey canopy N:P ratios
-
-
-#### Frass N:P ratios
+### readily available N:P ratio (i.e. sum of nitrate and ammonium : phosphate-P)
 
 
-#### Understorey N:P ratios
+### Overstorey canopy N:P ratios
 
 
-#### Mineralization N:P ratios
+### Frass N:P ratios
+
+
+### Understorey N:P ratios
+
+
+### Mineralization N:P ratios
 
 
 

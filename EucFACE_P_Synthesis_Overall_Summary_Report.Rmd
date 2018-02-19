@@ -1647,6 +1647,37 @@ This pool includes nitrate-N, ammonia-N.
     plot(p)
 ```
 
+#### Soil nitrification and mineralization flux
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    soil_nitrification_n_flux <- make_soil_n_nitrification_flux(bk_density=soil_bulk_density)
+
+    ### make the plot
+    p <- ggplot(soil_nitrification_n_flux,
+                aes(Date, soil_n_nitrification_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Soil Nitrification (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
+
+Positive values indicate nitrification, negative indicate denitrification.
+
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    soil_mineralization_n_flux <- make_soil_n_mineralization_flux(bk_density=soil_bulk_density)
+
+    ### make the plot
+    p <- ggplot(soil_mineralization_n_flux,
+                aes(Date, soil_n_mineralization_flux, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Soil Mineralization (mg m-2 d-1)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+```
+
+Positive values are net mineralization, negative are immbolisation. 
+
 
 #### Understorey N pool
 ``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
