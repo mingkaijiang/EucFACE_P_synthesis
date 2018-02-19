@@ -1788,14 +1788,10 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
 
 ### High priorities
 
-    - EucFACE C project - data notes and summary report.
     - Check Doodle Poll responses and send reminders
     - Has C:P ratio change over time (similarly, N:P ratio)?
     - Cat re-check microbial extraction procedure
     - Met data (including soil moisture)
-    - Understorey respiration rate scaled with temperature
-    - GPP data from Maespa - need to reconcile CUE issues for both overstorey and understorey
-
 
 ### Less priorities
 
@@ -1805,8 +1801,6 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
     - Canopy P conc. for all year
     - Root mortality and turnover for both C and P project (Juan)
     - More valid fine root and coarse root P retranslocation coefficients
-    - CH4 data
-    - litter pool
     - Summarize P concentration using min and max
     - Create error bars
     - Possibly look at 2015 to see CO2 treatment effect. 
