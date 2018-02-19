@@ -1,10 +1,8 @@
 
-make_soil_inorganic_n_concentration <- function(func) {
+make_soil_inorganic_n_concentration <- function() {
     
-    # soil nitrate n: in unit of ng/cm2/day, cm2 refers to IEM size
-    
-    # download the data
-    download_soil_inorganic_n_data()
+    # soil nitrate n: Unit mg/kg 
+    # soil ammonia n: unit mg/kg
     
     ## read in data - extractable NP data
     myDF1 <- read.csv(file.path(getToPath(), 
@@ -22,31 +20,33 @@ make_soil_inorganic_n_concentration <- function(func) {
     
     # get only top 10 cm
     myDF3 <- myDF3[which(myDF3$depth %in% " 0_10cm"),]
-
-    # average across rings, dates, and depths, unit: mg/kg PO4-P
-    myDF3.m <- summaryBy(phosphate~date+ring+depth,data=myDF3,FUN=func,keep.names=T,na.rm=T)
-    
-    myDF3.m <- myDF3.m[,c("date", "ring", "phosphate")]
-    
-    #myDF3.m <- myDF3.m[-c(1:6),]
     
     # read in Shun's data to expand the temporal coverages of the previous data
     myDF4 <- read.csv(file.path(getToPath(), 
                                 "FACE_RA_P0023_SOILEXTRACTABLENUTRIENTS_L3_20120613-20140310.csv"))
+    myDF4$date <- as.Date(myDF4$date)
     
-    myDF4.m <- summaryBy(phosphate~date+ring,data=myDF4,FUN=func,keep.names=T,na.rm=T)
-    myDF4.m$date <- as.Date(myDF4.m$date)
+    # select a subset
+    inDF1 <- myDF3[,c("date", "ring", "plot", "nitrate", "ammonium")]
+    inDF2 <- myDF4[,c("date", "ring", "plot", "nitrate", "ammonium")]
     
-    # combine both dataframes
-    myDF <- rbind(myDF4.m, myDF3.m)
+    # convert ammonium in inDF1 to numeric
+    inDF1$ammonium <- as.character(inDF1$ammonium)
+    inDF1 <- inDF1[complete.cases(inDF1$ammonium),]
+    inDF1[inDF1$ammonium == "BDL", "ammonium"] <- 0.0
+    inDF1$ammonium <- as.numeric(inDF1$ammonium)
     
-    # convert PO4-P in mg/kg to %
-    myDF$PercP <- myDF$phosphate / 10000
+    myDF <- rbind(inDF1, inDF2)
+    
+    out <- summaryBy(nitrate+ammonium~date+ring,data=myDF,FUN=mean,keep.names=T,na.rm=T)
+    
+    out$perc_nitr <- out$nitrate * 10^-4
+    out$perc_ammo <- out$ammonium * 10^-4
+    out$perc_tot <- out$perc_nitr + out$perc_ammo
     
     # output table
-    myDF.out <- myDF[,c("date", "ring", "PercP")]
-    colnames(myDF.out) <- c("Date", "Ring", "PercP")
+    myDF.out <- out[,c("date", "ring", "perc_nitr", "perc_ammo", "perc_tot")]
+    colnames(myDF.out) <- c("Date", "Ring","Nitrate_PercN", "Ammonium_PercN", "Total_PercN")
     
-
     return(myDF.out)
 }

@@ -359,6 +359,9 @@ frass_n_concentration <- make_frass_n_concentration()
 #### Soil N concentration
 soil_n_concentration <- make_soil_n_concentration()
 
+#### Soil inorganic N concentration
+soil_inorganic_n_concentration <- make_soil_inorganic_n_concentration()
+
 #### Understorey N concentration
 understorey_n_concentration <- make_understorey_n_concentration()
 
@@ -387,9 +390,10 @@ soil_n_pool <- make_soil_n_pool(n_conc=soil_n_concentration,
 ### extractable method
 ### Lysimeter (shallow and deep depth)
 ### not sure which to use
-soil_nitrate_n_pool <- make_soil_nitrate_n_pool()
+soil_inorganic_n_pool <- make_soil_inorganic_n_pool(n_conc=soil_inorganic_n_concentration,
+                                                    bk_density=soil_bulk_density)
     
-#### Soil ammonia N pool
+
 
 #### Soil nitrification flux
 
