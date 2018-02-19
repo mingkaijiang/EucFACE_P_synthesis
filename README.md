@@ -1,6 +1,5 @@
 ---
-output:
-  html_document: default
+
 ---
 # EucFACE Phosphorus synthesis code repository
 Synthesizing the phosphorus-related (P) pools and fluxes for the Eucalyptus Free Atmospheric CO2 Enrichment (EucFACE) experiment 
@@ -33,10 +32,10 @@ source("programs/prepare.R")
 
 # Key definitions:
 
-        All fluxes are in the unit of mg/m2/d, and all pools are in the unit of g/m2. Concentrations are in their respective units, such as ppm, or %. 
-        For variables that are uncertain with respect to data processing, data quality and output unit, please refer to the individual variable comments for details. 
-        Results (summary table) are summarized in units of g/m2/yr (fluxes), or g/m2 (pools).
-        There is a R markdown file for the overall result. 
+        <br/> All fluxes are in the unit of mg/m2/d, and all pools are in the unit of g/m2. Concentrations are in their respective units, such as ppm, or %. 
+        <br/> For variables that are uncertain with respect to data processing, data quality and output unit, please refer to the individual variable comments for details. 
+        <br/> Results (summary table) are summarized in units of g/m2/yr (fluxes), or g/m2 (pools).
+        <br/> There is a R markdown file for the overall result. 
 <br/> 
 
 
