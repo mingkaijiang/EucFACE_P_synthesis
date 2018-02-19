@@ -10,7 +10,8 @@ make_understorey_p_budgeting_variables <- function() {
     
     ### understorey P retranslocation, 
     source("programs/summary_variables/make_understorey_p_retranslocation.R")
-    understorey_p_retranslocation <- make_understorey_p_retranslocation(understorey_retrans_coef=retrans_ud,
+    understorey_p_retranslocation <- make_understorey_p_retranslocation(retrans_calc_method = "Mortality",
+                                                                        understorey_retrans_coef=retrans_ud,
                                                                         summary_table_flux_by_treatment)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation

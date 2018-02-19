@@ -1029,7 +1029,14 @@ Also, we only took sapwood to calculate wood p, assuming that all heartwood P is
 
 ```
 
-Understorey P pool, assume both species contributed equally. Also because p_conc and c_pool do not match in time, we are taking the average of p_conc and apply it to c_pool. When Mathias's continuous c_pool data becomes available, we can update this calculation.
+Understorey P pool, assume both species contributed equally. Also because p_conc and c_pool do not match in time, we are taking the average of p_conc and apply it to c_pool. 
+
+Here we are using harvest data (taken at quarterly timestep) to extrapolate for P pool. This estimate is lower than the Stereo camera estimates (non-destructive method), but it gives us the production term. To be consistent with the production term, here we are using harvest estimate. 
+
+The harvest data also provides information on % live and % dead. As such, understorey P pool can be extrapolated based on %P by total biomass or %P by live biomass methods.
+
+The understorey P production is estimated based on total biomass and % P. 
+
 
 ### 5.9 Mycorrhizal P pool
 Data still not available. 
