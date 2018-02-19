@@ -412,24 +412,26 @@ understorey_n_flux <- make_understorey_n_flux(n_conc=understorey_n_concentration
                                               c_frac=c_fraction_ud)
 
 #### N:P limitation indicative variables
-### Canopy N retranslocation coefficient
+### Canopy N:P ratio
+canopy_np_ratio <- make_canopy_np_ratios(n_pool=canopy_n_pool,
+                                         p_pool=canopy_p_pool)
 
 ### Soil N:P ratios
+soil_np_ratio <- make_soil_np_ratios(n_pool=soil_n_pool,
+                                     p_pool=soil_p_pool)
 
 ### readily available N:P ratio (i.e. sum of nitrate and ammonium : phosphate-P)
-
-
-### Overstorey canopy N:P ratios
+readily_available_soil_np_ratio <- make_readily_available_soil_np_ratios(n_pool=soil_inorganic_n_pool,
+                                                                         p_pool=soil_phosphate_pool)
 
 
 ### Frass N:P ratios
-
+frass_np_ratio <- make_frass_np_ratios(n_conc=frass_n_concentration,
+                                      p_conc=frass_p_concentration)
 
 ### Understorey N:P ratios
-
-
-### Mineralization N:P ratios
-
+understorey_np_ratio <- make_understorey_np_ratios(n_conc=understorey_n_concentration,
+                                                   p_conc=understorey_p_concentration)
 
 
 ###### ---------------- Data checking -------------------- ######
