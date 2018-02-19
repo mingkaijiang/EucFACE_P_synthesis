@@ -347,6 +347,48 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
 
 ### check - has CP ratio changed over time?
 
+###### ---------------- Nitrogen stuffs -------------------- ######
+rm(list=ls(all=TRUE))
+source("programs/prepare.R")
+
+#### Canopy N concentration
+canopy_n_concentration <- make_canopy_n_concentration()
+
+#### Frass N concentration
+frass_n_concentration <- make_frass_n_concentration()
+
+#### Soil N concentration
+soil_n_concentration <- make_soil_n_concentration()
+
+#### Understorey N concentration
+
+
+#### Canopy N pool
+
+#### Canopy N flux
+
+#### Frass N production
+
+
+#### Soil N pool
+
+#### Soil nitrate N pool
+
+#### Soil ammonia N pool
+
+#### Soil nitrification flux
+
+
+#### Soil N mineralization flux
+    
+
+#### Understorey N pool
+
+#### Understorey N flux
+
+####Canopy N retranslocation coefficient
+
+
 
 ###### ---------------- Data checking -------------------- ######
 source("programs/check_variables/check_wood_data.R")

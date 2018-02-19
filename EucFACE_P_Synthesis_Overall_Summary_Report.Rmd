@@ -1436,7 +1436,80 @@ This time-invariant CP ratio based on all data.
 <br/>
 <br/>
 
-# 7. Has anything changed over time?
+# 7. Nitrogen related data to understand P limitation
+### 7.1 Concentrations
+#### Canopy N concentration
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    canopy_n_concentration <- make_canopy_n_concentration()
+
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        canopy_n_concentration[canopy_n_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        canopy_n_concentration[canopy_n_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+
+    ### make the treatment over date plot
+    p <- ggplot(canopy_n_concentration,
+                aes(Date, PercN, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Canopy N Concentration (%)")
+    plot(p)
+
+```
+
+
+#### Frass N concentration
+``` {r, echo=FALSE, fig.width = 7, fig.align="center", warning=FALSE, message=FALSE} 
+    frass_n_concentration <- make_frass_n_concentration()
+
+    ### assign CO2 treatment labels
+    for (i in aCO2_rings) {
+        frass_n_concentration[frass_n_concentration$Ring == i, "CO2"] <- "aCO2"
+    }
+    for (i in eCO2_rings) {
+        frass_n_concentration[frass_n_concentration$Ring == i, "CO2"] <- "eCO2"
+    }
+
+    ### make the treatment over date plot
+    p <- ggplot(frass_n_concentration,
+                aes(Date, PercN, color=factor(CO2))) +   
+            geom_point(size = 5) +
+            xlab("Date") + ylab("Frass N Concentration (%)")
+    plot(p)
+
+```
+
+#### Soil N concentration
+
+
+#### Understorey N concentration
+
+
+<br/>
+
+### 7.2 Pools and fluxes
+#### Canopy N pool
+
+#### Canopy N flux
+
+#### Frass N production
+
+
+#### Soil N pool
+
+
+#### Understorey N pool
+
+#### Understorey N flux
+
+### 7.3 Canopy N retranslocation coefficient
+
+
+<br/>
+
+# 8. Has anything changed over time?
 Here, I will check if there's anything changed over time and if there's any CO2 effect or not. This is quite challenging because:
 
         1) we don't have common start and end dates across variables; 
@@ -1444,7 +1517,7 @@ Here, I will check if there's anything changed over time and if there's any CO2 
         3) biomass estimates and P concentration estimates often do not overlap, creating some range of uncertainties. 
 
 
-# 8. To-do list
+# 9. To-do list
 
 This list is a continuous update of the to-do items for both EucFACE C and P projects. It includes both high and less priority items. 
 
