@@ -5,6 +5,7 @@ date: "6/3/2018"
 output:
   html_document:
     toc: true
+    toc_float: true
     theme: united
 ---
 
@@ -1788,32 +1789,28 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
 
 ### High priorities
 
-    - Check Doodle Poll responses and send reminders
     - Has C:P ratio change over time (similarly, N:P ratio)?
-    - Cat re-check microbial extraction procedure
     - Met data (including soil moisture)
 
 ### Less priorities
 
-    - Hedley Fractionation (Cat) - almost done
-    - Microbial turnover rate (Cat and Johanna, but may not be available soon)
-    - Mycorrhizal data for both C and P project (Jeff)
-    - Canopy P conc. for all year
-    - Root mortality and turnover for both C and P project (Juan)
     - More valid fine root and coarse root P retranslocation coefficients
     - Summarize P concentration using min and max
     - Create error bars
     - Possibly look at 2015 to see CO2 treatment effect. 
 
-    
-### Completed with clarifications
+### Known missing data
 
-    - Wood pool - check why decreasing? wood pool is not decreasing if only considers live trees!
-    - Understorey production - now using Varsha's harvest data. 
-    - total P requirement is the sum of canopy, frass, wood, root and understorey. 
-    - standing dead pool completed (not yet included in the C project). Currently only 1 tree in ring 6 was marked as dead, although there are NAs marked for other trees (possibly no measurement for some dates). The C and P pools and fluxes are properly coded, but hasn't been integrated in the summary table, as it affects ring 6 only and is a very tiny proportion of the entire budget. 
-    - N pools and fluxes - we don't have N retranslocation, but we do have some N:P ratios now
+    - Hedley Fractionation (Cat) - almost done
+    - Mycorrhizal data for both C and P project (Jeff)
+    - Canopy P conc. (currently only a selection of data is available - Kristine)
+    - Root mortality estimates? (Juan)
     
+    
+### Data uncertainties
+
+    - Microbial pool conversion factor (Cat)
+
 
 <br/>
 <br/>
