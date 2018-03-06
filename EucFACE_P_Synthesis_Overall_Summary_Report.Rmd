@@ -1803,13 +1803,14 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
 
     - Hedley Fractionation (Cat) - almost done
     - Mycorrhizal data for both C and P project (Jeff)
-    - Canopy P conc. (currently only a selection of data is available - Kristine)
+    - Canopy P conc. (currently only May data included - Kristine)
     - Root mortality estimates? (Juan)
     
     
 ### Data uncertainties
 
     - Microbial pool conversion factor (Cat)
+    - How was net P mineralization rate calculated?
 
 
 <br/>
