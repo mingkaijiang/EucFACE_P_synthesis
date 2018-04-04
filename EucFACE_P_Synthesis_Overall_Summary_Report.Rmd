@@ -1791,6 +1791,8 @@ This list is a continuous update of the to-do items for both EucFACE C and P pro
 
     - Has C:P ratio change over time (similarly, N:P ratio)?
     - Met data (including soil moisture)
+    - Update PPT values using new leaf mass data (variable SLA)
+    - Sapwood depth information is available on HIEv
 
 ### Less priorities
 
