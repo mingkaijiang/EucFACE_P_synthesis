@@ -491,7 +491,7 @@ We need to think about data collected from the same time point. For now, because
     #### Canopy related variables (SLA, LAI, Canopy biomass)
     lai_variable <- make_lai_variable()
     sla_variable <- make_sla_variable()
-    canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
+    canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable, sla_option="variable")
     
     ### make the plot
     p <- ggplot(canopy_biomass_pool,

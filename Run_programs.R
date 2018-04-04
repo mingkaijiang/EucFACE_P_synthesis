@@ -80,7 +80,7 @@ understorey_p_concentration_max <- make_understorey_p_concentration(func=max)
 #### Canopy related variables (SLA, LAI, Canopy biomass)
 lai_variable <- make_lai_variable()
 sla_variable <- make_sla_variable()
-canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable)
+canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable, sla_option="variable")
 
 #### Litter production (leaf, twig, bark, seed)
 litter_c_production_flux <- make_litter_c_flux(c_fraction)
