@@ -20,8 +20,8 @@ make_conc_summary_table_by_treatment <- function() {
     
     treatDF$aCO2 <- rep(NA, length(treatDF$conc.terms))
     treatDF$eCO2 <- rep(NA, length(treatDF$conc.terms))
-    treatDF$diff <- rep(NA, length(treatDF$terms))
-    treatDF$percent_diff <- rep(NA, length(treatDF$terms))
+    treatDF$diff <- rep(NA, length(treatDF$conc.terms))
+    treatDF$percent_diff <- rep(NA, length(treatDF$conc.terms))
     
     treatDF$year_start <- rep(NA, length(treatDF$conc.terms))
     treatDF$year_end <- rep(NA, length(treatDF$conc.terms))
