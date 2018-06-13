@@ -20,6 +20,9 @@ make_conc_summary_table_by_treatment <- function() {
     
     treatDF$aCO2 <- rep(NA, length(treatDF$conc.terms))
     treatDF$eCO2 <- rep(NA, length(treatDF$conc.terms))
+    treatDF$diff <- rep(NA, length(treatDF$terms))
+    treatDF$percent_diff <- rep(NA, length(treatDF$terms))
+    
     treatDF$year_start <- rep(NA, length(treatDF$conc.terms))
     treatDF$year_end <- rep(NA, length(treatDF$conc.terms))
     treatDF$timepoint <- rep(NA, length(treatDF$conc.terms))
@@ -107,6 +110,12 @@ make_conc_summary_table_by_treatment <- function() {
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
     treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)
+    
+    ###### Diff (eCO2 - aCO2)
+    treatDF$diff <- round(treatDF$eCO2 - treatDF$aCO2, 4)
+    
+    ###### percent differences (eCO2 - aCO2) / aCO2 * 100
+    treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
     
     ##### output tables
