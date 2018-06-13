@@ -45,7 +45,10 @@ make_understorey_aboveground_production_flux_2 <- function(c_frac) {
     
     #- drop NA rows
     out <- out[complete.cases(out),]
-    df <- out[is.finite(out$understorey_production_flux),]
+    df <- out[Reduce(`&`, lapply(out, is.finite)),]
+    
+    df$ndays <- as.numeric(df$End_date - df$Start_date) + 1
+    
     
     #- format dataframe to return
     out <-df[,c("Start_date", "End_date", "Date", "Ring","understorey_production_flux", "ndays")]

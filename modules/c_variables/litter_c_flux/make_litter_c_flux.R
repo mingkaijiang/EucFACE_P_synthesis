@@ -37,7 +37,7 @@ make_litter_c_flux <- function(c_frac){
                                             seed_flux = Seed,
                                             leaf_flux = Leaf))
     
-    litter_a$Days <- as.numeric(with(litter_a, End_date - Start_date))
+    litter_a$Days <- as.numeric(with(litter_a, End_date - Start_date)) + 1
     
     return(litter_a)
 }
