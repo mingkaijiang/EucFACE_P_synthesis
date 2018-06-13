@@ -1062,7 +1062,7 @@ Also, we only took sapwood to calculate wood p, assuming that all heartwood P is
     understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
                                               c_pool=understorey_c_pool,
                                               c_frac=c_fraction_ud,
-                                              live_or_total="Live")
+                                              live_or_total="Total")
 
     ### make the plot
     p <- ggplot(understorey_p_pool,

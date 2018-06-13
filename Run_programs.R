@@ -274,7 +274,7 @@ fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentrat
 understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
                                               c_pool=understorey_c_pool,
                                               c_frac=c_fraction_ud,
-                                              live_or_total = "Live")
+                                              live_or_total = "Total")
 
 #### Understorey production flux
 #### Here we can use either stereo camera estimate of biomass (2) or
