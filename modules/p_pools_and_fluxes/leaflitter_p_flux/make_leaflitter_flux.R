@@ -15,8 +15,7 @@ make_leaflitter_flux <- function(){
                    Date = as.Date(litter_raw$Date, format = "%d/%m/%Y"),
                    Start_date = Date - days.past,
                    End_date = Date,
-                   Leaf = Leaf * conv / days.past
-                   )
+                   Leaf = as.numeric(Leaf) * conv / days.past)
   
   # Averages by Ring
   litter_a <- summaryBy(Leaf ~ Date + Ring, FUN=mean, na.rm=TRUE,

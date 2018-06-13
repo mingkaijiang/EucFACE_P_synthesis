@@ -157,11 +157,15 @@ soil_bulk_density <- make_soil_bulk_density()
 ### return sum of all depths
 soil_c_pool <- make_soil_c_pool(soil_bulk_density)
 
-
 #### Microbial C pool
-# this pool has data only at 0-10cm depth
+# this pool has data only at 0-10cm depth - Cat's data
 microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
+### Yolima's data
+microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
+
+#### Soil mycorrhizal production
+mycorrhizal_c_pool <- make_mycorrhizal_c_pool(soil_bulk_density)
 
 #### Coarse root C pool 
 coarse_root_c_pool_1 <- make_coarse_root_pool_1(c_fraction, FACE_ring_area) 

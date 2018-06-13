@@ -23,9 +23,9 @@ make_other_litter_flux <- function(){
                    Date = as.Date(litter_raw$Date, format = "%d/%m/%Y"),
                    Start_date = Date - days.past,
                    End_date = Date,
-                   Twig = Twig * conv / days.past,
-                   Bark = Bark * conv / days.past,
-                   Seed = Seed * conv / days.past)
+                   Twig = as.numeric(Twig) * conv / days.past,
+                   Bark = as.numeric(Bark) * conv / days.past,
+                   Seed = as.numeric(Seed) * conv / days.past)
   
   litter$other_tot <- litter$Twig + litter$Bark + litter$Seed
   

@@ -1,7 +1,7 @@
 ---
 title: "EucFACE Phosphorus Synthesis"
 author: "Mingkai Jiang"
-date: "6/3/2018"
+date: "15/6/2018"
 output:
   html_document:
     toc: true
@@ -866,6 +866,50 @@ Because wood pool may either increase or decrease over a certain measurement per
 
 ```
 
+### 4.10 Mycrobial pool
+``` {r, echo=F, warning=F, message=F, fig.width = 7, fig.align="center"}
+    # first, compute the microbial c pool as we will need it for summary purpose
+    microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
+
+````
+
+A second dataset for microbial C and N pool is available from Laura and Yolima. Here we are comparing the two methods for each ring. 
+
+``` {r, echo=F, warning=F, message=F, fig.width = 7, fig.align="center"}
+    microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
+    micro <- summaryBy(Cmic_g_m2~ring, data=microbial_c_pool, FUN=mean, keep.names=T, na.rm=T)
+    micro$micro2 <- microbial_c_pool2$microbial_c_pool
+    colnames(micro) <- c("Ring", "Microbial_C_pool1", "Microbial_C_pool2")
+    plotDF <- melt(micro, id="Ring")
+    
+    
+   ### make the plot
+    p <- ggplot(plotDF,
+                aes(Ring, value)) +   
+            geom_bar(stat = "identity", aes(fill=variable),
+                     position="dodge") +
+            xlab("Ring") + ylab("Microbial C Pool (g C m-2)")
+    plot(p)
+    
+```
+
+
+### 4.11 Mycorrhizal C Pool
+
+The mycorrhizal C pool is based on results of incubation. We assume it's top 30 cm soil, and 70% of soil is sand.
+``` {r, echo=F, warning=F, message=F, fig.width = 7, fig.align="center"}
+    mycorrhizal_c_pool <- make_mycorrhizal_c_pool(soil_bulk_density)
+
+    p <- ggplot(mycorrhizal_c_pool, aes(Date, mycorrhizal_c_pool, color=factor(Ring))) +
+        geom_line() + geom_point(size=5) +
+        xlab("Date") + ylab("Mycorrhizae C Pool (g m-2)") + 
+        scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                    "#FF4040", "#8B0000", "#0000FF"))
+    plot(p)
+
+```
+
+
 
 # 5. P pools and fluxes
 
@@ -927,7 +971,9 @@ Note, this is for top 10 cm of the soil.
 
 This pool seems very large, especially consideration its concentration is very small (compared to wood for example). It implies that the biomass is enormous. Checking data description on HIEv, the microbial P concentration was "Fumigation extraction with Bray P AQ2 determination of PO4", in the unit og ug g-1. Essentially, the calculation was done by P conc * soil bulk, not P conc by biomass. Check with Cat to see if this makes sense. 
 
-### 5.4 Canopy P pool
+### 5.4 Mycorrhizal P pool
+
+### 5.5 Canopy P pool
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
@@ -945,7 +991,7 @@ This pool seems very large, especially consideration its concentration is very s
 
 ```
 
-### 5.5 Wood P pool
+### 5.6 Wood P pool
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
@@ -969,7 +1015,7 @@ Check, why inconsistent time points.
 
 Also, we only took sapwood to calculate wood p, assuming that all heartwood P is retranslocated (i.e. zero P concentration).
 
-### 5.6 Fine root P pool
+### 5.7 Fine root P pool
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
@@ -987,7 +1033,7 @@ Also, we only took sapwood to calculate wood p, assuming that all heartwood P is
 
 ```
 
-### 5.7 Coarse root P pool
+### 5.8 Coarse root P pool
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     coarse_root_p_pool_1 <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
@@ -1010,7 +1056,7 @@ Also, we only took sapwood to calculate wood p, assuming that all heartwood P is
 
 ```
 
-### 5.8 Understorey aboveground P pool
+### 5.9 Understorey aboveground P pool
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
     understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
@@ -1037,10 +1083,6 @@ Here we are using harvest data (taken at quarterly timestep) to extrapolate for 
 The harvest data also provides information on % live and % dead. As such, understorey P pool can be extrapolated based on %P by total biomass or %P by live biomass methods.
 
 The understorey P production is estimated based on total biomass and % P. 
-
-
-### 5.9 Mycorrhizal P pool
-Data still not available. 
 
 
 ### 5.10 Canopy P flux
@@ -1331,8 +1373,6 @@ Rings 2, 3, 6 are ambient CO2 rings, and rings 1, 4, 5 are elevated CO2 rings.
 
 Here I am summarizing all the C pools used for P calculations:
 ``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
-    # first, compute the microbial c pool as we will need it for summary purpose
-    microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
     # now make the summary
     source("programs/summary_tables/make_c_pool_summary_table_by_treatment.R")
