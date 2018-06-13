@@ -88,7 +88,13 @@ make_c_pool_summary_table_by_treatment <- function() {
     
 
     ### Mycorrhizal C pool
-    treatDF$notes[treatDF$terms == "Mycorrhizal C Pool"] <- "Data not yet available"
+    out <- summaryBy(mycorrhizal_c_pool~Ring,data=mycorrhizal_c_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Mycorrhizal C Pool", 2:7]  <- out$mycorrhizal_c_pool
+    treatDF$year_start[treatDF$terms == "Mycorrhizal C Pool"] <- min(year(mycorrhizal_c_pool$Date))
+    treatDF$year_end[treatDF$terms == "Mycorrhizal C Pool"] <- max(year(mycorrhizal_c_pool$Date))
+    treatDF$timepoint[treatDF$terms == "Mycorrhizal C Pool"] <- length(unique(mycorrhizal_c_pool$Date))
+    treatDF$notes[treatDF$terms == "Mycorrhizal C Pool"]  <- "For 0 - 30 cm depth, assumed 70% sand"
+    
     
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
