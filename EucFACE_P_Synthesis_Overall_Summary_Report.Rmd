@@ -1477,6 +1477,20 @@ This time-invariant CP ratio based on all data.
 <br/>
 <br/>
 
+### Comparing CP ratio for microbial pool inside and outside the rings
+``` {r, echo = FALSE, warning=FALSE, message=FALSE} 
+    source("programs/check_variables/check_microbial_pool_CP_ratios.R")
+    summary_microbial_pool_comparison <- check_microbial_pool_CP_ratios(c_pool=summary_table_c_pool_by_treatment,
+                                                        p_pool=summary_table_pool_by_treatment)
+    
+    kable(summary_microbial_pool_comparison)
+
+```
+
+<br/>
+<br/>
+
+
 # 7. Nitrogen related data to understand P limitation
 ### 7.1 Concentrations
 #### Canopy N concentration

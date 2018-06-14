@@ -349,6 +349,10 @@ source("programs/summary_tables/make_cp_ratios.R")
 summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
                                     p_pool=summary_table_pool_by_treatment)
 
+source("programs/check_variables/check_microbial_pool_CP_ratios.R")
+summary_microbial_pool_comparison <- check_microbial_pool_CP_ratios(c_pool=summary_table_c_pool_by_treatment,
+                                                                    p_pool=summary_table_pool_by_treatment)
+
 ### check - has CP ratio changed over time?
 
 ###### ---------------- Nitrogen stuffs -------------------- ######
