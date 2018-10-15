@@ -146,135 +146,121 @@ generate_stats_abs_covariate <- function(stat.model) {
     
 
     ### Frass P flux
-    s.frasp.flux <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_concentration, 
-                                                                     var.col=3,
+    s.frasp.flux <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_production, 
+                                                                     var.col=5,
                                                                      stat.model="no_interaction_with_covariate",
                                                                      return.outcome="model")
     
+    ### Canopy P production flux
+    s.canopy.p.flux <- make_canopy_p_flux_treatment_abs_effect_statistics(inDF=canopy_p_flux, 
+                                                                     var.col=5,
+                                                                     stat.model="no_interaction_with_covariate",
+                                                                     return.outcome="model")
     
     ### Wood production flux
-    s.wood.prod <- make_wood_prod_treatment_abs_effect_statistics(inDF=wood_production_flux, 
-                                               var.cond="flux", var.col=5,
-                                               date.as.factor=T,
+    s.wood.p.flux <- make_wood_p_flux_treatment_abs_effect_statistics(inDF=wood_p_flux, 
+                                               var.col=5,
                                                stat.model="no_interaction_with_covariate",
                                                return.outcome="model") 
   
     ### Fineroot production flux
-    s.froot.prod <- make_froot_prod_treatment_abs_effect_statistics(inDF=fineroot_production_flux, 
-                                                                    var.cond="flux", var.col=5,
-                                                                    date.as.factor=T,
+    s.froot.p.flux <- make_froot_p_flux_treatment_abs_effect_statistics(inDF=fineroot_p_production, 
+                                                                    var.col=5,
                                                                     stat.model="no_interaction_with_covariate",
                                                                     return.outcome="model") 
 
     ### Coarseroot production
-    s.croot.prod <- make_croot_prod_treatment_abs_effect_statistics(inDF=coarse_root_production_flux_1, 
-                                                                    var.cond="flux", var.col=5,
-                                                                    date.as.factor=T,
+    s.croot.p.flux <- make_croot_p_flux_treatment_abs_effect_statistics(inDF=coarse_root_p_flux_1, 
+                                                                    var.col=5,
                                                                     stat.model="no_interaction_with_covariate",
                                                                     return.outcome="model")
    
     ### Understorey aboveground production
-    s.und.prod <- make_und_prod_treatment_abs_effect_statistics(inDF=understorey_aboveground_production_flux, 
-                                                                var.cond="flux", var.col=5,
-                                                                date.as.factor=T,
+    s.und.p.flux <- make_und_p_flux_treatment_abs_effect_statistics(inDF=understorey_p_flux, 
+                                                                var.col=5,
                                                                 stat.model="no_interaction_with_covariate",
                                                                 return.outcome="model")
     
     ### Understory litter flux
-    s.und.lit <- make_und_prod_treatment_abs_effect_statistics(inDF=understorey_aboveground_production_flux, 
-                                                                var.cond="flux", var.col=6,
-                                                                date.as.factor=T,
+    s.und.lit.p.flux <- make_und_lit_p_flux_treatment_abs_effect_statistics(inDF=understorey_litter_p_flux, 
+                                                                 var.col=5,
                                                                 stat.model="no_interaction_with_covariate",
                                                                 return.outcome="model")
 
-
-    ### Delta Soil C
-    s.delta.soilc <- make_delta_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool, 
-                                                          var.cond="pool", var.col=3,
-                                                          date.as.factor=T,
+    ### p mineralization flux
+    ### can't annualize it because we don't have a start and end date yet. 
+    
+    ### Delta Soil p
+    s.delta.soilp <- make_delta_soilp_treatment_abs_effect_statistics(inDF=soil_p_pool, 
+                                                         var.col=3,
                                                           stat.model="no_interaction_with_covariate",
                                                           return.outcome="model")
     
-    ### Delta Leaf C
-    s.delta.leafc <- make_delta_leafc_treatment_abs_effect_statistics(inDF=leaf_c_pool, 
-                                                          var.cond="pool", var.col=3,
-                                                          date.as.factor=T,
+    ### Delta Leaf p
+    s.delta.leafp <- make_delta_leafp_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
+                                                           var.col=3,
                                                           stat.model="no_interaction_with_covariate",
                                                           return.outcome="model")
     
     ### Delta Wood C pool
-    s.delta.woodc <- make_delta_woodc_treatment_abs_effect_statistics(inDF=wood_c_pool, 
-                                                          var.cond="pool", var.col=3,
-                                                          date.as.factor=T,
+    s.delta.woodp <- make_delta_woodp_treatment_abs_effect_statistics(inDF=wood_p_pool, 
+                                                          var.col=3,
                                                           stat.model="no_interaction_with_covariate",
                                                           return.outcome="model") 
     
     ### Delta Fineroot C pool
-    s.delta.frc <- make_delta_frootc_treatment_abs_effect_statistics(inDF=fineroot_c_pool, 
-                                                         var.cond="pool", var.col=3,
-                                                         date.as.factor=T,
-                                                         stat.model="no_interaction_with_covariate",
-                                                         return.outcome="model")
+    #s.delta.frp <- make_delta_frootp_treatment_abs_effect_statistics(inDF=fineroot_p_pool, 
+    #                                                      var.col=3,
+    #                                                     stat.model="no_interaction_with_covariate",
+    #                                                     return.outcome="model")
     
     ### Delta Coarseroot C pool
-    s.delta.crc <- make_delta_crootc_treatment_abs_effect_statistics(inDF=coarse_root_c_pool_1, 
-                                                         var.cond="pool", var.col=3,
-                                                         date.as.factor=T,
+    s.delta.crp <- make_delta_crootp_treatment_abs_effect_statistics(inDF=coarse_root_p_pool_1, 
+                                                         var.col=3,
                                                          stat.model="no_interaction_with_covariate",
                                                          return.outcome="model")
     
     ### Delta Understorey aboveground C pool
-    s.delta.uac <- make_delta_uac_treatment_abs_effect_statistics(inDF=understorey_aboveground_c_pool, 
-                                                      var.cond="pool", var.col=5,
-                                                      date.as.factor=T,
+    s.delta.uap <- make_delta_uap_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
+                                                       var.col=3,
                                                       stat.model="no_interaction_with_covariate",
                                                       return.outcome="model")
     
-    s.delta.uac2 <- make_delta_uac_treatment_abs_effect_statistics(inDF=understorey_aboveground_c_pool_2, 
-                                                       var.cond="pool", var.col=3,
-                                                       date.as.factor=T,
-                                                       stat.model="no_interaction_with_covariate",
-                                                       return.outcome="model")
-    
     ### Delta Microbial C pool
-    s.delta.micc <- make_delta_micc_treatment_abs_effect_statistics(inDF=microbial_c_pool, 
-                                                        var.cond="pool", var.col=3,
-                                                        date.as.factor=T,
-                                                        stat.model="no_interaction_with_covariate",
-                                                        return.outcome="model")
+    #s.delta.micp <- make_delta_micp_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
+    #                                                    var.col=3,
+    #                                                    stat.model="no_interaction_with_covariate",
+    #                                                    return.outcome="model")
     
     ### Delta Mycorrhizal C pool
-    s.delta.mycc <- make_delta_mycc_treatment_abs_effect_statistics(inDF=mycorrhizal_c_pool, 
-                                                        var.cond="pool", var.col=3,
-                                                        date.as.factor=T,
-                                                        stat.model="no_interaction_with_covariate",
-                                                        return.outcome="model")
+    #s.delta.mycp <- make_delta_mycp_treatment_abs_effect_statistics(inDF=mycorrhizal_c_pool, 
+    #                                                     var.col=3,
+    #                                                    stat.model="no_interaction_with_covariate",
+    #                                                    return.outcome="model")
     
     
     ### Delta Leaf litter C pool
-    s.delta.litc <- make_delta_litc_treatment_abs_effect_statistics(inDF=leaflitter_pool, 
-                                                        var.cond="pool", var.col=6,
-                                                        date.as.factor=T,
-                                                        stat.model="no_interaction_with_covariate"
-                                                        ,return.outcome="model")
+    #s.delta.litp <- make_delta_litc_treatment_abs_effect_statistics(inDF=leaflitter_pool, 
+    #                                                    var.col=6,
+    #                                                    stat.model="no_interaction_with_covariate",
+    #                                                    return.outcome="model")
     
-    ### Delta Insect pool
-    s.delta.insc <- make_delta_insc_treatment_abs_effect_statistics(inDF=insect_pool, 
-                                                        var.cond="pool", var.col=3,
-                                                        date.as.factor=T,
-                                                        stat.model="no_interaction_with_covariate",
-                                                        return.outcome="model")
+ 
     
     #### Create a output table to store all stats
-    var.list <- c("soil_c","leaf_c","wood_c","fineroot_c",
-                  "coarseroot_c","understorey_c","understorey_c_2",
-                  "microbial_c","mycorrhizal_c","litter_c","insect_c",
-                  "frass_prod","herb_consump","leaf_prod","twig_prod",
-                  "bark_prod","seed_prod","wood_prod","fineroot_prod",
-                  "coarseroot_prod","understorey_prod","understorey_lit",
-                  "delta_soil_c","delta_leaf_c","delta_wood_c","delta_fineroot_c",
-                  "delta_coarseroot_c","delta_understorey_c","delta_understorey_c_2",
-                  "delta_microbial_c","delta_mycorrhizal_c","delta_litter_c","delta_insect_c")
+    var.list <- c("soil_p_conc","soil_phosphate_p_conc","leaf_p_conc",
+                  "wood_p_conc","fineroot_p_conc",
+                  "understorey_p_conc","microbial_p_conc","litter_p_conc",
+                  "frass_p_conc",
+                  "soil_p_pool","leaf_p_pool","wood_p_pool","fineroot_p_pool",
+                  "coarseroot_p_pool","understorey_p_pool",
+                  "microbial_p_pool",
+                  "frass_p_prod","leaf_p_prod","other_p_prod","leaf_lit_p_prod",
+                  "wood_p_prod","fineroot_p_prod",
+                  "coarseroot_p_prod","understorey_p_prod","understorey_lit_p_prod",
+                  "delta_soil_p","delta_leaf_p","delta_wood_p","delta_fineroot_p",
+                  "delta_coarseroot_p","delta_understorey_p",
+                  "delta_microbial_p")
     out <- data.frame(var.list, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
                       NA,NA,NA,NA,NA,NA)
     colnames(out) <- c("Variable", "interactive_state",
@@ -309,40 +295,38 @@ generate_stats_abs_covariate <- function(stat.model) {
         return(temp)
     }
     
-    #### Assign value to out
-    out[out$Variable=="soil_c",2:17] <- assign_stats(s.var=s.soilc)
-    out[out$Variable=="leaf_c",2:17] <- assign_stats(s.var=s.leafc)
-    out[out$Variable=="wood_c",2:17] <- assign_stats(s.var=s.woodc)
-    out[out$Variable=="fineroot_c",2:17] <- assign_stats(s.var=s.frc)
-    out[out$Variable=="coarseroot_c",2:17] <- assign_stats(s.var=s.crc)
-    out[out$Variable=="understorey_c",2:17] <- assign_stats(s.var=s.uac)
-    out[out$Variable=="understorey_c_2",2:17] <- assign_stats(s.var=s.uac2)
-    out[out$Variable=="microbial_c",2:17] <- assign_stats(s.var=s.micc)
-    out[out$Variable=="mycorrhizal_c",2:17] <- assign_stats(s.var=s.mycc)
-    out[out$Variable=="litter_c",2:17] <- assign_stats(s.var=s.litc)
-    out[out$Variable=="insect_c",2:17] <- assign_stats(s.var=s.insc)
-    out[out$Variable=="frass_prod",2:17] <- assign_stats(s.var=s.fras)
-    out[out$Variable=="herb_consump",2:17] <- assign_stats(s.var=s.hb.cons)
-    out[out$Variable=="leaf_prod",2:17] <- assign_stats(s.var=s.lit.leaf)
-    out[out$Variable=="twig_prod",2:17] <- assign_stats(s.var=s.lit.twig)
-    out[out$Variable=="bark_prod",2:17] <- assign_stats(s.var=s.lit.bark)
-    out[out$Variable=="seed_prod",2:17] <- assign_stats(s.var=s.lit.seed)
-    out[out$Variable=="wood_prod",2:17] <- assign_stats(s.var=s.wood.prod)
-    out[out$Variable=="fineroot_prod",2:17] <- assign_stats(s.var=s.froot.prod)
-    out[out$Variable=="coarseroot_prod",2:17] <- assign_stats(s.var=s.croot.prod)
-    out[out$Variable=="understorey_prod",2:17] <- assign_stats(s.var=s.und.prod)
-    out[out$Variable=="understorey_lit",2:17] <- assign_stats(s.var=s.und.lit)
-    out[out$Variable=="delta_soil_c",2:17] <- assign_stats(s.var=s.delta.soilc)
-    out[out$Variable=="delta_leaf_c",2:17] <- assign_stats(s.var=s.delta.leafc)
-    out[out$Variable=="delta_wood_c",2:17] <- assign_stats(s.var=s.delta.woodc)
-    out[out$Variable=="delta_fineroot_c",2:17] <- assign_stats(s.var=s.delta.frc)
-    out[out$Variable=="delta_coarseroot_c",2:17] <- assign_stats(s.var=s.delta.crc)
-    out[out$Variable=="delta_understorey_c",2:17] <- assign_stats(s.var=s.delta.uac)
-    out[out$Variable=="delta_understorey_c_2",2:17] <- assign_stats(s.var=s.delta.uac2)
-    out[out$Variable=="delta_microbial_c",2:17] <- assign_stats(s.var=s.delta.micc)
-    out[out$Variable=="delta_mycorrhizal_c",2:17] <- assign_stats(s.var=s.delta.mycc)
-    out[out$Variable=="delta_litter_c",2:17] <- assign_stats(s.var=s.delta.litc)
-    out[out$Variable=="delta_insect_c",2:17] <- assign_stats(s.var=s.delta.insc)
+    out[out$Variable=="soil_p_conc",2:17] <- assign_stats(s.var=s.soilp.conc)
+    out[out$Variable=="soil_phosphate_p_conc",2:17] <- assign_stats(s.var=s.soil.phosphate.p.conc)
+    out[out$Variable=="leaf_p_conc",2:17] <- assign_stats(s.var=s.leafp.conc)
+    #out[out$Variable=="wood_p_conc",2:17] <- assign_stats(s.var=s.woodp.conc)
+    out[out$Variable=="fineroot_p_conc",2:17] <- assign_stats(s.var=s.frp.conc)
+    out[out$Variable=="understorey_p_conc",2:17] <- assign_stats(s.var=s.uap.conc)
+    out[out$Variable=="microbial_p_conc",2:17] <- assign_stats(s.var=s.micp.conc)
+    out[out$Variable=="litter_p_conc",2:17] <- assign_stats(s.var=s.litp.conc)
+    out[out$Variable=="frass_p_conc",2:17] <- assign_stats(s.var=s.frasp.conc)
+    out[out$Variable=="soil_p_pool",2:17] <- assign_stats(s.var=s.soilp.pool)
+    out[out$Variable=="leaf_p_pool",2:17] <- assign_stats(s.var=s.leafp.pool)
+    out[out$Variable=="wood_p_pool",2:17] <- assign_stats(s.var=s.woodp.pool)
+    out[out$Variable=="fineroot_p_pool",2:17] <- assign_stats(s.var=s.frp.pool)
+    out[out$Variable=="coarseroot_p_pool",2:17] <- assign_stats(s.var=s.crootp.pool)
+    out[out$Variable=="understorey_p_pool",2:17] <- assign_stats(s.var=s.uap.pool)
+    out[out$Variable=="microbial_p_pool",2:17] <- assign_stats(s.var=s.micp.pool)
+    out[out$Variable=="frass_p_prod",2:17] <- assign_stats(s.var=s.frasp.flux)
+    out[out$Variable=="leaf_p_prod",2:17] <- assign_stats(s.var=s.canopy.p.flux)
+    out[out$Variable=="other_p_prod",2:17] <- assign_stats(s.var=s.other.litp.flux)
+    out[out$Variable=="leaf_lit_p_prod",2:17] <- assign_stats(s.var=s.leaf.litp.flux)
+    out[out$Variable=="wood_p_prod",2:17] <- assign_stats(s.var=s.wood.p.flux)
+    out[out$Variable=="fineroot_p_prod",2:17] <- assign_stats(s.var=s.froot.p.flux)
+    out[out$Variable=="coarseroot_p_prod",2:17] <- assign_stats(s.var=s.croot.p.flux)
+    out[out$Variable=="understorey_p_prod",2:17] <- assign_stats(s.var=s.und.p.flux)
+    out[out$Variable=="understorey_lit_p_prod",2:17] <- assign_stats(s.var=s.und.lit.p.flux)
+    out[out$Variable=="delta_soil_p",2:17] <- assign_stats(s.var=s.delta.soilp)
+    out[out$Variable=="delta_leaf_p",2:17] <- assign_stats(s.var=s.delta.leafp)
+    out[out$Variable=="delta_wood_p",2:17] <- assign_stats(s.var=s.delta.woodp)
+    #out[out$Variable=="delta_fineroot_p",2:17] <- assign_stats(s.var=s.delta.frp)
+    out[out$Variable=="delta_coarseroot_p",2:17] <- assign_stats(s.var=s.delta.crp)
+    #out[out$Variable=="delta_understorey_p",2:17] <- assign_stats(s.var=s.delta.uap)
+    #out[out$Variable=="delta_microbial_p",2:17] <- assign_stats(s.var=s.delta.micp)
 
     stat.model <- "no_interaction_with_covariate"
     
