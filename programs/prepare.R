@@ -16,7 +16,10 @@ pacman::p_load(dplyr,
                gdata,
                ggplot2,
                knitr,
-               imputeTS) # add other packages needed to this list
+               imputeTS,
+               lme4,
+               car,
+               multcomp) # add other packages needed to this list
 
 
 # Loading constants
