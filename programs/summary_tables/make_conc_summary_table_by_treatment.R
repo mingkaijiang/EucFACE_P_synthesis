@@ -6,7 +6,7 @@ make_conc_summary_table_by_treatment <- function() {
     
     ### Define concentration variable names
     conc.terms <- c("Wood P Conc", "Canopy P Conc", "Fine Root P Conc",
-                    "Leaflitter P Conc","Understorey P Conc", "Frass P Conc",
+                    "Leaflitter P Conc","Understorey P Conc", "Understorey Litter P Conc", "Frass P Conc",
                     "Microbial P Conc", "Soil P Conc", "Soil Phosphate P Conc",
                     "Mycorrhizal P Conc")
     
@@ -71,6 +71,14 @@ make_conc_summary_table_by_treatment <- function() {
     treatDF$year_end[treatDF$conc.terms == "Understorey P Conc"] <- max(year(understorey_p_concentration$Date))    
     treatDF$timepoint[treatDF$conc.terms == "Understorey P Conc"] <- length(unique(understorey_p_concentration$Date))  
     treatDF$notes[treatDF$conc.terms == "Understorey P Conc"] <- "Assumed Cymbopogon and Microlaena contributed equally"
+    
+    ### Understorey Litter P concentration
+    out <- summaryBy(PercP~Ring,data=understorey_litter_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Understorey Litter P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Understorey Litter P Conc"] <- min(year(understorey_litter_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Understorey Litter P Conc"] <- max(year(understorey_litter_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Understorey Litter P Conc"] <- length(unique(understorey_litter_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Understorey Litter P Conc"] <- "Data from 2017"
 
     ### Frass P concentration
     out <- summaryBy(PercP~Ring,data=frass_p_concentration,FUN=mean,keep.names=T,na.rm=T)

@@ -8,6 +8,7 @@ make_pool_summary_table_by_treatment <- function() {
     ### Define pool variable names
     terms <- c("Wood P Pool", "Canopy P Pool", "Fine Root P Pool",
                "Coarse Root P Pool", "Understorey P Pool", 
+               "Understorey Litter P Pool",
                "Microbial P Pool", "Soil Phosphate P Pool",
                "Soil P Pool", "Mycorrhizal P Pool")
     
@@ -64,12 +65,20 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$notes[treatDF$terms == "Coarse Root P Pool"] <- "Allometric rlt with DBH"
     
     ### Understorey P pool
-    out <- summaryBy(understorey_p_pool~Ring,data=understorey_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Understorey P Pool", 2:7] <- out$understorey_p_pool
+    out <- summaryBy(live_p_pool~Ring,data=understorey_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Understorey P Pool", 2:7] <- out$live_p_pool
     treatDF$year_start[treatDF$terms == "Understorey P Pool"] <- min(year(understorey_p_pool$Date))    
     treatDF$year_end[treatDF$terms == "Understorey P Pool"] <- max(year(understorey_p_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Understorey P Pool"] <- length(unique(understorey_p_pool$Date))  
-    treatDF$notes[treatDF$terms == "Understorey P Pool"] <- "Used stereo camera estimates of C pool"
+    treatDF$notes[treatDF$terms == "Understorey P Pool"] <- "Used harvest estimate of C pool"
+    
+    ### Understorey Litter P pool
+    out <- summaryBy(dead_p_pool~Ring,data=understorey_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Understorey Litter P Pool", 2:7] <- out$dead_p_pool
+    treatDF$year_start[treatDF$terms == "Understorey Litter P Pool"] <- min(year(understorey_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey Litter P Pool"] <- max(year(understorey_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey Litter P Pool"] <- length(unique(understorey_p_pool$Date))  
+    treatDF$notes[treatDF$terms == "Understorey Litter P Pool"] <- "Used harvest estimate of C pool"
 
     
     ### Microbial P pool

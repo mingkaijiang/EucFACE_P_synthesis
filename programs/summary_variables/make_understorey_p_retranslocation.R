@@ -1,12 +1,17 @@
-make_understorey_p_retranslocation <- function(retrans_calc_method, understorey_retrans_coef, 
+make_understorey_p_retranslocation <- function(retrans_calc_method, 
+                                               retrans_coef,
                                                sumDF) {
     ### Calculate understorey p retranslocated
     ### it can be either calculated based on a fixed retranslocation coefficient (simple), 
     ### or based on % live information (mortality)
     
     if (retrans_calc_method == "Simple") {
+        
+        out <- sumDF[sumDF$term == "Understorey P flux", 2:9] 
+        
         # use pre-defined coefficient to calculate retranslocation
-        out <- understorey_retrans_coef * sumDF[sumDF$term == "Understorey P flux", 2:9] 
+
+        
         
     } else if (retrans_calc_method == "Mortality") {
         mortality <- summaryBy((1-percent_live)~Ring, data=understorey_live_percent, 

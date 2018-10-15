@@ -64,6 +64,9 @@ understorey_litter_p_concentration <- make_understorey_litter_p_concentration(fu
 understorey_litter_p_concentration_min <- make_understorey_litter_p_concentration(func=min)
 understorey_litter_p_concentration_max <- make_understorey_litter_p_concentration(func=max)
 
+#### Understorey P retranslocation coefficient
+understorey_p_retranslocation_coefficient <- make_understorey_p_retranslocation()
+
 #### Mycorrhizal P conc.
 ### Check back with Jeff in 2 weeks' time. 
 
@@ -136,6 +139,9 @@ understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
 understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 
 understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
+
+#M### understorey litter flux
+understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
 
 
 #source("programs/summary_variables/make_understorey_pool_size_comparison.R")
@@ -275,6 +281,7 @@ fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentrat
 #### It makes more sense to use harvest at this stage in time!
 #### Also, if use Varsha's harvest data, we can use either total or live part of biomass
 understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
+                                              p_lit_conc=understorey_litter_p_concentration,
                                               c_pool=understorey_c_pool,
                                               c_frac=c_fraction_ud,
                                               live_or_total = "Total")
@@ -285,6 +292,10 @@ understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration
 #### Currently, we are using harvest estimate
 understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
                                               c_flux=understorey_c_flux,
+                                              c_frac=c_fraction_ud)
+
+understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_p_concentration,
+                                              c_flux=understorey_litter_c_flux,
                                               c_frac=c_fraction_ud)
 
 ### Coarse root P pool

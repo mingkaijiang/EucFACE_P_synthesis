@@ -12,7 +12,7 @@ make_flux_summary_table_by_treatment <- function() {
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
                "Coarse Root P flux","Leaflitter P flux", "Fineroot Litter P flux",
                "Other litter P flux", "Frass P flux",
-               "Understorey P flux", "Mineralization P flux")
+               "Understorey P flux", "Understorey Litter P flux", "Mineralization P flux")
     
     treatDF <- data.frame(terms)
     treatDF$R1 <- rep(NA, length(treatDF$terms))
@@ -83,6 +83,15 @@ make_flux_summary_table_by_treatment <- function() {
     treatDF$timepoint[treatDF$terms == "Understorey P flux"] <- length(unique(understorey_p_flux$Date))  
     treatDF$notes[treatDF$terms == "Understorey P flux"] <- "Used Varsha's harvest data"
     
+    ### Understorey Litter P flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Understorey Litter P flux", i+1] <- with(understorey_litter_p_flux[understorey_litter_p_flux$Ring ==i,],
+                                                                    sum(understorey_litter_p_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Understorey Litter P flux"] <- min(year(understorey_litter_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey Litter P flux"] <- max(year(understorey_litter_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey Litter P flux"] <- length(unique(understorey_litter_p_flux$Date))  
+    treatDF$notes[treatDF$terms == "Understorey Litter P flux"] <- "Used Varsha's harvest data"
 
     ### Mineralization flux
     out <- summaryBy(p_mineralization_mg_m2_d~ring,data=soil_p_mineralization,FUN=mean,keep.names=T,na.rm=T)
