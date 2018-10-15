@@ -59,6 +59,11 @@ understorey_p_concentration <- make_understorey_p_concentration(func=mean)
 understorey_p_concentration_min <- make_understorey_p_concentration(func=min)
 understorey_p_concentration_max <- make_understorey_p_concentration(func=max)
 
+#### Understorey litter P conc.
+understorey_litter_p_concentration <- make_understorey_litter_p_concentration(func=mean)
+understorey_litter_p_concentration_min <- make_understorey_litter_p_concentration(func=min)
+understorey_litter_p_concentration_max <- make_understorey_litter_p_concentration(func=max)
+
 #### Mycorrhizal P conc.
 ### Check back with Jeff in 2 weeks' time. 
 

@@ -1,0 +1,97 @@
+Campaign,Origin,Type2,Year,Ring,CO2Treat,Tree/ID,Perc.P,P-method
+2013-Feb,Leaf litter,Senesced,2013,5,Elev,R5 (1232 - 1239),0.044425489,AQ2
+2013-Feb,Leaf litter,Senesced,2013,2,Amb,R2 (1184 - 1191),0.038,AQ2
+2013-Feb,Leaf litter,Senesced,2013,1,Elev,R1 (1168 - 1175),0.033,AQ2
+2013-Feb,Leaf litter,Senesced,2013,4,Elev,R4 (1216 - 1223),0.038,AQ2
+2013-Feb,Leaf litter,Senesced,2013,6,Amb,R6 (1248 - 1255),0.04,AQ2
+2013-Feb,Leaf litter,Senesced,2013,3,Amb,R3 (1200 - 1207),0.034,AQ2
+2014-Feb,Leaf litter,Senesced,2014,1,Elev,R1T1 (5226),0.038,AQ2
+2014-Feb,Leaf litter,Senesced,2014,1,Elev,R1T4 (5228),0.038,AQ2
+2014-Feb,Leaf litter,Senesced,2014,1,Elev,R1T7 (5231),0.048,AQ2
+2014-Feb,Leaf litter,Senesced,2014,2,Amb,R2T1 (5241),0.021,AQ2
+2014-Feb,Leaf litter,Senesced,2014,2,Amb,R2T1 (5241 - red label),0.028,AQ2
+2014-Feb,Leaf litter,Senesced,2014,2,Amb,R2T4 (5244),0.026,AQ2
+2014-Feb,Leaf litter,Senesced,2014,2,Amb,R2T7,0.033,ICP
+2014-Feb,Leaf litter,Senesced,2014,3,Amb,R3T1 (5257),0.019,AQ2
+2014-Feb,Leaf litter,Senesced,2014,3,Amb,R3T4 (5260),0.044,AQ2
+2014-Feb,Leaf litter,Senesced,2014,3,Amb,R3T7,0.032,ICP
+2014-Feb,Leaf litter,Senesced,2014,4,Elev,R4T1,0.04,ICP
+2014-Feb,Leaf litter,Senesced,2014,4,Elev,R4T4,0.025,ICP
+2014-Feb,Leaf litter,Senesced,2014,4,Elev,R4T7,0.047,ICP
+2014-Feb,Leaf litter,Senesced,2014,5,Elev,R5T1 (5289),0.031,AQ2
+2014-Feb,Leaf litter,Senesced,2014,5,Elev,R5T4 (5292),0.037,AQ2
+2014-Feb,Leaf litter,Senesced,2014,5,Elev,R5T7 (5295),0.031,AQ2
+2014-Feb,Leaf litter,Senesced,2014,6,Amb,R6T1 (5305),0.035,AQ2
+2014-Feb,Leaf litter,Senesced,2014,6,Amb,R6T4 (5308),0.032,AQ2
+2014-Feb,Leaf litter,Senesced,2014,6,Amb,R6T7 (5311),0.032,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,1,Elev,t116 (195),0.025,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,1,Elev,t117 (196),0.047816384,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,1,Elev,t122 (197),0.021193142,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,2,Amb,t202 (198),0.026637716,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,2,Amb,t207 (199),0.020015306,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,2,Amb,t208 (200),0.02483245,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,2,Amb,209,,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,4,Elev,t403 (202),0.044212219,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,4,Elev,t408 (203),0.031863327,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,4,Elev,t414 (204),0.026215354,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,4,Elev,t422 (205),0.03522554,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,5,Elev,t501 (206),0.02521249,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,5,Elev,t502 (207),0.027554039,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,5,Elev,t509 (208),0.016107351,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,5,Elev,t513 (209),0.018293638,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,5,Elev,t501 (210),0.036472793,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,5,Elev,t502 (211),0.01621745,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,6,Amb,t603,,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,6,Amb,t607 (213),0.031497216,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,6,Amb,t612 (214),0.028931827,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,6,Amb,t607 (215),0.038589525,AQ2
+2014-Feb,Senesced leaf,Senesced,2014,6,Amb,t614 (216),0.040963566,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,1,Elev,t116,0.015169471,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,1,Elev,t117,0.024502758,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,1,Elev,t122,0.047464256,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,2,Amb,t209,0.03696875,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,3,Amb,t301,0.014505572,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,3,Amb,t302,0.015679575,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,3,Amb,t320,0.026144957,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,4,Elev,t408,0.020057977,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,4,Elev,t422,0.017249506,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,5,Elev,t501,0.027067394,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,5,Elev,t502,0.025426471,AQ2
+2015-Feb,Senesced leaf,Senesced,2015,6,Amb,t614 ,0.038231638,AQ2
+2016-Feb,Leaf litter,Senesced,2016,1,Elev,1146_R1T1-2016,0.044,AQ2
+2016-Feb,Leaf litter,Senesced,2016,1,Elev,1147_R1T4-2016,0.036,AQ2
+2016-Feb,Leaf litter,Senesced,2016,1,Elev,1148_R1T7,0.048,AQ2
+2016-Feb,Leaf litter,Senesced,2016,2,Amb,1149_R2T1,0.044,AQ2
+2016-Feb,Leaf litter,Senesced,2016,2,Amb,1150_R2T4-redo,0.031,AQ2
+2016-Feb,Leaf litter,Senesced,2016,2,Amb,1151_R2T7,0.032,AQ2
+2016-Feb,Leaf litter,Senesced,2016,3,Amb,1152_R3T1,0.023,AQ2
+2016-Feb,Leaf litter,Senesced,2016,3,Amb,1153_R3T4,0.03,AQ2
+2016-Feb,Leaf litter,Senesced,2016,3,Amb,1154_R3T7,0.029,AQ2
+2016-Feb,Leaf litter,Senesced,2016,4,Elev,1155_R4T1,0.024,AQ2
+2016-Feb,Leaf litter,Senesced,2016,4,Elev,1156_R4T4,0.031,AQ2
+2016-Feb,Leaf litter,Senesced,2016,4,Elev,1157_R4T7,0.022,AQ2
+2016-Feb,Leaf litter,Senesced,2016,5,Elev,1158_R5T1,0.031,AQ2
+2016-Feb,Leaf litter,Senesced,2016,5,Elev,1159_R5T4,0.03,AQ2
+2016-Feb,Leaf litter,Senesced,2016,5,Elev,1159_R5T4-redo,0.036,AQ2
+2016-Feb,Leaf litter,Senesced,2016,5,Elev,1160_R5T7,0.026,AQ2
+2016-Feb,Leaf litter,Senesced,2016,6,Amb,1161_R6T1,0.032,AQ2
+2016-Feb,Leaf litter,Senesced,2016,6,Amb,1162_R6T4,0.023,AQ2
+2016-Feb,Leaf litter,Senesced,2016,6,Amb,1163_R6T7,0.029,AQ2
+2017-Feb,Leaf litter,Senesced,2017,1,Elev,1164_R1T1-2017,0.054,AQ2
+2017-Feb,Leaf litter,Senesced,2017,1,Elev,1165_R1T4,0.056,AQ2
+2017-Feb,Leaf litter,Senesced,2017,1,Elev,1166_R1T7,0.028,AQ2
+2017-Feb,Leaf litter,Senesced,2017,2,Amb,1167_R2T1,0.036,AQ2
+2017-Feb,Leaf litter,Senesced,2017,2,Amb,1168_R2T4,0.03,AQ2
+2017-Feb,Leaf litter,Senesced,2017,2,Amb,1169_R2T7,0.032,AQ2
+2017-Feb,Leaf litter,Senesced,2017,3,Amb,1170_R3T1,,AQ2
+2017-Feb,Leaf litter,Senesced,2017,3,Amb,1171_R3T4,0.033,AQ2
+2017-Feb,Leaf litter,Senesced,2017,3,Amb,1172_R3T7,0.04,AQ2
+2017-Feb,Leaf litter,Senesced,2017,4,Elev,1173_R4T1,0.057,AQ2
+2017-Feb,Leaf litter,Senesced,2017,4,Elev,1174_R4T4-2017,0.028,AQ2
+2017-Feb,Leaf litter,Senesced,2017,4,Elev,1175_R4T7-2017,0.032,AQ2
+2017-Feb,Leaf litter,Senesced,2017,5,Elev,1176_R5T1,0.047,AQ2
+2017-Feb,Leaf litter,Senesced,2017,5,Elev,1177_R5T4,0.044,AQ2
+2017-Feb,Leaf litter,Senesced,2017,5,Elev,1178_R5T7,0.046,AQ2
+2017-Feb,Leaf litter,Senesced,2017,6,Amb,1179_R6T1,0.021,AQ2
+2017-Feb,Leaf litter,Senesced,2017,6,Amb,1180_R6T4,0.033,AQ2
+2017-Feb,Leaf litter,Senesced,2017,6,Amb,1181_R6T7,0.036,AQ2

@@ -1,0 +1,16 @@
+Ring,Component,Subclass,Sample,P_conc_mg_g,Date
+2,Understorey,Live,1200_liveR2.2,0.684,6/1/17
+4,Understorey,Live,1201_liveR4.1,0.457,6/1/17
+6,Understorey,Live,1202_liveR6.4,0.915,6/1/17
+5,Understorey,Live,1203_liveR5.3,0.901,6/1/17
+3,Understorey,Live,1204_liveR3.2,0.628,6/1/17
+1,Understorey,Live,1205_liveR1.2,0.721,6/1/17
+2,Understorey,Dead,1206_deadR2.2,0.54,6/1/17
+4,Understorey,Dead,1207_deadR4.1,0.389,6/1/17
+6,Understorey,Dead,1208_deadR6.4,0.417,6/1/17
+5,Understorey,Dead,1209_deadR5.3,0.454,6/1/17
+3,Understorey,Dead,1210_deadR3.2,0.554,6/1/17
+1,Understorey,Dead,1211_deadR1.2,0.67,6/1/17
+All,Wood,Sapwood,wood,0.13,6/1/18
+All,Wood,Hardwood,wood,0.04,6/1/18
+All,Wood,Bark,wood,0.17,6/1/18

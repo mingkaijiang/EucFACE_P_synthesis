@@ -4,7 +4,6 @@ make_wood_p_concentration <- function(func) {
     infile <- "download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv"
     if(!file.exists(infile)) {
         download_canopy_p_data()
-        
     }
 
     df <- read.csv(infile)
@@ -14,6 +13,7 @@ make_wood_p_concentration <- function(func) {
     df$Date <- as.Date(df$Date, "%d-%b-%y")
     
     df.wood <- subset(df, Type == "wood")
+    
     
     ### Wood p, average across rings and date, unit = %
     df.wood.p <- summaryBy(PercP~Ring+Date,
