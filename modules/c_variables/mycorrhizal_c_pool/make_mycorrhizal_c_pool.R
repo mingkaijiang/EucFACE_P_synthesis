@@ -1,27 +1,18 @@
-make_mycorrhizal_c_pool <- function(bk_density) {
+make_mycorrhizal_c_pool <- function(micDF) {
     
-    ### read in the df
-    myDF <- read.csv("~/Documents/Research/Projects/EucFACE_C_Balance/R_repo/data/Mycorrhizae_data_JennifferW_experiment.csv")
+    ### calculate mycorrhizal biomass
+    micDF$mycorrhizal_c_pool[micDF$ring==1] <- micDF$Cmic_g_m2[micDF$ring==1] * 0.105
+    micDF$mycorrhizal_c_pool[micDF$ring==2] <- micDF$Cmic_g_m2[micDF$ring==2] * 0.115
+    micDF$mycorrhizal_c_pool[micDF$ring==3] <- micDF$Cmic_g_m2[micDF$ring==3] * 0.101
+    micDF$mycorrhizal_c_pool[micDF$ring==4] <- micDF$Cmic_g_m2[micDF$ring==4] * 0.11
+    micDF$mycorrhizal_c_pool[micDF$ring==5] <- micDF$Cmic_g_m2[micDF$ring==5] * 0.088
+    micDF$mycorrhizal_c_pool[micDF$ring==6] <- micDF$Cmic_g_m2[micDF$ring==6] * 0.128
     
-    ### aggregate ring average bulk density
-    bk <- aggregate(bk_density$bulk_density_kg_m3, by=list(bk_density$ring), mean, na.action=na.rm)
-    colnames(bk) <- c("Ring", "bk")
+    outDF <- micDF[,c("date", "ring", "mycorrhizal_c_pool")]
+    colnames(outDF) <- c("Date", "Ring", "mycorrhizal_c_pool")
     
-    #### convert unit from % (or mg C per g sand) to mg C kg soil
-    for (i in 1:6) {
-        myDF[myDF$Ring == i, "bk"] <- bk[bk$Ring == i, "bk"]
-    }
-    
-    ### calculate mycorrhizal biomass increment, in unit of g m-2 period -1
-    myDF$mycorrhizal_c_pool <- myDF$percentC/100 * myDF$bk * 0.3 / g_to_kg 
-    
-    ### convert dates
-    myDF$Start_date <- as.Date(as.character(myDF$Start_date), format="%d/%m/%Y")
-    myDF$End_Date <- as.Date(as.character(myDF$End_Date), format="%d/%m/%Y")
-    myDF$ndays <- as.numeric(myDF$End_Date - myDF$Start_date) + 1
-    myDF$Date <- myDF$End_Date
-    
-    outDF <- myDF[,c("Date", "Ring", "mycorrhizal_c_pool")]
+    # Only use data period 2012-2016
+    outDF <- outDF[outDF$Date<="2016-12-31",]
     
     return(outDF)
     

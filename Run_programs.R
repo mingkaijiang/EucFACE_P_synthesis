@@ -102,15 +102,13 @@ canopy_c_production_flux <- leaflitter_c_production_flux
 #### Wood C pool
 # year 2011-12 data on local directory
 wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
-                                c_frac=c_fraction,
-                                return_tree_level=FALSE)
+                                c_frac=c_fraction)
 
 # wood c without excluding mortality
 # mortality is not a big issue here as only one tree was marked dead!
 # missing data? Tree shrinking? Measurement error?
-wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
-                                            c_frac=c_fraction,
-                                            return_tree_level=FALSE)
+#wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
+#                                            c_frac=c_fraction)
 
 #### standing dead wood c pool
 standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
@@ -140,10 +138,10 @@ understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud
 understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
 
 
-source("programs/summary_variables/make_understorey_pool_size_comparison.R")
-make_understorey_pool_size_comparison(understorey_c_pool,
-                                      understorey_c_pool_2,
-                                      plotting = T)
+#source("programs/summary_variables/make_understorey_pool_size_comparison.R")
+#make_understorey_pool_size_comparison(understorey_c_pool,
+#                                      understorey_c_pool_2,
+#                                      plotting = T)
 
 ### estimate biomass growth based on cover data
 make_understorey_aboveground_growth_estimate(plotting = T)
@@ -167,10 +165,10 @@ soil_c_pool <- make_soil_c_pool(soil_bulk_density)
 microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 ### Yolima's data
-microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
+#microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
 
 #### Soil mycorrhizal production
-mycorrhizal_c_pool <- make_mycorrhizal_c_pool(soil_bulk_density)
+mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
 
 #### Coarse root C pool 
 coarse_root_c_pool_1 <- make_coarse_root_pool_1(c_fraction, FACE_ring_area) 
