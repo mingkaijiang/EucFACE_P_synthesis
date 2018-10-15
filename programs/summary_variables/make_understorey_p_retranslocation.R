@@ -7,9 +7,16 @@ make_understorey_p_retranslocation <- function(retrans_calc_method,
     
     if (retrans_calc_method == "Simple") {
         
-        out <- sumDF[sumDF$term == "Understorey P flux", 2:9] 
+    tmpDF <- sumDF[sumDF$term == "Understorey P flux", 2:7]
         
-        # use pre-defined coefficient to calculate retranslocation
+        for (i in 1:6) {
+            tmpDF[,i] <- tmpDF[,i] * understorey_retrans_coef$retrans_coef[understorey_retrans_coef$Ring==i]
+        }
+        
+        tmpDF$aCO2 <- mean(tmpDF$R2, tmpDF$R3, tmpDF$R6)
+        tmpDF$eCO2 <- mean(tmpDF$R1, tmpDF$R4, tmpDF$R5)
+        
+        out <- tmpDF
 
         
         

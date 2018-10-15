@@ -30,7 +30,7 @@ make_total_p_budgeting_variables <- function() {
     ### total P retranslocation, i.e. canopy P - litterfall P + wood P increment + fineroot P - fineroot litter P
     source("programs/summary_variables/make_total_p_retranslocation.R")
     total_p_retranslocation <- make_total_p_retranslocation(under_retrans_calc_method = "Simple", 
-                                                            understorey_retrans_coef=retrans_ud,
+                                                            understorey_retrans_coef=understorey_p_retranslocation_coefficient,
                                                             summary_table_flux_by_treatment)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation

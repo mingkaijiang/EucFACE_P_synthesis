@@ -7,7 +7,17 @@ make_total_p_retranslocation <- function(under_retrans_calc_method, understorey_
     df2 <- df1 - sumDF[sumDF$term == "Leaflitter P flux", 2:9] - sumDF[sumDF$term == "Fineroot Litter P flux", 2:9]
     
     if (under_retrans_calc_method == "Simple") {
-        df3 <- df2 + understorey_retrans_coef * sumDF[sumDF$term == "Understorey P flux", 2:9]
+        
+        tmpDF <- sumDF[sumDF$term == "Understorey P flux", 2:7]
+        
+        for (i in 1:6) {
+            tmpDF[,i] <- tmpDF[,i] * understorey_retrans_coef$retrans_coef[understorey_retrans_coef$Ring==i]
+        }
+        
+        tmpDF$aCO2 <- mean(tmpDF$R2, tmpDF$R3, tmpDF$R6)
+        tmpDF$eCO2 <- mean(tmpDF$R1, tmpDF$R4, tmpDF$R5)
+        
+        df3 <- df2 + tmpDF
         retranDF <- df3
         
     } else if (under_retrans_calc_method == "Mortality") {
