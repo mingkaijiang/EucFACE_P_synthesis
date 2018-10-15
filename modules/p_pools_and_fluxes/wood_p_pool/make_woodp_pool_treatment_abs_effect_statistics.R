@@ -1,13 +1,7 @@
-make_soilp_conc_treatment_abs_effect_statistics <- function(inDF, 
+make_woodp_pool_treatment_abs_effect_statistics <- function(inDF, 
                                                    var.col, 
                                                    stat.model, return.outcome) {
     
-    ### subset pre-treatment data
-    #preDF <- subset(inDF, Date=="2012-06-17")
-    #inDF <- subset(inDF, Date>"2012-06-17")
-    #for (i in 1:6) {
-    #    inDF$PreTrt[inDF$Ring==i] <- preDF$soil_carbon_pool[preDF$Ring==i]
-    #}
     
     ### Pass in covariate values (assuming 1 value for each ring)
     cov2 <- lai_variable[lai_variable$Date=="2012-10-26",]
@@ -79,7 +73,7 @@ make_soilp_conc_treatment_abs_effect_statistics <- function(inDF,
     
     ## confidence interval 
     eff.conf2 <- confint(modelt2,"Trtele")
-  
+ 
     ### conditional output
     if (stat.model == "no_interaction_with_covariate") {
         out <- list(int.state=int.m1,
@@ -95,7 +89,7 @@ make_soilp_conc_treatment_abs_effect_statistics <- function(inDF,
                     diff = summ2,
                     eff = eff.size2,
                     conf = eff.conf2)
-    } 
+    }
 
     ### Predict the model with a standard LAI value
     newDF <- tDF

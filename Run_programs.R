@@ -234,7 +234,8 @@ fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_co
                                                             p_retrans=0.5)
 
 #### Other litterfall
-#### Used wood P concentration to extrapolate
+twig_litter_p_flux <- make_twig_litter_p_flux(p_conc=wood_p_concentration)  
+
 other_litter_p_flux <- make_other_litter_p_flux(p_conc=wood_p_concentration)  
 
 #### Wood P pool   

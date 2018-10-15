@@ -2,110 +2,155 @@ generate_stats_abs_covariate <- function(stat.model) {
     
     ### remove pre-treatment data period for individual variables (e.g. leaf, wood, soil, mic, myc)
     
-    #### Work on each variable per time
+    ######## Concentration
     ### Soil P conc
     s.soilp.conc <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_concentration, 
                                                           var.col=3,
                                                           stat.model="no_interaction_with_covariate",
                                                           return.outcome="model")
     
-    ### Leaf P conc
-    s.leafp.conc <- make_leafp_conc_treatment_abs_effect_statistics(inDF=leaf_p_concentration, 
-                                                          var.cond="pool", var.col=3,
-                                                          date.as.factor=T,
+    ### Soil Phosphate conc
+    s.soil.phosphate.p.conc <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_phosphate_concentration, 
+                                                                    var.col=3,
+                                                                    stat.model="no_interaction_with_covariate",
+                                                                    return.outcome="model")
+    
+    ### Overstorey Leaf P conc
+    s.leafp.conc <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_concentration, 
+                                                          var.col=3,
                                                           stat.model="no_interaction_with_covariate",
                                                           return.outcome="model")
     
+    ### Overstorey Leaf litter P conc
+    s.leafp.lit.conc <- make_leafp_conc_treatment_abs_effect_statistics(inDF=leaflitter_p_concentration, 
+                                                                    var.col=3,
+                                                                    stat.model="no_interaction_with_covariate",
+                                                                    return.outcome="model")
+    
+    
+    ### To do list:
+    ### 1. finish all conc, delta conc, fluxes, pools, delta pools stats
+    ### 2. Create figures for stats summary
+    ### 3. P budget figure (conc, fluxes and stocks)
+    
+    
     ### Wood P conc
-    s.woodp.conc <- make_woodp_conc_treatment_abs_effect_statistics(inDF=wood_p_concentration, 
-                                                          var.cond="pool", var.col=3,
-                                                          date.as.factor=T,
-                                                          stat.model="no_interaction_with_covariate",
-                                                          return.outcome="model") 
+    ### we do not have enough data to perform lmer for wood P concentration
 
     ### Fineroot P conc
     s.frp.conc <- make_frootp_conc_treatment_abs_effect_statistics(inDF=fineroot_p_concentration, 
-                                                         var.cond="pool", var.col=3,
-                                                         date.as.factor=T,
+                                                         var.col=3,
                                                          stat.model="no_interaction_with_covariate",
                                                          return.outcome="model")
 
-    ### Coarseroot P conc
-    s.crp.conc <- make_crootp_conc_treatment_abs_effect_statistics(inDF=coarse_root_p_concentration, 
-                                            var.cond="pool", var.col=3,
-                                            date.as.factor=T,
-                                            stat.model="no_interaction_with_covariate",
-                                            return.outcome="model")
-
     ### Understorey aboveground P conc
-    s.uap.conc <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_aboveground_p_concentration, 
-                                                      var.cond="pool", var.col=5,
-                                                      date.as.factor=T,
+    s.uap.conc <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_concentration, 
+                                                      var.col=3,
                                                       stat.model="no_interaction_with_covariate",
                                                       return.outcome="model")
+    
+    ### Understorey aboveground litter P conc
+    ### not possible to construct a model due to limited data
 
     ### Microbial P conc
     s.micp.conc <- make_micp_conc_treatment_abs_effect_statistics(inDF=microbial_p_concentration, 
-                                                        var.cond="pool", var.col=3,
-                                                        date.as.factor=T,
+                                                        var.col=3,
                                                         stat.model="no_interaction_with_covariate",
                                                         return.outcome="model")
 
     ### Mycorrhizal P conc
-    s.mycp.conc <- make_mycp_conc_treatment_abs_effect_statistics(inDF=mycorrhizal_p_concentration, 
-                                                        var.cond="pool", var.col=3,
-                                                        date.as.factor=T,
-                                                        stat.model="no_interaction_with_covariate",
-                                                        return.outcome="model")
+    #s.mycp.conc <- make_mycp_conc_treatment_abs_effect_statistics(inDF=mycorrhizal_p_concentration, 
+    #                                                    var.col=3,
+    #                                                    stat.model="no_interaction_with_covariate",
+    #                                                    return.outcome="model")
 
     ### Leaf litter P conc
-    s.litp <- make_litp_conc_treatment_abs_effect_statistics(inDF=leaflitter_p_concentration, 
-                                                        var.cond="pool", var.col=6,
-                                                        date.as.factor=T,
-                                                        stat.model="no_interaction_with_covariate",
-                                                        return.outcome="model")
-
-    ### Frass production
-    s.fras <- make_frass_treatment_abs_effect_statistics(inDF=frass_production_flux, 
-                                                         var.cond="flux", var.col=5,
-                                                         date.as.factor=T,
-                                                         stat.model="no_interaction_with_covariate",
-                                                         return.outcome="model")
-  
-    ### herbivory leaf consumption flux
-    s.hb.cons <- make_hb_cons_treatment_abs_effect_statistics(inDF=herbivory_leaf_consumption_flux, 
-                                                              var.cond="flux", var.col=5,
-                                                              date.as.factor=T,
+    s.litp.conc <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_concentration, 
+                                                              var.col=3,
                                                               stat.model="no_interaction_with_covariate",
                                                               return.outcome="model")
- 
-    ### Leaflitter flux
-    s.lit.leaf <- make_litter_flux_treatment_abs_effect_statistics(inDF=leaflitter_flux, 
-                                                                   var.cond="flux", var.col=6,
-                                                                   date.as.factor=T,
-                                                                   stat.model="no_interaction_with_covariate",
-                                                                   return.outcome="model")  
 
+    ### Frass P concentration
+    s.frasp.conc <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_concentration, 
+                                                         var.col=3,
+                                                         stat.model="no_interaction_with_covariate",
+                                                         return.outcome="model")
+ 
+    
+    ######## P fluxes and stocks
+    ### Soil P pool
+    s.soilp.pool <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool, 
+                                                                    var.col=3,
+                                                                    stat.model="no_interaction_with_covariate",
+                                                                    return.outcome="model")
+    
+    ### Soil Phosphate pool
+    s.soil.phosphate.p.pool <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_phosphate_pool, 
+                                                                               var.col=3,
+                                                                               stat.model="no_interaction_with_covariate",
+                                                                               return.outcome="model")
+    
+    ### Overstorey Leaf P pool
+    s.leafp.pool <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
+                                                                    var.col=3,
+                                                                    stat.model="no_interaction_with_covariate",
+                                                                    return.outcome="model")
+    
+    ### Wood P pool
+    s.woodp.pool <- make_woodp_pool_treatment_abs_effect_statistics(inDF=wood_p_pool, 
+                                                                    var.col=3,
+                                                                    stat.model="no_interaction_with_covariate",
+                                                                    return.outcome="model")
+    
+    ### Fineroot P pool
+    s.frp.pool <- make_frootp_conc_treatment_abs_effect_statistics(inDF=fineroot_p_pool, 
+                                                                   var.col=3,
+                                                                   stat.model="no_interaction_with_covariate",
+                                                                   return.outcome="model")
+    
+    ### Understorey aboveground P pool
+    s.uap.pool <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
+                                                                var.col=3,
+                                                                stat.model="no_interaction_with_covariate",
+                                                                return.outcome="model")
+    
+    ### Microbial P pool
+    s.micp.pool <- make_micp_conc_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
+                                                                  var.col=3,
+                                                                  stat.model="no_interaction_with_covariate",
+                                                                  return.outcome="model")
+    
+    ### Mycorrhizal P pool
+    #s.mycp.pool <- make_mycp_conc_treatment_abs_effect_statistics(inDF=mycorrhizal_p_concentration, 
+    #                                                    var.col=3,
+    #                                                    stat.model="no_interaction_with_covariate",
+    #                                                    return.outcome="model")
+    
+    ### coarse root P pool
+    s.crootp.pool <- make_crootp_pool_treatment_abs_effect_statistics(inDF=coarse_root_p_pool_1, 
+                                                                  var.col=3,
+                                                                  stat.model="no_interaction_with_covariate",
+                                                                  return.outcome="model")
+    
+    ### Leaf litter P flux
+    s.leaf.litp.flux <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=leaflitter_p_flux, 
+                                                                   var.col=5,
+                                                                   stat.model="no_interaction_with_covariate",
+                                                                   return.outcome="model")
+    
     ### twig litter flux
-    s.lit.twig <- make_litter_flux_treatment_abs_effect_statistics(inDF=leaflitter_flux, 
-                                                                   var.cond="flux", var.col=3,
-                                                                   date.as.factor=T,
-                                                                   stat.model="no_interaction_with_covariate",
-                                                                   return.outcome="model")
-  
-    ### bark litter flux
-    s.lit.bark <- make_litter_flux_treatment_abs_effect_statistics(inDF=leaflitter_flux, 
-                                                                   var.cond="flux", var.col=4,
-                                                                   date.as.factor=T,
-                                                                   stat.model="no_interaction_with_covariate",
-                                                                   return.outcome="model") 
-   
-    ### Seed litter flux
-    s.lit.seed <- make_litter_flux_treatment_abs_effect_statistics(inDF=leaflitter_flux, 
-                                                                   var.cond="flux", var.col=5,
-                                                                   date.as.factor=T,
-                                                                   stat.model="no_interaction_with_covariate",
-                                                                   return.outcome="model")
+    s.other.litp.flux <- make_other_lit_p_flux_treatment_abs_effect_statistics(inDF=other_litter_p_flux, 
+                                                                             var.col=5,
+                                                                             stat.model="no_interaction_with_covariate",
+                                                                             return.outcome="model")
+    
+
+    ### Frass P flux
+    s.frasp.flux <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_concentration, 
+                                                                     var.col=3,
+                                                                     stat.model="no_interaction_with_covariate",
+                                                                     return.outcome="model")
+    
     
     ### Wood production flux
     s.wood.prod <- make_wood_prod_treatment_abs_effect_statistics(inDF=wood_production_flux, 
