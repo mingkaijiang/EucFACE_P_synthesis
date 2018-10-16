@@ -382,6 +382,11 @@ generate_stats_abs_covariate(stat.model="no_interaction")
 #### Make figures
 
 
+### To do list:
+### 1. finish all conc, delta conc, fluxes, pools, delta pools stats (need to check missing components)
+### 2. Create figures for stats summary
+### 3. P budget figure (conc, fluxes and stocks)
+
 
 
 
@@ -483,10 +488,6 @@ check_wood_data()
 
 ###### ---------------- Import met data -------------------- ######
 
-
-
-
-###### ---------- Compute statistical analyses ----------------- ######
 
 
 

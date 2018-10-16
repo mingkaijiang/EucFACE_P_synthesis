@@ -27,13 +27,6 @@ generate_stats_abs_covariate <- function(stat.model) {
                                                                     stat.model="no_interaction_with_covariate",
                                                                     return.outcome="model")
     
-    
-    ### To do list:
-    ### 1. finish all conc, delta conc, fluxes, pools, delta pools stats
-    ### 2. Create figures for stats summary
-    ### 3. P budget figure (conc, fluxes and stocks)
-    
-    
     ### Wood P conc
     ### we do not have enough data to perform lmer for wood P concentration
 

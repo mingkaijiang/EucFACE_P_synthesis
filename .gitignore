@@ -45,6 +45,7 @@ vignettes/*.pdf
 /download/*.xlsx
 /download/*.dat
 /plots_tables/*.pdf
+/plots_tables/*.csv
 
 # html
 *.html
