@@ -2,7 +2,7 @@ make_delta_micp_treatment_abs_effect_statistics <- function(inDF,
                                                    var.col, 
                                                    stat.model, return.outcome) {
     ### create delta DF
-    deltaDF <- make_yearly_delta_pool_function(inDF, var.col)
+    deltaDF <- make_delta_pool_function(inDF, var.col)
     
     ### Pass in covariate values (assuming 1 value for each ring)
     cov2 <- lai_variable[lai_variable$Date=="2012-10-26",]

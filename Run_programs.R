@@ -365,7 +365,7 @@ summary_microbial_pool_comparison <- check_microbial_pool_CP_ratios(c_pool=summa
 #### Stats summary for all individual P concentrations
 ### All stats for fluxes are based on annual rate
 source("programs/stats/generate_stats_abs_covariate.R")
-generate_stats_abs_covariate(stat.model="no_interaction")
+generate_stats_abs_covariate()
 
 #### Stats summary for all P stock and fluxes
 
