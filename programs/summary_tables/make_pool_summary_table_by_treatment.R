@@ -57,11 +57,11 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$notes[treatDF$terms == "Fine Root P Pool"] <- "Top 30 cm"
     
     ### Coarse root P pool
-    out <- summaryBy(coarse_root_p_pool~Ring,data=coarse_root_p_pool_1,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(coarse_root_p_pool~Ring,data=coarse_root_p_pool,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Coarse Root P Pool", 2:7] <- out$coarse_root_p_pool
-    treatDF$year_start[treatDF$terms == "Coarse Root P Pool"] <- min(year(coarse_root_p_pool_1$Date))    
-    treatDF$year_end[treatDF$terms == "Coarse Root P Pool"] <- max(year(coarse_root_p_pool_1$Date))    
-    treatDF$timepoint[treatDF$terms == "Coarse Root P Pool"] <- length(unique(coarse_root_p_pool_1$Date))  
+    treatDF$year_start[treatDF$terms == "Coarse Root P Pool"] <- min(year(coarse_root_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Coarse Root P Pool"] <- max(year(coarse_root_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Coarse Root P Pool"] <- length(unique(coarse_root_p_pool$Date))  
     treatDF$notes[treatDF$terms == "Coarse Root P Pool"] <- "Allometric rlt with DBH"
     
     ### Understorey P pool

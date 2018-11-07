@@ -180,7 +180,7 @@ mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
 coarse_root_c_pool <- make_coarse_root_pool(c_fraction, fr_pool=fineroot_c_pool) 
 
 #### Coarse root C production
-coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool_1) 
+coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool) 
 
 
 

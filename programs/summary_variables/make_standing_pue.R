@@ -19,7 +19,7 @@ make_standing_pue <- function(p_up) {
         nppDF[nppDF$Ring == i, "fine root"] <- with(fineroot_c_production_flux[fineroot_c_production_flux$Ring == i, ],
                                                sum(fineroot_production_flux*Days)/sum(Days)) * conv
         
-        nppDF[nppDF$Ring == i, "coarse root"] <- with(coarse_root_c_flux_1[coarse_root_c_flux_1$Ring == i, ],
+        nppDF[nppDF$Ring == i, "coarse root"] <- with(coarse_root_c_flux[coarse_root_c_flux$Ring == i, ],
                                                sum(coarse_root_production_flux*Days)/sum(Days)) * conv
         
         nppDF[nppDF$Ring == i, "frass"] <- with(frass_c_production_flux[frass_c_production_flux$Ring == i, ],

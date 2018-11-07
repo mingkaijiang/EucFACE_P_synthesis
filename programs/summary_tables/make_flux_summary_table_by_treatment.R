@@ -11,7 +11,7 @@ make_flux_summary_table_by_treatment <- function() {
     ### Define production variable names
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
                "Coarse Root P flux","Leaflitter P flux", "Fineroot Litter P flux",
-               "Other litter P flux", "Frass P flux",
+               "Twig litter P flux", "Bark litter P flux","Seed litter P flux", "Frass P flux",
                "Understorey P flux", "Understorey Litter P flux", "Mineralization P flux")
     
     treatDF <- data.frame(terms)
@@ -65,12 +65,12 @@ make_flux_summary_table_by_treatment <- function() {
     
     ### Coarse root P flux
     for (i in c(1:6)) {
-        treatDF[treatDF$terms == "Coarse Root P flux", i+1] <- with(coarse_root_p_flux_1[coarse_root_p_flux_1$Ring ==i,],
+        treatDF[treatDF$terms == "Coarse Root P flux", i+1] <- with(coarse_root_p_flux[coarse_root_p_flux$Ring ==i,],
                                                                   sum(coarse_root_p_flux*Days)/sum(Days)) * conv
     }
-    treatDF$year_start[treatDF$terms == "Coarse Root P flux"] <- min(year(coarse_root_p_flux_1$Date))    
-    treatDF$year_end[treatDF$terms == "Coarse Root P flux"] <- max(year(coarse_root_p_flux_1$Date))    
-    treatDF$timepoint[treatDF$terms == "Coarse Root P flux"] <- length(unique(coarse_root_p_flux_1$Date))  
+    treatDF$year_start[treatDF$terms == "Coarse Root P flux"] <- min(year(coarse_root_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Coarse Root P flux"] <- max(year(coarse_root_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Coarse Root P flux"] <- length(unique(coarse_root_p_flux$Date))  
     treatDF$notes[treatDF$terms == "Coarse Root P flux"] <- "Allometric rlt with DBH"
     
     ### Understorey P flux
@@ -133,15 +133,35 @@ make_flux_summary_table_by_treatment <- function() {
     treatDF$notes[treatDF$terms == "Fineroot Litter P flux"] <- "Assuming fineroot production = fineroot litter production"
     
     
-    ### Other aboveground litter flux
+    ### twig litter flux
     for (i in c(1:6)) {
-        treatDF[treatDF$terms == "Other litter P flux", i+1] <- with(other_litter_p_flux[other_litter_p_flux$Ring ==i,],
-                                                                   sum(other_litter_p_flux_mg_m2_d*Days)/sum(Days)) * conv
+        treatDF[treatDF$terms == "Twig litter P flux", i+1] <- with(twig_litter_p_flux[twig_litter_p_flux$Ring ==i,],
+                                                                   sum(twiglitter_p_flux_mg_m2_d*Days)/sum(Days)) * conv
     }
-    treatDF$year_start[treatDF$terms == "Other litter P flux"] <- min(year(other_litter_p_flux$Date))    
-    treatDF$year_end[treatDF$terms == "Other litter P flux"] <- max(year(other_litter_p_flux$Date))    
-    treatDF$timepoint[treatDF$terms == "Other litter P flux"] <- length(unique(other_litter_p_flux$Date))  
-    treatDF$notes[treatDF$terms == "Other litter P flux"] <- "Assume wood P concentration applies to twig, bark and seed"
+    treatDF$year_start[treatDF$terms == "Twig litter P flux"] <- min(year(twig_litter_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Twig litter P flux"] <- max(year(twig_litter_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Twig litter P flux"] <- length(unique(twig_litter_p_flux$Date))  
+    treatDF$notes[treatDF$terms == "Twig litter P flux"] <- "Assume wood P concentration"
+    
+    ### bark litter flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Bark litter P flux", i+1] <- with(bark_litter_p_flux[bark_litter_p_flux$Ring ==i,],
+                                                                     sum(barklitter_p_flux_mg_m2_d*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Bark litter P flux"] <- min(year(bark_litter_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Bark litter P flux"] <- max(year(bark_litter_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Bark litter P flux"] <- length(unique(bark_litter_p_flux$Date))  
+    treatDF$notes[treatDF$terms == "Bark litter P flux"] <- "Assume wood P concentration"
+    
+    ### seed litter flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Seed litter P flux", i+1] <- with(seed_litter_p_flux[seed_litter_p_flux$Ring ==i,],
+                                                                     sum(seedlitter_p_flux_mg_m2_d*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Seed litter P flux"] <- min(year(seed_litter_p_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Seed litter P flux"] <- max(year(seed_litter_p_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Seed litter P flux"] <- length(unique(seed_litter_p_flux$Date))  
+    treatDF$notes[treatDF$terms == "Seed litter P flux"] <- "Assume wood P concentration"
     
     
     ### calculate treatment averages

@@ -12,16 +12,7 @@ make_barklitter_p_flux <- function(p_conc, litter_flux) {
     
     ### find the common month and year
     for (i in c(1:6)) {
-        mydf1 <- subset(p_conc, Ring == i)
-        
-        for (j in mydf1$numd) {
-            
-            mydf2 <- subset(mydf1, numd == j)
-            
-            out[out$Ring == i & out$s.diff <= j & out$e.diff >= j, "PercP"] <- mydf2$PercP
-            out[out$Ring == i & out$s.diff <= j & out$e.diff >= j, "date"] <- difftime(mydf2$Date, "2010-01-01", units="days")
-            
-        }
+        out[out$Ring == i, "PercP"] <- p_conc$PercP[p_conc$Ring==i]
     }
     
     outDF <- out[complete.cases(out),]

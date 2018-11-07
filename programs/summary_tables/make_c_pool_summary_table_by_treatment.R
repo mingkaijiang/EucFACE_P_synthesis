@@ -57,11 +57,11 @@ make_c_pool_summary_table_by_treatment <- function() {
     treatDF$notes[treatDF$terms == "Fine Root C Pool"] <- "Top 30 cm"
     
     ### Coarse root C pool
-    out <- summaryBy(coarse_root_pool~Ring,data=coarse_root_c_pool_1,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(coarse_root_pool~Ring,data=coarse_root_c_pool,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Coarse Root C Pool", 2:7] <- out$coarse_root_pool
-    treatDF$year_start[treatDF$terms == "Coarse Root C Pool"] <- min(year(coarse_root_c_pool_1$Date))    
-    treatDF$year_end[treatDF$terms == "Coarse Root C Pool"] <- max(year(coarse_root_c_pool_1$Date))    
-    treatDF$timepoint[treatDF$terms == "Coarse Root C Pool"] <- length(unique(coarse_root_c_pool_1$Date))  
+    treatDF$year_start[treatDF$terms == "Coarse Root C Pool"] <- min(year(coarse_root_c_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Coarse Root C Pool"] <- max(year(coarse_root_c_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Coarse Root C Pool"] <- length(unique(coarse_root_c_pool$Date))  
     treatDF$notes[treatDF$terms == "Coarse Root C Pool"] <- "Allometric relationship with DBH"
     
     ### Understorey C pool

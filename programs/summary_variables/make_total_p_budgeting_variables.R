@@ -7,12 +7,12 @@ make_total_p_budgeting_variables <- function() {
     
     
     ### standing P stock
-    ### summarize according to year
+    ### summarize according to year - this ignores bark and twigs
     source("programs/summary_variables/make_overstorey_standing_p_stock.R")
     overstorey_standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
                                                                     wood=wood_p_pool, 
                                                                     froot=fineroot_p_pool, 
-                                                                    croot=coarse_root_p_pool_1)
+                                                                    croot=coarse_root_p_pool)
     
     overstorey_standing_p_stock_avg <- summaryBy(total~Ring, data=overstorey_standing_p_stock, 
                                                  FUN=mean, na.rm=T, keep.names=T)
@@ -31,7 +31,7 @@ make_total_p_budgeting_variables <- function() {
     source("programs/summary_variables/make_total_p_retranslocation.R")
     total_p_retranslocation <- make_total_p_retranslocation(under_retrans_calc_method = "Simple", 
                                                             understorey_retrans_coef=understorey_p_retranslocation_coefficient,
-                                                            summary_table_flux_by_treatment)
+                                                            sumDF=summary_table_flux_by_treatment)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation
     source("programs/summary_variables/make_p_uptake_from_soil.R")

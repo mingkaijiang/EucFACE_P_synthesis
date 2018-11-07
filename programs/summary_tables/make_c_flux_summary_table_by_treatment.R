@@ -64,12 +64,12 @@ make_c_flux_summary_table_by_treatment <- function() {
     
     ### Coarse root C flux
     for (i in c(1:6)) {
-        treatDF[treatDF$terms == "Coarse Root C flux", i+1] <- with(coarse_root_c_flux_1[coarse_root_c_flux_1$Ring ==i,],
+        treatDF[treatDF$terms == "Coarse Root C flux", i+1] <- with(coarse_root_c_flux[coarse_root_c_flux$Ring ==i,],
                                                                   sum(coarse_root_production_flux*Days)/sum(Days)) * conv
     }
-    treatDF$year_start[treatDF$terms == "Coarse Root C flux"] <- min(year(coarse_root_c_flux_1$Date))    
-    treatDF$year_end[treatDF$terms == "Coarse Root C flux"] <- max(year(coarse_root_c_flux_1$Date))    
-    treatDF$timepoint[treatDF$terms == "Coarse Root C flux"] <- length(unique(coarse_root_c_flux_1$Date))  
+    treatDF$year_start[treatDF$terms == "Coarse Root C flux"] <- min(year(coarse_root_c_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Coarse Root C flux"] <- max(year(coarse_root_c_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Coarse Root C flux"] <- length(unique(coarse_root_c_flux$Date))  
     treatDF$notes[treatDF$terms == "Coarse Root C flux"] <- "Allometric rlt with DBH"
     
     ### Understorey C flux

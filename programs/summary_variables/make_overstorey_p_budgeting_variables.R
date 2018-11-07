@@ -12,7 +12,7 @@ make_overstorey_p_budgeting_variables <- function() {
     overstorey_standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
                                                                     wood=wood_p_pool, 
                                                                     froot=fineroot_p_pool, 
-                                                                    croot=coarse_root_p_pool_1)
+                                                                    croot=coarse_root_p_pool)
     
     overstorey_standing_p_stock_avg <- summaryBy(total~Ring, data=overstorey_standing_p_stock, 
                                                  FUN=mean, na.rm=T, keep.names=T)
