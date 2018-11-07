@@ -50,3 +50,6 @@ strip_area <- 0.1
 
 # understorey P retranslocation coefficient
 retrans_ud <- 0.8
+
+# water fraction
+water_frac <- 0.5
