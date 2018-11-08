@@ -16,6 +16,7 @@ make_canopy_p_pool <- function(p_conc,
     
     ### prepare output df
     out <- biom
+    out$leaf_pool <- out$leaf_pool / c_fraction
 
     ### find the common month and year 
     for (i in c(1:6)) {

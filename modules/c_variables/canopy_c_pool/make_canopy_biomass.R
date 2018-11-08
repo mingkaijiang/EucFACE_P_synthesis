@@ -56,6 +56,8 @@ make_canopy_biomass_pool <- function(lai_variable, sla_variable, sla_option){
         out$leaf_pool <- lai_variable$lai_variable / (10^-4 * lai_variable$SLA)
     }
     
+    out$leaf_pool <- out$leaf_pool * c_fraction
+    
     return(out)
 
 }

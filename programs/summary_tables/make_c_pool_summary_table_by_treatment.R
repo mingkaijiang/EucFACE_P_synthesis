@@ -31,7 +31,6 @@ make_c_pool_summary_table_by_treatment <- function() {
     
     ### Canopy C 
     out <- summaryBy(leaf_pool~Ring,data=canopy_biomass_pool,FUN=mean,keep.names=T,na.rm=T)
-    out$leaf_pool <- out$leaf_pool * c_fraction
     treatDF[treatDF$terms == "Canopy C Pool", 2:7] <- out$leaf_pool
     treatDF$year_start[treatDF$terms == "Canopy C Pool"] <- min(year(canopy_biomass_pool$Date))    
     treatDF$year_end[treatDF$terms == "Canopy C Pool"] <- max(year(canopy_biomass_pool$Date))    
