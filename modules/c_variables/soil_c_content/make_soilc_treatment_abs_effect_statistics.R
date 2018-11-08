@@ -4,7 +4,7 @@ make_soilc_treatment_abs_effect_statistics <- function(inDF,
     
 
     ### Pass in covariate values (assuming 1 value for each ring)
-    inDF$Ring <- as.numeric(inDF$Ring)
+    inDF$Ring <- as.numeric(inDF$ring)
     
     #cov2 <- lai_variable[lai_variable$Date<="2013-01-01",]
     cov2 <- lai_variable[lai_variable$Date=="2012-10-26",]

@@ -636,19 +636,19 @@ twiglitter_flux_ann <- make_litter_flux_treatment_abs_effect_statistics(inDF=twi
                                                                         return.outcome="predicted")
 
 ### bark litter flux
-barklitter_flux_ann <- make_litter_flux_treatment_abs_effect_statistics(inDF=barklitter_c_production_flux,, 
+barklitter_flux_ann <- make_litter_flux_treatment_abs_effect_statistics(inDF=barklitter_c_production_flux, 
                                                                         var.col=3,
                                                                         stat.model="no_interaction_with_covariate",
                                                                         return.outcome="predicted") 
 
 ### Seed litter flux
-seedlitter_flux_ann <- make_litter_flux_treatment_abs_effect_statistics(inDF=seedlitter_c_production_flux,, 
+seedlitter_flux_ann <- make_litter_flux_treatment_abs_effect_statistics(inDF=seedlitter_c_production_flux, 
                                                                         var.col=3,
                                                                         stat.model="no_interaction_with_covariate",
                                                                         return.outcome="predicted")
 
 ### Wood production flux
-wood_production_flux_ann <- make_wood_prod_treatment_abs_effect_statistics(inDF=wood_c_production_flux, 
+wood_production_flux_ann <- make_wood_prod_treatment_abs_effect_statistics(inDF=wood_c_production, 
                                                                             var.col=5,
                                                                            stat.model="no_interaction_with_covariate",
                                                                            return.outcome="predicted") 
@@ -660,7 +660,7 @@ fineroot_production_flux_ann <- make_froot_prod_treatment_abs_effect_statistics(
                                                                                 return.outcome="predicted") 
 
 ### Coarseroot production
-coarse_root_production_flux_ann <- make_croot_prod_treatment_abs_effect_statistics(inDF=coarse_root_c_production_flux, 
+coarse_root_production_flux_ann <- make_croot_prod_treatment_abs_effect_statistics(inDF=coarse_root_c_flux, 
                                                                                     var.col=5,
                                                                                    stat.model="no_interaction_with_covariate",
                                                                                    return.outcome="predicted")
@@ -712,7 +712,7 @@ coarse_root_c_pool_ann <- make_crootc_treatment_abs_effect_statistics(inDF=coars
                                                                       return.outcome="predicted")
 
 ### Understorey aboveground C pool
-understorey_aboveground_c_pool_ann <- make_uac_treatment_abs_effect_statistics(inDF=understorey_aboveground_c_pool, 
+understorey_aboveground_c_pool_ann <- make_uac_treatment_abs_effect_statistics(inDF=understorey_c_pool, 
                                                                                var.col=5,
                                                                                stat.model="no_interaction_with_covariate",
                                                                                return.outcome="predicted")
@@ -736,7 +736,7 @@ delta_soil_c_pool_ann <- make_delta_soilc_treatment_abs_effect_statistics(inDF=s
                                                                           return.outcome="predicted")
 
 ### Delta Leaf C
-delta_leaf_c_pool_ann <- make_delta_leafc_treatment_abs_effect_statistics(inDF=leaf_c_pool, 
+delta_leaf_c_pool_ann <- make_delta_leafc_treatment_abs_effect_statistics(inDF=canopy_biomass_pool, 
                                                                            var.col=3,
                                                                           stat.model="no_interaction_with_covariate",
                                                                           return.outcome="predicted")
@@ -760,7 +760,7 @@ delta_coarse_root_c_pool_ann <- make_delta_crootc_treatment_abs_effect_statistic
                                                                                   return.outcome="predicted")
 
 ### Delta Understorey aboveground C pool
-delta_understorey_aboveground_c_pool_ann <- make_delta_uac_treatment_abs_effect_statistics(inDF=understorey_aboveground_c_pool, 
+delta_understorey_aboveground_c_pool_ann <- make_delta_uac_treatment_abs_effect_statistics(inDF=understorey_c_pool, 
                                                                                            var.col=5,
                                                                                            stat.model="no_interaction_with_covariate",
                                                                                            return.outcome="predicted")

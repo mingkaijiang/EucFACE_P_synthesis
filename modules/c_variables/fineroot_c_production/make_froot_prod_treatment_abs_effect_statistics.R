@@ -35,7 +35,7 @@ make_froot_prod_treatment_abs_effect_statistics <- function(inDF,
         for (j in yr.list) {
             ### averaged over days within a year 
             tmp <- with(inDF[inDF$Ring == i & inDF$Yr == j, ],
-                        sum(Value*ndays, na.rm=T)/sum(ndays, na.rm=T)) * 365 / 1000
+                        sum(Value*Days, na.rm=T)/sum(Days, na.rm=T)) * 365 / 1000
             tDF[tDF$Ring == i & tDF$Yr == j, "Value"] <- tmp
         }
     }

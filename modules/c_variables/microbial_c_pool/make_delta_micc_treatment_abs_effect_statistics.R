@@ -3,6 +3,9 @@ make_delta_micc_treatment_abs_effect_statistics <- function(inDF,
                                                    stat.model, return.outcome) {
 
     ### create delta DF
+    inDF$Date <- inDF$date
+    inDF$Ring <- inDF$ring
+    
     deltaDF <- make_yearly_delta_pool_function(inDF, var.col)
     
     ### Pass in covariate values (assuming 1 value for each ring)

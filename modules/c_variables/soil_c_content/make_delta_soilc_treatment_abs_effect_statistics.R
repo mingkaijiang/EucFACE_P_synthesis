@@ -4,6 +4,7 @@ make_delta_soilc_treatment_abs_effect_statistics <- function(inDF,
     
     ### subset pre-treatment data
     inDF <- subset(inDF, Date>"2012-06-17")
+    inDF$Ring <- inDF$ring
     
     ### create delta DF
     deltaDF <- make_yearly_delta_pool_function(inDF, var.col)
