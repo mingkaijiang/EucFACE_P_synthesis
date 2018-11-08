@@ -25,33 +25,37 @@ make_soil_p_mineralization_flux <- function(bk_density) {
 
     # output table
     myDF1.out <- myDF1.m[,c("date", "ring", "p_mineralization_mg_m2_d")]
+    colnames(myDF1.out) <- c("Date", "Ring", "p_mineralization_mg_m2_d")
+    
+    myDF1.out$Start_date <- myDF1.out$End_date <- myDF1.out$Date
+    myDF1.out$Days <- 1
     
     # plotting time series
-    pdf("plots_tables/soil_p_mineralization_over_time.pdf")
-    
-    # compare eCO2 and aCO2 treatment
-    myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
-    myDF1.out[myDF1.out$ring == 4, "CO2"] <- "eCO2"
-    myDF1.out[myDF1.out$ring == 5, "CO2"] <- "eCO2"
-    
-    myDF1.out[myDF1.out$ring == 2, "CO2"] <- "aCO2"
-    myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
-    myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
-    
-    # check CO2 treatment averages
-    test1 <- summaryBy(p_mineralization_mg_m2_d~CO2, 
-                       data=myDF1.out, FUN=mean, keep.names=T)
-    
-    # plotting
-    p <- ggplot(myDF1.out, aes(date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
-        geom_point(size = 5) +
-        xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") + 
-        annotate("text", x = "2013-10-22", y = 4, 
-                 label = paste0("aCO2 = ", round(test1[1,2], 2))) +
-        annotate("text", x = "2013-10-22", y = 3.8, 
-                 label = paste0("eCO2 = ", round(test1[2,2], 2)))
-    plot(p) 
-    dev.off()
+    #pdf("plots_tables/soil_p_mineralization_over_time.pdf")
+    #
+    ## compare eCO2 and aCO2 treatment
+    #myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$ring == 4, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$ring == 5, "CO2"] <- "eCO2"
+    #
+    #myDF1.out[myDF1.out$ring == 2, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
+    #
+    ## check CO2 treatment averages
+    #test1 <- summaryBy(p_mineralization_mg_m2_d~CO2, 
+    #                   data=myDF1.out, FUN=mean, keep.names=T)
+    #
+    ## plotting
+    #p <- ggplot(myDF1.out, aes(date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
+    #    geom_point(size = 5) +
+    #    xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") + 
+    #    annotate("text", x = "2013-10-22", y = 4, 
+    #             label = paste0("aCO2 = ", round(test1[1,2], 2))) +
+    #    annotate("text", x = "2013-10-22", y = 3.8, 
+    #             label = paste0("eCO2 = ", round(test1[2,2], 2)))
+    #plot(p) 
+    #dev.off()
     
     # Shun's GCB paper indicates that P mineralization rate was higher
     # under eCO2, but here it is lower. 
@@ -62,5 +66,5 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     # although this difference did not persist."
     # Hence, CO2 treatment effct is only there for the first few points! 
     
-    return(myDF1.out[,1:3])
+    return(myDF1.out)
 }

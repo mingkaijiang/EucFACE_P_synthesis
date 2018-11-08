@@ -96,9 +96,9 @@ make_flux_summary_table_by_treatment <- function() {
     ### Mineralization flux
     out <- summaryBy(p_mineralization_mg_m2_d~ring,data=soil_p_mineralization,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Mineralization P flux", 2:7] <- out$p_mineralization_mg_m2_d * conv
-    treatDF$year_start[treatDF$terms == "Mineralization P flux"] <- min(year(soil_p_mineralization$date))    
-    treatDF$year_end[treatDF$terms == "Mineralization P flux"] <- max(year(soil_p_mineralization$date))    
-    treatDF$timepoint[treatDF$terms == "Mineralization P flux"] <- length(unique(soil_p_mineralization$date))  
+    treatDF$year_start[treatDF$terms == "Mineralization P flux"] <- min(year(soil_p_mineralization$Date))    
+    treatDF$year_end[treatDF$terms == "Mineralization P flux"] <- max(year(soil_p_mineralization$Date))    
+    treatDF$timepoint[treatDF$terms == "Mineralization P flux"] <- length(unique(soil_p_mineralization$Date))  
     treatDF$notes[treatDF$terms == "Mineralization P flux"] <- "positive is mineralization, negative is immobilization"
     
     ### Frass production flux
@@ -162,6 +162,16 @@ make_flux_summary_table_by_treatment <- function() {
     treatDF$year_end[treatDF$terms == "Seed litter P flux"] <- max(year(seed_litter_p_flux$Date))    
     treatDF$timepoint[treatDF$terms == "Seed litter P flux"] <- length(unique(seed_litter_p_flux$Date))  
     treatDF$notes[treatDF$terms == "Seed litter P flux"] <- "Assume wood P concentration"
+    
+    ###  P mineralization flux
+    for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Mineralization P flux", i+1] <- with(soil_p_mineralization[soil_p_mineralization$Ring ==i,],
+                                                                    sum(p_mineralization_mg_m2_d*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Mineralization P flux"] <- min(year(soil_p_mineralization$Date))    
+    treatDF$year_end[treatDF$terms == "Mineralization P flux"] <- max(year(soil_p_mineralization$Date))    
+    treatDF$timepoint[treatDF$terms == "Mineralization P flux"] <- length(unique(soil_p_mineralization$Date))  
+    treatDF$notes[treatDF$terms == "Mineralization P flux"] <- "obtained"
     
     
     ### calculate treatment averages

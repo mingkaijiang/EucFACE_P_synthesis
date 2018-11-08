@@ -193,7 +193,10 @@ generate_stats_abs_covariate <- function() {
                                                                 return.outcome="model")
 
     ### p mineralization flux
-    ### can't annualize it because we don't have a start and end date yet. 
+    s.mineralization.p.flux <- make_mineralization_p_flux_treatment_abs_effect_statistics(inDF=soil_p_mineralization, 
+                                                                                   var.col=3,
+                                                                                   stat.model="no_interaction_with_covariate",
+                                                                                   return.outcome="model")
     
     ### Delta Soil p
     s.delta.soilp <- make_delta_soilp_treatment_abs_effect_statistics(inDF=soil_p_pool, 
@@ -264,6 +267,7 @@ generate_stats_abs_covariate <- function() {
                   "bark_lit_p_prod","seed_lit_p_prod",
                   "wood_p_prod","fineroot_p_prod",
                   "coarseroot_p_prod","understorey_p_prod","understorey_lit_p_prod",
+                  "soil_p_mineralization",
                   "delta_soil_p","delta_leaf_p","delta_wood_p","delta_fineroot_p",
                   "delta_coarseroot_p","delta_understorey_p",
                   "delta_microbial_p")
@@ -322,13 +326,14 @@ generate_stats_abs_covariate <- function() {
     out[out$Variable=="twig_lit_p_prod",2:17] <- assign_stats(s.var=s.twig.litp.flux)
     out[out$Variable=="bark_lit_p_prod",2:17] <- assign_stats(s.var=s.bark.litp.flux)
     out[out$Variable=="seed_lit_p_prod",2:17] <- assign_stats(s.var=s.seed.litp.flux)
-    
     out[out$Variable=="leaf_lit_p_prod",2:17] <- assign_stats(s.var=s.leaf.litp.flux)
     out[out$Variable=="wood_p_prod",2:17] <- assign_stats(s.var=s.wood.p.flux)
     out[out$Variable=="fineroot_p_prod",2:17] <- assign_stats(s.var=s.froot.p.flux)
     out[out$Variable=="coarseroot_p_prod",2:17] <- assign_stats(s.var=s.croot.p.flux)
     out[out$Variable=="understorey_p_prod",2:17] <- assign_stats(s.var=s.und.p.flux)
     out[out$Variable=="understorey_lit_p_prod",2:17] <- assign_stats(s.var=s.und.lit.p.flux)
+    out[out$Variable=="soil_p_mineralization",2:17] <- assign_stats(s.var=s.mineralization.p.flux)
+    
     out[out$Variable=="delta_soil_p",2:17] <- assign_stats(s.var=s.delta.soilp)
     out[out$Variable=="delta_leaf_p",2:17] <- assign_stats(s.var=s.delta.leafp)
     out[out$Variable=="delta_wood_p",2:17] <- assign_stats(s.var=s.delta.woodp)
