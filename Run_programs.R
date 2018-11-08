@@ -688,7 +688,7 @@ soil_c_pool_ann <- make_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool,
                                                               return.outcome="predicted")
 
 ### Leaf C
-leaf_c_pool_ann <- make_leafc_treatment_abs_effect_statistics(inDF=leaf_c_pool, 
+canopy_biomass_pool_ann <- make_leafc_treatment_abs_effect_statistics(inDF=canopy_biomass_pool, 
                                                               var.col=3,
                                                               stat.model="no_interaction_with_covariate",
                                                               return.outcome="predicted")

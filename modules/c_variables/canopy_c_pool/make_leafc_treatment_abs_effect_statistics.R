@@ -1,13 +1,8 @@
-make_leafc_treatment_abs_effect_statistics <- function(inDF, var.cond, 
-                                                   var.col, date.as.factor,
+make_leafc_treatment_abs_effect_statistics <- function(inDF, 
+                                                   var.col, 
                                                    stat.model, return.outcome) {
     
     ### Pass in covariate values (assuming 1 value for each ring)
-    covDF <- summaryBy(soil_p_g_m2~Ring, data=soil_p_pool, FUN=mean, keep.names=T, na.rm=T)
-    covDF$Ring <- as.numeric(covDF$Ring)
-    inDF$Ring <- as.numeric(inDF$Ring)
-    
-    #cov2 <- lai_variable[lai_variable$Date<="2013-01-01",]
     cov2 <- lai_variable[lai_variable$Date=="2012-10-26",]
     covDF2 <- summaryBy(lai_variable~Ring, data=cov2, FUN=mean, keep.names=T)
     
@@ -17,10 +12,9 @@ make_leafc_treatment_abs_effect_statistics <- function(inDF, var.cond,
     baDF <- summaryBy(ba~Ring, data=f12, FUN=sum, na.rm=T, keep.names=T)
     
     ### return in unit of cm2/m2, which is m2 ha-1
-    baDF$ba_ground_area <- baDF$ba / ring_area
+    baDF$ba_ground_area <- baDF$ba / FACE_ring_area
     
     for (i in 1:6) {
-        inDF$Cov[inDF$Ring==i] <- covDF$soil_p_g_m2[covDF$Ring==i]
         inDF$Cov2[inDF$Ring==i] <- covDF2$lai_variable[covDF2$Ring==i]
         inDF$Cov3[inDF$Ring==i] <- baDF$ba_ground_area[baDF$Ring==i]
     }
@@ -83,37 +77,7 @@ make_leafc_treatment_abs_effect_statistics <- function(inDF, var.cond,
     ## confidence interval 
     eff.conf2 <- confint(modelt2,"Trtele")
     
-    ### Analyse the variable model
-    ## model 3: no interaction, year as factor, covariate, linear model only
-    int.m3 <- "non-interative_with_linear_covariate"
-    modelt3 <- lm(Value~Trt + Datef + Cov2,data=tDF)
-    
-    ## anova
-    m3.anova <- Anova(modelt3, test="F")
-    
-    ## Check ele - amb diff
-    summ3 <- summary(modelt3)
-    
-    ## average effect size
-    eff.size3 <- coef(modelt3)[[2]]
-    
-    ### confidence interval
-    eff.conf3 <- confint(modelt3,"Trtele")
-    
-    ## standard error of treatment
-    eff.se3 <-sqrt(diag(vcov(modelt3)))[[2]]
-    
-    ### Analyse the variable model
-    ## model 4: no interaction, year as factor, paired t-test
-    int.m4 <- "paired_t_test"
-    modelt4 <- t.test(Value~Trt, data=tDF, paired=T)
-    
-    ## average effect size
-    eff.size4 <- -modelt4$estimate[[1]]
-    
-    ## confidence interval 
-    eff.conf4 <- cbind(as.numeric(-modelt4$conf.int[2]),as.numeric(-modelt4$conf.int[1]))
-    
+
     ### conditional output
     if (stat.model == "no_interaction_with_covariate") {
         out <- list(int.state=int.m1,
@@ -129,22 +93,7 @@ make_leafc_treatment_abs_effect_statistics <- function(inDF, var.cond,
                     diff = summ2,
                     eff = eff.size2,
                     conf = eff.conf2)
-    } else if (stat.model == "no_interaction_with_linear_covariate") {
-        out <- list(int.state=int.m3,
-                    mod = modelt3, 
-                    anova = m3.anova,
-                    diff = summ3,
-                    se = eff.se3,
-                    eff = eff.size3,
-                    conf = eff.conf3)
-    } else if (stat.model == "paired_t_test") {
-        out <- list(int.state=int.m4,
-                    mod = modelt4, 
-                    anova = NA,
-                    diff = NA,
-                    eff = eff.size4,
-                    conf = eff.conf4)
-    }
+    } 
     
     ### Predict the model with a standard LAI value
     newDF <- tDF
