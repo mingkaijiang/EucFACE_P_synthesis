@@ -6,7 +6,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out <- data.frame(c("Total P requirement", "Total P retranslocation", "Total P uptake",
                         "Uptake over Requirement", "Stand P OA", 
                         "Stand P UA", "Stand P Belowground", "Total plant standing P", 
-                        "MRT", "Standing PUE"), NA, NA, NA, NA)
+                        "MRT", "Standing PUE", "Soil P mineralization"), NA, NA, NA, NA)
     colnames(out) <- c("Variable", "aCO2", "eCO2", "aCO2_conf", "eCO2_conf")
     
     ### create dataframe to hold bootstrap results - inout
@@ -40,7 +40,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
                        sd=sumDF$aCO2_sd[sumDF$term=="Seed litter P flux"])
     bDF1$Frass <- rnorm(1000, mean=sumDF$aCO2[sumDF$term=="Frass P flux"],
                         sd=sumDF$aCO2_sd[sumDF$term=="Frass P flux"])
-    bDF1$Total <- with(bDF1, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
+    bDF1$Total <- with(bDF1, Wood+Canopy+CoarseRoot+FineRoot+Understorey)#+Twig+Bark+Seed+Frass)
     
     ### elevated
     bDF2$Wood <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Wood P flux"],
@@ -61,7 +61,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
                        sd=sumDF$eCO2_sd[sumDF$term=="Seed litter P flux"])
     bDF2$Frass <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Frass P flux"],
                         sd=sumDF$eCO2_sd[sumDF$term=="Frass P flux"])
-    bDF2$Total <- with(bDF2, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
+    bDF2$Total <- with(bDF2, Wood+Canopy+CoarseRoot+FineRoot+Understorey)#+Twig+Bark+Seed+Frass)
     
     ### Calculate total
     out$aCO2[out$Variable=="Total P requirement"] <- mean(bDF1$Total)
@@ -288,6 +288,27 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out$aCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF9$PUE)
     out$eCO2[out$Variable=="Standing PUE"] <- mean(bDF10$PUE)
     out$eCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF10$PUE)
+    
+    
+    ### Soil P mineralization flux
+    mDF1 <- summaryBy(predicted~Trt, data=soil_p_mineralization_pred, FUN=mean, keep.names=T)
+    mDF2 <- summaryBy(predicted~Trt, data=soil_p_mineralization_pred, FUN=sd, keep.names=T)
+    mDF1$sd <- mDF2$predicted
+    colnames(mDF1) <- c("Trt", "mean", "sd")
+    
+    bDF11 <- data.frame(c(1:1000), NA, NA)
+    colnames(bDF11) <- c("bootID", "aCO2", "eCO2")
+
+    bDF11$aCO2 <- rnorm(1000, mean=mDF1$mean[mDF1$Trt=="amb"],
+                        sd=mDF1$sd[mDF1$Trt=="amb"])
+    bDF11$eCO2 <- rnorm(1000, mean=mDF1$mean[mDF1$Trt=="ele"],
+                        sd=mDF1$sd[mDF1$Trt=="ele"])
+    
+    out$aCO2[out$Variable=="Soil P mineralization"] <- mean(bDF11$aCO2)
+    out$aCO2_conf[out$Variable=="Soil P mineralization"] <- sd(bDF11$aCO2)
+    out$eCO2[out$Variable=="Soil P mineralization"] <- mean(bDF11$eCO2)
+    out$eCO2_conf[out$Variable=="Soil P mineralization"] <- sd(bDF11$eCO2)
+    
     
     return(out)
     

@@ -804,16 +804,10 @@ summary_table_c_flux_by_treatment_bootstrap <- make_c_flux_summary_table_by_trea
 source("programs/summary_variables/bootstrap/make_total_p_budgeting_variables_bootstrap.R")
 summary_table_total_p_budgets_bootstrap <- make_total_p_budgeting_variables_bootstrap()
 
-source("programs/summary_variables/bootstrap/make_overstorey_p_budgeting_variables_bootstrap.R")
-summary_table_overstorey_p_budgets_bootstrap <- make_overstorey_p_budgeting_variables_bootstrap()
-
-source("programs/summary_variables/bootstrap/make_understorey_p_budgeting_variables_bootstrap.R")
-summary_table_understorey_p_budgets_bootstrap <- make_understorey_p_budgeting_variables_bootstrap()
 
 
 
-
-
+###
 
 
 
