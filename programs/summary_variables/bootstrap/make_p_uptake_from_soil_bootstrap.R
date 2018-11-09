@@ -1,12 +1,10 @@
-make_total_p_budgeting_variables_bootstrap <- function() {
-    #### This function calculates all P budgeting variables
+make_p_uptake_from_soil_bootstrap <- function(sumDF) {
+    
     
     ### total requirement
     ### prepare output df
     out <- data.frame(c("Total P requirement", "Total P retranslocation", "Total P uptake",
-                        "Uptake over Requirement", "Stand P OA", 
-                        "Stand P UA", "Stand P Belowground", "Total plant standing P", 
-                        "MRT", "Standing PUE"), NA, NA, NA, NA)
+                        "Uptake over Requirement"), NA, NA, NA, NA)
     colnames(out) <- c("Variable", "aCO2", "eCO2", "aCO2_conf", "eCO2_conf")
     
     ### create dataframe to hold bootstrap results - inout
@@ -17,9 +15,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF2 <- bDF1
     
     ## set seed
-    set.seed(123)
-    
-    sumDF <- summary_table_flux_by_treatment_bootstrap
+    set.seed(99)
     
     ### ambient
     bDF1$Wood <- rnorm(1000, mean=sumDF$aCO2[sumDF$term=="Wood P flux"],
@@ -149,146 +145,5 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out$eCO2[out$Variable=="Uptake over Requirement"] <- mean(bDF6$UptakeOverRequ)
     out$eCO2_conf[out$Variable=="Uptake over Requirement"] <- sd(bDF6$UptakeOverRequ)
     
-    
-    ### Standing P
-    inDF <- summary_table_pool_by_treatment_bootstrap
-    
-    ### create dataframe to hold bootstrap results - inout
-    bDF7 <- data.frame(c(1:1000), NA, NA, NA, NA, NA, NA, NA, NA, NA)
-    colnames(bDF7) <- c("bootID", "Wood", "Canopy", 
-                        "FineRoot", "CoarseRoot", "Understorey", "OverstoreyAboveground", "UnderstoreyAboveground",
-                        "Belowground", "Total")
-    bDF8 <- bDF7
-
-    
-    ## ambient rings
-    bDF7$Wood <- rnorm(1000, mean=inDF$aCO2[inDF$term=="Wood P Pool"],
-                       sd=inDF$aCO2_sd[inDF$term=="Wood P Pool"])
-    bDF7$Canopy <- rnorm(1000, mean=inDF$aCO2[inDF$term=="Canopy P Pool"],
-                         sd=inDF$aCO2_sd[inDF$term=="Canopy P Pool"])
-    bDF7$FineRoot <- rnorm(1000, mean=inDF$aCO2[inDF$term=="Fine Root P Pool"],
-                           sd=inDF$aCO2_sd[inDF$term=="Fine Root P Pool"])
-    bDF7$CoarseRoot <- rnorm(1000, mean=inDF$aCO2[inDF$term=="Coarse Root P Pool"],
-                             sd=inDF$aCO2_sd[inDF$term=="Coarse Root P Pool"])
-    bDF7$Understorey <- rnorm(1000, mean=inDF$aCO2[inDF$term=="Understorey P Pool"],
-                              sd=inDF$aCO2_sd[inDF$term=="Understorey P Pool"])
-    bDF7$OverstoreyAboveground <- with(bDF7, (Wood+Canopy))
-    bDF7$Belowground <- with(bDF7, (FineRoot+CoarseRoot))
-    bDF7$UnderstoreyAboveground <- bDF7$Understorey
-    bDF7$Total <- with(bDF7, Wood+Canopy+CoarseRoot+FineRoot+Understorey)
-    
-    ## elevated rings
-    bDF8$Wood <- rnorm(1000, mean=inDF$eCO2[inDF$term=="Wood P Pool"],
-                       sd=inDF$eCO2_sd[inDF$term=="Wood P Pool"])
-    bDF8$Canopy <- rnorm(1000, mean=inDF$eCO2[inDF$term=="Canopy P Pool"],
-                         sd=inDF$eCO2_sd[inDF$term=="Canopy P Pool"])
-    bDF8$FineRoot <- rnorm(1000, mean=inDF$eCO2[inDF$term=="Fine Root P Pool"],
-                           sd=inDF$eCO2_sd[inDF$term=="Fine Root P Pool"])
-    bDF8$CoarseRoot <- rnorm(1000, mean=inDF$eCO2[inDF$term=="Coarse Root P Pool"],
-                             sd=inDF$eCO2_sd[inDF$term=="Coarse Root P Pool"])
-    bDF8$Understorey <- rnorm(1000, mean=inDF$eCO2[inDF$term=="Understorey P Pool"],
-                              sd=inDF$eCO2_sd[inDF$term=="Understorey P Pool"])
-    bDF8$OverstoreyAboveground <- with(bDF8, (Wood+Canopy))
-    bDF8$Belowground <- with(bDF8, (FineRoot+CoarseRoot))
-    bDF8$UnderstoreyAboveground <- bDF8$Understorey
-    bDF8$Total <- with(bDF8, Wood+Canopy+CoarseRoot+FineRoot+Understorey)
-    
-    ### Calculate total
-    out$aCO2[out$Variable=="Stand P OA"] <- mean(bDF7$OverstoreyAboveground)
-    out$aCO2_conf[out$Variable=="Stand P OA"] <- sd(bDF7$OverstoreyAboveground)
-    out$eCO2[out$Variable=="Stand P OA"] <- mean(bDF8$OverstoreyAboveground)
-    out$eCO2_conf[out$Variable=="Stand P OA"] <- sd(bDF8$OverstoreyAboveground)
-    
-    out$aCO2[out$Variable=="Stand P UA"] <- mean(bDF7$UnderstoreyAboveground)
-    out$aCO2_conf[out$Variable=="Stand P UA"] <- sd(bDF7$UnderstoreyAboveground)
-    out$eCO2[out$Variable=="Stand P UA"] <- mean(bDF8$UnderstoreyAboveground)
-    out$eCO2_conf[out$Variable=="Stand P UA"] <- sd(bDF8$UnderstoreyAboveground)
-    
-    out$aCO2[out$Variable=="Stand P Belowground"] <- mean(bDF7$Belowground)
-    out$aCO2_conf[out$Variable=="Stand P Belowground"] <- sd(bDF7$Belowground)
-    out$eCO2[out$Variable=="Stand P Belowground"] <- mean(bDF8$Belowground)
-    out$eCO2_conf[out$Variable=="Stand P Belowground"] <- sd(bDF8$Belowground)
-    
-    out$aCO2[out$Variable=="Total plant standing P"] <- mean(bDF7$Total)
-    out$aCO2_conf[out$Variable=="Total plant standing P"] <- sd(bDF7$Total)
-    out$eCO2[out$Variable=="Total plant standing P"] <- mean(bDF8$Total)
-    out$eCO2_conf[out$Variable=="Total plant standing P"] <- sd(bDF8$Total)
-    
-    
-    ### Calculate MRT, standing biomass / uptake rate
-    bDF7$Uptake <- bDF5$Uptake
-    bDF8$Uptake <- bDF6$Uptake
-    
-    bDF7$MRT <- with(bDF7, Total/Uptake)
-    bDF8$MRT <- with(bDF8, Total/Uptake)
-    
-    out$aCO2[out$Variable=="MRT"] <- mean(bDF7$MRT)
-    out$aCO2_conf[out$Variable=="MRT"] <- sd(bDF7$MRT)
-    out$eCO2[out$Variable=="MRT"] <- mean(bDF8$MRT)
-    out$eCO2_conf[out$Variable=="MRT"] <- sd(bDF8$MRT)
-    
-    ### Calculate standing PUE, i.e. NPP / P uptake
-    cDF <- summary_table_c_flux_by_treatment_bootstrap
- 
-    bDF9 <- data.frame(c(1:1000), NA, NA, NA, NA, NA, NA, NA, NA, NA)
-    colnames(bDF9) <- c("bootID", "Wood", "Canopy", 
-                        "FineRoot", "CoarseRoot", "Understorey", "Twig", "Bark",
-                        "Seed", "Frass")
-    bDF10 <- bDF9
-    
-    ## ambient rings
-    bDF9$Wood <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Wood C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Wood C flux"])
-    bDF9$Canopy <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Canopy C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Canopy C flux"])
-    bDF9$FineRoot <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Fine Root C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Fine Root C flux"])
-    bDF9$CoarseRoot <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Coarse Root C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Coarse Root C flux"])
-    bDF9$Understorey <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Understorey C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Understorey C flux"])
-    bDF9$Twig <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Twiglitter C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Twiglitter C flux"])
-    bDF9$Bark <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Barklitter C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Barklitter C flux"])
-    bDF9$Seed <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Seedlitter C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Seedlitter C flux"])
-    bDF9$Frass <- rnorm(1000, mean=cDF$aCO2[cDF$term=="Frass C flux"],
-                       sd=cDF$aCO2_sd[cDF$term=="Frass C flux"])
-    bDF9$Total <- with(bDF9, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
-    
-    ## elevated rings
-    bDF10$Wood <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Wood C flux"],
-                       sd=cDF$eCO2_sd[cDF$term=="Wood C flux"])
-    bDF10$Canopy <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Canopy C flux"],
-                         sd=cDF$eCO2_sd[cDF$term=="Canopy C flux"])
-    bDF10$FineRoot <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Fine Root C flux"],
-                           sd=cDF$eCO2_sd[cDF$term=="Fine Root C flux"])
-    bDF10$CoarseRoot <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Coarse Root C flux"],
-                             sd=cDF$eCO2_sd[cDF$term=="Coarse Root C flux"])
-    bDF10$Understorey <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Understorey C flux"],
-                              sd=cDF$eCO2_sd[cDF$term=="Understorey C flux"])
-    bDF10$Twig <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Twiglitter C flux"],
-                       sd=cDF$eCO2_sd[cDF$term=="Twiglitter C flux"])
-    bDF10$Bark <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Barklitter C flux"],
-                       sd=cDF$eCO2_sd[cDF$term=="Barklitter C flux"])
-    bDF10$Seed <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Seedlitter C flux"],
-                       sd=cDF$eCO2_sd[cDF$term=="Seedlitter C flux"])
-    bDF10$Frass <- rnorm(1000, mean=cDF$eCO2[cDF$term=="Frass C flux"],
-                        sd=cDF$eCO2_sd[cDF$term=="Frass C flux"])
-    bDF10$Total <- with(bDF10, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
-    
-    bDF9$Puptake <- bDF7$Uptake
-    bDF10$Puptake <- bDF8$Uptake
-    
-    bDF9$PUE <- with(bDF9, Total/Puptake)
-    bDF10$PUE <- with(bDF10, Total/Puptake)
-    
-    out$aCO2[out$Variable=="Standing PUE"] <- mean(bDF9$PUE)
-    out$aCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF9$PUE)
-    out$eCO2[out$Variable=="Standing PUE"] <- mean(bDF10$PUE)
-    out$eCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF10$PUE)
-    
     return(out)
-    
 }

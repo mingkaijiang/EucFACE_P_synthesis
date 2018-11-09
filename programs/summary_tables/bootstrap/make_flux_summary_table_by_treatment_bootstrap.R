@@ -46,6 +46,15 @@ make_flux_summary_table_by_treatment_bootstrap <- function() {
     treatDF$aCO2_sd[treatDF$terms == "Fine Root P flux"] <- out2$predicted[out2$Trt=="amb"]
     treatDF$eCO2_sd[treatDF$terms == "Fine Root P flux"] <- out2$predicted[out2$Trt=="ele"]
     
+    ### Fine root P flux
+    out1 <- summaryBy(predicted~Trt,data=fineroot_p_production_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=fineroot_p_production_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$terms == "Fineroot Litter P flux"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$terms == "Fineroot Litter P flux"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$terms == "Fineroot Litter P flux"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$terms == "Fineroot Litter P flux"] <- out2$predicted[out2$Trt=="ele"]
+    
     ### Coarse root P flux
     out1 <- summaryBy(predicted~Trt,data=coarse_root_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
     out2 <- summaryBy(predicted~Trt,data=coarse_root_p_flux_pred,FUN=sd,keep.names=T,na.rm=T)
@@ -107,28 +116,28 @@ make_flux_summary_table_by_treatment_bootstrap <- function() {
     out1 <- summaryBy(predicted~Trt,data=twig_litter_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
     out2 <- summaryBy(predicted~Trt,data=twig_litter_p_flux_pred,FUN=sd,keep.names=T,na.rm=T)
     
-    treatDF$aCO2[treatDF$terms == "Twig Litter P flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Twig Litter P flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Twig Litter P flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Twig Litter P flux"] <- out2$predicted[out2$Trt=="ele"]
+    treatDF$aCO2[treatDF$terms == "Twig litter P flux"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$terms == "Twig litter P flux"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$terms == "Twig litter P flux"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$terms == "Twig litter P flux"] <- out2$predicted[out2$Trt=="ele"]
     
     ### bark litter flux
     out1 <- summaryBy(predicted~Trt,data=bark_litter_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
     out2 <- summaryBy(predicted~Trt,data=bark_litter_p_flux_pred,FUN=sd,keep.names=T,na.rm=T)
     
-    treatDF$aCO2[treatDF$terms == "Bark Litter P flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Bark Litter P flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Bark Litter P flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Bark Litter P flux"] <- out2$predicted[out2$Trt=="ele"]
+    treatDF$aCO2[treatDF$terms == "Bark litter P flux"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$terms == "Bark litter P flux"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$terms == "Bark litter P flux"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$terms == "Bark litter P flux"] <- out2$predicted[out2$Trt=="ele"]
     
     ### seed litter flux
     out1 <- summaryBy(predicted~Trt,data=seed_litter_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
     out2 <- summaryBy(predicted~Trt,data=seed_litter_p_flux_pred,FUN=sd,keep.names=T,na.rm=T)
     
-    treatDF$aCO2[treatDF$terms == "Seed Litter P flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Seed Litter P flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Seed Litter P flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Seed Litter P flux"] <- out2$predicted[out2$Trt=="ele"]
+    treatDF$aCO2[treatDF$terms == "Seed litter P flux"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$terms == "Seed litter P flux"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$terms == "Seed litter P flux"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$terms == "Seed litter P flux"] <- out2$predicted[out2$Trt=="ele"]
     
     
     ##### output tables
