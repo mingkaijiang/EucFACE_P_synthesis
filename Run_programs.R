@@ -807,9 +807,10 @@ summary_table_total_p_budgets_bootstrap <- make_total_p_budgeting_variables_boot
 
 
 
-###
+###### ---------------- Making P budgeting figures, based on bootstrapped result -------------------- ######
 
-
+source("programs/plot_scripts/make_summary_plots.R")
+make_summary_plots()
 
 
 

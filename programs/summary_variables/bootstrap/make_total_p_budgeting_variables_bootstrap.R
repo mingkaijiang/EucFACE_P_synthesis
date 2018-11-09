@@ -40,7 +40,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
                        sd=sumDF$aCO2_sd[sumDF$term=="Seed litter P flux"])
     bDF1$Frass <- rnorm(1000, mean=sumDF$aCO2[sumDF$term=="Frass P flux"],
                         sd=sumDF$aCO2_sd[sumDF$term=="Frass P flux"])
-    bDF1$Total <- with(bDF1, Wood+Canopy+CoarseRoot+FineRoot+Understorey)#+Twig+Bark+Seed+Frass)
+    bDF1$Total <- with(bDF1, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
     
     ### elevated
     bDF2$Wood <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Wood P flux"],
@@ -61,7 +61,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
                        sd=sumDF$eCO2_sd[sumDF$term=="Seed litter P flux"])
     bDF2$Frass <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Frass P flux"],
                         sd=sumDF$eCO2_sd[sumDF$term=="Frass P flux"])
-    bDF2$Total <- with(bDF2, Wood+Canopy+CoarseRoot+FineRoot+Understorey)#+Twig+Bark+Seed+Frass)
+    bDF2$Total <- with(bDF2, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
     
     ### Calculate total
     out$aCO2[out$Variable=="Total P requirement"] <- mean(bDF1$Total)
