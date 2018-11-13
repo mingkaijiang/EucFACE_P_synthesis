@@ -1,4 +1,4 @@
-make_summary_plots <- function() {
+make_summary_p_budget_plots <- function() {
     
     ################### Plot all P summary budget plots
     
