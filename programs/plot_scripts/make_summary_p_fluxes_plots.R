@@ -75,7 +75,7 @@ make_summary_p_fluxes_plots <- function() {
     colnames(plotDF3) <- c("mean", "sd", "Variable")
     plotDF3$sd <- c(inDF$aCO2_sd[inDF$terms=="Mineralization P flux"], 
                     inDF$eCO2_sd[inDF$terms=="Mineralization P flux"])
-    plotDF3$Variable <- rep(c("Mineralization rate"), each=2)
+    plotDF3$Variable <- rep(c("P mineralization rate"), each=2)
     plotDF3$Trt <- rep(c("aCO2", "eCO2"), 1)
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
@@ -87,7 +87,7 @@ make_summary_p_fluxes_plots <- function() {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y=expression(paste("P pool (g P ", m^-2, ")")))+
+        labs(x="", y=expression(paste("P flux (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
@@ -108,7 +108,7 @@ make_summary_p_fluxes_plots <- function() {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y=expression(paste("P pool (g P ", m^-2, ")")))+
+        labs(x="", y=expression(paste("P flux (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
@@ -128,7 +128,7 @@ make_summary_p_fluxes_plots <- function() {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y=expression(paste("P pool (g P ", m^-2, ")")))+
+        labs(x="", y=expression(paste("P flux (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
@@ -156,9 +156,9 @@ make_summary_p_fluxes_plots <- function() {
     ## plot 
     pdf("plots_tables/Summary_P_Fluxes_Plots.pdf", width=8,height=8)
     bot_row <- plot_grid(p2, p3, ncol=2)
-    plot_grid(p1, bot_row,  ncol = 1, rel_widths = c(1, 1, 0.4),
+    plot_grid(p1, bot_row,  ncol = 1, rel_widths = c(1, 1, 0.2),
               rel_heights=c(1.2, 1, 1))
-    grid.text(grid.labs,x = c(0.12, 0.11, 0.42, 0.75), y = c(0.9, 0.42, 0.42, 0.42),
+    grid.text(grid.labs,x = c(0.12, 0.14, 0.6), y = c(0.9, 0.42, 0.42),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
