@@ -825,9 +825,19 @@ source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
 make_summary_p_fluxes_plots()
 
 
+###### ---------------- Making P budgeting figures, for each individual rings -------------------- ######
+source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
+make_summary_p_budget_ring_plots()
 
 
 
+
+
+
+#### To do list:
+
+### 1. add per ring figures
+### 2. change date factor to pre and after 2015 and see if we have a time effect
 
 
 

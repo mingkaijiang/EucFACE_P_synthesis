@@ -53,13 +53,17 @@ make_total_p_budgeting_variables <- function() {
     source("programs/summary_variables/make_standing_pue.R")
     standing_pue <- make_standing_pue(p_up=total_p_uptake_from_soil)
     
+    p_mineralization <- summaryBy(p_mineralization_mg_m2_d~Ring, FUN=mean, keep.names=T, data=soil_p_mineralization)
+    p_mineralization$p_mineralization <- with(p_mineralization, p_mineralization_mg_m2_d * 365/1000)
     
     ### out df
     terms <- c("total standing p stock", 
                "total p requirement", 
                "total p retranslocated", 
                "total p uptake from soil", 
+               "soil p mineralization",
                "total uptake over requirement",
+               "p supply and uptake gap",
                "total P MRT in plant", "total standing PUE")
     
     out <- data.frame(terms, NA, NA, NA, NA, NA, NA, NA, NA, NA)
@@ -73,6 +77,13 @@ make_total_p_budgeting_variables <- function() {
     out[out$terms == "total p retranslocated", 2:9] <- round(total_p_retranslocation[1,],2)
 
     out[out$terms == "total p uptake from soil", 2:9] <- round(total_p_uptake_from_soil[1,],2)
+    
+    out[out$terms == "soil p mineralization", 2:7] <- round(p_mineralization$p_mineralization,2)
+    out[out$terms == "soil p mineralization", 8] <- round(mean(p_mineralization$p_mineralization[p_mineralization$Ring%in%c(2,3,6)]),2)
+    out[out$terms == "soil p mineralization", 9] <- round(mean(p_mineralization$p_mineralization[p_mineralization$Ring%in%c(1,4,5)]),2)
+    
+    
+    out[out$terms == "p supply and uptake gap", 2:9] <- round(out[out$terms == "total p uptake from soil", 2:9] - out[out$terms == "soil p mineralization", 2:9],2)
 
     out[out$terms == "total uptake over requirement", 2:9] <- round(p_uptake_over_requirement[1,], 2)
 
