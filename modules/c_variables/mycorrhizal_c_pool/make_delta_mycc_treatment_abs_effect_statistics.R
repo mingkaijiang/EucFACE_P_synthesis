@@ -6,7 +6,7 @@ make_delta_mycc_treatment_abs_effect_statistics <- function(inDF,
     deltaDF <- make_yearly_delta_pool_function(inDF, var.col)
     
     ### Pass in covariate values (assuming 1 value for each ring)
-    cov2 <- lai_variable[lai_variable$Date=="2012-10-26",]
+    cov2 <- lai_variable[lai_variable$Date<="2013-02-06",]
     covDF2 <- summaryBy(lai_variable~Ring, data=cov2, FUN=mean, keep.names=T)
     
     ### Read initial basal area data
@@ -88,7 +88,7 @@ make_delta_mycc_treatment_abs_effect_statistics <- function(inDF,
     
     ### Predict the model with a standard LAI value
     newDF <- tDF
-    newDF$Cov2 <- 1.14815  # initial LAI averages
+    newDF$Cov2 <- mean(covDF2$lai_variable)
     newDF$predicted <- predict(out$mod, newdata=newDF)
     
     

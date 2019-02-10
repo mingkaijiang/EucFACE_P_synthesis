@@ -5,7 +5,7 @@ make_crootc_treatment_abs_effect_statistics <- function(inDF,
     ### Pass in covariate values (assuming 1 value for each ring)
     inDF$Ring <- as.numeric(inDF$Ring)
     
-    cov2 <- lai_variable[lai_variable$Date=="2012-10-26",]
+    cov2 <- lai_variable[lai_variable$Date<="2013-02-06",]
     covDF2 <- summaryBy(lai_variable~Ring, data=cov2, FUN=mean, keep.names=T)
     
     ### Read initial basal area data
@@ -99,7 +99,7 @@ make_crootc_treatment_abs_effect_statistics <- function(inDF,
     
     ### Predict the model with a standard LAI value
     newDF <- tDF
-    newDF$Cov2 <- 1.14815  # initial LAI averages
+    newDF$Cov2 <- mean(covDF2$lai_variable)
     newDF$predicted <- predict(out$mod, newdata=newDF)
     
     newDF$Ring <- as.numeric(as.character(newDF$Ring))
