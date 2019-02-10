@@ -182,7 +182,8 @@ coarse_root_c_pool <- make_coarse_root_pool(c_fraction, fr_pool=fineroot_c_pool)
 #### Coarse root C production
 coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool) 
 
-
+#### Leaf litter pool
+leaflitter_c_pool <- make_leaflitter_pool(c_fraction)
 
 
 ###### ----------- Generating P pools and fluxes  ----------- ######
