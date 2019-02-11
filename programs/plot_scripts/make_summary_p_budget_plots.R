@@ -95,7 +95,7 @@ make_summary_p_budget_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         xlab("") + ylab(expression(paste("Standing P stock (g P ", m^-2, ")")))+
         theme_linedraw() +
-        ylim(0, 1.5)+
+        ylim(0, 2.0)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),

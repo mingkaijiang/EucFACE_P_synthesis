@@ -151,7 +151,7 @@ make_summary_p_budget_ring_plots <- function() {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
         xlab("") + ylab(expression(paste("Standing P stock (g P ", m^-2, ")")))+
         theme_linedraw() +
-        ylim(0, 1.5)+
+        ylim(0, 2.0)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_blank(), 
               axis.text.x = element_blank(),
@@ -339,7 +339,7 @@ make_summary_p_budget_ring_plots <- function() {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
         xlab("") + ylab(expression(paste("P MRT (", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(0, 8)+
+        ylim(0, 12)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_blank(), 
               axis.text.x = element_blank(),

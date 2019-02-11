@@ -109,7 +109,7 @@ make_summary_p_concentration_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,10)+
+        ylim(0,15)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
