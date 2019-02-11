@@ -1,0 +1,45 @@
+#- Make the canopy P concentration
+make_canopy_p_concentration_new <- function(func) {
+    ### return ring-specific canopy P data (mg/kg)
+    ### this script is written for new data that Kristine processed
+
+    ### read in
+    df <- read.csv("temp_files/GreenLeaves_allP-clean_Mingkai.csv")
+    
+    ### setting up the date
+    df$DATE <- gsub("/", "-", df$DATE)
+    df$Date <- as.Date(df$DATE, "%d-%m-%Y")
+    
+    ### check data
+    #p1 <- ggplot(df,
+    #             aes(Date, Perc.P)) + 
+    #    geom_point(aes(color=AGE, shape=CO2TREAT, size=2)) +
+    #    xlab("Date") + ylab("Canopy P conc (%)")+
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=10), 
+    #          axis.text.x = element_text(size=10),
+    #          axis.text.y=element_text(size=10),
+    #          axis.title.y=element_text(size=10),
+    #          legend.text=element_text(size=10),
+    #          legend.title=element_text(size=12),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom") 
+    #plot(p1)
+    
+    ### only include new leaf, as this is the total required
+    df.new <- subset(df, AGE == "NEW")
+
+    ### obtain ring means
+    out <- summaryBy(Perc.P~Ring+Date+AGE,
+                      data=df,FUN=func,keep.names=T,na.rm=T)
+    out$month <- month(out$Date)
+    out$year <- year(out$Date)
+    
+    colnames(out) <- c("Ring", "Date", "Age", "PercP", "month", "year")
+    
+    return(out)
+
+}
+
+

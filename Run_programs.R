@@ -30,14 +30,22 @@ microbial_p_concentration_min <- make_microbial_p_concentration(func=min)
 microbial_p_concentration_max <- make_microbial_p_concentration(func=max)
 
 #### Canopy P conc.
-canopy_p_concentration <- make_canopy_p_concentration(func=mean)
-canopy_p_concentration_min <- make_canopy_p_concentration(func=min)
-canopy_p_concentration_max <- make_canopy_p_concentration(func=max)
+canopy_p_concentration_limited_data <- make_canopy_p_concentration(func=mean)
+canopy_p_concentration_limited_data_min <- make_canopy_p_concentration(func=min)
+canopy_p_concentration_limited_data_max <- make_canopy_p_concentration(func=max)
+
+canopy_p_concentration <- make_canopy_p_concentration_new(func=mean)
+
+#compare_canopy_p_conc_datasets(inDF1=canopy_p_concentration, inDF2=canopy_p_concentration_new)
+
 
 #### Leaf litter P conc. 
-leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
-leaflitter_p_concentration_min <- make_leaflitter_p_concentration(func=min)
-leaflitter_p_concentration_max <- make_leaflitter_p_concentration(func=max)
+leaflitter_p_concentration_limited_data <- make_leaflitter_p_concentration(func=mean)
+leaflitter_p_concentration_limited_data_min <- make_leaflitter_p_concentration(func=min)
+leaflitter_p_concentration_limited_data_max <- make_leaflitter_p_concentration(func=max)
+
+leaflitter_p_concentration <- make_leaflitter_p_concentration_new(func=mean)
+
 
 #### Wood P conc. 
 wood_p_concentration <- make_wood_p_concentration(func=mean)
@@ -67,8 +75,7 @@ understorey_litter_p_concentration_max <- make_understorey_litter_p_concentratio
 #### Understorey P retranslocation coefficient
 understorey_p_retranslocation_coefficient <- make_understorey_p_retranslocation()
 
-#### Mycorrhizal P conc.
-### Check back with Jeff in 2 weeks' time. 
+#### Mycorrhizal P conc.???
 
 #### Soil mineral P conc. 
 ### It's almost ready!
