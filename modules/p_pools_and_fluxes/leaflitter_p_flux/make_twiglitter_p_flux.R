@@ -12,9 +12,12 @@ make_twiglitter_p_flux <- function(p_conc, litter_flux) {
     
     
     ### find the common month and year
-    for (i in c(1:6)) {
-        out[out$Ring == i, "PercP"] <- p_conc$PercP[p_conc$Ring==i]
-    }
+    #for (i in c(1:6)) {
+    #    out[out$Ring == i, "PercP"] <- p_conc$PercP[p_conc$Ring==i]
+    #}
+    
+    ### Data from Kristine - sapwood P conc (0.13 mg P g-1)
+    out$PercP <- 0.013
     
     outDF <- out[complete.cases(out),]
     

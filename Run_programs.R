@@ -244,10 +244,13 @@ bark_litter_p_flux <- make_barklitter_p_flux(p_conc=wood_p_concentration, litter
 seed_litter_p_flux <- make_seedlitter_p_flux(p_conc=wood_p_concentration, litter_flux=seedlitter_c_production_flux)  
 
 #### Wood P pool   
-wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
+sapwood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
                                 c_pool=wood_c_pool,
                                 case_consideration = "sapwood")
 
+wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
+                                c_pool=wood_c_pool,
+                                case_consideration = "total")
 
 #### standing dead p pool
 standing_dead_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,

@@ -11,9 +11,12 @@ make_barklitter_p_flux <- function(p_conc, litter_flux) {
     
     
     ### find the common month and year
-    for (i in c(1:6)) {
-        out[out$Ring == i, "PercP"] <- p_conc$PercP[p_conc$Ring==i]
-    }
+    #for (i in c(1:6)) {
+    #    out[out$Ring == i, "PercP"] <- p_conc$PercP[p_conc$Ring==i]
+    #}
+    
+    # bark p concentration data from Kristine (0.17 mg g -1 P)
+    out$PercP <- 0.017
     
     outDF <- out[complete.cases(out),]
     

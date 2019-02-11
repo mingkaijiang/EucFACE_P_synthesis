@@ -6,7 +6,10 @@ make_wood_p_pool <- function(p_conc, c_pool, case_consideration) {
     
     # calculate p pool
     if (case_consideration == "total") {
-        out$wood_p_pool <- out$wood_pool / c_fraction * out$PercP / 100
+        ### data from Kristine: sapwood P conc: 0.13 mg P g-1, heartwood P conc: 0.04 mg P g-1
+        out$wood_p_pool <- (out$sap_pool / c_fraction * 0.013 / 100) + (out$heart_pool / c_fraction * 0.004 / 100)
+        
+        #out$wood_p_pool <- (out$wood_pool / c_fraction * out$PercP / 100) 
     } else if (case_consideration == "sapwood") {
         out$wood_p_pool <- out$sap_pool / c_fraction * out$PercP / 100
     }
