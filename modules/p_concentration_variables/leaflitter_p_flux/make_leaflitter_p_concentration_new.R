@@ -24,9 +24,9 @@ make_leaflitter_p_concentration_new <- function(func) {
     #plot(p1)
 
     #### Leaf litter p, average across rings and date, unit = %
-    df.litter.p <- summaryBy(Perc.P~Ring+Date+Origin,
+    df.litter.p <- summaryBy(Perc.P~Ring+Date,
                              data=df2,FUN=func,keep.names=T,na.rm=T)
-    colnames(df.litter.p) <- c("Ring", "Date", "Age", "PercP")
+    colnames(df.litter.p) <- c("Ring", "Date", "PercP")
     df.litter.p$month <- month(df.litter.p$Date)
     df.litter.p$year <- year(df.litter.p$Date)
 

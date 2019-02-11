@@ -28,15 +28,15 @@ make_canopy_p_concentration_new <- function(func) {
     #plot(p1)
     
     ### only include new leaf, as this is the total required
-    df.new <- subset(df, AGE == "NEW")
+    df2 <- subset(df, AGE == "new")
 
     ### obtain ring means
-    out <- summaryBy(Perc.P~Ring+Date+AGE,
-                      data=df,FUN=func,keep.names=T,na.rm=T)
+    out <- summaryBy(Perc.P~Ring+Date,
+                      data=df2,FUN=func,keep.names=T,na.rm=T)
     out$month <- month(out$Date)
     out$year <- year(out$Date)
     
-    colnames(out) <- c("Ring", "Date", "Age", "PercP", "month", "year")
+    colnames(out) <- c("Ring", "Date", "PercP", "month", "year")
     
     return(out)
 
