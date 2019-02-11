@@ -7,8 +7,9 @@ make_canopy_p_concentration_new <- function(func) {
     df <- read.csv("temp_files/GreenLeaves_allP-clean_Mingkai.csv")
     
     ### setting up the date
-    df$DATE <- gsub("/", "-", df$DATE)
-    df$Date <- as.Date(df$DATE, "%d-%m-%Y")
+    df$Date <- paste0("01-", as.character(df$Campaign))
+    #df$DATE <- gsub("/", "-", df$DATE)
+    df$Date <- as.Date(df$Date, "%d-%b-%Y")
     
     ### check data
     #p1 <- ggplot(df,

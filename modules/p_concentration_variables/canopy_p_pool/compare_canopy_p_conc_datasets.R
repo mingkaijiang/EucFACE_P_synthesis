@@ -10,11 +10,11 @@ compare_canopy_p_conc_datasets <- function(inDF1, inDF2) {
     p1 <- ggplot() + 
         geom_point(data=pDF1, aes(Date, PercP), color="black") +
         geom_point(data=pDF2, aes(Date, PercP), color="red") +
-        geom_point(data=pDF3, aes(Date, PercP), color="blue") +
+        #geom_point(data=pDF3, aes(Date, PercP), color="blue") +
         
         geom_smooth(data=pDF1, aes(Date, PercP), color="black", method="gam") +
         geom_smooth(data=pDF2, aes(Date, PercP), color="red", method="gam") +
-        geom_smooth(data=pDF3, aes(Date, PercP), color="blue", method="gam") +
+        #geom_smooth(data=pDF3, aes(Date, PercP), color="blue", method="gam") +
         
         xlab("Date") + ylab("Canopy P conc (%)")+
         theme_linedraw() +
@@ -27,7 +27,10 @@ compare_canopy_p_conc_datasets <- function(inDF1, inDF2) {
               legend.title=element_text(size=12),
               panel.grid.major=element_blank(),
               legend.position="bottom") 
-    #plot(p1)
+    
+    pdf("plots_tables/Leaf_P_conc_over_time.pdf")
+    plot(p1)
+    dev.off()
     
     
     

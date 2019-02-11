@@ -40,6 +40,10 @@ make_leafp_conc_treatment_abs_effect_statistics <- function(inDF,
     ## Get year list and ring list
     tDF <- summaryBy(Value+Cov2+Cov~Trt+Ring+Datef,data=inDF,FUN=mean, keep.names=T, na.rm=T)
     tDF <-  tDF[tDF$Datef!="2012-05-11",]    
+    
+    ### add split factor to split period into pre 2015 and post 2015
+    tDF$split <- year(as.Date(as.character(tDF$Datef)))
+    tDF$split <- ifelse(tDF$split<2015, "pre","pos")
 
     ### Analyse the variable model
     ## model 1: no interaction, year as factor, ring random factor, include pre-treatment effect
@@ -60,20 +64,20 @@ make_leafp_conc_treatment_abs_effect_statistics <- function(inDF,
     
     ### Analyse the variable model
     ## model 2: interaction, year as factor, ring random factor, with pre-treatment
-    #int.m2 <- "interative_with_covariate"
-    #modelt2 <- lmer(Value~Trt*Datef+Cov2 + (1|Ring),data=tDF)
-    #
-    ### anova
-    #m2.anova <- Anova(modelt2, test="F")
-    #
-    ### Check ele - amb diff
-    #summ2 <- summary(glht(modelt2, linfct = mcp(Trt = "Tukey")))
-    #
-    ### average effect size
-    #eff.size2 <- coef(modelt2)[[1]][1,2]
-    #
-    ### confidence interval 
-    #eff.conf2 <- confint(modelt2,"Trtele")
+    int.m2 <- "non-interative_with_covariate"
+    modelt2 <- lmer(Value~Trt + split + Cov2 + (1|Ring),data=tDF)
+    
+    ## anova
+    m2.anova <- Anova(modelt2, test="F")
+    
+    ## Check ele - amb diff
+    summ2 <- summary(glht(modelt2, linfct = mcp(Trt = "Tukey")))
+    
+    ## average effect size
+    eff.size2 <- coef(modelt2)[[1]][1,2]
+    
+    ## confidence interval 
+    eff.conf2 <- confint(modelt2,"Trtele")
     
  
     ### conditional output
@@ -85,12 +89,12 @@ make_leafp_conc_treatment_abs_effect_statistics <- function(inDF,
                     eff = eff.size1,
                     conf = eff.conf1)
     } else if (stat.model == "interaction_with_covariate") {
-        #out <- list(int.state=int.m2,
-        #            mod = modelt2, 
-        #            anova = m2.anova,
-        #            diff = summ2,
-        #            eff = eff.size2,
-        #            conf = eff.conf2)
+        out <- list(int.state=int.m2,
+                    mod = modelt2, 
+                    anova = m2.anova,
+                    diff = summ2,
+                    eff = eff.size2,
+                    conf = eff.conf2)
     }
 
     ### Predict the model with a standard LAI value
