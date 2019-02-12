@@ -75,10 +75,10 @@ understorey_litter_p_concentration_max <- make_understorey_litter_p_concentratio
 #### Understorey P retranslocation coefficient
 understorey_p_retranslocation_coefficient <- make_understorey_p_retranslocation()
 
-#### Mycorrhizal P conc.???
+#### Hedley fractionation dataset
+soil_hedley_p_concentration <- make_soil_hedley_p_concentration(func=mean)
 
-#### Soil mineral P conc. 
-### It's almost ready!
+#### Mycorrhizal P conc.???
 
 
 ###### ----------- Preparing C and other variables  ----------- ######
@@ -205,7 +205,12 @@ soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
 soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentration,
                                                 bk_density=soil_bulk_density)
 
-#### Soil P mienralization flux
+#### Soil P pool of different bioavailability
+soil_p_pool_hedley <- make_soil_p_pool_hedley_fractionation(p_conc=soil_hedley_p_concentration,
+                                                            bk_density=soil_bulk_density)
+
+
+#### Soil P mineralization flux
 #### It is assumed that the mineralization data is for top 10 cm only!
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 
@@ -318,8 +323,6 @@ coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
                                                 c_flux=coarse_root_c_flux,
                                                 c_frac=c_fraction)
 
-
-#### Hedley fractionation data will be available in early January
 
 
 ### mycorrhizal P content

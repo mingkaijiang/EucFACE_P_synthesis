@@ -12,20 +12,21 @@ make_canopy_p_concentration_new <- function(func) {
     df$Date <- as.Date(df$Date, "%d-%b-%Y")
     
     ### check data
-    #p1 <- ggplot(df,
-    #             aes(Date, Perc.P)) + 
-    #    geom_point(aes(color=AGE, shape=CO2TREAT, size=2)) +
-    #    xlab("Date") + ylab("Canopy P conc (%)")+
-    #    theme_linedraw() +
-    #    theme(panel.grid.minor=element_blank(),
-    #          axis.title.x = element_text(size=10), 
-    #          axis.text.x = element_text(size=10),
-    #          axis.text.y=element_text(size=10),
-    #          axis.title.y=element_text(size=10),
-    #          legend.text=element_text(size=10),
-    #          legend.title=element_text(size=12),
-    #          panel.grid.major=element_blank(),
-    #          legend.position="bottom") 
+    p1 <- ggplot(df,
+                 aes(Date, Perc.P)) + 
+        geom_point(aes(color=AGE, shape=CO2TREAT, size=2)) +
+        geom_smooth(method="gam")+
+        xlab("Date") + ylab("Canopy P conc (%)")+
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=10),
+              axis.title.y=element_text(size=10),
+              legend.text=element_text(size=10),
+              legend.title=element_text(size=12),
+              panel.grid.major=element_blank(),
+              legend.position="bottom") 
     #plot(p1)
     
     ### only include new leaf, as this is the total required
