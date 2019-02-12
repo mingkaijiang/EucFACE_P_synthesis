@@ -206,7 +206,7 @@ soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentrat
                                                 bk_density=soil_bulk_density)
 
 #### Soil P pool of different bioavailability
-soil_p_pool_hedley <- make_soil_p_pool_hedley_fractionation(p_conc=soil_hedley_p_concentration,
+soil_p_pool_hedley <- make_soil_p_pool_hedley(p_conc=soil_hedley_p_concentration,
                                                             bk_density=soil_bulk_density)
 
 
@@ -361,6 +361,9 @@ summary_table_overstorey_p_budgets <- make_overstorey_p_budgeting_variables()
 
 source("programs/summary_variables/make_understorey_p_budgeting_variables.R")
 summary_table_understorey_p_budgets <- make_understorey_p_budgeting_variables()
+
+source("programs/summary_variables/make_soil_p_budgeting_variables.R")
+summary_table_soil_p_budgets <- make_soil_p_budgeting_variables()
 
 
 ###### ---------------- Generating CP ratios -------------------- ######

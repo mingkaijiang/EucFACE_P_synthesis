@@ -10,7 +10,10 @@ make_pool_summary_table_by_treatment <- function() {
                "Coarse Root P Pool", "Understorey P Pool", 
                "Understorey Litter P Pool",
                "Microbial P Pool", "Soil Phosphate P Pool",
-               "Soil P Pool", "Mycorrhizal P Pool")
+               "Soil P Pool", "Mycorrhizal P Pool",
+               "Exhanagable Pi Pool", "Exhanagable Po Pool",
+               "Moderately labile Po Pool", "Secondary Fe bound Pi Pool", "Primary Ca bound Pi Pool",
+               "Occluded P Pool")
     
     treatDF <- data.frame(terms)
     treatDF$R1 <- rep(NA, length(treatDF$terms))
@@ -105,7 +108,56 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$timepoint[treatDF$terms == "Soil P Pool"] <- length(unique(soil_p_pool$Date))  
     treatDF$notes[treatDF$terms == "Soil P Pool"] <- "Averaged across all P forms"
     
+    ### Exhanagable Pi Pool
+    out <- summaryBy(F1_2_Pi_Exhanagable~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Exhanagable Pi Pool", 2:7] <- out$F1_2_Pi_Exhanagable
+    treatDF$year_start[treatDF$terms == "Exhanagable Pi Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Exhanagable Pi Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Exhanagable Pi Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Exhanagable Pi Pool"] <- "unclear depth info"
+    
+    ### Exhanagable Po Pool
+    out <- summaryBy(F1_2_Po_Exhanagable~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Exhanagable Po Pool", 2:7] <- out$F1_2_Po_Exhanagable
+    treatDF$year_start[treatDF$terms == "Exhanagable Po Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Exhanagable Po Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Exhanagable Po Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Exhanagable Po Pool"] <- "unclear depth info"
+    
+    ### Moderately labile Po Pool
+    out <- summaryBy(F3_Po_Moderately_labile~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Moderately labile Po Pool", 2:7] <- out$F3_Po_Moderately_labile
+    treatDF$year_start[treatDF$terms == "Moderately labile Po Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Moderately labile Po Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Moderately labile Po Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Moderately labile Po Pool"] <- "unclear depth info"
+    
 
+    ### Secondary Fe bound Pi Pool
+    out <- summaryBy(F3_Fe_bound_P_Secondary_mineral~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Secondary Fe bound Pi Pool", 2:7] <- out$F3_Fe_bound_P_Secondary_mineral
+    treatDF$year_start[treatDF$terms == "Secondary Fe bound Pi Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Secondary Fe bound Pi Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Secondary Fe bound Pi Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Secondary Fe bound Pi Pool"] <- "unclear depth info"
+    
+    ### Primary Ca bound Pi Pool
+    out <- summaryBy(F4_Ca_bound_Primary_Mineral~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Primary Ca bound Pi Pool", 2:7] <- out$F4_Ca_bound_Primary_Mineral
+    treatDF$year_start[treatDF$terms == "Primary Ca bound Pi Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Primary Ca bound Pi Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Primary Ca bound Pi Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Primary Ca bound Pi Pool"] <- "unclear depth info"
+    
+    ### Occluded P Pool
+    out <- summaryBy(F5_6_Occluded~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Occluded P Pool", 2:7] <- out$F5_6_Occluded
+    treatDF$year_start[treatDF$terms == "Occluded P Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Occluded P Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Occluded P Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Occluded P Pool"] <- "unclear depth info"
+    
+    
     ### Mycorrhizal P pool
     treatDF$notes[treatDF$terms == "Mycorrhizal P Pool"] <- "Data not yet available"
     

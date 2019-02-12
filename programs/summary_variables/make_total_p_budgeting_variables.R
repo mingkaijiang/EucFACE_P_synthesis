@@ -64,7 +64,9 @@ make_total_p_budgeting_variables <- function() {
                "soil p mineralization",
                "total uptake over requirement",
                "p supply and uptake gap",
-               "total P MRT in plant", "total standing PUE")
+               "total P MRT in plant", 
+               "total standing PUE",
+               "labile Pi stock")
     
     out <- data.frame(terms, NA, NA, NA, NA, NA, NA, NA, NA, NA)
     colnames(out) <- c("terms", "R1", "R2", "R3", "R4", "R5", "R6", "aCO2", "eCO2", "notes")
@@ -90,6 +92,7 @@ make_total_p_budgeting_variables <- function() {
     out[out$terms == "total P MRT in plant", 2:9] <- round(P_mean_residence_time[1,1:8],2)
     out[out$terms == "total standing PUE", 2:7] <- round(standing_pue[1:6, "NPP_by_PUP"],4)
     
+    out[out$terms == "labile Pi stock", 2:7] <- round(summary_table_pool_by_treatment[summary_table_pool_by_treatment$terms=="Exhanagable Pi Pool", 2:7],2)
     
     ### aCO2 and eCO2 averages
     out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)
@@ -107,7 +110,11 @@ make_total_p_budgeting_variables <- function() {
     out[out$terms == "total uptake over requirement", "notes"] <- "uncertainty in wood and understorey"
 
     out[out$terms == "total P MRT in plant", "notes"] <- "standing stock / uptake"
+    
     out[out$terms == "total standing PUE", "notes"] <- "NPP / uptake"
+    
+    out[out$terms == "labile Pi stock", "notes"] <- "Exhanagable Pi based on Hedley"
+    
     
     return(out)
     
