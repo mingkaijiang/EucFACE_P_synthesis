@@ -9,7 +9,10 @@ make_pool_summary_table_by_treatment_bootstrap <- function() {
     terms <- c("Wood P Pool", "Canopy P Pool", "Fine Root P Pool",
                "Coarse Root P Pool", "Understorey P Pool", 
                "Microbial P Pool", "Soil Phosphate P Pool",
-               "Soil P Pool", "Mycorrhizal P Pool")
+               "Soil P Pool", "Mycorrhizal P Pool",
+               "Exhanagable Pi Pool", "Exhanagable Po Pool",
+               "Moderately labile Po Pool", "Secondary Fe bound Pi Pool", "Primary Ca bound Pi Pool",
+               "Occluded P Pool")
     
     treatDF <- data.frame(terms)
     
@@ -97,8 +100,64 @@ make_pool_summary_table_by_treatment_bootstrap <- function() {
     
 
     ### Mycorrhizal P pool
+    
+    
 
-
+    ### Exhanagable Pi Pool
+    out1 <- summaryBy(predicted~Trt,data=soil_exhanagable_pi_pool_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_exhanagable_pi_pool_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Exhanagable Pi Pool"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Exhanagable Pi Pool"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Exhanagable Pi Pool"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Exhanagable Pi Pool"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Exhanagable Po Pool
+    out1 <- summaryBy(predicted~Trt,data=soil_exhanagable_po_pool_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_exhanagable_po_pool_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Exhanagable Po Pool"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Exhanagable Po Pool"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Exhanagable Po Pool"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Exhanagable Po Pool"] <- out2$predicted[out2$Trt=="ele"]
+    
+    
+    ### Moderately labile Po Pool
+    out1 <- summaryBy(predicted~Trt,data=soil_mlabile_po_pool_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_mlabile_po_pool_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Moderately labile Po Pool"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Moderately labile Po Pool"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Moderately labile Po Pool"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Moderately labile Po Pool"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Secondary Fe bound Pi Pool
+    out1 <- summaryBy(predicted~Trt,data=soil_secondary_pi_pool_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_secondary_pi_pool_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Secondary Fe bound Pi Pool"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Secondary Fe bound Pi Pool"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Secondary Fe bound Pi Pool"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Secondary Fe bound Pi Pool"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Primary Ca bound Pi Pool
+    out1 <- summaryBy(predicted~Trt,data=soil_primary_pi_pool_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_primary_pi_pool_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Primary Ca bound Pi Pool"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Primary Ca bound Pi Pool"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Primary Ca bound Pi Pool"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Primary Ca bound Pi Pool"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Occluded P Pool
+    out1 <- summaryBy(predicted~Trt,data=soil_occluded_p_pool_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_occluded_p_pool_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Occluded P Pool"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Occluded P Pool"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Occluded P Pool"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Occluded P Pool"] <- out2$predicted[out2$Trt=="ele"]
+    
     
     ##### output tables
     return(treatDF)

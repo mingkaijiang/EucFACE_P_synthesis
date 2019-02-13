@@ -8,7 +8,9 @@ make_conc_summary_table_by_treatment_bootstrap <- function() {
     conc.terms <- c("Wood P Conc", "Canopy P Conc", "Fine Root P Conc", "Coarse Root P Conc",
                     "Leaflitter P Conc","Understorey P Conc", "Understorey Litter P Conc", "Frass P Conc",
                     "Microbial P Conc", "Soil P Conc", "Soil Phosphate P Conc",
-                    "Mycorrhizal P Conc")
+                    "Mycorrhizal P Conc","Exhanagable Pi Conc", "Exhanagable Po Conc",
+                    "Moderately labile Po Conc", "Secondary Fe bound Pi Conc", "Primary Ca bound Pi Conc",
+                    "Occluded P Conc")
     
     treatDF <- data.frame(conc.terms)
 
@@ -103,6 +105,61 @@ make_conc_summary_table_by_treatment_bootstrap <- function() {
     treatDF$eCO2_sd[treatDF$conc.terms == "Soil Phosphase P Conc"] <- out2$predicted[out2$Trt=="ele"]
     
     ### Mycorrhizal P concentration
+    
+    ### Exhanagable Pi Conc
+    out1 <- summaryBy(predicted~Trt,data=soil_exhanagable_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_exhanagable_pi_concentration_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Exhanagable Pi Conc"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Exhanagable Pi Conc"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Exhanagable Pi Conc"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Exhanagable Pi Conc"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Exhanagable Po Conc
+    out1 <- summaryBy(predicted~Trt,data=soil_exhanagable_po_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_exhanagable_po_concentration_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Exhanagable Po Conc"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Exhanagable Po Conc"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Exhanagable Po Conc"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Exhanagable Po Conc"] <- out2$predicted[out2$Trt=="ele"]
+    
+    
+    ### Moderately labile Po Conc
+    out1 <- summaryBy(predicted~Trt,data=soil_mlabile_po_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_mlabile_po_concentration_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Moderately labile Po Conc"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Moderately labile Po Conc"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Moderately labile Po Conc"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Moderately labile Po Conc"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Secondary Fe bound Pi Conc
+    out1 <- summaryBy(predicted~Trt,data=soil_secondary_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_secondary_pi_concentration_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Primary Ca bound Pi Conc
+    out1 <- summaryBy(predicted~Trt,data=soil_primary_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_primary_pi_concentration_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- out2$predicted[out2$Trt=="ele"]
+    
+    ### Occluded P Conc
+    out1 <- summaryBy(predicted~Trt,data=soil_occluded_p_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(predicted~Trt,data=soil_occluded_p_concentration_pred,FUN=sd,keep.names=T,na.rm=T)
+    
+    treatDF$aCO2[treatDF$conc.terms == "Occluded P Conc"] <- out1$predicted[out1$Trt=="amb"]
+    treatDF$eCO2[treatDF$conc.terms == "Occluded P Conc"] <- out1$predicted[out1$Trt=="ele"]
+    treatDF$aCO2_sd[treatDF$conc.terms == "Occluded P Conc"] <- out2$predicted[out2$Trt=="amb"]
+    treatDF$eCO2_sd[treatDF$conc.terms == "Occluded P Conc"] <- out2$predicted[out2$Trt=="ele"]
 
     
     ##### output tables

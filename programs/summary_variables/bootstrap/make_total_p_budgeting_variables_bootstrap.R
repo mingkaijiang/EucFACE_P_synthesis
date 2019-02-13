@@ -6,7 +6,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out <- data.frame(c("Total P requirement", "Total P retranslocation", "Total P uptake",
                         "Uptake over Requirement", "Stand P OA", 
                         "Stand P UA", "Stand P Belowground", "Total plant standing P", 
-                        "MRT", "Standing PUE", "Soil P mineralization"), NA, NA, NA, NA)
+                        "MRT", "Standing PUE", "Soil P mineralization","Labile Pi stock"), NA, NA, NA, NA)
     colnames(out) <- c("Variable", "aCO2", "eCO2", "aCO2_conf", "eCO2_conf")
     
     ### create dataframe to hold bootstrap results - inout
@@ -308,6 +308,26 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out$aCO2_conf[out$Variable=="Soil P mineralization"] <- sd(bDF11$aCO2)
     out$eCO2[out$Variable=="Soil P mineralization"] <- mean(bDF11$eCO2)
     out$eCO2_conf[out$Variable=="Soil P mineralization"] <- sd(bDF11$eCO2)
+    
+    
+    ### Soil Labile P pool
+    mDF1 <- summaryBy(predicted~Trt, data=soil_exhanagable_pi_pool_pred, FUN=mean, keep.names=T)
+    mDF2 <- summaryBy(predicted~Trt, data=soil_exhanagable_pi_pool_pred, FUN=sd, keep.names=T)
+    mDF1$sd <- mDF2$predicted
+    colnames(mDF1) <- c("Trt", "mean", "sd")
+    
+    bDF12 <- data.frame(c(1:1000), NA, NA)
+    colnames(bDF12) <- c("bootID", "aCO2", "eCO2")
+    
+    bDF12$aCO2 <- rnorm(1000, mean=mDF1$mean[mDF1$Trt=="amb"],
+                        sd=mDF1$sd[mDF1$Trt=="amb"])
+    bDF12$eCO2 <- rnorm(1000, mean=mDF1$mean[mDF1$Trt=="ele"],
+                        sd=mDF1$sd[mDF1$Trt=="ele"])
+    
+    out$aCO2[out$Variable=="Labile Pi stock"] <- mean(bDF12$aCO2)
+    out$aCO2_conf[out$Variable=="Labile Pi stock"] <- sd(bDF12$aCO2)
+    out$eCO2[out$Variable=="Labile Pi stock"] <- mean(bDF12$eCO2)
+    out$eCO2_conf[out$Variable=="Labile Pi stock"] <- sd(bDF12$eCO2)
     
     
     return(out)
