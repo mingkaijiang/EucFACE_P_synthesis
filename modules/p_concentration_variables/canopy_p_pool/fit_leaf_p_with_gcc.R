@@ -53,25 +53,25 @@ fit_leaf_p_with_gcc <- function() {
     fit.ggc <- nls(gcc.norm~pheno.gcc.func(ndays,a,b,0.0005),data = lai.gcc.df,
                    start = list(a = 2000,b=9))
     
-    # plot fitted vc pheno
+    # plot fitted leaf P concentration phenology
     df$treat <- NA
     df$treat[df$Ring %in% c(1,4,5)] <- 'E'
     df$treat[df$Ring %in% c(2,3,6)] <- 'A'
     df$treat <- as.factor(df$treat)
-    euc.vc.ls <- split(df,df$treat)
+    df.pheno <- split(df,df$treat)
     
     
-    fit.a <- nls(Vcmax~c((up.q - low.q) *
+    fit.a <- nls(Perc.P~c((up.q - low.q) *
                              pheno.gcc.func(ndays,coef(fit.ggc)[[1]],coef(fit.ggc)[[2]],0.0005) +
                              low.q),
-                 data = euc.vc.ls[[1]],start = list(up.q=90, low.q=70))
-    fit.e <- nls(Vcmax~c((up.q - low.q) *
+                 data = df.pheno[[1]],start = list(up.q=90, low.q=70))
+    fit.e <- nls(Perc.P~c((up.q - low.q) *
                              pheno.gcc.func(ndays,coef(fit.ggc)[[1]],coef(fit.ggc)[[2]],0.0005) +
                              low.q),
-                 data = euc.vc.ls[[2]],start = list(up.q=90, low.q=70))
+                 data = df.pheno[[2]],start = list(up.q=90, low.q=70))
     
     
-    fit.vj.func <- function(in.vec,days.vec){
+    fit.p.func <- function(in.vec,days.vec){
         fit.28 <- nls(in.vec~c((up.q - low.q) *
                                    pheno.gcc.func(days.vec,coef(fit.ggc)[[1]],coef(fit.ggc)[[2]],0.0005) +
                                    low.q),start = list(up.q=90, low.q=70))
@@ -81,37 +81,38 @@ fit_leaf_p_with_gcc <- function() {
         return(c(up.q,low.q))
     }
     
-    pred.vc.func <- function(in.vec,days.vec,pred.days.vec=1:365){
+    pred.p.func <- function(in.vec,days.vec,pred.days.vec=1:365){
         # up.q <- quantile(in.vec,probs = 0.8)
         # low.q <- quantile(in.vec,probs = 0.2)
         
-        fit.vec <- fit.vj.func(in.vec,days.vec)
+        fit.vec <- fit.p.func(in.vec,days.vec)
         up.q <- fit.vec[1]
         low.q <- fit.vec[2]
-        vc.max.min.df <- data.frame(x = pred.days.vec,
+        p.min.df <- data.frame(x = pred.days.vec,
                                     y = (up.q - low.q) *
                                         pheno.gcc.func(pred.days.vec,coef(fit.ggc)[[1]],coef(fit.ggc)[[2]],0.0005) +
                                         low.q)
-        vc.max.min.df <- vc.max.min.df[order(vc.max.min.df$x),]
-        return(vc.max.min.df)
+        p.min.df <- p.min.df[order(p.min.df$x),]
+        return(p.min.df)
     }
     
-    plot.vc.fit <- function(v.vec,day.vec,col.in){
-        vc.max.min.df <- pred.vc.func(v.vec,days.vec=day.vec)
-        lines(vc.max.min.df$x,vc.max.min.df$y, lwd=2,col=col.in)
+    plot.p.fit <- function(v.vec,day.vec,col.in){
+        p.min.df <- pred.p.func(v.vec,days.vec=day.vec)
+        lines(p.min.df$x,p.min.df$y, lwd=2,col=col.in)
     }
     
-    par(mar=c(5,5,1,1))
-    palette(c('blue','red'))
-    plot(Perc.P~ndays,data = df,xlim=c(0,365),
-         col=treat,pch=16,cex=1,
-         xlab='Days since Oct 1')
-    plot.vc.fit(euc.vc.ls[[1]]$Perc.P,euc.vc.ls[[1]]$ndays,col.in = 'blue')
-    plot.vc.fit(euc.vc.ls[[2]]$Perc.P,euc.vc.ls[[2]]$ndays,col.in = 'red')
-    legend('topright',legend = c('A','E'),lty='solid',col=c('blue','red'),bty='n')
     
-    euc.leafp.df <- data.frame(Vc.a = pred.vc.func(euc.vc.ls[[1]]$Perc.P,euc.vc.ls[[1]]$ndays),
-                               Vc.e = pred.vc.func(euc.vc.ls[[2]]$Perc.P,euc.vc.ls[[2]]$ndays))
+    ### make a plot with ndays as x and percP as y
+    #palette(c('blue','red'))
+    #plot(Perc.P~ndays,data = df,xlim=c(0,365),
+    #     col=treat,pch=16,cex=1,
+    #     xlab='Days since Oct 1')
+    #plot.p.fit(df.pheno[[1]]$Perc.P,df.pheno[[1]]$ndays,col.in = 'blue')
+    #plot.p.fit(df.pheno[[2]]$Perc.P,df.pheno[[2]]$ndays,col.in = 'red')
+    #legend('topright',legend = c('A','E'),lty='solid',col=c('blue','red'),bty='n')
+    
+    euc.leafp.df <- data.frame(p.a = pred.p.func(euc.vc.ls[[1]]$Perc.P,df.pheno[[1]]$ndays),
+                               p.e = pred.p.func(euc.vc.ls[[2]]$Perc.P,df.pheno[[2]]$ndays))
     
     euc.4y.df <- data.frame(date = seq.Date(as.Date('2013-01-01'),
                                             as.Date('2016-12-31'),
@@ -126,22 +127,21 @@ fit_leaf_p_with_gcc <- function() {
     euc.pred.ls <- list()
     for (i in 1:length(euc.4y.ls)){
 
-        euc.pred.ls[[i]] <- data.frame(v.a = pred.vc.func(euc.vc.ls[[1]]$Vcmax,euc.vc.ls[[1]]$ndays,
+        euc.pred.ls[[i]] <- data.frame(p.a = pred.p.func(euc.vc.ls[[1]]$Perc.P,df.pheno[[1]]$ndays,
                                                           euc.4y.ls[[i]]$ndays)$y,
-                                       v.e = pred.vc.func(euc.vc.ls[[2]]$Vcmax,euc.vc.ls[[2]]$ndays,
+                                       p.e = pred.p.func(euc.vc.ls[[2]]$Perc.P,df.pheno[[2]]$ndays,
                                                           euc.4y.ls[[i]]$ndays)$y,
                                        date = euc.4y.ls[[i]]$date)
         
     }
     
     euc.pred.df <- do.call(rbind,euc.pred.ls)
-    # temp.df <- data.frame(date = ceiling(floor_date(euc.pred.df$date, "week")))
     
-    temp.df <- data.frame(date = seq.Date(as.Date('2013-01-01'),
-                                          as.Date('2016-12-31'),
+    temp.df <- data.frame(date = seq.Date(as.Date('2012-01-01'),
+                                          as.Date('2018-12-31'),
                                           by='week'))
     
     out.df <- merge(temp.df,euc.pred.df,by='date')
-    saveRDS(out.df,'cache/euc.vj.rds')
     
+    return(out.df)
 }
