@@ -1,4 +1,4 @@
-make_total_p_budgeting_variables <- function() {
+make_soil_p_budgeting_variables <- function() {
     #### This function calculates all soil P budgeting variables
     
     sumDF <- summary_table_pool_by_treatment

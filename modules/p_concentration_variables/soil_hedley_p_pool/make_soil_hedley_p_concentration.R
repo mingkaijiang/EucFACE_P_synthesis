@@ -17,9 +17,10 @@ make_soil_hedley_p_concentration <- function(func){
 
     ## only 2013 data is quality checked
     ## for now, to create the code structure, replace 2015 with 2013 data
-    myDF <- subset(myDF, Year == 2013)
-    myDF2 <- rbind(myDF, myDF)
-    myDF2$Year[25:48] <- 2015
+    #myDF <- subset(myDF, Year == 2013)
+    #myDF2 <- rbind(myDF, myDF)
+    #myDF2$Year[25:48] <- 2015
+    myDF2 <- myDF
     
     # average plots within ring
     myDF3 <- summaryBy(F1_2_Pi_Exhanagable+F1_2_Po_Exhanagable+F3_Po_Moderately_labile+

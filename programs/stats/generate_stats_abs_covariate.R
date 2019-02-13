@@ -15,6 +15,42 @@ generate_stats_abs_covariate <- function() {
                                                                     stat.model="no_interaction_with_covariate",
                                                                     return.outcome="model")
     
+    ### hedley P concentrations
+    s.soil.exhanagable.pi.conc <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                               var.col=3,
+                                                                               stat.model="no_interaction_with_covariate",
+                                                                               return.outcome="model")
+    
+    s.soil.exhanagable.po.conc <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                         var.col=4,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
+    s.soil.mlabile.po.conc <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                         var.col=5,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
+    s.soil.secondary.pi.conc <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                         var.col=6,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
+    s.soil.primary.pi.conc <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                         var.col=7,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
+    s.soil.occluded.p.conc <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                         var.col=8,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
+    s.soil.aqua.p.conc <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                         var.col=9,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
     ### Overstorey Leaf P conc
     s.leafp.conc <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_concentration, 
                                                           var.col=3,
@@ -82,6 +118,42 @@ generate_stats_abs_covariate <- function() {
                                                                                var.col=3,
                                                                                stat.model="no_interaction_with_covariate",
                                                                                return.outcome="model")
+    
+    ### hedley P pools
+    s.soil.exhanagable.pi.pool <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                         var.col=3,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
+    s.soil.exhanagable.po.pool <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                         var.col=4,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="model")
+    
+    s.soil.mlabile.po.pool <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                     var.col=5,
+                                                                                     stat.model="no_interaction_with_covariate",
+                                                                                     return.outcome="model")
+    
+    s.soil.secondary.pi.pool <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                       var.col=6,
+                                                                                       stat.model="no_interaction_with_covariate",
+                                                                                       return.outcome="model")
+    
+    s.soil.primary.pi.pool <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                     var.col=7,
+                                                                                     stat.model="no_interaction_with_covariate",
+                                                                                     return.outcome="model")
+    
+    s.soil.occluded.p.pool <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                     var.col=8,
+                                                                                     stat.model="no_interaction_with_covariate",
+                                                                                     return.outcome="model")
+    
+    s.soil.aqua.p.pool <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                 var.col=9,
+                                                                                 stat.model="no_interaction_with_covariate",
+                                                                                 return.outcome="model")
     
     ### Overstorey Leaf P pool
     s.leafp.pool <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
@@ -256,11 +328,21 @@ generate_stats_abs_covariate <- function() {
  
     
     #### Create a output table to store all stats
-    var.list <- c("soil_p_conc","soil_phosphate_p_conc","leaf_p_conc",
+    var.list <- c("soil_p_conc","soil_phosphate_p_conc",
+                  "exhanagable_pi_conc", "exhanagable_po_conc",
+                  "moderately_labile_po_conc", "secondary_pi_conc",
+                  "primary_pi_conc", "occluded_p_conc",
+                  "aqua_regia_p_conc",
+                  "leaf_p_conc",
                   "wood_p_conc","fineroot_p_conc",
                   "understorey_p_conc","microbial_p_conc","litter_p_conc",
                   "frass_p_conc",
-                  "soil_p_pool","leaf_p_pool","wood_p_pool","fineroot_p_pool",
+                  "soil_p_pool",
+                  "exhanagable_pi_pool", "exhanagable_po_pool",
+                  "moderately_labile_po_pool", "secondary_pi_pool",
+                  "primary_pi_pool", "occluded_p_pool",
+                  "aqua_regia_p_pool",
+                  "leaf_p_pool","wood_p_pool","fineroot_p_pool",
                   "coarseroot_p_pool","understorey_p_pool",
                   "microbial_p_pool",
                   "frass_p_prod","leaf_p_prod","leaf_lit_p_prod","twig_lit_p_prod",
@@ -306,7 +388,14 @@ generate_stats_abs_covariate <- function() {
     }
     
     out[out$Variable=="soil_p_conc",2:17] <- assign_stats(s.var=s.soilp.conc)
-    out[out$Variable=="soil_phosphate_p_conc",2:17] <- assign_stats(s.var=s.soil.phosphate.p.conc)
+    out[out$Variable=="exhanagable_pi_conc",2:17] <- assign_stats(s.var=s.soil.exhanagable.pi.conc)
+    out[out$Variable=="exhanagable_po_conc",2:17] <- assign_stats(s.var=s.soil.exhanagable.po.conc)
+    out[out$Variable=="moderately_labile_po_conc",2:17] <- assign_stats(s.var=s.soil.mlabile.po.conc)
+    out[out$Variable=="secondary_pi_conc",2:17] <- assign_stats(s.var=s.soil.secondary.pi.conc)
+    out[out$Variable=="primary_pi_conc",2:17] <- assign_stats(s.var=s.soil.primary.pi.conc)
+    out[out$Variable=="occluded_p_conc",2:17] <- assign_stats(s.var=s.soil.occluded.p.conc)
+    out[out$Variable=="aqua_regia_p_conc",2:17] <- assign_stats(s.var=s.soil.aqua.p.conc)
+    
     out[out$Variable=="leaf_p_conc",2:17] <- assign_stats(s.var=s.leafp.conc)
     #out[out$Variable=="wood_p_conc",2:17] <- assign_stats(s.var=s.woodp.conc)
     out[out$Variable=="fineroot_p_conc",2:17] <- assign_stats(s.var=s.frp.conc)
@@ -314,7 +403,17 @@ generate_stats_abs_covariate <- function() {
     out[out$Variable=="microbial_p_conc",2:17] <- assign_stats(s.var=s.micp.conc)
     out[out$Variable=="litter_p_conc",2:17] <- assign_stats(s.var=s.litp.conc)
     out[out$Variable=="frass_p_conc",2:17] <- assign_stats(s.var=s.frasp.conc)
+    
+    
     out[out$Variable=="soil_p_pool",2:17] <- assign_stats(s.var=s.soilp.pool)
+    out[out$Variable=="exhanagable_pi_pool",2:17] <- assign_stats(s.var=s.soil.exhanagable.pi.pool)
+    out[out$Variable=="exhanagable_po_pool",2:17] <- assign_stats(s.var=s.soil.exhanagable.po.pool)
+    out[out$Variable=="moderately_labile_po_pool",2:17] <- assign_stats(s.var=s.soil.mlabile.po.pool)
+    out[out$Variable=="secondary_pi_pool",2:17] <- assign_stats(s.var=s.soil.secondary.pi.pool)
+    out[out$Variable=="primary_pi_pool",2:17] <- assign_stats(s.var=s.soil.primary.pi.pool)
+    out[out$Variable=="occluded_p_pool",2:17] <- assign_stats(s.var=s.soil.occluded.p.pool)
+    out[out$Variable=="aqua_regia_p_pool",2:17] <- assign_stats(s.var=s.soil.aqua.p.pool)
+    
     out[out$Variable=="leaf_p_pool",2:17] <- assign_stats(s.var=s.leafp.pool)
     out[out$Variable=="wood_p_pool",2:17] <- assign_stats(s.var=s.woodp.pool)
     out[out$Variable=="fineroot_p_pool",2:17] <- assign_stats(s.var=s.frp.pool)

@@ -399,6 +399,43 @@ soil_phosphate_concentration_pred <- make_soilp_conc_treatment_abs_effect_statis
                                                                            stat.model="no_interaction_with_covariate",
                                                                            return.outcome="predicted")
 
+### hedley P concentrations
+soil_exhanagable_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                     var.col=3,
+                                                                                     stat.model="no_interaction_with_covariate",
+                                                                                     return.outcome="predicted")
+
+soil_exhanagable_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                     var.col=4,
+                                                                                     stat.model="no_interaction_with_covariate",
+                                                                                     return.outcome="predicted")
+
+soil_mlabile_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                 var.col=5,
+                                                                                 stat.model="no_interaction_with_covariate",
+                                                                                 return.outcome="predicted")
+
+soil_secondary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                   var.col=6,
+                                                                                   stat.model="no_interaction_with_covariate",
+                                                                                   return.outcome="predicted")
+
+soil_primary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                 var.col=7,
+                                                                                 stat.model="no_interaction_with_covariate",
+                                                                                 return.outcome="predicted")
+
+soil_occluded_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                                 var.col=8,
+                                                                                 stat.model="no_interaction_with_covariate",
+                                                                                 return.outcome="predicted")
+
+soil_aqua_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+                                                                             var.col=9,
+                                                                             stat.model="no_interaction_with_covariate",
+                                                                             return.outcome="predicted")
+
+
 ### Overstorey Leaf P conc
 canopy_p_concentration_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_concentration, 
                                                                 var.col=3,
@@ -461,6 +498,42 @@ soil_phosphate_pool_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF
                                                                            var.col=3,
                                                                            stat.model="no_interaction_with_covariate",
                                                                            return.outcome="predicted")
+
+### hedley P pools
+soil_exhanagable_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                                 var.col=3,
+                                                                                                 stat.model="no_interaction_with_covariate",
+                                                                                                 return.outcome="predicted")
+
+soil_exhanagable_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                                 var.col=4,
+                                                                                                 stat.model="no_interaction_with_covariate",
+                                                                                                 return.outcome="predicted")
+
+soil_mlabile_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                             var.col=5,
+                                                                                             stat.model="no_interaction_with_covariate",
+                                                                                             return.outcome="predicted")
+
+soil_secondary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                               var.col=6,
+                                                                                               stat.model="no_interaction_with_covariate",
+                                                                                               return.outcome="predicted")
+
+soil_primary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                             var.col=7,
+                                                                                             stat.model="no_interaction_with_covariate",
+                                                                                             return.outcome="predicted")
+
+soil_occluded_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                             var.col=8,
+                                                                                             stat.model="no_interaction_with_covariate",
+                                                                                             return.outcome="predicted")
+
+soil_aqua_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+                                                                                         var.col=9,
+                                                                                         stat.model="no_interaction_with_covariate",
+                                                                                         return.outcome="predicted")
 
 ### Overstorey Leaf P pool
 canopy_p_pool_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
