@@ -19,7 +19,9 @@ pacman::p_load(dplyr,
                imputeTS,
                lme4,
                car,
-               multcomp) # add other packages needed to this list
+               multcomp,
+               grid,
+               cowplot) # add other packages needed to this list
 
 
 # Loading constants
@@ -29,6 +31,8 @@ source("definitions/constants.R")
 sourcefiles <- dir("modules", pattern="[.]R$", recursive = TRUE, full.names = TRUE)
 for(z in sourcefiles)source(z)
 
+# color blind friendly
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 
 
