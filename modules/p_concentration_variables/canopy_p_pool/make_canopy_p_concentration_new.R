@@ -12,25 +12,43 @@ make_canopy_p_concentration_new <- function(func) {
     df$Date <- as.Date(df$Date, "%d-%b-%Y")
     
     ### check data
-    p1 <- ggplot(df,
-                 aes(Date, Perc.P)) + 
-        geom_point(aes(color=AGE, shape=CO2TREAT, size=2)) +
-        geom_smooth(method="gam")+
-        xlab("Date") + ylab("Canopy P conc (%)")+
-        theme_linedraw() +
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=10), 
-              axis.text.x = element_text(size=10),
-              axis.text.y=element_text(size=10),
-              axis.title.y=element_text(size=10),
-              legend.text=element_text(size=10),
-              legend.title=element_text(size=12),
-              panel.grid.major=element_blank(),
-              legend.position="bottom") 
+    #p1 <- ggplot(df,
+    #             aes(Date, Perc.P)) + 
+    #    geom_point(aes(color=AGE, shape=CO2TREAT, size=2)) +
+    #    geom_smooth(method="gam")+
+    #    xlab("Date") + ylab("Canopy P conc (%)")+
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=10), 
+    #          axis.text.x = element_text(size=10),
+    #          axis.text.y=element_text(size=10),
+    #          axis.title.y=element_text(size=10),
+    #          legend.text=element_text(size=10),
+    #          legend.title=element_text(size=12),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom") 
     #plot(p1)
     
     ### only include new leaf, as this is the total required
-    df2 <- subset(df, AGE == "new")
+    df2 <- subset(df, AGE == "old")
+    
+    ### check data
+    #p2 <- ggplot(df2,
+    #             aes(Date, Perc.P)) + 
+    #    geom_point(aes(shape=CO2TREAT, size=2)) +
+    #    geom_smooth(method="gam")+
+    #    xlab("Date") + ylab("Canopy P conc (%)")+
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=10), 
+    #          axis.text.x = element_text(size=10),
+    #          axis.text.y=element_text(size=10),
+    #          axis.title.y=element_text(size=10),
+    #          legend.text=element_text(size=10),
+    #          legend.title=element_text(size=12),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom") 
+    #plot(p2)
 
     ### obtain ring means
     out <- summaryBy(Perc.P~Ring+Date,
@@ -39,6 +57,7 @@ make_canopy_p_concentration_new <- function(func) {
     out$year <- year(out$Date)
     
     colnames(out) <- c("Ring", "Date", "PercP", "month", "year")
+    out <- out[complete.cases(out$Date),]
     
     return(out)
 

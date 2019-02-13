@@ -36,7 +36,7 @@ canopy_p_concentration_limited_data_max <- make_canopy_p_concentration(func=max)
 
 canopy_p_concentration <- make_canopy_p_concentration_new(func=mean)
 
-#compare_canopy_p_conc_datasets(inDF1=canopy_p_concentration, inDF2=canopy_p_concentration_new)
+compare_canopy_p_conc_datasets(inDF1=canopy_p_concentration_limited_data, inDF2=canopy_p_concentration)
 
 
 #### Leaf litter P conc. 
