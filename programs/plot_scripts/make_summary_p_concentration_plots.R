@@ -6,11 +6,11 @@ make_summary_p_concentration_plots <- function() {
     inDF$aCO2_sd <- apply(data.frame(inDF$R2, inDF$R3, inDF$R6), 1, sd)
     inDF$eCO2_sd <- apply(data.frame(inDF$R1, inDF$R4, inDF$R5), 1, sd)
     
-    inDF$aCO2 <- inDF$aCO2 * 100
-    inDF$eCO2 <- inDF$eCO2 * 100
+    inDF$aCO2 <- inDF$aCO2 
+    inDF$eCO2 <- inDF$eCO2
     
-    inDF$aCO2_sd <- inDF$aCO2_sd * 100
-    inDF$eCO2_sd <- inDF$eCO2_sd * 100
+    inDF$aCO2_sd <- inDF$aCO2_sd 
+    inDF$eCO2_sd <- inDF$eCO2_sd 
     
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Canopy P Conc"], 
@@ -109,7 +109,7 @@ make_summary_p_concentration_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,15)+
+        ylim(0,0.15)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -131,7 +131,7 @@ make_summary_p_concentration_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,10)+
+        ylim(0,0.10)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -152,7 +152,7 @@ make_summary_p_concentration_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,5)+
+        ylim(0,0.05)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -173,7 +173,7 @@ make_summary_p_concentration_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,15)+
+        ylim(0,0.15)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -194,7 +194,7 @@ make_summary_p_concentration_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,1)+
+        ylim(0,0.01)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -215,7 +215,7 @@ make_summary_p_concentration_plots <- function() {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,0.02)+
+        ylim(0,0.0002)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -240,7 +240,7 @@ make_summary_p_concentration_plots <- function() {
     pdf("plots_tables/Summary_P_Concentration_Plots.pdf", width=8,height=8)
     plot_grid(p1, p4, p2, p5, p3, p6, labels="", ncol=2, align="v", axis = "l",
               rel_heights = c(1, 1, 1.2))
-    grid.text(grid.labs, x = c(0.12, 0.62, 0.12, 0.62, 0.12, 0.62),
+    grid.text(grid.labs, x = c(0.15, 0.65, 0.15, 0.65, 0.15, 0.65),
               y = c(0.95, 0.95, 0.65, 0.65, 0.34, 0.34), 
               gp=gpar(fontsize=14, col="black", fontface="bold"))
     dev.off()

@@ -337,7 +337,7 @@ make_summary_p_budget_ring_plots <- function() {
     p8 <- ggplot(plotDF8,
                  aes(plot.order, mean)) + 
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
-        xlab("") + ylab(expression(paste("P MRT (", yr^-1, ")")))+
+        xlab("") + ylab(expression(paste("P MRT (", yr, ")")))+
         theme_linedraw() +
         ylim(0, 12)+
         theme(panel.grid.minor=element_blank(),

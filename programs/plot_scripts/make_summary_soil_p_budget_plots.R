@@ -45,7 +45,7 @@ make_summary_soil_p_budget_plots <- function() {
         xlab(expression(paste(CO[2]," Treatment")))+ 
         ylab(expression(paste("Soil P stock (g P ", m^-2, ")")))+
         theme_linedraw() +
-        ylim(0, 50)+
+        ylim(0, 15)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -59,7 +59,7 @@ make_summary_soil_p_budget_plots <- function() {
                           values = c("1_Exhanagable_Pi" = cbPalette[1], "2_Exhanagable_Po" = cbPalette[2],
                                      "3_Moderately_labile_Po" = cbPalette[3], "4_Secondary_Pi" = cbPalette[4],
                                      "5_Primary_Pi" = cbPalette[5], "6_Occluded_P" = cbPalette[6]),
-                          labels=c("Exhanagable Pi", "Exhanagable Po", 
+                          labels=c("Exchangeable Pi", "Exchangeable Po", 
                                    "Moderately labile Po", "Secondary Pi (Fe-bound)",
                                    "Primary Pi (Ca-bound)", "Occluded P"))+
         scale_x_discrete(limits=c("amb","ele"),
