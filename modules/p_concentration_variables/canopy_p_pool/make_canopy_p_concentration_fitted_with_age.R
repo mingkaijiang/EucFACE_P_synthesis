@@ -1,5 +1,5 @@
 #- Make the canopy P concentration
-make_canopy_p_concentration_new <- function() {
+make_canopy_p_concentration_fitted_with_age <- function() {
     ### return ring-specific canopy P data (mg/kg)
     ### this script is written for new data that Kristine processed
     ### and based on Jim's method for fitting concentration with age over time

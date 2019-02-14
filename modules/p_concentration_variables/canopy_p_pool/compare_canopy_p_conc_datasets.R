@@ -4,7 +4,7 @@ compare_canopy_p_conc_datasets <- function(inDF1, inDF2) {
     
     pDF1 <- summaryBy(PercP~Date, FUN=mean, data=inDF1, keep.names=T)
     pDF2 <- summaryBy(PercP~Date, FUN=mean, data=inDF2, keep.names=T, na.rm=T)
-    pDF3 <- summaryBy(PercP~Date, FUN=mean, data=inDF2[inDF2$Age=="new",], keep.names=T, na.rm=T)
+    #pDF3 <- summaryBy(PercP~Date, FUN=mean, data=inDF2[inDF2$Age=="new",], keep.names=T, na.rm=T)
         
         
     p1 <- ggplot() + 

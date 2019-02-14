@@ -9,7 +9,7 @@ make_canopy_p_concentration_new <- function(func) {
     ### setting up the date
     df$Date <- paste0("01-", as.character(df$Campaign))
     #df$DATE <- gsub("/", "-", df$DATE)
-    df$Date <- as.Date(df$Date, "%d-%b-%Y")
+    df$Date <- as.Date(df$Date, "%d-%b-%y")
     
     ### check data
     #p1 <- ggplot(df,

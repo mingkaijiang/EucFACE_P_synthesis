@@ -1,6 +1,6 @@
 #- Make the canopy P pool 
 make_canopy_p_pool <- function(p_conc,
-                               biom) {
+                             biom) {
     ### return ring-specific canopy P data (mg/kg)
     ### p_conc: P concentration in %
     ### biom: canopy biomass pool (dry weight)
