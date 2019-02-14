@@ -96,6 +96,8 @@ soil_hedley_p_concentration <- make_soil_hedley_p_concentration(func=mean)
 
 #### Canopy related variables (SLA, LAI, Canopy biomass)
 lai_variable <- make_lai_variable()
+lai_variable_smoothed <- make_smooth_lai_variable(timestep="1 day", kgam=15)
+
 sla_variable <- make_sla_variable()
 canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable, sla_option="variable")
 

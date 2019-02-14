@@ -20,8 +20,9 @@ pacman::p_load(dplyr,
                lme4,
                car,
                multcomp,
-               grid,
-               cowplot) # add other packages needed to this list
+               grid,       # plot
+               cowplot,    # plot
+               mgcv)       # gam
 
 
 # Loading constants
