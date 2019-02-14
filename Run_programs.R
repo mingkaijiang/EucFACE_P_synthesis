@@ -928,10 +928,8 @@ make_summary_p_budget_ring_plots()
 
 #### To do list:
 
-### 1. add per ring figures
-### 2. change date factor to pre and after 2015 and see if we have a time effect
-
-
+### finish canopy P estimates and LAI and litterfall (Remko's paper)
+### prepare meeting report
 
 
 
