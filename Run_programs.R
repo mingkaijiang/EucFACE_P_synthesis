@@ -233,15 +233,19 @@ microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
                                           bk_density=soil_bulk_density)
 
 #### Canopy P pool - only for green leaves
-canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
-                                    biom=canopy_biomass_pool)
+#canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
+#                                    biom=canopy_biomass_pool)
 
-canopy_p_pool_smoothed <- make_canopy_p_pool_smoothed(biom=canopy_biomass_pool_smoothed)
+canopy_p_pool <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
 
 #### Canopy production flux
-canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
-                                          c_flux=canopy_c_production_flux,
-                                          c_frac=c_fraction)
+#canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
+#                                          c_flux=canopy_c_production_flux,
+#                                          c_frac=c_fraction)
+
+### considered both change in LAI and litterfall
+canopy_p_flux <- make_canopy_p_production_new(c_flux=canopy_c_production_flux_new,
+                                                  c_frac=c_fraction)
 
 #### Litter P production flux 
 #### Literfall biomass (not C) will be calculated within the function
