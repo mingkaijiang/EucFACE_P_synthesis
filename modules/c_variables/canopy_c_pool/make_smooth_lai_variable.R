@@ -1,4 +1,4 @@
-make_smooth_lai_variable <- function(timestep="1 day", kgam=15){
+make_smooth_lai_variable <- function(timestep="1 day", kgam=15, return.option="datamframe"){
     
 
     ## read in the lai variable data
@@ -24,15 +24,20 @@ make_smooth_lai_variable <- function(timestep="1 day", kgam=15){
         return(dfr)
     })
     
-    #head(smoothlai$R1)
-    smoothlai$R1$Ring <- 1
-    smoothlai$R2$Ring <- 2
-    smoothlai$R3$Ring <- 3
-    smoothlai$R4$Ring <- 4
-    smoothlai$R5$Ring <- 5
-    smoothlai$R6$Ring <- 6
-    
-    out <- rbind(smoothlai$R1, smoothlai$R2, smoothlai$R3, smoothlai$R4, smoothlai$R5, smoothlai$R6)
-    out <- out[,c("Date", "Ring", "LAIsmooth", "dLAI", "ndays")]
-    return(out)
+    if (return.option=="dataframe") {
+        #head(smoothlai$R1)
+        smoothlai$R1$Ring <- 1
+        smoothlai$R2$Ring <- 2
+        smoothlai$R3$Ring <- 3
+        smoothlai$R4$Ring <- 4
+        smoothlai$R5$Ring <- 5
+        smoothlai$R6$Ring <- 6
+        
+        out <- rbind(smoothlai$R1, smoothlai$R2, smoothlai$R3, smoothlai$R4, smoothlai$R5, smoothlai$R6)
+        out <- out[,c("Date", "Ring", "LAIsmooth", "dLAI", "ndays")]
+        return(out)
+    } else (
+        return(smoothlai)
+    )
+
 }
