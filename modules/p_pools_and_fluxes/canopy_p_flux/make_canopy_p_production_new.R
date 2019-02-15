@@ -28,5 +28,7 @@ make_canopy_p_production_new <- function(c_flux,
     
     out <- out[,c("Date", "Start_date", "End_date", "Ring", "canopy_p_flux", "Days")]
     
+    out <- out[complete.cases(out$canopy_p_flux),]
+    
     return(out)
 }
