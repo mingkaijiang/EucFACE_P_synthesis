@@ -1001,6 +1001,10 @@ canopy_n_flux <- make_canopy_n_production(n_conc=canopy_n_concentration,
                                           c_flux=canopy_c_production_flux,
                                           c_frac=c_fraction)
 
+wood_n_pool <- make_wood_n_pool(n_conc=wood_n_concentration,
+                                c_pool=wood_c_pool,
+                                case_consideration="total")
+
 
 ### Frass N production
 frass_n_production <- make_frass_n_production_flux(n_conc=frass_n_concentration,
