@@ -975,6 +975,10 @@ make_summary_p_budget_ring_plots()
 ### Canopy N concentration
 canopy_n_concentration <- make_canopy_n_concentration()
 
+### Wood N concentration
+wood_n_concentration <- make_wood_n_concentration(func=mean)
+
+
 ### Frass N concentration
 frass_n_concentration <- make_frass_n_concentration()
 

@@ -7,12 +7,29 @@ make_canopy_n_concentration <- function() {
     
     indf1 <- read.csv("download/FACE_P0020_RA_LeafN_L2_20130213-20131115.csv")
     indf2 <- read.csv("download/FACE_P0020_RA_LeafN_L2_20140130-20140502.csv")
+    indf3 <- read.csv("download/FACE_P0020_RA_LeafN_L2_20150201-20180201.csv.csv")
+    
+    indf3 <- indf3[,c("Campaign", "Campaign", "Tree", "Age_class", "Leaf_Cohort", "LeafN_concentration")]
+    colnames(indf3) <- c("Campaign", "Date", "TREE", "AGE", "LEAF", "PercN")
+    indf3$Date <- paste0("01/", indf3$Date)
+    indf3$Date <- gsub("_", "/", indf3$Date)
+    indf3$Date <- as.Date(indf3$Date, format="%d/%b/%Y")
+    indf3$Campaign <- as.character(indf3$Campaign)
+    indf3$AGE <- as.character(indf3$AGE)
+    indf3$LEAF <- as.character(indf3$LEAF)
+    indf3$PercN <- indf3$PercN/10
     
     df <- rbind(indf1, indf2)
     df <- as.data.frame(df)
     
-    ### setting up the date
+    df$Campaign <- as.character(df$Campaign)
+    df$AGE <- as.character(df$AGE)
+    df$LEAF <- as.character(df$LEAF)
     df$Date <- as.Date(df$Date, "%d/%m/%Y")
+    
+    df <- rbind(df, indf3)
+    
+    ### setting up the date
     df <- df[complete.cases(df),]
     
     ### Assign ring information based on tree number
