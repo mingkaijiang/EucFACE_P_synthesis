@@ -598,13 +598,11 @@ Method 1:
 
 ``` {r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 7, fig.align="center"}
 
-    coarse_root_c_pool_1 <- make_coarse_root_pool_1(c_fraction, FACE_ring_area) 
-    coarse_root_c_pool_2 <- make_coarse_root_pool_2(c_fraction, FACE_ring_area) 
-    coarse_root_c_flux_1 <- make_coarse_root_production_flux(coarse_root_c_pool_1) 
-    coarse_root_c_flux_2 <- make_coarse_root_production_flux(coarse_root_c_pool_2) 
-    
+    coarse_root_c_pool <- make_coarse_root_pool(c_fraction, FACE_ring_area) 
+    coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool) 
+
     ### make the plot
-    p <- ggplot(coarse_root_c_pool_1,
+    p <- ggplot(coarse_root_c_pool,
                 aes(Date, coarse_root_pool, color=factor(Ring))) +   
             geom_point(size = 2.5) + geom_line() + 
             xlab("Date") + ylab("Coarse root C pool (g C m-2)") + 
