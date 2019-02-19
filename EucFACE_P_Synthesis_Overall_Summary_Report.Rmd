@@ -1,7 +1,7 @@
 ---
 title: "EucFACE Phosphorus Synthesis"
 author: "Mingkai Jiang"
-date: "15/10/2018"
+date: "20/02/2019"
 output:
   html_document:
     toc: true
@@ -79,7 +79,7 @@ The other way to treat the complexity of variable P concentration over time is m
 Canopy P concentration summarized by ring over the experimental period:
 ``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
     ### calculate the variable
-    canopy_p_concentration <- make_canopy_p_concentration(func=mean)
+    canopy_p_concentration <- make_canopy_p_concentration_new(func=mean)
     canopy_p_concentration_min <- make_canopy_p_concentration(func=min)
     canopy_p_concentration_max <- make_canopy_p_concentration(func=max)
 
@@ -187,20 +187,16 @@ Note, these samples were not taken on the same date; nor were they taken on the 
 We firstly need to distinguish the difference between the two. 
 
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
-    df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
-    
-    ### setting up the date
-    df$Date <- paste0("1-", as.character(df$Campaign))
-    df$Date <- as.Date(df$Date, "%d-%b-%y")
-    df.litter <- subset(df, Type == "Leaf litter")
-    df.dead <- subset(df, Type == "sceneced leaf")
-    myDF <- rbind(df.litter, df.dead)
+        ### calculate the variable
+    leaflitter_p_concentration <- make_leaflitter_p_concentration_new(func=mean)
 
-    ### plot
-    p <- ggplot(myDF,
-                aes(Date, PercP, color=factor(Type))) +   
-            geom_point(size = 5) +
-            xlab("Date") + ylab("Leaflitter P Concentration (%)")
+    ### make the ring over date plot
+    p <- ggplot(leaflitter_p_concentration,
+                aes(Date, PercP, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Leaflitter P Concentration (%)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
     plot(p)
 ```
 
@@ -208,12 +204,7 @@ Next, both leaflitter and senesced leaves were grouped together as leaflitter.
 The CO2 by date plot is:
 
 ``` {r, echo=FALSE, fig.width = 7, fig.align="center"}
-    ### calculate the variable
-    leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
-    leaflitter_p_concentration_min <- make_leaflitter_p_concentration(func=min)
-    leaflitter_p_concentration_max <- make_leaflitter_p_concentration(func=max)
-
-    
+ 
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
         leaflitter_p_concentration[leaflitter_p_concentration$Ring == i, "CO2"] <- "aCO2"
@@ -237,25 +228,21 @@ There are two understorey species: Cymbopogon refractus and Microlaena stipoides
 
 ``` {r, echo=FALSE, fig.width = 7, fig.align="center"} 
     ### read in the file
-    df <- read.csv("download/FACE_P0019_RA_leafP-understory_20130509-20151030_L1.csv")
+    understorey_p_concentration <- make_understorey_p_concentration(func=mean)
     
-    ### Assign date format
-    df$Date <- as.Date(df$Date, "%d-%b-%y")
-    
-    ### Plot species comparisons
-    p <- ggplot(df,
-            aes(Date, PercP, color=factor(Species))) +   
-        geom_point(size = 5) +
-        xlab("Date") + ylab("Understorey P Concentration (%)")
+    ### make the ring over date plot
+    p <- ggplot(understorey_p_concentration,
+                aes(Date, PercP, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Understorey P Concentration (%)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
     plot(p)
 ```
 
 Now, we can group both species together and plot understorey P concentration over time.
 
 ``` {r, echo=FALSE, fig.width = 7, fig.align="center"} 
-    understorey_p_concentration <- make_understorey_p_concentration(func=mean)
-    understorey_p_concentration_min <- make_understorey_p_concentration(func=min)
-    understorey_p_concentration_max <- make_understorey_p_concentration(func=max)
 
     ### assign CO2 treatment labels
     for (i in aCO2_rings) {
@@ -433,16 +420,16 @@ We currently don't have mycorrhizal data available yet.
 
     ### make the plot
     # compare eCO2 and aCO2 treatment
-    soil_p_mineralization[soil_p_mineralization$ring == 1, "CO2"] <- "eCO2"
-    soil_p_mineralization[soil_p_mineralization$ring == 4, "CO2"] <- "eCO2"
-    soil_p_mineralization[soil_p_mineralization$ring == 5, "CO2"] <- "eCO2"
+    soil_p_mineralization[soil_p_mineralization$Ring == 1, "CO2"] <- "eCO2"
+    soil_p_mineralization[soil_p_mineralization$Ring == 4, "CO2"] <- "eCO2"
+    soil_p_mineralization[soil_p_mineralization$Ring == 5, "CO2"] <- "eCO2"
     
-    soil_p_mineralization[soil_p_mineralization$ring == 2, "CO2"] <- "aCO2"
-    soil_p_mineralization[soil_p_mineralization$ring == 3, "CO2"] <- "aCO2"
-    soil_p_mineralization[soil_p_mineralization$ring == 6, "CO2"] <- "aCO2"
+    soil_p_mineralization[soil_p_mineralization$Ring == 2, "CO2"] <- "aCO2"
+    soil_p_mineralization[soil_p_mineralization$Ring == 3, "CO2"] <- "aCO2"
+    soil_p_mineralization[soil_p_mineralization$Ring == 6, "CO2"] <- "aCO2"
     
     
-    p <- ggplot(soil_p_mineralization, aes(date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
+    p <- ggplot(soil_p_mineralization, aes(Date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
         geom_point(size = 5) +
         xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") + 
         ggtitle("P mineralization rate over time") 
@@ -456,8 +443,8 @@ We need to think about data collected from the same time point. For now, because
 
 ``` {r, echo=FALSE, warning=FALSE, fig.width = 7, fig.align="center"}
 
-    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient.R")
-    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
+    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient_new.R")
+    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_new()
 
     p <- ggplot(leaf_p_retrans_coefficient, aes(CO2, retrans_coef, color=factor(Ring))) +   
                 geom_point(size = 5) +

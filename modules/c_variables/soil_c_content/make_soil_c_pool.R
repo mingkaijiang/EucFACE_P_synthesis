@@ -1,5 +1,5 @@
 #- Make the soil C pool
-make_soil_c_pool <- function(bk_density){
+make_soil_c_pool <- function(bk_density, return="shallow"){
 
     ### download the data
     infile <- "FACE_P0014_ALL_BasicSoilProperties_L1_2012.csv"
@@ -71,13 +71,40 @@ make_soil_c_pool <- function(bk_density){
         }
     }
     
-    ### sum across layers on each date
-    dat.s <- summaryBy(totC_g_m2~plot+ring+Date,data=mydat,FUN=sum,keep.names=T)
-    names(dat.s)[4] <- "soil_carbon_pool"
-
-    ### average across plots within each ring
-    dat.s.m <- summaryBy(soil_carbon_pool~Date+ring,data=dat.s,FUN=mean,keep.names=T)
-    dat.s.m$ring <- as.numeric(dat.s.m$ring)
+    #------
+    #- sum across layers on each date, if "return" is "all_depths"
+    if(return=="all_depths"){
+        dat.s <- summaryBy(totCgm2~Plot+Ring+Date,data=mydat,FUN=sum,keep.names=T)
+        names(dat.s)[4] <- "soil_carbon_pool"
+        #- average across plots within each ring
+        dat.s.m <- summaryBy(soil_carbon_pool~Date+Ring,data=dat.s,FUN=mean,keep.names=T)
+        dat.s.m$Ring <- as.numeric(dat.s.m$Ring)
+        
+    }
+    
+    #- return only the shallow layer on each date, if "return" is "shallow"
+    if(return=="shallow"){
+        dat.s <- summaryBy(totC_g_m2~plot+ring+Date,data=subset(mydat,depth=="0-10cm"),FUN=sum,keep.names=T)
+        names(dat.s)[4] <- "soil_carbon_pool"
+        #- average across plots within each ring
+        dat.s.m <- summaryBy(soil_carbon_pool~Date+ring,data=dat.s,FUN=mean,keep.names=T)
+        dat.s.m$Ring <- as.numeric(dat.s.m$ring)
+        
+    }
+    
+    #- return by depth, ring, if "return" is "by_depths"
+    if(return=="by_depths"){
+        dat.s <- summaryBy(totCgm2~Plot+Ring+Date+Depth,data=mydat,FUN=sum,keep.names=T)
+        names(dat.s)[5] <- "soil_carbon_pool"
+        
+        
+        dat.s.m <- summaryBy(soil_carbon_pool~Date+Ring+Depth,data=dat.s,FUN=mean,keep.names=T)
+        dat.s.m$Ring <- as.numeric(dat.s.m$Ring)
+        
+        dat.s.m <- dat.s.m[,c("Date", "Ring", "soil_carbon_pool", "Depth")]
+        
+    }
+    
     
     return(dat.s.m)
     

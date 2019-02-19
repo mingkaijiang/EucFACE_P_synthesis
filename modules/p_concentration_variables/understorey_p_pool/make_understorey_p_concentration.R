@@ -15,7 +15,7 @@ make_understorey_p_concentration <- function(func){
     df2 <- subset(df2, Subclass == "Live")
     df2$PercP <- df2$P_conc_mg_g / 10
     df3 <- df2[,c("Date", "Ring", "PercP")]
-    df3$Date <- as.Date(df3$Date)
+    df3$Date <- as.Date(df3$Date, format="%d/%m/%y")
     ### prepare the data
     myDF <- rbind(df1, df3)
     
