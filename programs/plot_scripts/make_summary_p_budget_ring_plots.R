@@ -232,7 +232,7 @@ make_summary_p_budget_ring_plots <- function() {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
         xlab("") + ylab(expression(paste("Plant P uptake (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(0, 0.5)+
+        ylim(0, 0.6)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_blank(), 
               axis.text.x = element_blank(),
@@ -259,7 +259,7 @@ make_summary_p_budget_ring_plots <- function() {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
         xlab("") + ylab(expression(paste("P mineralization rate (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(0, 0.5)+
+        ylim(0, 0.6)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_blank(), 
               axis.text.x = element_blank(),
@@ -282,11 +282,11 @@ make_summary_p_budget_ring_plots <- function() {
                    color = "black", size=1)
     
     p6 <- ggplot(plotDF7,
-                 aes(plot.order, mean)) + 
+                 aes(plot.order, -mean)) + 
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
         xlab("") + ylab(expression(paste("P supply-demand gap (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(-0.5, 0.4)+
+        ylim(0.0, 0.6)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),

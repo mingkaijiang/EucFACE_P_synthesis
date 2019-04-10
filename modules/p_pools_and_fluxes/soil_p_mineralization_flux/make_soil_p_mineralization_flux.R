@@ -5,8 +5,11 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     download_soil_p_mineralization_data()
     
     ## read in data - extractable NP data
+    #myDF1 <- read.csv(file.path(getToPath(), 
+    #                            "FACE_RA_P0023_SOILMINERALISATION_L3_20120724-20140124.csv"))
     myDF1 <- read.csv(file.path(getToPath(), 
-                                "FACE_RA_P0023_SOILMINERALISATION_L3_20120724-20140124.csv"))
+                                "FACE_RA_P0023_SOILMINERALISATION_L1_20140428-20160121.csv"))
+    
     
     # average across rings, dates, and depths, unit: mg/kg/d 
     myDF1.m <- summaryBy(P_mineralisation~date+ring,data=myDF1,FUN=mean,keep.names=T,na.rm=T)
@@ -27,33 +30,42 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF1.out <- myDF1.m[,c("date", "ring", "p_mineralization_mg_m2_d")]
     colnames(myDF1.out) <- c("Date", "Ring", "p_mineralization_mg_m2_d")
     
+    myDF1.out$Date <- as.Date(as.character(myDF1.out$Date), format="%d/%m/%Y")
+    
+    ### year 2016 only has one value, which is in Jan, decided to group it with 2015
+    myDF1.out$Date <- gsub("2016-01-21", "2015-01-21", myDF1.out$Date)
+    
+    
     myDF1.out$Start_date <- myDF1.out$End_date <- myDF1.out$Date
     myDF1.out$Days <- 1
     
+    myDF1.out <- myDF1.out[complete.cases(myDF1.out$p_mineralization_mg_m2_d),]
+    
+
     # plotting time series
     #pdf("plots_tables/soil_p_mineralization_over_time.pdf")
     #
     ## compare eCO2 and aCO2 treatment
-    #myDF1.out[myDF1.out$ring == 1, "CO2"] <- "eCO2"
-    #myDF1.out[myDF1.out$ring == 4, "CO2"] <- "eCO2"
-    #myDF1.out[myDF1.out$ring == 5, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$Ring == 1, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$Ring == 4, "CO2"] <- "eCO2"
+    #myDF1.out[myDF1.out$Ring == 5, "CO2"] <- "eCO2"
     #
-    #myDF1.out[myDF1.out$ring == 2, "CO2"] <- "aCO2"
-    #myDF1.out[myDF1.out$ring == 3, "CO2"] <- "aCO2"
-    #myDF1.out[myDF1.out$ring == 6, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$Ring == 2, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$Ring == 3, "CO2"] <- "aCO2"
+    #myDF1.out[myDF1.out$Ring == 6, "CO2"] <- "aCO2"
     #
     ## check CO2 treatment averages
     #test1 <- summaryBy(p_mineralization_mg_m2_d~CO2, 
-    #                   data=myDF1.out, FUN=mean, keep.names=T)
+    #                   data=myDF1.out, FUN=mean, keep.names=T, na.rm=T)
     #
     ## plotting
-    #p <- ggplot(myDF1.out, aes(date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
+    #p <- ggplot(myDF1.out, aes(Date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
     #    geom_point(size = 5) +
-    #    xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") + 
-    #    annotate("text", x = "2013-10-22", y = 4, 
-    #             label = paste0("aCO2 = ", round(test1[1,2], 2))) +
-    #    annotate("text", x = "2013-10-22", y = 3.8, 
-    #             label = paste0("eCO2 = ", round(test1[2,2], 2)))
+    #    xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)")# + 
+    #    #annotate("text", x = "2013-10-22", y = 4, 
+    #    #         label = paste0("aCO2 = ", round(test1[1,2], 2))) +
+    #    #annotate("text", x = "2013-10-22", y = 3.8, 
+    #    #         label = paste0("eCO2 = ", round(test1[2,2], 2)))
     #plot(p) 
     #dev.off()
     
