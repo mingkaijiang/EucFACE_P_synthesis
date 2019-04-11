@@ -914,6 +914,24 @@ source("programs/summary_variables/bootstrap/make_total_p_budgeting_variables_bo
 summary_table_total_p_budgets_bootstrap <- make_total_p_budgeting_variables_bootstrap()
 
 
+write.csv(summary_table_concentration_by_treatment_bootstrap,
+          "plots_tables/summary_table_concentration_by_treatment_bootstrap.csv")
+
+write.csv(summary_table_pool_by_treatment_bootstrap,
+          "plots_tables/summary_table_pool_by_treatment_bootstrap.csv")
+
+write.csv(summary_table_flux_by_treatment_bootstrap,
+          "plots_tables/summary_table_flux_by_treatment_bootstrap.csv")
+
+write.csv(summary_table_c_pool_by_treatment_bootstrap,
+          "plots_tables/summary_table_c_pool_by_treatment_bootstrap.csv")
+
+write.csv(summary_table_c_flux_by_treatment_bootstrap,
+          "plots_tables/summary_table_c_flux_by_treatment_bootstrap.csv")
+
+write.csv(summary_table_total_p_budgets_bootstrap,
+          "plots_tables/summary_table_total_p_budgets_bootstrap.csv")
+
 
 
 ###### ---------------- Making P budgeting figures, based on bootstrapped result -------------------- ######
