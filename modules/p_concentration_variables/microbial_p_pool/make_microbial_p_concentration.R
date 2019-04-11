@@ -7,10 +7,12 @@ make_microbial_p_concentration <- function(func) {
     # download the data
     download_microbial_p_data()
     
-    df <- read.csv(file.path(getToPath(), 
+    df1 <- read.csv(file.path(getToPath(), 
                              "FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130.csv"))
+    df <- read.csv("temp_files/FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130_V2.csv")
+    df$Pmic <- as.numeric(as.character(df$Pmic_2_noEF))
+    df <- df[complete.cases(df$ring),]
     
-
     df$Date <- as.character(df$date)
     df$date <- as.Date(df$Date, format="%d/%m/%Y")    
         
@@ -34,6 +36,9 @@ make_microbial_p_concentration <- function(func) {
     ### this is august/sep 2017 data
     newdf <- read.csv("temp_files/MASTER_Mic_P_biomass_P0091.csv")
     newdf$Date <- "2017-09-01"
+    
+    # to account for the original conversion factor of 0.4
+    newdf$mic_P_mg.kg <- newdf$mic_P_mg.kg/0.4
     
     ### 
     newdf.m <- summaryBy(mic_P_mg.kg~ring+depth+Date, data=newdf, 
