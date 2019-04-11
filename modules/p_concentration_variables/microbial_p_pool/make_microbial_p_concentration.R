@@ -9,6 +9,7 @@ make_microbial_p_concentration <- function(func) {
     
     df <- read.csv(file.path(getToPath(), 
                              "FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130.csv"))
+    
 
     df$Date <- as.character(df$date)
     df$date <- as.Date(df$Date, format="%d/%m/%Y")    
@@ -28,6 +29,21 @@ make_microbial_p_concentration <- function(func) {
     
     df.out <- df.m[,c("date", "ring", "PercP")]
     colnames(df.out) <- c("Date", "Ring", "PercP")
+    
+    
+    ### this is august/sep 2017 data
+    newdf <- read.csv("temp_files/MASTER_Mic_P_biomass_P0091.csv")
+    newdf$Date <- "2017-09-01"
+    
+    ### 
+    newdf.m <- summaryBy(mic_P_mg.kg~ring+depth+Date, data=newdf, 
+                         FUN=func, na.rm=T, keep.names=T)
+    newdf.s <- subset(newdf.m, depth == "0-10")
+    newdf.s$PercP <- newdf.s$mic_P_mg.kg * 10^-4
+    newdf.out <- newdf.s[,c("Date", "ring", "PercP")]
+    colnames(newdf.out) <- c("Date", "Ring", "PercP")
+    
+    df.out <- rbind(df.out, newdf.out)
     
     return(df.out)
     
