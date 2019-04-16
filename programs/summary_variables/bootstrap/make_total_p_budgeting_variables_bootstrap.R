@@ -6,7 +6,8 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out <- data.frame(c("Total P requirement", "Total P retranslocation", "Total P uptake",
                         "Uptake over Requirement", "Stand P OA", 
                         "Stand P UA", "Stand P Belowground", "Total plant standing P", 
-                        "MRT", "Standing PUE", "Soil P mineralization","Labile Pi stock"), NA, NA, NA, NA)
+                        "MRT", "MRT_canopy", "MRT_ua", "MRT_belowground",
+                        "Standing PUE", "Soil P mineralization","Labile Pi stock"), NA, NA, NA, NA)
     colnames(out) <- c("Variable", "aCO2", "eCO2", "aCO2_conf", "eCO2_conf")
     
     ### create dataframe to hold bootstrap results - inout
@@ -41,6 +42,9 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF1$Frass <- rnorm(1000, mean=sumDF$aCO2[sumDF$term=="Frass P flux"],
                         sd=sumDF$aCO2_sd[sumDF$term=="Frass P flux"])
     bDF1$Total <- with(bDF1, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
+    bDF1$Canopy <- with(bDF1, Canopy)
+    bDF1$UA <- with(bDF1, Understorey)
+    bDF1$Belowground <- with(bDF1, CoarseRoot+FineRoot)
     
     ### elevated
     bDF2$Wood <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Wood P flux"],
@@ -62,6 +66,9 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF2$Frass <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Frass P flux"],
                         sd=sumDF$eCO2_sd[sumDF$term=="Frass P flux"])
     bDF2$Total <- with(bDF2, Wood+Canopy+CoarseRoot+FineRoot+Understorey+Twig+Bark+Seed+Frass)
+    bDF2$Canopy <- with(bDF2, Canopy)
+    bDF2$UA <- with(bDF2, Understorey)
+    bDF2$Belowground <- with(bDF2, CoarseRoot+FineRoot)
     
     ### Calculate total
     out$aCO2[out$Variable=="Total P requirement"] <- mean(bDF1$Total)
@@ -98,6 +105,9 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF3$Understoreylitter <- rnorm(1000, mean=sumDF$aCO2[sumDF$term=="Understorey Litter P flux"],
                                     sd=sumDF$aCO2_sd[sumDF$term=="Understorey Litter P flux"])
     bDF3$Total <- with(bDF3, Wood+Canopy+CoarseRoot+FineRoot+Understorey-Leaflitter-Finerootlitter-Understoreylitter)
+    bDF3$Canopy <- with(bDF3, Canopy-Leaflitter)
+    bDF3$UA <- with(bDF3, Understorey-Understoreylitter)
+    bDF3$Belowground <- with(bDF3, CoarseRoot+FineRoot-Finerootlitter)
     
     ### elevated
     bDF4$Wood <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Wood P flux"],
@@ -117,6 +127,10 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF4$Understoreylitter <- rnorm(1000, mean=sumDF$eCO2[sumDF$term=="Understorey Litter P flux"],
                                     sd=sumDF$eCO2_sd[sumDF$term=="Understorey Litter P flux"])
     bDF4$Total <- with(bDF4, Wood+Canopy+CoarseRoot+FineRoot+Understorey-Leaflitter-Finerootlitter-Understoreylitter)
+    bDF4$Canopy <- with(bDF4, Canopy-Leaflitter)
+    bDF4$UA <- with(bDF4, Understorey-Understoreylitter)
+    bDF4$Belowground <- with(bDF4, CoarseRoot+FineRoot-Finerootlitter)
+    
     
     ### Calculate total
     out$aCO2[out$Variable=="Total P retranslocation"] <- mean(bDF3$Total)
@@ -126,13 +140,22 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     
     ### Total P uptake
     ### create dataframe to hold bootstrap results - inout
-    bDF5 <- data.frame(bDF1$Total, bDF3$Total)
-    bDF6 <- data.frame(bDF2$Total, bDF4$Total)
+    bDF5 <- data.frame(bDF1$Total, bDF3$Total,bDF1$Canopy, bDF3$Canopy, bDF1$UA, bDF3$UA, bDF1$Belowground, bDF3$Belowground)
+    bDF6 <- data.frame(bDF2$Total, bDF4$Total,bDF2$Canopy, bDF4$Canopy, bDF2$UA, bDF4$UA, bDF2$Belowground, bDF4$Belowground)
     
-    colnames(bDF5) <- colnames(bDF6) <- c("Requirement", "Retranslocation")
+    colnames(bDF5) <- colnames(bDF6) <- c("Requirement", "Retranslocation", "C_req", "C_retrans", "UA_req", "UA_retrans", "B_req", "B_retrans")
     
     bDF5$Uptake <- with(bDF5, Requirement - Retranslocation)
     bDF6$Uptake <- with(bDF6, Requirement - Retranslocation)
+    
+    bDF5$C_Uptake <- with(bDF5, C_req - C_retrans)
+    bDF6$C_Uptake <- with(bDF6, C_req - C_retrans)
+    
+    bDF5$UA_Uptake <- with(bDF5, UA_req - UA_retrans)
+    bDF6$UA_Uptake <- with(bDF6, UA_req - UA_retrans)
+    
+    bDF5$B_Uptake <- with(bDF5, B_req - B_retrans)
+    bDF6$B_Uptake <- with(bDF6, B_req - B_retrans)
     
     bDF5$UptakeOverRequ <- with(bDF5, Uptake / Requirement)
     bDF6$UptakeOverRequ <- with(bDF6, Uptake / Requirement)
@@ -149,7 +172,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out$eCO2[out$Variable=="Uptake over Requirement"] <- mean(bDF6$UptakeOverRequ)
     out$eCO2_conf[out$Variable=="Uptake over Requirement"] <- sd(bDF6$UptakeOverRequ)
     
-    
+ 
     ### Standing P
     inDF <- summary_table_pool_by_treatment_bootstrap
     
@@ -176,7 +199,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF7$Belowground <- with(bDF7, (FineRoot+CoarseRoot))
     bDF7$UnderstoreyAboveground <- bDF7$Understorey
     bDF7$Total <- with(bDF7, Wood+Canopy+CoarseRoot+FineRoot+Understorey)
-    
+
     ## elevated rings
     bDF8$Wood <- rnorm(1000, mean=inDF$eCO2[inDF$term=="Wood P Pool"],
                        sd=inDF$eCO2_sd[inDF$term=="Wood P Pool"])
@@ -192,7 +215,7 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF8$Belowground <- with(bDF8, (FineRoot+CoarseRoot))
     bDF8$UnderstoreyAboveground <- bDF8$Understorey
     bDF8$Total <- with(bDF8, Wood+Canopy+CoarseRoot+FineRoot+Understorey)
-    
+
     ### Calculate total
     out$aCO2[out$Variable=="Stand P OA"] <- mean(bDF7$OverstoreyAboveground)
     out$aCO2_conf[out$Variable=="Stand P OA"] <- sd(bDF7$OverstoreyAboveground)
@@ -219,13 +242,67 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF7$Uptake <- bDF5$Uptake
     bDF8$Uptake <- bDF6$Uptake
     
+    bDF7$C_Uptake <- bDF5$C_Uptake
+    bDF8$C_Uptake <- bDF6$C_Uptake
+    
+    bDF7$UA_Uptake <- bDF5$UA_Uptake
+    bDF8$UA_Uptake <- bDF6$UA_Uptake
+    
+    bDF7$B_Uptake <- bDF5$B_Uptake
+    bDF8$B_Uptake <- bDF6$B_Uptake
+    
+    
     bDF7$MRT <- with(bDF7, Total/Uptake)
     bDF8$MRT <- with(bDF8, Total/Uptake)
     
-    out$aCO2[out$Variable=="MRT"] <- mean(bDF7$MRT)
-    out$aCO2_conf[out$Variable=="MRT"] <- sd(bDF7$MRT)
-    out$eCO2[out$Variable=="MRT"] <- mean(bDF8$MRT)
-    out$eCO2_conf[out$Variable=="MRT"] <- sd(bDF8$MRT)
+    bDF7$C_MRT <- with(bDF7, Canopy/C_Uptake)
+    bDF8$C_MRT <- with(bDF8, Canopy/C_Uptake)
+    
+    bDF7$UA_MRT <- with(bDF7, UnderstoreyAboveground/UA_Uptake)
+    bDF8$UA_MRT <- with(bDF8, UnderstoreyAboveground/UA_Uptake)
+    
+    bDF7$B_MRT <- with(bDF7, Belowground/B_Uptake)
+    bDF8$B_MRT <- with(bDF8, Belowground/B_Uptake)
+    
+    qt7.mrt <- quantile(bDF7$MRT, c(0.025, 0.975)) 
+    qt8.mrt <- quantile(bDF8$MRT, c(0.025, 0.975)) 
+    bDF7.sub <- subset(bDF7, MRT >= qt7.mrt[1] & MRT <= qt7.mrt[2])
+    bDF8.sub <- subset(bDF8, MRT >= qt8.mrt[1] & MRT <= qt8.mrt[2])
+    
+    out$aCO2[out$Variable=="MRT"] <- mean(bDF7.sub$MRT)
+    out$aCO2_conf[out$Variable=="MRT"] <- sd(bDF7.sub$MRT)
+    out$eCO2[out$Variable=="MRT"] <- mean(bDF8.sub$MRT)
+    out$eCO2_conf[out$Variable=="MRT"] <- sd(bDF8.sub$MRT)
+    
+    qt7.mrt <- quantile(bDF7$C_MRT, c(0.025, 0.975)) 
+    qt8.mrt <- quantile(bDF8$C_MRT, c(0.025, 0.975)) 
+    bDF7.sub <- subset(bDF7, C_MRT >= qt7.mrt[1] & C_MRT <= qt7.mrt[2])
+    bDF8.sub <- subset(bDF8, C_MRT >= qt8.mrt[1] & C_MRT <= qt8.mrt[2])
+    
+    out$aCO2[out$Variable=="MRT_canopy"] <- mean(bDF7.sub$C_MRT)
+    out$aCO2_conf[out$Variable=="MRT_canopy"] <- sd(bDF7.sub$C_MRT)
+    out$eCO2[out$Variable=="MRT_canopy"] <- mean(bDF8.sub$C_MRT)
+    out$eCO2_conf[out$Variable=="MRT_canopy"] <- sd(bDF8.sub$C_MRT)
+    
+    qt7.mrt <- quantile(bDF7$UA_MRT, c(0.025, 0.975)) 
+    qt8.mrt <- quantile(bDF8$UA_MRT, c(0.025, 0.975)) 
+    bDF7.sub <- subset(bDF7, UA_MRT >= qt7.mrt[1] & UA_MRT <= qt7.mrt[2])
+    bDF8.sub <- subset(bDF8, UA_MRT >= qt8.mrt[1] & UA_MRT <= qt8.mrt[2])
+    
+    out$aCO2[out$Variable=="MRT_ua"] <- mean(bDF7.sub$UA_MRT)
+    out$aCO2_conf[out$Variable=="MRT_ua"] <- sd(bDF7.sub$UA_MRT)
+    out$eCO2[out$Variable=="MRT_ua"] <- mean(bDF8.sub$UA_MRT)
+    out$eCO2_conf[out$Variable=="MRT_ua"] <- sd(bDF8.sub$UA_MRT)
+    
+    qt7.mrt <- quantile(bDF7$B_MRT, c(0.025, 0.975)) 
+    qt8.mrt <- quantile(bDF8$B_MRT, c(0.025, 0.975)) 
+    bDF7.sub <- subset(bDF7, B_MRT >= qt7.mrt[1] & B_MRT <= qt7.mrt[2])
+    bDF8.sub <- subset(bDF8, B_MRT >= qt8.mrt[1] & B_MRT <= qt8.mrt[2])
+    
+    out$aCO2[out$Variable=="MRT_belowground"] <- mean(bDF7.sub$B_MRT)
+    out$aCO2_conf[out$Variable=="MRT_belowground"] <- sd(bDF7.sub$B_MRT)
+    out$eCO2[out$Variable=="MRT_belowground"] <- mean(bDF8.sub$B_MRT)
+    out$eCO2_conf[out$Variable=="MRT_belowground"] <- sd(bDF8.sub$B_MRT)
     
     ### Calculate standing PUE, i.e. NPP / P uptake
     cDF <- summary_table_c_flux_by_treatment_bootstrap
@@ -284,10 +361,15 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF9$PUE <- with(bDF9, Total/Puptake)
     bDF10$PUE <- with(bDF10, Total/Puptake)
     
-    out$aCO2[out$Variable=="Standing PUE"] <- mean(bDF9$PUE)
-    out$aCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF9$PUE)
-    out$eCO2[out$Variable=="Standing PUE"] <- mean(bDF10$PUE)
-    out$eCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF10$PUE)
+    qt9.mrt <- quantile(bDF9$PUE, c(0.025, 0.975)) 
+    qt10.mrt <- quantile(bDF10$PUE, c(0.025, 0.975)) 
+    bDF9.sub <- subset(bDF9, PUE >= qt9.mrt[1] & PUE <= qt9.mrt[2])
+    bDF10.sub <- subset(bDF10, PUE >= qt10.mrt[1] & PUE <= qt10.mrt[2])
+    
+    out$aCO2[out$Variable=="Standing PUE"] <- mean(bDF9.sub$PUE)
+    out$aCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF9.sub$PUE)
+    out$eCO2[out$Variable=="Standing PUE"] <- mean(bDF10.sub$PUE)
+    out$eCO2_conf[out$Variable=="Standing PUE"] <- sd(bDF10.sub$PUE)
     
     
     ### Soil P mineralization flux

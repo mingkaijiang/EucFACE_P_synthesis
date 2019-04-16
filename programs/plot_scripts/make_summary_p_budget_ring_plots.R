@@ -1,4 +1,6 @@
 make_summary_p_budget_ring_plots <- function() {
+    ### because this is a per ring plot, we cannot use bootstrapped results!!!
+    
     
     ################### Plot all P summary budget plots
     

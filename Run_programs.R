@@ -966,7 +966,8 @@ make_summary_p_budget_ring_plots()
 ### prepare meeting report
 ### small things to improve: 1. leaf P retranslocation coefficient based on new dataset (needs info)
 ###                          2. wood and coarseroot P rentranslocation coefficient recalculated. 
-
+###                          3. resolve the issue with per ring plot (unable to use bootstrapped result), there is a diagreement in MRT 
+###                          4. 
 
 
 
