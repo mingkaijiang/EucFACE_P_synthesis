@@ -1084,6 +1084,11 @@ understorey_np_ratio <- make_understorey_np_ratios(n_conc=understorey_n_concentr
                                                    p_conc=understorey_p_concentration)
 
 
+### make a output table to store all np ratios
+make_summary_table_np_ratios()
+
+
+
 ###### ---------------- Data checking -------------------- ######
 source("programs/check_variables/check_wood_data.R")
 check_wood_data()

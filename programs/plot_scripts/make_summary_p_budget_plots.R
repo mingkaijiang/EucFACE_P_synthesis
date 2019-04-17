@@ -244,6 +244,161 @@ make_summary_p_budget_plots <- function() {
               gp=gpar(fontsize=14, col="black", fontface="bold"))
     dev.off()
     
+    
+    
+    ### Plot 
+    plotDF1 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT"], 
+                            inDF$eCO2[inDF$Variable=="MRT"]), 
+                          NA)
+    colnames(plotDF1) <- c("mean", "sd")
+    plotDF1$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT"], 
+                    inDF$eCO2_conf[inDF$Variable=="MRT"])
+    plotDF1$Trt <- c("aCO2", "eCO2")
+    plotDF1$pos <- with(plotDF1, mean + sd)
+    plotDF1$neg <- with(plotDF1, mean - sd)
+    
+    plotDF2 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT_canopy"], 
+                            inDF$eCO2[inDF$Variable=="MRT_canopy"]), 
+                          NA)
+    colnames(plotDF2) <- c("mean", "sd")
+    plotDF2$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT_canopy"], 
+                    inDF$eCO2_conf[inDF$Variable=="MRT_canopy"])
+    plotDF2$Trt <- c("aCO2", "eCO2")
+    plotDF2$pos <- with(plotDF2, mean + sd)
+    plotDF2$neg <- with(plotDF2, mean - sd)
+    
+    plotDF3 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT_ua"], 
+                            inDF$eCO2[inDF$Variable=="MRT_ua"]), 
+                          NA)
+    colnames(plotDF3) <- c("mean", "sd")
+    plotDF3$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT_ua"], 
+                    inDF$eCO2_conf[inDF$Variable=="MRT_ua"])
+    plotDF3$Trt <- c("aCO2", "eCO2")
+    plotDF3$pos <- with(plotDF3, mean + sd)
+    plotDF3$neg <- with(plotDF3, mean - sd)
+    
+    plotDF4 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT_belowground"], 
+                            inDF$eCO2[inDF$Variable=="MRT_belowground"]), 
+                          NA)
+    colnames(plotDF4) <- c("mean", "sd")
+    plotDF4$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT_belowground"], 
+                    inDF$eCO2_conf[inDF$Variable=="MRT_belowground"])
+    plotDF4$Trt <- c("aCO2", "eCO2")
+    plotDF4$pos <- with(plotDF4, mean + sd)
+    plotDF4$neg <- with(plotDF4, mean - sd)
+    
+    
+    p1 <- ggplot(plotDF1,
+                 aes(Trt, mean)) + 
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+        #geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+        #              position = position_dodge(0.9), width=0.2, size=0.4) +
+        xlab("") + ylab("MRT (yr)")+
+        theme_linedraw() +
+        ylim(0,10)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=10),
+              axis.title.y=element_text(size=10),
+              legend.text=element_text(size=10),
+              legend.title=element_text(size=12),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_x_discrete(limits=c("aCO2","eCO2"),
+                         labels=c(expression(aCO[2]),
+                                  expression(eCO[2])))
+    
+    
+    p2 <- ggplot(plotDF2,
+                 aes(Trt, mean)) + 
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+        #geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+        #              position = position_dodge(0.9), width=0.2, size=0.4) +
+        xlab("") + ylab("Canopy MRT (yr)")+
+        theme_linedraw() +
+        ylim(0,10)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=10),
+              axis.title.y=element_text(size=10),
+              legend.text=element_text(size=10),
+              legend.title=element_text(size=12),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_x_discrete(limits=c("aCO2","eCO2"),
+                         labels=c(expression(aCO[2]),
+                                  expression(eCO[2])))
+    
+    p3 <- ggplot(plotDF3,
+                 aes(Trt, mean)) + 
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+        #geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+        #              position = position_dodge(0.9), width=0.2, size=0.4) +
+        xlab("") + ylab("Understorey aboveground MRT (yr)")+
+        theme_linedraw() +
+        ylim(0,10)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=10),
+              axis.title.y=element_text(size=10),
+              legend.text=element_text(size=10),
+              legend.title=element_text(size=12),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_x_discrete(limits=c("aCO2","eCO2"),
+                         labels=c(expression(aCO[2]),
+                                  expression(eCO[2])))
+    
+    p4 <- ggplot(plotDF4,
+                 aes(Trt, mean)) + 
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+        #geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+        #              position = position_dodge(0.9), width=0.2, size=0.4) +
+        xlab("") + ylab("Belowground MRT (yr)")+
+        theme_linedraw() +
+        ylim(0,10)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=10),
+              axis.title.y=element_text(size=10),
+              legend.text=element_text(size=10),
+              legend.title=element_text(size=12),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_x_discrete(limits=c("aCO2","eCO2"),
+                         labels=c(expression(aCO[2]),
+                                  expression(eCO[2])))
+    
+
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)")
+    
+    
+    pdf("plots_tables/Summary_P_Budget_MRT_Plots.pdf", width=8,height=8)
+    plot_grid(p1,p2,p3,p4, labels="", ncol=2, align="v", axis = "l")
+    grid.text(grid.labs, x = c(0.11, 0.60, 0.11, 0.60),
+              y = c(0.95, 0.95, 0.45, 0.45), 
+              gp=gpar(fontsize=14, col="black", fontface="bold"))
+    dev.off()
 }
 
 

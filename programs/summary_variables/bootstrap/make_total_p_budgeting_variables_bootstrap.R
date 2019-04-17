@@ -264,8 +264,8 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF7$B_MRT <- with(bDF7, Belowground/B_Uptake)
     bDF8$B_MRT <- with(bDF8, Belowground/B_Uptake)
     
-    qt7.mrt <- quantile(bDF7$MRT, c(0.025, 0.975)) 
-    qt8.mrt <- quantile(bDF8$MRT, c(0.025, 0.975)) 
+    qt7.mrt <- quantile(bDF7$MRT, c(0.005, 0.995)) 
+    qt8.mrt <- quantile(bDF8$MRT, c(0.005, 0.995)) 
     bDF7.sub <- subset(bDF7, MRT >= qt7.mrt[1] & MRT <= qt7.mrt[2])
     bDF8.sub <- subset(bDF8, MRT >= qt8.mrt[1] & MRT <= qt8.mrt[2])
     
@@ -274,8 +274,8 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out$eCO2[out$Variable=="MRT"] <- mean(bDF8.sub$MRT)
     out$eCO2_conf[out$Variable=="MRT"] <- sd(bDF8.sub$MRT)
     
-    qt7.mrt <- quantile(bDF7$C_MRT, c(0.025, 0.975)) 
-    qt8.mrt <- quantile(bDF8$C_MRT, c(0.025, 0.975)) 
+    qt7.mrt <- quantile(bDF7$C_MRT, c(0.005, 0.995)) 
+    qt8.mrt <- quantile(bDF8$C_MRT, c(0.005, 0.995)) 
     bDF7.sub <- subset(bDF7, C_MRT >= qt7.mrt[1] & C_MRT <= qt7.mrt[2])
     bDF8.sub <- subset(bDF8, C_MRT >= qt8.mrt[1] & C_MRT <= qt8.mrt[2])
     
@@ -284,8 +284,8 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out$eCO2[out$Variable=="MRT_canopy"] <- mean(bDF8.sub$C_MRT)
     out$eCO2_conf[out$Variable=="MRT_canopy"] <- sd(bDF8.sub$C_MRT)
     
-    qt7.mrt <- quantile(bDF7$UA_MRT, c(0.025, 0.975)) 
-    qt8.mrt <- quantile(bDF8$UA_MRT, c(0.025, 0.975)) 
+    qt7.mrt <- quantile(bDF7$UA_MRT, c(0.005, 0.995)) 
+    qt8.mrt <- quantile(bDF8$UA_MRT, c(0.005, 0.995)) 
     bDF7.sub <- subset(bDF7, UA_MRT >= qt7.mrt[1] & UA_MRT <= qt7.mrt[2])
     bDF8.sub <- subset(bDF8, UA_MRT >= qt8.mrt[1] & UA_MRT <= qt8.mrt[2])
     
@@ -294,8 +294,8 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     out$eCO2[out$Variable=="MRT_ua"] <- mean(bDF8.sub$UA_MRT)
     out$eCO2_conf[out$Variable=="MRT_ua"] <- sd(bDF8.sub$UA_MRT)
     
-    qt7.mrt <- quantile(bDF7$B_MRT, c(0.025, 0.975)) 
-    qt8.mrt <- quantile(bDF8$B_MRT, c(0.025, 0.975)) 
+    qt7.mrt <- quantile(bDF7$B_MRT, c(0.005, 0.995)) 
+    qt8.mrt <- quantile(bDF8$B_MRT, c(0.005, 0.995)) 
     bDF7.sub <- subset(bDF7, B_MRT >= qt7.mrt[1] & B_MRT <= qt7.mrt[2])
     bDF8.sub <- subset(bDF8, B_MRT >= qt8.mrt[1] & B_MRT <= qt8.mrt[2])
     
@@ -361,8 +361,8 @@ make_total_p_budgeting_variables_bootstrap <- function() {
     bDF9$PUE <- with(bDF9, Total/Puptake)
     bDF10$PUE <- with(bDF10, Total/Puptake)
     
-    qt9.mrt <- quantile(bDF9$PUE, c(0.025, 0.975)) 
-    qt10.mrt <- quantile(bDF10$PUE, c(0.025, 0.975)) 
+    qt9.mrt <- quantile(bDF9$PUE, c(0.005, 0.995)) 
+    qt10.mrt <- quantile(bDF10$PUE, c(0.005, 0.995)) 
     bDF9.sub <- subset(bDF9, PUE >= qt9.mrt[1] & PUE <= qt9.mrt[2])
     bDF10.sub <- subset(bDF10, PUE >= qt10.mrt[1] & PUE <= qt10.mrt[2])
     
