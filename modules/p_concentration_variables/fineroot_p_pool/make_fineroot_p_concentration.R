@@ -5,7 +5,7 @@ make_fineroot_p_concentration <- function(func){
     download_fineroot_p_data()
 
     ### read in the csv
-    myDF <- read.csv("download/EucFACE_FineRootData.csv")
+    myDF <- read.csv("temp_files/EucFACE_FineRootData.csv")
 
     ### setting up the date
     myDF$Date <- paste0("1-", as.character(myDF$Date))

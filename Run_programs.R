@@ -30,23 +30,23 @@ microbial_p_concentration_min <- make_microbial_p_concentration(func=min)
 microbial_p_concentration_max <- make_microbial_p_concentration(func=max)
 
 #### Canopy P conc.
-canopy_p_concentration_limited_data <- make_canopy_p_concentration(func=mean)
-canopy_p_concentration_limited_data_min <- make_canopy_p_concentration(func=min)
-canopy_p_concentration_limited_data_max <- make_canopy_p_concentration(func=max)
+canopy_p_concentration <- make_canopy_p_concentration(func=mean)
+canopy_p_concentration_min <- make_canopy_p_concentration(func=min)
+canopy_p_concentration_max <- make_canopy_p_concentration(func=max)
 
-canopy_p_concentration <- make_canopy_p_concentration_new(func=mean)
-compare_canopy_p_conc_datasets(inDF1=canopy_p_concentration_limited_data, inDF2=canopy_p_concentration)
+#canopy_p_concentration <- make_canopy_p_concentration_new(func=mean)
+#compare_canopy_p_conc_datasets(inDF1=canopy_p_concentration_limited_data, inDF2=canopy_p_concentration)
 
 #canopy_p_concentration <- make_canopy_p_concentration_fitted_with_age()
 
 
 
 #### Leaf litter P conc. 
-leaflitter_p_concentration_limited_data <- make_leaflitter_p_concentration(func=mean)
-leaflitter_p_concentration_limited_data_min <- make_leaflitter_p_concentration(func=min)
-leaflitter_p_concentration_limited_data_max <- make_leaflitter_p_concentration(func=max)
+leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
+leaflitter_p_concentration_min <- make_leaflitter_p_concentration(func=min)
+leaflitter_p_concentration_max <- make_leaflitter_p_concentration(func=max)
 
-leaflitter_p_concentration <- make_leaflitter_p_concentration_new(func=mean)
+#leaflitter_p_concentration <- make_leaflitter_p_concentration_new(func=mean)
 
 
 #### Wood P conc. 
