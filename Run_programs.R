@@ -375,6 +375,8 @@ summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
 source("programs/summary_variables/make_total_p_budgeting_variables.R")
 summary_table_total_p_budgets <- make_total_p_budgeting_variables()
 
+write.csv(summary_table_total_p_budgets, "plots_tables/summary_table_total_p_budgets_unnormalized.csv", row.names=F)
+
 source("programs/summary_variables/make_overstorey_p_budgeting_variables.R")
 summary_table_overstorey_p_budgets <- make_overstorey_p_budgeting_variables()
 
@@ -394,7 +396,6 @@ source("programs/check_variables/check_microbial_pool_CP_ratios.R")
 summary_microbial_pool_comparison <- check_microbial_pool_CP_ratios(c_pool=summary_table_c_pool_by_treatment,
                                                                     p_pool=summary_table_pool_by_treatment)
 
-### check - has CP ratio changed over time?
 
 ###### ---------------- treatment difference based on raw data, predicted by initial LAI  -------------------- ######
 #### Stats summary for all individual P concentrations

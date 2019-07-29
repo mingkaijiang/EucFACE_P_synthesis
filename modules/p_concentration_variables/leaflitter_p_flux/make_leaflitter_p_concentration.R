@@ -18,6 +18,7 @@ make_leaflitter_p_concentration <- function(func) {
     df.lit.p$month <- month(df.lit.p$Date)
     df.lit.p$year <- year(df.lit.p$Date)
     
+    colnames(df.lit.p) <- c("Ring", "Date", "PercP", "month", "year")
     
     
     #### this dataset has been updated

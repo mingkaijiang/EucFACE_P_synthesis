@@ -2,8 +2,8 @@ make_overstorey_p_budgeting_variables <- function() {
     #### This function calculates all P budgeting variables
     
     ### leaf p retranslocation coefficient
-    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient.R")
-    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient()
+    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient_new.R")
+    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_new()
     
     
     ### standing P stock
