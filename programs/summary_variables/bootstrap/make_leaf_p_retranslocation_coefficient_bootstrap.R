@@ -1,67 +1,68 @@
 #- Make the retranslocation coefficient
 make_leaf_p_retranslocation_coefficient_bootstrap <- function(){
  
-    df <- read.csv("download/FACE_P0020_RA_leafP-Eter_20130201-20151115_L1.csv")
+    df1 <- canopy_p_concentration
+    df2 <- leaflitter_p_concentration
     
-    ### setting up the date
-    df$Date <- paste0("1-", as.character(df$Campaign))
-    df$Date <- as.Date(df$Date, "%d-%b-%y")
+    df1$year <- year(df1$Date)
+    df2$year <- year(df2$Date)
     
-    ### per ring leaf P % - litter
-    df.litter <- subset(df, Type == "Leaf litter")
+    df1.yr <- summaryBy(PercP~Ring+year, data=df1, FUN=mean, keep.names=T)
+    df2.yr <- summaryBy(PercP~Ring+year, data=df2, FUN=mean, keep.names=T)
     
-    ### Leaf litter p, average across rings, ignore dates, unit = %
-    df.litter.p <- summaryBy(PercP~Ring,
-                             data=df.litter,FUN=mean,keep.names=T,na.rm=T)
     
-    ### per ring leaf P % - green
-    df.green <- subset(df, Type == "green leaf")
+    retransDF <- data.frame(rep(c(1:6), each=6), rep(c(2012:2017), 6),NA, NA)
+    colnames(retransDF) <- c("Ring", "Year", "old", "senesced")
     
-    ### Leaf green p, average across rings, ignore dates, unit = %
-    df.green.p <- summaryBy(PercP~Ring,
-                             data=df.green,FUN=mean,keep.names=T,na.rm=T)
     
-    ### per ring leaf P % - dead
-    df.dead <- subset(df, Type == "sceneced leaf")
+    for (i in c(2012:2017)) {
+        for (j in c(1:6)) {
+            retransDF$senesced[retransDF$Ring == j & retransDF$Year == i] <- df2.yr$PercP[df2.yr$Ring == j & df2.yr$year == (i+1)]
+        }
+    }
     
-    ### Leaf dead p, average across rings, ignore dates, unit = %
-    df.dead.p <- summaryBy(PercP~Ring,
-                             data=df.dead,FUN=mean,keep.names=T,na.rm=T)
+    for (i in c(2012:2015)) {
+        for (j in c(1:6)) {
+            retransDF$old[retransDF$Ring == j & retransDF$Year == i] <- df1.yr$PercP[df1.yr$Ring == j & df1.yr$year == i]
+        }
+    }
     
-    ### compare P% across green, dead and litter leaves
-    require(ggplot2)
     
-    pdf("plots_tables/Leaf_P_concentration.pdf")
-    plotDF <- rbind(df.green.p, df.dead.p, df.litter.p)
-    plotDF$Category <- rep(c("green", "dead", "litter"), each = 6)
-    p <- ggplot(plotDF, aes(Ring, PercP)) +   
-           geom_bar(aes(fill = Category), position = "dodge", stat="identity") +
-           xlab("Ring") + ylab("P concentration (%)") + 
-           ggtitle("P concentration comparison across leaf tissues")
-    plot(p)
-    dev.off()
+    retransDF$old[retransDF$Ring == "5" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "5" & df1.yr$year == "2016"]
+    retransDF$old[retransDF$Ring == "3" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "3" & df1.yr$year == "2016"]
+    retransDF$old[retransDF$Ring == "2" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "2" & df1.yr$year == "2016"]
+    retransDF$old[retransDF$Ring == "1" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "1" & df1.yr$year == "2016"]
     
-    ### calculate leaf P retranslocation rate based on dead and green leaf
-    retransDF <- cbind(df.green.p, df.dead.p$PercP)
-    colnames(retransDF) <- c("Ring", "green", "dead")
-    retransDF$retrans_coef <- (retransDF$green - retransDF$dead) / retransDF$green 
-    #retransDF$retrans_coef <- 1 - (retransDF$percent_diff/retransDF$green)
+    
+    ### calculate retranslocation coefficient for each ring
+    test <- subset(retransDF, Year < "2016")
+    test$retrans <- with(test, (old - senesced) / old)
+    
+    reDF <- summaryBy(retrans~Ring, FUN=mean, keep.names=T, data=test)
+    
+    ### calculate year 2017
+    for (j in c(1:6)) {
+        retransDF$old[retransDF$Ring == j & retransDF$Year == "2017"] <- retransDF$senesced[retransDF$Ring == j & retransDF$Year == "2017"] / (1 - reDF$retrans[reDF$Ring==j])
+    }
+    
+    for (j in c(4,6)) {
+        retransDF$old[retransDF$Ring == j & retransDF$Year == "2016"] <- retransDF$senesced[retransDF$Ring == j & retransDF$Year == "2016"] / (1 - reDF$retrans[reDF$Ring==j])
+        
+    }
+    
+    retransDF$retrans_coef <- (retransDF$old - retransDF$senesced) / retransDF$old 
     
     ### Plot eCO2 effect on retranslocation coefficient
     retransDF$CO2 <- c("eCO2", "aCO2", "aCO2", "eCO2", "eCO2", "aCO2")
-
-    pdf("plots_tables/CO2_effect_on_P_retranslocation_coefficient.pdf")
-    p <- ggplot(retransDF, aes(CO2, retrans_coef*100, color=factor(Ring))) +   
-        geom_point(size = 5) +
-        xlab("Treatment") + ylab("Leaf P retranslocation coefficient (%)") + 
-        ggtitle("CO2 effect on P retranslocation coefficient") + 
-        scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
-                                    "#FF4040", "#8B0000", "#0000FF"))
-    plot(p)
-    dev.off()
     
-    outDF <- retransDF[,c("Ring", "retrans_coef", "CO2")]
-
+    
+    outDF <- retransDF[,c("Ring", "retrans_coef", "CO2", "Year")]
+    
+    
+    ###
+    #sumDF <- summaryBy(retrans_coef~CO2, data=outDF, FUN=mean, keep.names=T)
+    
+    return(outDF)
     return(outDF)
     
 }

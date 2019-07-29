@@ -1,6 +1,9 @@
 #- Make the retranslocation coefficient
-make_leaf_p_retranslocation_coefficient_new <- function(){
+make_leaf_p_retranslocation_coefficient_bootstrap_new <- function(){
  
+    
+    ### this is incorrect as it is not normalized yet!
+    
     df1 <- canopy_p_concentration
     df2 <- leaflitter_p_concentration
     
@@ -33,7 +36,7 @@ make_leaf_p_retranslocation_coefficient_new <- function(){
     retransDF$old[retransDF$Ring == "2" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "2" & df1.yr$year == "2016"]
     retransDF$old[retransDF$Ring == "1" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "1" & df1.yr$year == "2016"]
     
-
+    
     ### calculate retranslocation coefficient for each ring
     test <- subset(retransDF, Year < "2016")
     test$retrans <- with(test, (old - senesced) / old)
@@ -51,19 +54,16 @@ make_leaf_p_retranslocation_coefficient_new <- function(){
     }
     
     retransDF$retrans_coef <- (retransDF$old - retransDF$senesced) / retransDF$old 
-
+    
     ### Plot eCO2 effect on retranslocation coefficient
     retransDF$CO2 <- c("eCO2", "aCO2", "aCO2", "eCO2", "eCO2", "aCO2")
-
-
-    outDF <- retransDF[,c("Ring", "retrans_coef", "CO2", "Year")]
     
+    
+    outDF <- retransDF[,c("Ring", "retrans_coef", "CO2", "Year")]
     
     outDF2 <- summaryBy(retrans_coef~Ring, FUN=mean, data=outDF, keep.names=T)
     
-    ###
-    #sumDF <- summaryBy(retrans_coef~CO2, data=outDF, FUN=mean, keep.names=T)
-
+    
     return(outDF2)
     
 }

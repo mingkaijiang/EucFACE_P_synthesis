@@ -5,9 +5,6 @@
 
 make_c_flux_summary_table_by_treatment_bootstrap <- function() {
     
-    ### convert daily flux in mg C m2 d-1 to g C m-2 yr-1
-    conv <- 365 / 1000
-    
     ### Define production variable names
     terms <- c("Wood C flux", "Canopy C flux", "Fine Root C flux",
                "Coarse Root C flux","Leaflitter C flux", "Twiglitter C flux",
@@ -16,112 +13,68 @@ make_c_flux_summary_table_by_treatment_bootstrap <- function() {
                "Frass C flux","Understorey C flux")
     
     treatDF <- data.frame(terms)
+    treatDF$R1 <- rep(NA, length(treatDF$terms))
+    treatDF$R2 <- rep(NA, length(treatDF$terms))
+    treatDF$R3 <- rep(NA, length(treatDF$terms))
+    treatDF$R4 <- rep(NA, length(treatDF$terms))
+    treatDF$R5 <- rep(NA, length(treatDF$terms))
+    treatDF$R6 <- rep(NA, length(treatDF$terms))
+    
     treatDF$aCO2 <- rep(NA, length(treatDF$terms))
     treatDF$eCO2 <- rep(NA, length(treatDF$terms))
     treatDF$aCO2_sd <- rep(NA, length(treatDF$terms))
     treatDF$eCO2_sd <- rep(NA, length(treatDF$terms))
     
     ### Canopy C flux
-    out1 <- summaryBy(predicted~Trt,data=leaflitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=leaflitter_flux_pred,FUN=sd,keep.names=T,na.rm=T)
+    out <- summaryBy(predicted~Ring,data=leaflitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Canopy C flux", 2:7] <- out$predicted
     
-    treatDF$aCO2[treatDF$terms == "Canopy C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Canopy C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Canopy C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Canopy C flux"] <- out2$predicted[out2$Trt=="ele"]
     
     
     ### Wood C 
-    out1 <- summaryBy(predicted~Trt,data=wood_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=wood_production_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Wood C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Wood C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Wood C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Wood C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=wood_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Wood C flux", 2:7] <- out$predicted
     
     ### Fine root C flux
-    out1 <- summaryBy(predicted~Trt,data=fineroot_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=fineroot_production_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Fine Root C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Fine Root C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Fine Root C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Fine Root C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=fineroot_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Fine Root C flux", 2:7] <- out$predicted
     
     ### Coarse root C flux
-    out1 <- summaryBy(predicted~Trt,data=coarse_root_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=coarse_root_production_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Coarse Root C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Coarse Root C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Coarse Root C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Coarse Root C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=coarse_root_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Coarse Root C flux", 2:7] <- out$predicted
     
     ### Understorey C flux
-    out1 <- summaryBy(predicted~Trt,data=understorey_aboveground_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=understorey_aboveground_production_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Understorey C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Understorey C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Understorey C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Understorey C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=understorey_aboveground_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Understorey C flux", 2:7] <- out$predicted
     
     ### Frass production flux
-    out1 <- summaryBy(predicted~Trt,data=frass_c_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=frass_c_production_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Frass C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Frass C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Frass C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Frass C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=frass_c_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Frass C flux", 2:7] <- out$predicted
     
     ### Leaf litter flux
-    out1 <- summaryBy(predicted~Trt,data=leaflitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=leaflitter_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Leaflitter C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Leaflitter C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Leaflitter C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Leaflitter C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=leaflitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Leaflitter C flux", 2:7] <- out$predicted
     
     ### Twig litter flux
-    out1 <- summaryBy(predicted~Trt,data=twiglitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=twiglitter_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Twiglitter C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Twiglitter C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Twiglitter C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Twiglitter C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=twiglitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Twiglitter C flux", 2:7] <- out$predicted
     
     ### Bark litter flux
-    out1 <- summaryBy(predicted~Trt,data=barklitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=barklitter_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Barklitter C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Barklitter C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Barklitter C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Barklitter C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=barklitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Barklitter C flux", 2:7] <- out$predicted
     
     ### Seed litter flux
-    out1 <- summaryBy(predicted~Trt,data=seedlitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=seedlitter_flux_pred,FUN=sd,keep.names=T,na.rm=T)
-    
-    treatDF$aCO2[treatDF$terms == "Seedlitter C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Seedlitter C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Seedlitter C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Seedlitter C flux"] <- out2$predicted[out2$Trt=="ele"]
+    out <- summaryBy(predicted~Ring,data=seedlitter_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Seedlitter C flux", 2:7] <- out$predicted
     
     ### Fine Root litter flux
     # assume it's the same as fine root production flux
-    out1 <- summaryBy(predicted~Trt,data=fineroot_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
-    out2 <- summaryBy(predicted~Trt,data=fineroot_production_flux_pred,FUN=sd,keep.names=T,na.rm=T)
+    out <- summaryBy(predicted~Ring,data=fineroot_production_flux_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Fineroot Liter C flux", 2:7] <- out$predicted
     
-    treatDF$aCO2[treatDF$terms == "Fineroot Litter C flux"] <- out1$predicted[out1$Trt=="amb"]
-    treatDF$eCO2[treatDF$terms == "Fineroot Litter C flux"] <- out1$predicted[out1$Trt=="ele"]
-    treatDF$aCO2_sd[treatDF$terms == "Fineroot Litter C flux"] <- out2$predicted[out2$Trt=="amb"]
-    treatDF$eCO2_sd[treatDF$terms == "Fineroot Litter C flux"] <- out2$predicted[out2$Trt=="ele"]
-    
+    ### calculate treatment averages
+    treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
+    treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)
 
     
     ##### output tables

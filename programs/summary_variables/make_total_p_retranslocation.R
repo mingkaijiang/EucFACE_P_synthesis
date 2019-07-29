@@ -1,4 +1,19 @@
 make_total_p_retranslocation <- function(under_retrans_calc_method, understorey_retrans_coef, sumDF) {
+    
+    
+    ### recalculate canopy p leaf litter
+    ac <- leaf_p_retrans_coefficient[leaf_p_retrans_coefficient$Ring%in%c(2,3,6),]
+    ec <- leaf_p_retrans_coefficient[leaf_p_retrans_coefficient$Ring%in%c(1,4,5),]
+    ac.m <- mean(ac$retrans_coef)
+    ec.m <- mean(ec$retrans_coef)
+    
+    sumDF[sumDF$term == "Leaflitter P flux", 2:7] <- (1 - leaf_p_retrans_coefficient$retrans_coef) * sumDF[sumDF$term == "Canopy P flux", 2:7]
+    sumDF[sumDF$term == "Leaflitter P flux", "aCO2"] <- (1 - ac.m) * sumDF[sumDF$term == "Canopy P flux", "aCO2"]
+    sumDF[sumDF$term == "Leaflitter P flux", "eCO2"] <- (1 - ec.m) * sumDF[sumDF$term == "Canopy P flux", "eCO2"]
+    
+    
+    sumDF[sumDF$term == "Fineroot Litter P flux", 2:9] <- sumDF[sumDF$term == "Fine Root P flux", 2:9] * 0.5
+        
     ### Calculate total p retranslocated
     ### coarseroot, canopy, wood, fine root and understorey
 
@@ -6,7 +21,7 @@ make_total_p_retranslocation <- function(under_retrans_calc_method, understorey_
         sumDF[sumDF$term == "Fine Root P flux", 2:9] + sumDF[sumDF$term == "Coarse Root P flux", 2:9] +
         sumDF[sumDF$term == "Understorey P flux", 2:9]
     df2 <- df1 - sumDF[sumDF$term == "Leaflitter P flux", 2:9] - sumDF[sumDF$term == "Fineroot Litter P flux", 2:9] -
-        - sumDF[sumDF$term == "Understorey Litter P flux", 2:9]
+        - sumDF[sumDF$term == "Understorey Litter P flux", 2:9] 
     
     retranDF <- df2
         

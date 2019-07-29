@@ -911,8 +911,8 @@ source("programs/summary_tables/bootstrap/make_c_flux_summary_table_by_treatment
 summary_table_c_flux_by_treatment_bootstrap <- make_c_flux_summary_table_by_treatment_bootstrap()
 
 ### Calculate all P budgeting variables
-source("programs/summary_variables/bootstrap/make_total_p_budgeting_variables_bootstrap.R")
-summary_table_total_p_budgets_bootstrap <- make_total_p_budgeting_variables_bootstrap()
+source("programs/summary_variables/bootstrap/make_total_p_budgeting_variables_unbootstrap.R")
+summary_table_total_p_budgets_bootstrap <- make_total_p_budgeting_variables_unbootstrap()
 
 
 write.csv(summary_table_concentration_by_treatment_bootstrap,
@@ -934,12 +934,12 @@ write.csv(summary_table_total_p_budgets_bootstrap,
           "plots_tables/summary_table_total_p_budgets_bootstrap.csv")
 
 ### cp ratios
-source("programs/summary_tables/make_cp_ratios.R")
-summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_bootstrap,
-                                    p_pool=summary_table_pool_by_treatment_bootstrap)
+#source("programs/summary_tables/make_cp_ratios.R")
+#summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_bootstrap,
+#                                    p_pool=summary_table_pool_by_treatment_bootstrap)
 
-write.csv(summary_cp_ratios,
-          "plots_tables/summary_table_cp_ratios.csv")
+#write.csv(summary_cp_ratios,
+#          "plots_tables/summary_table_cp_ratios.csv")
 
 ###### ---------------- Making P budgeting figures, based on bootstrapped result -------------------- ######
 
