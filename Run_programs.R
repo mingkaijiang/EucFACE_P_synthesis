@@ -358,10 +358,9 @@ coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 4: Making P budgeting variables and tables, based on raw data
-### P concentration by treatment and ring
+#### 4.1 Summary Tables
 source("programs/summary_tables/unnormalized/make_conc_summary_table_by_treatment.R")
 summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
-
 
 ### P pools by treatment and ring
 source("programs/summary_tables/unnormalized/make_pool_summary_table_by_treatment.R")
@@ -379,6 +378,9 @@ summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
 source("programs/summary_tables/unnormalized/make_c_flux_summary_table_by_treatment.R")
 summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
 
+
+
+#### 4.2 Summary variables
 ### Calculate all P budgeting variables
 source("programs/summary_variables/unnormalized/make_total_p_budgeting_variables.R")
 summary_table_total_p_budgets <- make_total_p_budgeting_variables()
@@ -395,11 +397,8 @@ source("programs/summary_variables/unnormalized/make_soil_p_budgeting_variables.
 summary_table_soil_p_budgets <- make_soil_p_budgeting_variables()
 
 
-
-
-
-###### ---------------- Generating CP ratios -------------------- ######
-source("programs/summary_tables/make_cp_ratios.R")
+#### 4.3 Generating CP ratios 
+source("programs/summary_tables/unnormalized/make_cp_ratios.R")
 summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
                                     p_pool=summary_table_pool_by_treatment)
 
@@ -409,11 +408,8 @@ summary_microbial_pool_comparison <- check_microbial_pool_CP_ratios(c_pool=summa
 
 
 
-
-
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 5: Normalize all responses to a pretreatment LAI
-
 
 #### 5.1: Summary table for the stats 
 #### All stats for fluxes are based on annual rate

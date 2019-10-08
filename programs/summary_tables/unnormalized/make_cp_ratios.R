@@ -53,7 +53,7 @@ make_cp_ratios <- function(c_pool, p_pool) {
     treatDF$notes[treatDF$terms == "Soil CP"] <- ""
     
     ### Mycorrhizal CP
-    treatDF$notes[treatDF$terms == "Mycorrhizal CP"] <- "Data not yet available"
+    treatDF$notes[treatDF$terms == "Mycorrhizal CP"] <- "No P data"
     
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 2)

@@ -1,4 +1,6 @@
-make_total_p_retranslocation <- function(under_retrans_calc_method, understorey_retrans_coef, sumDF) {
+make_total_p_retranslocation <- function(under_retrans_calc_method, 
+                                         leaf_p_retrans_coefficient,
+                                         understorey_retrans_coef, sumDF) {
     
     
     ### recalculate canopy p leaf litter
