@@ -578,10 +578,6 @@ microbial_p_pool_pred <- make_micp_conc_treatment_abs_effect_statistics(inDF=mic
                                                               var.col=3,
                                                               return.outcome="predicted")
 
-### Mycorrhizal P pool
-#mycorrhizal_p_pool_pred <- make_mycp_conc_treatment_abs_effect_statistics(inDF=mycorrhizal_p_pool, 
-#                                                    var.col=3,
-#                                                    return.outcome="predicted")
 
 ### coarse root P pool
 coarse_root_p_pool_pred <- make_crootp_pool_treatment_abs_effect_statistics(inDF=coarse_root_p_pool, 
@@ -649,53 +645,36 @@ soil_p_mineralization_pred <- make_mineralization_p_flux_treatment_abs_effect_st
                                                                                       var.col=3,
                                                                                       return.outcome="predicted")
 
+### p leaching flux
+soil_p_leaching_pred <- make_p_leaching_flux_treatment_abs_effect_statistics(inDF=soil_p_leaching, 
+                                                                                         var.col=5,
+                                                                                         return.outcome="predicted")
+
 ### Delta Soil p
-delta_soil_p_pool_pred <- make_delta_soilp_treatment_abs_effect_statistics(inDF=soil_p_pool, 
-                                                                  var.col=3,
-                                                                  return.outcome="predicted")
+delta_soil_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=soil_p_pool_pred)
 
 ### Delta Leaf p
-delta_canopy_p_pool_pred <- make_delta_leafp_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
-                                                                  var.col=3,
-                                                                  return.outcome="predicted")
+delta_canopy_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=canopy_p_pool_pred)
 
 ### Delta Wood C pool
-delta_wood_p_pool_pred <- make_delta_woodp_treatment_abs_effect_statistics(inDF=wood_p_pool, 
-                                                                  var.col=3,
-                                                                  return.outcome="predicted") 
+delta_wood_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=wood_p_pool_pred)
 
 ### Delta Fineroot C pool
-delta_fineroot_p_pool_pred <- make_delta_frootp_treatment_abs_effect_statistics(inDF=fineroot_p_pool, 
-                                                                 var.col=3,
-                                                                 return.outcome="predicted")
+delta_fineroot_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=fineroot_p_pool_pred)
 
 ### Delta Coarseroot C pool
-delta_coarse_root_p_pool_pred <- make_delta_crootp_treatment_abs_effect_statistics(inDF=coarse_root_p_pool, 
-                                                                 var.col=3,
-                                                                 return.outcome="predicted")
+delta_coarse_root_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=coarse_root_p_pool_pred)
 
 ### Delta Understorey aboveground C pool
-delta_understorey_p_pool_pred <- make_delta_uap_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
-                                                              var.col=3,
-                                                              return.outcome="predicted")
+delta_understorey_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=understorey_p_pool_pred)
 
 ### Delta Microbial C pool
-delta_microbial_p_pool_pred <- make_delta_micp_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
-                                                                var.col=3,
-                                                                return.outcome="predicted")
-
-### Delta Mycorrhizal P pool
-#delta_mycorrhizal_c_pool_pred <- make_delta_mycp_treatment_abs_effect_statistics(inDF=mycorrhizal_c_pool, 
-#                                                     var.col=3,
-#                                                    return.outcome="predicted")
+delta_microbial_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=microbial_p_pool_pred)
 
 
-### Delta Leaf litter P pool
-#delta_leaflitter_pool_pred <- make_delta_litc_treatment_abs_effect_statistics(inDF=leaflitter_pool, 
-#                                                    var.col=6,
-#                                                    return.outcome="predicted")
 
 
+###### C pools and fluxes
 ### Frass production
 frass_c_production_flux_pred <- make_frass_treatment_abs_effect_statistics(inDF=frass_c_production_flux, 
                                                                         var.col=5,
@@ -745,11 +724,6 @@ understorey_aboveground_production_flux_pred <- make_und_prod_treatment_abs_effe
 ### Understorey aboveground litter 
 
 
-
-### Mycorrhizal production
-#mycorrhizal_c_production_flux_pred <- make_myc_production_treatment_abs_effect_statistics(inDF=mycorrhizal_c_production_flux, 
-#                                                                              var.col=5,
-#                                                                              return.outcome="predicted")
 
 ### Soil C
 soil_c_pool_pred <- make_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool, 

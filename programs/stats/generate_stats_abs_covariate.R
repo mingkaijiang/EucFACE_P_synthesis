@@ -1,7 +1,7 @@
 generate_stats_abs_covariate <- function() {
-    
+  
   ### remove pre-treatment data period for individual variables (e.g. leaf, wood, soil, mic, myc)
-    
+  
   ######## Concentration
   ### Soil P conc
   s.soilp.conc <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_concentration, 
@@ -219,44 +219,10 @@ generate_stats_abs_covariate <- function() {
   
   ### p leaching flux
   s.leaching.p.flux <- make_p_leaching_flux_treatment_abs_effect_statistics(inDF=soil_p_leaching, 
-                                                                                        var.col=5,
-                                                                                        return.outcome="model")
+                                                                            var.col=5,
+                                                                            return.outcome="model")
   
-  ### Delta Soil p
-  s.delta.soilp <- make_delta_soilp_treatment_abs_effect_statistics(inDF=soil_p_pool, 
-                                                                    var.col=3,
-                                                                    return.outcome="model")
-  
-  ### Delta Leaf p
-  s.delta.leafp <- make_delta_leafp_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
-                                                                    var.col=3,
-                                                                    return.outcome="model")
-  
-  ### Delta Wood C pool
-  s.delta.woodp <- make_delta_woodp_treatment_abs_effect_statistics(inDF=wood_p_pool, 
-                                                                    var.col=3,
-                                                                    return.outcome="model") 
-  
-  ### Delta Fineroot C pool
-  s.delta.frp <- make_delta_frootp_treatment_abs_effect_statistics(inDF=fineroot_p_pool, 
-                                                                   var.col=3,
-                                                                   return.outcome="model")
-  
-  ### Delta Coarseroot C pool
-  s.delta.crp <- make_delta_crootp_treatment_abs_effect_statistics(inDF=coarse_root_p_pool, 
-                                                                   var.col=3,
-                                                                   return.outcome="model")
-  
-  ### Delta Understorey aboveground C pool
-  s.delta.uap <- make_delta_uap_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
-                                                                var.col=3,
-                                                                return.outcome="model")
-  
-  ### Delta Microbial C pool
-  s.delta.micp <- make_delta_micp_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
-                                                                  var.col=3,
-                                                                  return.outcome="model")
-  
+
   
   
   #### Create a output table to store all stats
@@ -281,10 +247,7 @@ generate_stats_abs_covariate <- function() {
                 "bark_lit_p_prod","seed_lit_p_prod",
                 "wood_p_prod","fineroot_p_prod",
                 "coarseroot_p_prod","understorey_p_prod","understorey_lit_p_prod",
-                "soil_p_mineralization",
-                "delta_soil_p","delta_leaf_p","delta_wood_p","delta_fineroot_p",
-                "delta_coarseroot_p","delta_understorey_p",
-                "delta_microbial_p")
+                "soil_p_mineralization", "soil_p_leaching")
   out <- data.frame(var.list, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
                     NA,NA,NA,NA,NA,NA)
   colnames(out) <- c("Variable", "interactive_state",
@@ -355,17 +318,10 @@ generate_stats_abs_covariate <- function() {
   out[out$Variable=="understorey_p_prod",2:17] <- assign_stats(s.var=s.und.p.flux)
   out[out$Variable=="understorey_lit_p_prod",2:17] <- assign_stats(s.var=s.und.lit.p.flux)
   out[out$Variable=="soil_p_mineralization",2:17] <- assign_stats(s.var=s.mineralization.p.flux)
+  out[out$Variable=="soil_p_leaching",2:17] <- assign_stats(s.var=s.leaching.p.flux)
   
-  out[out$Variable=="delta_soil_p",2:17] <- assign_stats(s.var=s.delta.soilp)
-  out[out$Variable=="delta_leaf_p",2:17] <- assign_stats(s.var=s.delta.leafp)
-  out[out$Variable=="delta_wood_p",2:17] <- assign_stats(s.var=s.delta.woodp)
-  out[out$Variable=="delta_fineroot_p",2:17] <- assign_stats(s.var=s.delta.frp)
-  out[out$Variable=="delta_coarseroot_p",2:17] <- assign_stats(s.var=s.delta.crp)
-  out[out$Variable=="delta_understorey_p",2:17] <- assign_stats(s.var=s.delta.uap)
-  out[out$Variable=="delta_microbial_p",2:17] <- assign_stats(s.var=s.delta.micp)
   
-
   write.csv(out, "plots_tables/treatment_statistics_normalized.csv", row.names=F)
-
-    
+  
+  
 }

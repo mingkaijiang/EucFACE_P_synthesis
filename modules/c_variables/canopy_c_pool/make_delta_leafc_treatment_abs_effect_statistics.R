@@ -1,6 +1,6 @@
 make_delta_leafc_treatment_abs_effect_statistics <- function(inDF, 
                                                    var.col, 
-                                                   stat.model, return.outcome) {
+                                                   return.outcome) {
 
     ### create delta DF
     deltaDF <- make_yearly_delta_pool_function(inDF, var.col)
