@@ -2,12 +2,12 @@ make_total_p_budgeting_variables <- function() {
     #### This function calculates all P budgeting variables
     
     ### leaf p retranslocation coefficient
-    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient_new.R")
+    source("programs/summary_variables/unnormalized/make_leaf_p_retranslocation_coefficient_new.R")
     leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_new()
     
     ### standing P stock
     ### summarize according to year - this ignores bark and twigs
-    source("programs/summary_variables/make_overstorey_standing_p_stock.R")
+    source("programs/summary_variables/unnormalized/make_overstorey_standing_p_stock.R")
     overstorey_standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
                                                                     wood=wood_p_pool, 
                                                                     froot=fineroot_p_pool, 
@@ -17,39 +17,39 @@ make_total_p_budgeting_variables <- function() {
                                                  FUN=mean, na.rm=T, keep.names=T)
     
     
-    source("programs/summary_variables/make_understorey_standing_p_stock.R")
+    source("programs/summary_variables/unnormalized/make_understorey_standing_p_stock.R")
     understorey_standing_p_stock <- make_understorey_standing_p_stock(abg=understorey_p_pool)
     
     total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$understorey_p_pool
     
     ### P requirements, i.e. using plant P fluxes 
-    source("programs/summary_variables/make_total_p_requirement.R")
+    source("programs/summary_variables/unnormalized/make_total_p_requirement.R")
     total_p_requirement_table <- make_total_p_requirement_table(summary_table_flux_by_treatment)
     
     ### total P retranslocation, i.e. canopy P - litterfall P + wood P increment + fineroot P - fineroot litter P
-    source("programs/summary_variables/make_total_p_retranslocation.R")
+    source("programs/summary_variables/unnormalized/make_total_p_retranslocation.R")
     total_p_retranslocation <- make_total_p_retranslocation(under_retrans_calc_method = "Simple", 
                                                             understorey_retrans_coef=understorey_p_retranslocation_coefficient,
                                                             sumDF=summary_table_flux_by_treatment)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation
-    source("programs/summary_variables/make_p_uptake_from_soil.R")
+    source("programs/summary_variables/unnormalized/make_p_uptake_from_soil.R")
     total_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=total_p_requirement_table,
                                                         p_retrans=total_p_retranslocation)
     
     
     ### Uptake/requirement
-    source("programs/summary_variables/make_p_uptake_over_requirement.R")
+    source("programs/summary_variables/unnormalized/make_p_uptake_over_requirement.R")
     p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=total_p_uptake_from_soil,
                                                                 p_req=total_p_requirement_table)
     
     ### MRT, i.e. Standing P / Uptake
-    source("programs/summary_variables/make_p_MRT.R")
+    source("programs/summary_variables/unnormalized/make_p_MRT.R")
     P_mean_residence_time <- make_p_MRT(p_stand=total_standing_p_stock,
                                         p_up=total_p_uptake_from_soil)
     
     ### Standing PUE, i.e. NPP / P Uptake
-    source("programs/summary_variables/make_standing_pue.R")
+    source("programs/summary_variables/unnormalized/make_standing_pue.R")
     standing_pue <- make_standing_pue(p_up=total_p_uptake_from_soil)
     
     p_mineralization <- summaryBy(p_mineralization_mg_m2_d~Ring, FUN=mean, keep.names=T, data=soil_p_mineralization)

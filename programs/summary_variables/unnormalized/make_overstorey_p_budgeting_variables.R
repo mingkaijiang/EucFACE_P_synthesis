@@ -2,13 +2,13 @@ make_overstorey_p_budgeting_variables <- function() {
     #### This function calculates all P budgeting variables
     
     ### leaf p retranslocation coefficient
-    source("programs/summary_variables/make_leaf_p_retranslocation_coefficient_new.R")
+    source("programs/summary_variables/unnormalized/make_leaf_p_retranslocation_coefficient_new.R")
     leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_new()
     
     
     ### standing P stock
     ### summarize according to year
-    source("programs/summary_variables/make_overstorey_standing_p_stock.R")
+    source("programs/summary_variables/unnormalized/make_overstorey_standing_p_stock.R")
     overstorey_standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
                                                                     wood=wood_p_pool, 
                                                                     froot=fineroot_p_pool, 
@@ -20,21 +20,21 @@ make_overstorey_p_budgeting_variables <- function() {
     
     ### P requirements, i.e. using plant P fluxes 
  
-    source("programs/summary_variables/make_overstorey_p_requirement.R")
+    source("programs/summary_variables/unnormalized/make_overstorey_p_requirement.R")
     overstorey_p_requirement_table <- make_overstorey_p_requirement_table(summary_table_flux_by_treatment)
     
     ### overstorey P retranslocation, i.e. canopy P - litterfall P + wood P increment + fineroot P - fineroot litter P
-    source("programs/summary_variables/make_overstorey_p_retranslocation.R")
+    source("programs/summary_variables/unnormalized/make_overstorey_p_retranslocation.R")
     overstorey_p_retranslocation <- make_overstorey_p_retranslocation(summary_table_flux_by_treatment)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation
-    source("programs/summary_variables/make_p_uptake_from_soil.R")
+    source("programs/summary_variables/unnormalized/make_p_uptake_from_soil.R")
 
     overstorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=overstorey_p_requirement_table,
                                                              p_retrans=overstorey_p_retranslocation)
 
     ### Uptake/requirement
-    source("programs/summary_variables/make_p_uptake_over_requirement.R")
+    source("programs/summary_variables/unnormalized/make_p_uptake_over_requirement.R")
 
     overstorey_p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=overstorey_p_uptake_from_soil,
                                                                            p_req=overstorey_p_requirement_table)

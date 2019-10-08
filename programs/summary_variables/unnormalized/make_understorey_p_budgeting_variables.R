@@ -2,26 +2,26 @@ make_understorey_p_budgeting_variables <- function() {
     #### This function calculates all P budgeting variables
     
 
-    source("programs/summary_variables/make_understorey_standing_p_stock.R")
+    source("programs/summary_variables/unnormalized/make_understorey_standing_p_stock.R")
     understorey_standing_p_stock <- make_understorey_standing_p_stock(abg=understorey_p_pool)
     
-    source("programs/summary_variables/make_understorey_p_requirement.R")
+    source("programs/summary_variables/unnormalized/make_understorey_p_requirement.R")
     understorey_p_requirement_table <- make_understorey_p_requirement_table(summary_table_flux_by_treatment)
     
     ### understorey P retranslocation, 
-    source("programs/summary_variables/make_understorey_p_retranslocation.R")
+    source("programs/summary_variables/unnormalized/make_understorey_p_retranslocation.R")
     understorey_p_retranslocation <- make_understorey_p_retranslocation(retrans_calc_method = "Simple",
                                                                         retrans_coef = understorey_p_retranslocation_coefficient,
                                                                         summary_table_flux_by_treatment)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation
-    source("programs/summary_variables/make_p_uptake_from_soil.R")
+    source("programs/summary_variables/unnormalized/make_p_uptake_from_soil.R")
     
     understorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=understorey_p_requirement_table,
                                                               p_retrans=understorey_p_retranslocation)
     
     ### Uptake/requirement
-    source("programs/summary_variables/make_p_uptake_over_requirement.R")
+    source("programs/summary_variables/unnormalized/make_p_uptake_over_requirement.R")
 
     understorey_p_uptake_over_requirement <- make_p_uptake_over_requirement(p_up=understorey_p_uptake_from_soil,
                                                                 p_req=understorey_p_requirement_table)
