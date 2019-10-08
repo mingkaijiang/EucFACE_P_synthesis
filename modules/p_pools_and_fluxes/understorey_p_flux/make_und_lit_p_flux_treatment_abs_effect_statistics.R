@@ -1,6 +1,6 @@
 make_und_lit_p_flux_treatment_abs_effect_statistics <- function(inDF, 
                                                    var.col, 
-                                                   stat.model, return.outcome) {
+                                                   return.outcome) {
     
     #### Assign amb and ele factor
     for (i in (1:length(inDF$Ring))) {
@@ -74,39 +74,14 @@ make_und_lit_p_flux_treatment_abs_effect_statistics <- function(inDF,
     ## confidence interval 
     eff.conf1 <- confint(modelt1,"Trtele")
     
-    ### Analyse the variable model
-    ## model 2: interaction, year as factor, ring random factor
-    int.m2 <- "interative"
-    modelt2 <- lmer(Value~Trt*Yrf + Cov2 + (1|Ring),data=tDF)
+
+    out <- list(int.state=int.m1,
+                mod = modelt1, 
+                anova = m1.anova,
+                diff = summ1,
+                eff = eff.size1,
+                conf = eff.conf1)
     
-    ## anova
-    m2.anova <- Anova(modelt2, test="F")
-    
-    ## Check ele - amb diff
-    summ2 <- summary(glht(modelt2, linfct = mcp(Trt = "Tukey")))
-    
-    ## average effect size
-    eff.size2 <- coef(modelt2)[[1]][1,2]
-    
-    ## confidence interval 
-    eff.conf2 <- confint(modelt2,"Trtele")
-    
-    ### conditional output
-    if (stat.model == "no_interaction_with_covariate") {
-        out <- list(int.state=int.m1,
-                    mod = modelt1, 
-                    anova = m1.anova,
-                    diff = summ1,
-                    eff = eff.size1,
-                    conf = eff.conf1)
-    } else if (stat.model == "interaction_with_covariate") {
-        out <- list(int.state=int.m2,
-                    mod = modelt2, 
-                    anova = m2.anova,
-                    diff = summ2,
-                    eff = eff.size2,
-                    conf = eff.conf2)
-    }
 
     ### Predict the model with a standard LAI value
     newDF <- tDF

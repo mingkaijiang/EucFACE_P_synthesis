@@ -1,48 +1,41 @@
 #- Make the fineroot c production flux
-make_fineroot_c_production_flux <- function(c_frac){
+make_fineroot_c_production_flux <- function(){
     
-    # returns fine root production flux (mg m-2 d-1)
-    # 5 time points, possibly measured at quarterly timesteps
-
-    infile <- "FACE_P0083_RA_FR-PRODUCTION_L1_20140601-20150915.csv"
     
-    #- download the data
-    if(!file.exists(paste0("download/FACE_P0083_RA_FR-PRODUCTION_L1_20140601-20150915.csv"))) {
-        download_fineroot_data()
-    }
-
-    #- read in the csv
-    frp1 <- read.csv(file.path(getToPath(), 
-                               infile))
+    # read in the csv
+    frb1 <- read.csv("temp_files/EucFACERootsRingDateDepth.csv")
+    frb1$Date <- as.Date(frb1$Dateform, format="%d-%m-%Y")
     
-    # Fix Date format:
-    # Assume that e.g. 'Jan-13' means the last day of that month (2013-01-31).
-    frp1$Date <- as.Date(paste0("1-", frp1$Date), format = "%d-%b-%y") + months(1) - days(1)
+    # fineroot C pool
+    frb1$frb_top <- with(frb1, FRP0d_0.10cm * C0_0.10cm / 100, na.rm=T)
+    frb1$frb_bot <- with(frb1, FRP0d_10.30cm * C0_10.30cm / 100, na.rm=T)
+    frb1$frb_tot <- with(frb1, frb_top + frb_bot, na.rm=T)
     
-    names(frp1)[2] <- "Ring"
-    names(frp1)[8] <- "frp_tot"
+    # average across rings and dates
+    frb.m <- summaryBy(frb_tot+frb_top+frb_bot~Date+Ring,data=frb1,FUN=mean,keep.names=T)
     
-    #- average across rings and dates
-    frp.m <- summaryBy(frp_tot~Date+Ring,data=frp1,FUN=mean,keep.names=T,na.rm=T)
+    ## colnames
+    colnames(frb.m) <- c("Date","Ring","fineroot_production_flux", 
+                         "fineroot_production_flux_0_10_cm", 
+                         "fineroot_production_flux_10_30_cm")
     
-    #- convert to mg C m-2 day-1
-    frp.m$fineroot_production_flux <- frp.m$frp_tot*c_frac*1000
+    s.date <- unique(frb.m$Date)
+    s.date <- s.date[-7]
     
-    #- add 3 months before the first date
-    frp.m$End_date <- frp.m$Date
-    time.list1 <- unique(frp.m$Date)
-    time.list2 <- c("2014-03-30", as.character(unique(frp.m$Date)))
-    for (i in c(1: length(time.list1))) {
-        frp.m[frp.m$Date == time.list1[i], "Start_date"] <- time.list2[i]
-    }
+    ### prepare output
+    outDF <- subset(frb.m, Date > "2014-02-18")
     
-    frp.m$Start_date <- as.Date(frp.m$Start_date)
-    frp.m$End_date <- as.Date(frp.m$End_date)
+    outDF$Start_date <- rep(s.date, each=6)
+    outDF$End_date <- outDF$Date
+    outDF$Days <- as.numeric(outDF$End_date - outDF$Start_date) + 1
     
-    frp.m$Days <- as.numeric(with(frp.m, End_date - Start_date)) + 1
+    # format dataframe to return
+    outDF <- outDF[,c("Date","Start_date", "End_date", "Ring","fineroot_production_flux", "Days")]
     
-    #- format dataframe to return
-    frp.out <- frp.m[,c("Date","Start_date", "End_date", "Ring", "fineroot_production_flux", "Days")]
-    return(frp.out)
+    # convert to mg C m-2 yr-1
+    outDF$fineroot_production_flux <- outDF$fineroot_production_flux * 1000
+    
+    ### return
+    return(outDF)
     
 }
