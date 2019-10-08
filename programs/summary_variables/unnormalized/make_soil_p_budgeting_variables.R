@@ -7,6 +7,11 @@ make_soil_p_budgeting_variables <- function() {
     p_mineralization <- summaryBy(p_mineralization_mg_m2_d~Ring, FUN=mean, keep.names=T, data=soil_p_mineralization)
     p_mineralization$p_mineralization <- with(p_mineralization, p_mineralization_mg_m2_d * 365/1000)
     
+    ### P leaching flux
+    p_leaching <- summaryBy(phosphate_leaching_flux~Ring, FUN=mean, keep.names=T, data=soil_p_leaching)
+    p_leaching$p_leaching <- with(p_leaching, phosphate_leaching_flux * 365/1000)
+    
+    
     ### P phosphate pool
     soil_phosphate <- summaryBy(soil_phosphate_p_g_m2~Ring, FUN=mean, keep.names=T, data=soil_phosphate_pool)
     
@@ -18,6 +23,7 @@ make_soil_p_budgeting_variables <- function() {
     
     ### out df
     terms <- c("P mineralization flux",
+               "P leaching flux",
                "Soil phosphate P pool", 
                "Exhanagable Pi pool",
                "Exhanagable Po pool",
@@ -33,6 +39,9 @@ make_soil_p_budgeting_variables <- function() {
     
     ### assign values
     out[out$terms == "P mineralization flux", 2:7] <- round(p_mineralization$p_mineralization_mg_m2_d,2)
+    
+    out[out$terms == "P leaching flux", 2:7] <- round(p_leaching$p_leaching,6)
+    
     
     out[out$terms == "Soil phosphate P pool", 2:7] <- round(soil_phosphate$soil_phosphate_p_g_m2,2)
 
@@ -58,6 +67,9 @@ make_soil_p_budgeting_variables <- function() {
     
     ### notes
     out[out$terms == "P mineralization flux", "notes"] <- "Shun's data"
+    
+    out[out$terms == "P leaching flux", "notes"] <- "drainage"
+    
     
     out[out$terms == "Soil phosphate P pool","notes"] <- ""
     

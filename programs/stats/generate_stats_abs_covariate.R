@@ -1,6 +1,6 @@
 generate_stats_abs_covariate <- function() {
     
-    ### remove pre-treatment data period for individual variables (e.g. leaf, wood, soil, mic, myc)
+  ### remove pre-treatment data period for individual variables (e.g. leaf, wood, soil, mic, myc)
     
   ######## Concentration
   ### Soil P conc
@@ -217,6 +217,11 @@ generate_stats_abs_covariate <- function() {
                                                                                         var.col=3,
                                                                                         return.outcome="model")
   
+  ### p leaching flux
+  s.leaching.p.flux <- make_p_leaching_flux_treatment_abs_effect_statistics(inDF=soil_p_leaching, 
+                                                                                        var.col=5,
+                                                                                        return.outcome="model")
+  
   ### Delta Soil p
   s.delta.soilp <- make_delta_soilp_treatment_abs_effect_statistics(inDF=soil_p_pool, 
                                                                     var.col=3,
@@ -251,17 +256,6 @@ generate_stats_abs_covariate <- function() {
   s.delta.micp <- make_delta_micp_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
                                                                   var.col=3,
                                                                   return.outcome="model")
-  
-  ### Delta Mycorrhizal C pool
-  #s.delta.mycp <- make_delta_mycp_treatment_abs_effect_statistics(inDF=mycorrhizal_c_pool, 
-  #                                                     var.col=3,
-  #                                                    return.outcome="model")
-  
-  
-  ### Delta Leaf litter C pool
-  #s.delta.litp <- make_delta_litc_treatment_abs_effect_statistics(inDF=leaflitter_pool, 
-  #                                                    var.col=6,
-  #                                                    return.outcome="model")
   
   
   
@@ -304,24 +298,15 @@ generate_stats_abs_covariate <- function() {
   assign_stats <- function(s.var) {
     temp <- c()
     
-    if(s.var$int.state == "non-interactive") {
-      #### Assign values to out
-      temp <- c(s.var$int.state,
-                s.var$anova$F[1],s.var$anova$F[2],NA,
-                s.var$anova$Df[1],s.var$anova$Df[2],NA,
-                s.var$anova$Df.res[1],s.var$anova$Df.res[2],NA,
-                s.var$anova$`Pr(>F)`[1],s.var$anova$`Pr(>F)`[2],NA,
-                s.var$eff,s.var$conf[1],s.var$conf[2])
-      
-    } else {#if (s.var$int.state == "interactive") {
-      #### Assign values to out
-      temp <- c(s.var$int.state,
-                s.var$anova$F[1],s.var$anova$F[2],s.var$anova$F[3],
-                s.var$anova$Df[1],s.var$anova$Df[2],s.var$anova$Df[3],
-                s.var$anova$Df.res[1],s.var$anova$Df.res[2],s.var$anova$Df.res[3],
-                s.var$anova$`Pr(>F)`[1],s.var$anova$`Pr(>F)`[2],s.var$anova$`Pr(>F)`[3],
-                s.var$eff,s.var$conf[1],s.var$conf[2])
-    }
+    #### Assign values to out
+    temp <- c(s.var$int.state,
+              s.var$anova$F[1],s.var$anova$F[2],NA,
+              s.var$anova$Df[1],s.var$anova$Df[2],NA,
+              s.var$anova$Df.res[1],s.var$anova$Df.res[2],NA,
+              s.var$anova$`Pr(>F)`[1],s.var$anova$`Pr(>F)`[2],NA,
+              s.var$eff,s.var$conf[1],s.var$conf[2])
+    
+    
     return(temp)
   }
   

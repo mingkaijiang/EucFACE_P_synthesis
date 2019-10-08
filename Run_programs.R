@@ -213,8 +213,6 @@ leaflitter_c_pool <- make_leaflitter_pool(c_fraction)
 
 
 
-
-
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 3: Generating P pools and fluxes
 #### 3.1 Soil P pool
@@ -236,6 +234,9 @@ soil_p_pool_hedley <- make_soil_p_pool_hedley(p_conc=soil_hedley_p_concentration
 #### 3.4 Soil P mineralization flux
 #### It is assumed that the mineralization data is for top 10 cm only!
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
+
+#### Soil P leaching rate
+soil_p_leaching <- make_soil_p_leaching_flux()
 
 #### 3.5 Microbial P pool 
 #### Top 10 cm
@@ -354,6 +355,20 @@ coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
                                                 c_frac=c_fraction)
 
 
+### 3.20 delta P pools
+delta_soil_p_pool <- make_yearly_delta_pool_function(inDF=soil_p_pool, var.col=3)
+
+delta_canopy_p_pool <- make_yearly_delta_pool_function(inDF=canopy_p_pool, var.col=3)
+
+delta_wood_p_pool <- make_yearly_delta_pool_function(inDF=wood_p_pool, var.col=3)
+
+delta_fineroot_p_pool <- make_yearly_delta_pool_function(inDF=fineroot_p_pool, var.col=3)
+
+delta_coarse_root_p_pool <- make_yearly_delta_pool_function(inDF=coarse_root_p_pool, var.col=3)
+
+delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_pool, var.col=3)
+
+delta_microbial_p_pool <- make_yearly_delta_pool_function(inDF=microbial_p_pool, var.col=3)
 
 
 ##### ---------------------------------------------------------------------------------------------------------##### 

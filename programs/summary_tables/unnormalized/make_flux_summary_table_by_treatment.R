@@ -12,7 +12,8 @@ make_flux_summary_table_by_treatment <- function() {
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
                "Coarse Root P flux","Leaflitter P flux", "Fineroot Litter P flux",
                "Twig litter P flux", "Bark litter P flux","Seed litter P flux", "Frass P flux",
-               "Understorey P flux", "Understorey Litter P flux", "Mineralization P flux")
+               "Understorey P flux", "Understorey Litter P flux", "Mineralization P flux",
+               "Leaching P flux")
     
     treatDF <- data.frame(terms)
     treatDF$R1 <- rep(NA, length(treatDF$terms))
@@ -165,14 +166,15 @@ make_flux_summary_table_by_treatment <- function() {
     treatDF$timepoint[treatDF$terms == "Mineralization P flux"] <- length(unique(soil_p_mineralization$Date))  
     treatDF$notes[treatDF$terms == "Mineralization P flux"] <- "obtained"
     
-    #### Mineralization flux
-    #out <- summaryBy(p_mineralization_mg_m2_d~Ring,data=soil_p_mineralization,FUN=mean,keep.names=T,na.rm=T)
-    #treatDF[treatDF$terms == "Mineralization P flux", 2:7] <- out$p_mineralization_mg_m2_d * conv
-    #treatDF$year_start[treatDF$terms == "Mineralization P flux"] <- min(year(soil_p_mineralization$Date))    
-    #treatDF$year_end[treatDF$terms == "Mineralization P flux"] <- max(year(soil_p_mineralization$Date))    
-    #treatDF$timepoint[treatDF$terms == "Mineralization P flux"] <- length(unique(soil_p_mineralization$Date))  
-    #treatDF$notes[treatDF$terms == "Mineralization P flux"] <- "positive is mineralization, negative is immobilization"
-    
+    ###  P leaching flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Leaching P flux", i+1] <- with(soil_p_leaching[soil_p_leaching$Ring ==i,],
+                                                                     sum(phosphate_leaching_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Leaching P flux"] <- min(year(soil_p_leaching$Date))    
+    treatDF$year_end[treatDF$terms == "Leaching P flux"] <- max(year(soil_p_leaching$Date))    
+    treatDF$timepoint[treatDF$terms == "Leaching P flux"] <- length(unique(soil_p_leaching$Date))  
+    treatDF$notes[treatDF$terms == "Leaching P flux"] <- "drainage 20 ml/d"
     
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
