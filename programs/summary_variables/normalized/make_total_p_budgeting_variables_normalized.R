@@ -8,8 +8,8 @@ make_total_p_budgeting_variables_normalized <- function() {
     
     ### standing P stock
     ### summarize according to year - this ignores bark and twigs
-    source("programs/summary_variables/normalized/make_overstorey_standing_p_stock_pred.R")
-    overstorey_standing_p_stock <- make_overstorey_standing_p_stock_pred(leaf=canopy_p_pool_pred, 
+    source("programs/summary_variables/normalized/make_overstorey_standing_p_stock_normalized.R")
+    overstorey_standing_p_stock <- make_overstorey_standing_p_stock_normalized(leaf=canopy_p_pool_pred, 
                                                                     wood=wood_p_pool_pred, 
                                                                     froot=fineroot_p_pool_pred, 
                                                                     croot=coarse_root_p_pool_pred)
@@ -18,8 +18,8 @@ make_total_p_budgeting_variables_normalized <- function() {
                                                  FUN=mean, na.rm=T, keep.names=T)
     
     
-    source("programs/summary_variables/normalized/make_understorey_standing_p_stock_pred.R")
-    understorey_standing_p_stock <- make_understorey_standing_p_stock_pred(abg=understorey_p_pool_pred)
+    source("programs/summary_variables/normalized/make_understorey_standing_p_stock_normalized.R")
+    understorey_standing_p_stock <- make_understorey_standing_p_stock_normalized(abg=understorey_p_pool_pred)
     
     total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$predicted
     

@@ -795,6 +795,19 @@ summary_table_total_p_budgets_normalized <- make_total_p_budgeting_variables_nor
 
 
 
+source("programs/summary_variables/normalized/make_overstorey_p_budgeting_variables_normalized.R")
+summary_table_overstorey_p_budgets_normalized <- make_overstorey_p_budgeting_variables_normalized()
+
+source("programs/summary_variables/normalized/make_understorey_p_budgeting_variables_normalized.R")
+summary_table_understorey_p_budgets_normalized <- make_understorey_p_budgeting_variables_normalized()
+
+source("programs/summary_variables/normalized/make_soil_p_budgeting_variables_normalized.R")
+summary_table_soil_p_budgets_normalized <- make_soil_p_budgeting_variables_normalized(sumDF=summary_table_pool_by_treatment_normalized)
+
+
+
+
+
 #### 6.3 save output
 write.csv(summary_table_concentration_by_treatment_normalized,
           "plots_tables/summary_table_concentration_by_treatment_normalized.csv")
