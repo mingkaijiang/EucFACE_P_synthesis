@@ -1,8 +1,7 @@
 #- Make the retranslocation coefficient
-make_leaf_p_retranslocation_coefficient_normalized <- function(){
+make_leaf_p_retranslocation_coefficient_normalized <- function(df1, df2){
  
-    df1 <- canopy_p_concentration_pred
-    df2 <- leaflitter_p_concentration_pred
+    
     
     df1$year <- year(df1$Datef)
     df2$year <- year(df2$Datef)

@@ -1,36 +1,36 @@
-make_summary_p_budget_plots <- function() {
+make_summary_p_budget_plots <- function(inDF) {
     
     ################### Plot all P summary budget plots
     
     ## Total plant standing P, with components of OA, UA, and belowground
-    inDF <- summary_table_total_p_budgets_bootstrap
+    #inDF <- summary_table_total_p_budgets
     
     ### Plot 1
-    plotDF1 <- data.frame(c(inDF$aCO2[inDF$Variable=="Total plant standing P"], 
-                            inDF$eCO2[inDF$Variable=="Total plant standing P"]), 
+    plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="total standing p stock"], 
+                            inDF$eCO2[inDF$terms=="total standing p stock"]), 
                           NA)
     colnames(plotDF1) <- c("mean", "sd")
-    plotDF1$sd <- c(inDF$aCO2_conf[inDF$Variable=="Total plant standing P"], 
-                    inDF$eCO2_conf[inDF$Variable=="Total plant standing P"])
+    plotDF1$sd <- c(inDF$aCO2_conf[inDF$terms=="total standing p stock"], 
+                    inDF$eCO2_conf[inDF$terms=="total standing p stock"])
     plotDF1$Trt <- c("aCO2", "eCO2")
     plotDF1$pos <- with(plotDF1, mean + sd)
     plotDF1$neg <- with(plotDF1, mean - sd)
     
     ### Plot 2
-    plotDF2 <- data.frame(c(inDF$aCO2[inDF$Variable=="Stand P OA"], 
-                            inDF$eCO2[inDF$Variable=="Stand P OA"],
-                            inDF$aCO2[inDF$Variable=="Stand P UA"], 
-                            inDF$eCO2[inDF$Variable=="Stand P UA"],
-                            inDF$aCO2[inDF$Variable=="Stand P Belowground"], 
-                            inDF$eCO2[inDF$Variable=="Stand P Belowground"]), 
+    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="Stand P OA"], 
+                            inDF$eCO2[inDF$terms=="Stand P OA"],
+                            inDF$aCO2[inDF$terms=="Stand P UA"], 
+                            inDF$eCO2[inDF$terms=="Stand P UA"],
+                            inDF$aCO2[inDF$terms=="Stand P Belowground"], 
+                            inDF$eCO2[inDF$terms=="Stand P Belowground"]), 
                           NA)
     colnames(plotDF2) <- c("mean", "sd")
-    plotDF2$sd <- c(inDF$aCO2_conf[inDF$Variable=="Stand P OA"], 
-                    inDF$eCO2_conf[inDF$Variable=="Stand P OA"],
-                    inDF$aCO2_conf[inDF$Variable=="Stand P UA"], 
-                    inDF$eCO2_conf[inDF$Variable=="Stand P UA"],
-                    inDF$aCO2_conf[inDF$Variable=="Stand P Belowground"], 
-                    inDF$eCO2_conf[inDF$Variable=="Stand P Belowground"])
+    plotDF2$sd <- c(inDF$aCO2_conf[inDF$terms=="Stand P OA"], 
+                    inDF$eCO2_conf[inDF$terms=="Stand P OA"],
+                    inDF$aCO2_conf[inDF$terms=="Stand P UA"], 
+                    inDF$eCO2_conf[inDF$terms=="Stand P UA"],
+                    inDF$aCO2_conf[inDF$terms=="Stand P Belowground"], 
+                    inDF$eCO2_conf[inDF$terms=="Stand P Belowground"])
     plotDF2$Trt <- rep(c("aCO2", "eCO2"), 3)
     plotDF2$Variable <- rep(c("OA", "UA", "B"), each=2)
     plotDF2$pos <- with(plotDF2, mean + sd)
@@ -43,45 +43,45 @@ make_summary_p_budget_plots <- function() {
     
     
     ### Plot 3
-    plotDF3 <- data.frame(c(inDF$aCO2[inDF$Variable=="Total P requirement"], 
-                            inDF$eCO2[inDF$Variable=="Total P requirement"]), 
+    plotDF3 <- data.frame(c(inDF$aCO2[inDF$terms=="Total P requirement"], 
+                            inDF$eCO2[inDF$terms=="Total P requirement"]), 
                           NA)
     colnames(plotDF3) <- c("mean", "sd")
-    plotDF3$sd <- c(inDF$aCO2_conf[inDF$Variable=="Total P requirement"], 
-                    inDF$eCO2_conf[inDF$Variable=="Total P requirement"])
+    plotDF3$sd <- c(inDF$aCO2_conf[inDF$terms=="Total P requirement"], 
+                    inDF$eCO2_conf[inDF$terms=="Total P requirement"])
     plotDF3$Trt <- c("aCO2", "eCO2")
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
     
     ### Plot 4
-    plotDF4 <- data.frame(c(inDF$aCO2[inDF$Variable=="Total P retranslocation"], 
-                            inDF$eCO2[inDF$Variable=="Total P retranslocation"]), 
+    plotDF4 <- data.frame(c(inDF$aCO2[inDF$terms=="Total P retranslocation"], 
+                            inDF$eCO2[inDF$terms=="Total P retranslocation"]), 
                           NA)
     colnames(plotDF4) <- c("mean", "sd")
-    plotDF4$sd <- c(inDF$aCO2_conf[inDF$Variable=="Total P retranslocation"], 
-                    inDF$eCO2_conf[inDF$Variable=="Total P retranslocation"])
+    plotDF4$sd <- c(inDF$aCO2_conf[inDF$terms=="Total P retranslocation"], 
+                    inDF$eCO2_conf[inDF$terms=="Total P retranslocation"])
     plotDF4$Trt <- c("aCO2", "eCO2")
     plotDF4$pos <- with(plotDF4, mean + sd)
     plotDF4$neg <- with(plotDF4, mean - sd)
     
     ### Plot 5
-    plotDF5 <- data.frame(c(inDF$aCO2[inDF$Variable=="Total P uptake"], 
-                            inDF$eCO2[inDF$Variable=="Total P uptake"]), 
+    plotDF5 <- data.frame(c(inDF$aCO2[inDF$terms=="Total P uptake"], 
+                            inDF$eCO2[inDF$terms=="Total P uptake"]), 
                           NA)
     colnames(plotDF5) <- c("mean", "sd")
-    plotDF5$sd <- c(inDF$aCO2_conf[inDF$Variable=="Total P uptake"], 
-                    inDF$eCO2_conf[inDF$Variable=="Total P uptake"])
+    plotDF5$sd <- c(inDF$aCO2_conf[inDF$terms=="Total P uptake"], 
+                    inDF$eCO2_conf[inDF$terms=="Total P uptake"])
     plotDF5$Trt <- c("aCO2", "eCO2")
     plotDF5$pos <- with(plotDF5, mean + sd)
     plotDF5$neg <- with(plotDF5, mean - sd)
     
     ### Plot 6
-    plotDF6 <- data.frame(c(inDF$aCO2[inDF$Variable=="Soil P mineralization"], 
-                            inDF$eCO2[inDF$Variable=="Soil P mineralization"]), 
+    plotDF6 <- data.frame(c(inDF$aCO2[inDF$terms=="Soil P mineralization"], 
+                            inDF$eCO2[inDF$terms=="Soil P mineralization"]), 
                           NA)
     colnames(plotDF6) <- c("mean", "sd")
-    plotDF6$sd <- c(inDF$aCO2_conf[inDF$Variable=="Soil P mineralization"], 
-                    inDF$eCO2_conf[inDF$Variable=="Soil P mineralization"])
+    plotDF6$sd <- c(inDF$aCO2_conf[inDF$terms=="Soil P mineralization"], 
+                    inDF$eCO2_conf[inDF$terms=="Soil P mineralization"])
     plotDF6$Trt <- c("aCO2", "eCO2")
     plotDF6$pos <- with(plotDF6, mean + sd)
     plotDF6$neg <- with(plotDF6, mean - sd)
@@ -247,42 +247,42 @@ make_summary_p_budget_plots <- function() {
     
     
     ### Plot 
-    plotDF1 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT"], 
-                            inDF$eCO2[inDF$Variable=="MRT"]), 
+    plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="MRT"], 
+                            inDF$eCO2[inDF$terms=="MRT"]), 
                           NA)
     colnames(plotDF1) <- c("mean", "sd")
-    plotDF1$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT"], 
-                    inDF$eCO2_conf[inDF$Variable=="MRT"])
+    plotDF1$sd <- c(inDF$aCO2_conf[inDF$terms=="MRT"], 
+                    inDF$eCO2_conf[inDF$terms=="MRT"])
     plotDF1$Trt <- c("aCO2", "eCO2")
     plotDF1$pos <- with(plotDF1, mean + sd)
     plotDF1$neg <- with(plotDF1, mean - sd)
     
-    plotDF2 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT_canopy"], 
-                            inDF$eCO2[inDF$Variable=="MRT_canopy"]), 
+    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="MRT_canopy"], 
+                            inDF$eCO2[inDF$terms=="MRT_canopy"]), 
                           NA)
     colnames(plotDF2) <- c("mean", "sd")
-    plotDF2$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT_canopy"], 
-                    inDF$eCO2_conf[inDF$Variable=="MRT_canopy"])
+    plotDF2$sd <- c(inDF$aCO2_conf[inDF$terms=="MRT_canopy"], 
+                    inDF$eCO2_conf[inDF$terms=="MRT_canopy"])
     plotDF2$Trt <- c("aCO2", "eCO2")
     plotDF2$pos <- with(plotDF2, mean + sd)
     plotDF2$neg <- with(plotDF2, mean - sd)
     
-    plotDF3 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT_ua"], 
-                            inDF$eCO2[inDF$Variable=="MRT_ua"]), 
+    plotDF3 <- data.frame(c(inDF$aCO2[inDF$terms=="MRT_ua"], 
+                            inDF$eCO2[inDF$terms=="MRT_ua"]), 
                           NA)
     colnames(plotDF3) <- c("mean", "sd")
-    plotDF3$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT_ua"], 
-                    inDF$eCO2_conf[inDF$Variable=="MRT_ua"])
+    plotDF3$sd <- c(inDF$aCO2_conf[inDF$terms=="MRT_ua"], 
+                    inDF$eCO2_conf[inDF$terms=="MRT_ua"])
     plotDF3$Trt <- c("aCO2", "eCO2")
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
     
-    plotDF4 <- data.frame(c(inDF$aCO2[inDF$Variable=="MRT_belowground"], 
-                            inDF$eCO2[inDF$Variable=="MRT_belowground"]), 
+    plotDF4 <- data.frame(c(inDF$aCO2[inDF$terms=="MRT_belowground"], 
+                            inDF$eCO2[inDF$terms=="MRT_belowground"]), 
                           NA)
     colnames(plotDF4) <- c("mean", "sd")
-    plotDF4$sd <- c(inDF$aCO2_conf[inDF$Variable=="MRT_belowground"], 
-                    inDF$eCO2_conf[inDF$Variable=="MRT_belowground"])
+    plotDF4$sd <- c(inDF$aCO2_conf[inDF$terms=="MRT_belowground"], 
+                    inDF$eCO2_conf[inDF$terms=="MRT_belowground"])
     plotDF4$Trt <- c("aCO2", "eCO2")
     plotDF4$pos <- with(plotDF4, mean + sd)
     plotDF4$neg <- with(plotDF4, mean - sd)
@@ -399,6 +399,8 @@ make_summary_p_budget_plots <- function() {
               y = c(0.95, 0.95, 0.45, 0.45), 
               gp=gpar(fontsize=14, col="black", fontface="bold"))
     dev.off()
+    
+    
 }
 
 

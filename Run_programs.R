@@ -13,8 +13,8 @@
 #### 4. Generate summary tables, based on unnormalized responses
 #### 5. Normalize all responses
 #### 6. Generate summary tables, figures based on normalized relationships
-#### 7. Generate N related pools and fluxes
-#### 8. Generate manuscript figures
+#### 7. Generate manuscript figures
+#### 8. Generate N related pools and fluxes
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 0: Prepare the repository (clean and read in necessary packages)
@@ -818,16 +818,19 @@ write.csv(summary_table_total_p_budgets_normalized,
 #source("programs/summary_tables/make_cp_ratios.R")
 #summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_normalized,
 #                                    p_pool=summary_table_pool_by_treatment_normalized)
-
 #write.csv(summary_cp_ratios,
 #          "plots_tables/summary_table_cp_ratios.csv")
 
-###### ---------------- Making P budgeting figures, based on bootstrapped result -------------------- ######
+
+
+##### ---------------------------------------------------------------------------------------------------------##### 
+##### Step 7. Plotting P budget figures
+
 
 source("programs/plot_scripts/make_summary_p_budget_plots.R")
-make_summary_p_budget_plots()
+make_summary_p_budget_plots(inDF=summary_table_total_p_budgets_normalized)
 
-### This is based on unpredicted, unboostrapped data!!!!!!!!!
+### This is based on unnormalized data!
 source("programs/plot_scripts/make_summary_p_concentration_plots.R")
 make_summary_p_concentration_plots()
 
@@ -840,7 +843,7 @@ source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
 make_summary_p_fluxes_plots()
 
 
-###### ---------------- Making P budgeting figures, for each individual rings -------------------- ######
+#### Individial rings
 source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
 make_summary_p_budget_ring_plots()
 
@@ -849,13 +852,6 @@ make_summary_p_budget_ring_plots()
 
 
 
-#### To do list:
-
-### prepare meeting report
-### small things to improve: 1. leaf P retranslocation coefficient based on new dataset (needs info)
-###                          2. wood and coarseroot P rentranslocation coefficient recalculated. 
-###                          3. resolve the issue with per ring plot (unable to use bootstrapped result), there is a diagreement in MRT 
-###                          4. 
 
 
 
@@ -873,11 +869,8 @@ make_summary_p_budget_ring_plots()
 
 
 
-
-
-
-
-###### ---------------- Nitrogen stuffs -------------------- ######
+##### ---------------------------------------------------------------------------------------------------------##### 
+##### Step 8. Nitrogen variables
 #### Concentrations
 ### Canopy N concentration
 canopy_n_concentration <- make_canopy_n_concentration()

@@ -3,7 +3,8 @@ make_total_p_budgeting_variables_normalized <- function() {
     
     ### leaf p retranslocation coefficient
     source("programs/summary_variables/normalized/make_leaf_p_retranslocation_coefficient_normalized.R")
-    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_normalized()
+    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_normalized(df1 = canopy_p_concentration_pred,
+                                                                                     df2 = leaflitter_p_concentration_pred)
     
     ### standing P stock
     ### summarize according to year - this ignores bark and twigs
@@ -23,11 +24,11 @@ make_total_p_budgeting_variables_normalized <- function() {
     total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$predicted
     
     ### P requirements, i.e. using plant P fluxes 
-    source("programs/summary_variables/normalized/make_total_p_requirement_pred.R")
-    total_p_requirement_table <- make_total_p_requirement_table_pred(summary_table_flux_by_treatment_normalized)
+    source("programs/summary_variables/make_total_p_requirement.R")
+    total_p_requirement_table <- make_total_p_requirement_table(summary_table_flux_by_treatment_normalized)
     
     ### total P retranslocation, i.e. canopy P - litterfall P + wood P increment + fineroot P - fineroot litter P
-    source("programs/summary_variables/make_total_p_retranslocation_normalized.R")
+    source("programs/summary_variables/make_total_p_retranslocation.R")
     total_p_retranslocation <- make_total_p_retranslocation(under_retrans_calc_method = "Simple", 
                                                             leaf_p_retrans_coefficient=leaf_p_retrans_coefficient,
                                                             understorey_retrans_coef=understorey_p_retranslocation_coefficient,
@@ -99,6 +100,11 @@ make_total_p_budgeting_variables_normalized <- function() {
     out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)
     out$eCO2 <- round(rowMeans(data.frame(out$R1, out$R4, out$R5)) , 4)
     
+    
+    ### sd
+    out$aCO2_sd <- rowSds(as.matrix(subset(out, select=c(R2, R3, R6))), na.rm=T)
+    out$eCO2_sd <- rowSds(as.matrix(subset(out, select=c(R1, R4, R5))), na.rm=T)
+    
     ### notes
     out[out$terms == "total standing p stock", "notes"] <- "overstorey + understorey"
     
@@ -115,6 +121,7 @@ make_total_p_budgeting_variables_normalized <- function() {
     out[out$terms == "total standing PUE", "notes"] <- "NPP / uptake"
     
     out[out$terms == "labile Pi stock", "notes"] <- "Exhanagable Pi based on Hedley"
+    
     
     
     return(out)

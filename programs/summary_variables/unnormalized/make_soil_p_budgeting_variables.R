@@ -65,6 +65,12 @@ make_soil_p_budgeting_variables <- function() {
     out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)
     out$eCO2 <- round(rowMeans(data.frame(out$R1, out$R4, out$R5)) , 4)
     
+    
+    ### sd
+    out$aCO2_sd <- rowSds(as.matrix(subset(out, select=c(R2, R3, R6))), na.rm=T)
+    out$eCO2_sd <- rowSds(as.matrix(subset(out, select=c(R1, R4, R5))), na.rm=T)
+    
+    
     ### notes
     out[out$terms == "P mineralization flux", "notes"] <- "Shun's data"
     
