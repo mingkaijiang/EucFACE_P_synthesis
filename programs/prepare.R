@@ -19,6 +19,7 @@ pacman::p_load(dplyr,
                imputeTS,
                lme4,
                car,
+               matrixStats,
                multcomp,
                grid,       # plot
                cowplot,    # plot

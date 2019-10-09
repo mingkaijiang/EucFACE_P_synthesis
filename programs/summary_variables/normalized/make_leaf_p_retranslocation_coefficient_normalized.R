@@ -1,14 +1,14 @@
 #- Make the retranslocation coefficient
-make_leaf_p_retranslocation_coefficient_bootstrap <- function(){
+make_leaf_p_retranslocation_coefficient_normalized <- function(){
  
-    df1 <- canopy_p_concentration
-    df2 <- leaflitter_p_concentration
+    df1 <- canopy_p_concentration_pred
+    df2 <- leaflitter_p_concentration_pred
     
-    df1$year <- year(df1$Date)
-    df2$year <- year(df2$Date)
+    df1$year <- year(df1$Datef)
+    df2$year <- year(df2$Datef)
     
-    df1.yr <- summaryBy(PercP~Ring+year, data=df1, FUN=mean, keep.names=T)
-    df2.yr <- summaryBy(PercP~Ring+year, data=df2, FUN=mean, keep.names=T)
+    df1.yr <- summaryBy(predicted~Ring+year, data=df1, FUN=mean, keep.names=T)
+    df2.yr <- summaryBy(predicted~Ring+year, data=df2, FUN=mean, keep.names=T)
     
     
     retransDF <- data.frame(rep(c(1:6), each=6), rep(c(2012:2017), 6),NA, NA)
@@ -17,21 +17,21 @@ make_leaf_p_retranslocation_coefficient_bootstrap <- function(){
     
     for (i in c(2012:2017)) {
         for (j in c(1:6)) {
-            retransDF$senesced[retransDF$Ring == j & retransDF$Year == i] <- df2.yr$PercP[df2.yr$Ring == j & df2.yr$year == (i+1)]
+            retransDF$senesced[retransDF$Ring == j & retransDF$Year == i] <- df2.yr$predicted[df2.yr$Ring == j & df2.yr$year == (i+1)]
         }
     }
     
     for (i in c(2012:2015)) {
         for (j in c(1:6)) {
-            retransDF$old[retransDF$Ring == j & retransDF$Year == i] <- df1.yr$PercP[df1.yr$Ring == j & df1.yr$year == i]
+            retransDF$old[retransDF$Ring == j & retransDF$Year == i] <- df1.yr$predicted[df1.yr$Ring == j & df1.yr$year == i]
         }
     }
     
     
-    retransDF$old[retransDF$Ring == "5" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "5" & df1.yr$year == "2016"]
-    retransDF$old[retransDF$Ring == "3" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "3" & df1.yr$year == "2016"]
-    retransDF$old[retransDF$Ring == "2" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "2" & df1.yr$year == "2016"]
-    retransDF$old[retransDF$Ring == "1" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "1" & df1.yr$year == "2016"]
+    retransDF$old[retransDF$Ring == "5" & retransDF$Year == "2016"] <- df1.yr$predicted[df1.yr$Ring == "5" & df1.yr$year == "2016"]
+    retransDF$old[retransDF$Ring == "3" & retransDF$Year == "2016"] <- df1.yr$predicted[df1.yr$Ring == "3" & df1.yr$year == "2016"]
+    retransDF$old[retransDF$Ring == "2" & retransDF$Year == "2016"] <- df1.yr$predicted[df1.yr$Ring == "2" & df1.yr$year == "2016"]
+    retransDF$old[retransDF$Ring == "1" & retransDF$Year == "2016"] <- df1.yr$predicted[df1.yr$Ring == "1" & df1.yr$year == "2016"]
     
     
     ### calculate retranslocation coefficient for each ring
@@ -58,12 +58,10 @@ make_leaf_p_retranslocation_coefficient_bootstrap <- function(){
     
     outDF <- retransDF[,c("Ring", "retrans_coef", "CO2", "Year")]
     
+    outDF2 <- summaryBy(retrans_coef~Ring, FUN=mean, data=outDF, keep.names=T)
     
-    ###
-    #sumDF <- summaryBy(retrans_coef~CO2, data=outDF, FUN=mean, keep.names=T)
     
-    return(outDF)
-    return(outDF)
+    return(outDF2)
     
 }
 

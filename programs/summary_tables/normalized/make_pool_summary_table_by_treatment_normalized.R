@@ -3,7 +3,7 @@
 #### Ignore time but produce time coverage information
 #### This is for pools
 
-make_pool_summary_table_by_treatment_bootstrap <- function() {
+make_pool_summary_table_by_treatment_normalized <- function() {
     
     ### Define pool variable names
     terms <- c("Wood P Pool", "Canopy P Pool", "Fine Root P Pool",
@@ -94,11 +94,15 @@ make_pool_summary_table_by_treatment_bootstrap <- function() {
     
     ### Occluded P Pool
     out <- summaryBy(predicted~Ring,data=soil_occluded_p_pool_pred,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Occluded Pool", 2:7] <- out$predicted
+    treatDF[treatDF$terms == "Occluded P Pool", 2:7] <- out$predicted
     
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
     treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)
+    
+    treatDF$aCO2_sd <- rowSds(as.matrix(subset(treatDF, select=c(R2, R3, R6))), na.rm=T)
+    treatDF$eCO2_sd <- rowSds(as.matrix(subset(treatDF, select=c(R1, R4, R5))), na.rm=T)
+    
     
     
     ##### output tables

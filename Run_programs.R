@@ -721,10 +721,6 @@ understorey_aboveground_production_flux_pred <- make_und_prod_treatment_abs_effe
                                                                                               var.col=5,
                                                                                              return.outcome="predicted")
 
-### Understorey aboveground litter 
-
-
-
 ### Soil C
 soil_c_pool_pred <- make_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool, 
                                                               var.col=3,
@@ -738,7 +734,7 @@ canopy_biomass_pool_pred <- make_leafc_treatment_abs_effect_statistics(inDF=cano
 ### Wood C pool
 wood_c_pool_pred <- make_woodc_treatment_abs_effect_statistics(inDF=wood_c_pool, 
                                                                var.col=3,
-                                                              return.outcome="predicted") 
+                                                               return.outcome="predicted") 
 
 ### Fineroot C pool
 fineroot_c_pool_pred <- make_frootc_treatment_abs_effect_statistics(inDF=fineroot_c_pool, 
@@ -765,96 +761,63 @@ mycorrhizal_c_pool_pred <- make_mycc_treatment_abs_effect_statistics(inDF=mycorr
                                                                     var.col=3,
                                                                     return.outcome="predicted")
 
-### Delta Soil C
-delta_soil_c_pool_pred <- make_delta_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool, 
-                                                                           var.col=3,
-                                                                          return.outcome="predicted")
 
-### Delta Leaf C
-delta_leaf_c_pool_pred <- make_delta_leafc_treatment_abs_effect_statistics(inDF=canopy_biomass_pool, 
-                                                                           var.col=3,
-                                                                          return.outcome="predicted")
+##### ---------------------------------------------------------------------------------------------------------##### 
+##### Step 6: Making P budgeting variables and tables, based on normalized results
 
-### Delta Wood C pool
-delta_wood_c_pool_pred <- make_delta_woodc_treatment_abs_effect_statistics(inDF=wood_c_pool, 
-                                                                          var.col=3,
-                                                                          return.outcome="predicted") 
-
-### Delta Fineroot C pool
-delta_fineroot_c_pool_pred <- make_delta_frootc_treatment_abs_effect_statistics(inDF=fineroot_c_pool, 
-                                                                               var.col=3,
-                                                                               return.outcome="predicted")
-
-### Delta Coarseroot C pool
-delta_coarse_root_c_pool_pred <- make_delta_crootc_treatment_abs_effect_statistics(inDF=coarse_root_c_pool, 
-                                                                                  var.col=3,
-                                                                                  return.outcome="predicted")
-
-### Delta Understorey aboveground C pool
-delta_understorey_aboveground_c_pool_pred <- make_delta_uac_treatment_abs_effect_statistics(inDF=understorey_c_pool, 
-                                                                                           var.col=5,
-                                                                                           return.outcome="predicted")
-
-### Delta Microbial C pool
-delta_microbial_c_pool_pred <- make_delta_micc_treatment_abs_effect_statistics(inDF=microbial_c_pool, 
-                                                                               var.col=3,
-                                                                              return.outcome="predicted")
-
-### Delta Mycorrhizal C pool
-delta_mycorrhizal_c_pool_pred <- make_delta_mycc_treatment_abs_effect_statistics(inDF=mycorrhizal_c_pool, 
-                                                                                var.col=3,
-                                                                                return.outcome="predicted")
-
-
-
-###### ---------------- Making P budgeting variables and tables, based on bootstrapped data -------------------- ######
+#### 6.1 Summary tables for concentrations, fluxes and pools
 ### P concentration by treatment and ring
-source("programs/summary_tables/bootstrap/make_conc_summary_table_by_treatment_bootstrap.R")
-summary_table_concentration_by_treatment_bootstrap <- make_conc_summary_table_by_treatment_bootstrap()
+source("programs/summary_tables/normalized/make_conc_summary_table_by_treatment_normalized.R")
+summary_table_concentration_by_treatment_normalized <- make_conc_summary_table_by_treatment_normalized()
 
 ### P pools by treatment and ring
-source("programs/summary_tables/bootstrap/make_pool_summary_table_by_treatment_bootstrap.R")
-summary_table_pool_by_treatment_bootstrap <- make_pool_summary_table_by_treatment_bootstrap()
+source("programs/summary_tables/normalized/make_pool_summary_table_by_treatment_normalized.R")
+summary_table_pool_by_treatment_normalized <- make_pool_summary_table_by_treatment_normalized()
 
 ### P fluxes by treatment and ring
-source("programs/summary_tables/bootstrap/make_flux_summary_table_by_treatment_bootstrap.R")
-summary_table_flux_by_treatment_bootstrap <- make_flux_summary_table_by_treatment_bootstrap()
+source("programs/summary_tables/normalized/make_flux_summary_table_by_treatment_normalized.R")
+summary_table_flux_by_treatment_normalized <- make_flux_summary_table_by_treatment_normalized()
 
 ### C pools by treatment and ring
-source("programs/summary_tables/bootstrap/make_c_pool_summary_table_by_treatment_bootstrap.R")
-summary_table_c_pool_by_treatment_bootstrap <- make_c_pool_summary_table_by_treatment_bootstrap()
+source("programs/summary_tables/normalized/make_c_pool_summary_table_by_treatment_normalized.R")
+summary_table_c_pool_by_treatment_normalized <- make_c_pool_summary_table_by_treatment_normalized()
 
 ### C fluxes by treatment and ring
-source("programs/summary_tables/bootstrap/make_c_flux_summary_table_by_treatment_bootstrap.R")
-summary_table_c_flux_by_treatment_bootstrap <- make_c_flux_summary_table_by_treatment_bootstrap()
+source("programs/summary_tables/normalized/make_c_flux_summary_table_by_treatment_normalized.R")
+summary_table_c_flux_by_treatment_normalized <- make_c_flux_summary_table_by_treatment_normalized()
 
+
+
+#### 6.2 summary variables for the budget
 ### Calculate all P budgeting variables
-source("programs/summary_variables/bootstrap/make_total_p_budgeting_variables_unbootstrap.R")
-summary_table_total_p_budgets_bootstrap <- make_total_p_budgeting_variables_unbootstrap()
+source("programs/summary_variables/normalized/make_total_p_budgeting_variables_normalized.R")
+summary_table_total_p_budgets_normalized <- make_total_p_budgeting_variables_normalized()
 
 
-write.csv(summary_table_concentration_by_treatment_bootstrap,
-          "plots_tables/summary_table_concentration_by_treatment_bootstrap.csv")
 
-write.csv(summary_table_pool_by_treatment_bootstrap,
-          "plots_tables/summary_table_pool_by_treatment_bootstrap.csv")
+#### 6.3 save output
+write.csv(summary_table_concentration_by_treatment_normalized,
+          "plots_tables/summary_table_concentration_by_treatment_normalized.csv")
 
-write.csv(summary_table_flux_by_treatment_bootstrap,
-          "plots_tables/summary_table_flux_by_treatment_bootstrap.csv")
+write.csv(summary_table_pool_by_treatment_normalized,
+          "plots_tables/summary_table_pool_by_treatment_normalized.csv")
 
-write.csv(summary_table_c_pool_by_treatment_bootstrap,
-          "plots_tables/summary_table_c_pool_by_treatment_bootstrap.csv")
+write.csv(summary_table_flux_by_treatment_normalized,
+          "plots_tables/summary_table_flux_by_treatment_normalized.csv")
 
-write.csv(summary_table_c_flux_by_treatment_bootstrap,
-          "plots_tables/summary_table_c_flux_by_treatment_bootstrap.csv")
+write.csv(summary_table_c_pool_by_treatment_normalized,
+          "plots_tables/summary_table_c_pool_by_treatment_normalized.csv")
 
-write.csv(summary_table_total_p_budgets_bootstrap,
-          "plots_tables/summary_table_total_p_budgets_bootstrap.csv")
+write.csv(summary_table_c_flux_by_treatment_normalized,
+          "plots_tables/summary_table_c_flux_by_treatment_normalized.csv")
+
+write.csv(summary_table_total_p_budgets_normalized,
+          "plots_tables/summary_table_total_p_budgets_normalized.csv")
 
 ### cp ratios
 #source("programs/summary_tables/make_cp_ratios.R")
-#summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_bootstrap,
-#                                    p_pool=summary_table_pool_by_treatment_bootstrap)
+#summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_normalized,
+#                                    p_pool=summary_table_pool_by_treatment_normalized)
 
 #write.csv(summary_cp_ratios,
 #          "plots_tables/summary_table_cp_ratios.csv")

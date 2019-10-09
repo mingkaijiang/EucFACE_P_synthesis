@@ -2,7 +2,7 @@
 #### To make EucFACE P summary table by CO2 treatment
 #### Ignore time but produce time coverage information
 
-make_conc_summary_table_by_treatment_bootstrap <- function() {
+make_conc_summary_table_by_treatment_normalized <- function() {
     
     ### Define concentration variable names
     conc.terms <- c("Wood P Conc", "Canopy P Conc", "Fine Root P Conc", "Coarse Root P Conc",
@@ -35,10 +35,21 @@ make_conc_summary_table_by_treatment_bootstrap <- function() {
     treatDF$notes[treatDF$conc.terms == "Canopy P Conc"] <- "Only green leaf"
     
     ### Wood P concentration
-
+    out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Wood P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Wood P Conc"] <- min(year(wood_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Wood P Conc"] <- max(year(wood_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Wood P Conc"] <- length(unique(wood_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Wood P Conc"] <- "un-normalized"
+    
     
     ### Coarse root P concentration
-    
+    out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Coarse Root P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Coarse Root P Conc"] <- min(year(wood_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Coarse Root P Conc"] <- max(year(wood_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Coarse Root P Conc"] <- length(unique(wood_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Coarse Root P Conc"] <- "same as wood"
     
     ### Fine root P concentration
     out <- summaryBy(predicted~Ring,data=fineroot_p_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
@@ -68,6 +79,12 @@ make_conc_summary_table_by_treatment_bootstrap <- function() {
     treatDF$notes[treatDF$conc.terms == "Understorey P Conc"] <- "Assumed Cymbopogon and Microlaena contributed equally"
     
     ### Understorey Litter P concentration
+    out <- summaryBy(PercP~Ring,data=understorey_litter_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Understorey Litter P Conc", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Understorey Litter P Conc"] <- min(year(understorey_litter_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Understorey Litter P Conc"] <- max(year(understorey_litter_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Understorey Litter P Conc"] <- length(unique(understorey_litter_p_concentration$Date))  
+    treatDF$notes[treatDF$conc.terms == "Understorey Litter P Conc"] <- "Un-normalized"
     
 
     ### Frass P concentration
@@ -102,8 +119,7 @@ make_conc_summary_table_by_treatment_bootstrap <- function() {
     treatDF$timepoint[treatDF$conc.terms == "Soil Phosphate P Conc"] <- length(unique(soil_phosphate_concentration$Date))  
     treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc"] <- "Top 10 cm"
     
-    ### Mycorrhizal P concentration
-    
+
     ### Exhanagable Pi Conc
     out <- summaryBy(predicted~Ring,data=soil_exhanagable_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$conc.terms == "Exhanagable Pi Conc", 2:7] <- out$predicted
@@ -154,6 +170,9 @@ make_conc_summary_table_by_treatment_bootstrap <- function() {
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
     treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)
+    
+    treatDF$aCO2_sd <- rowSds(as.matrix(subset(treatDF, select=c(R2, R3, R6))), na.rm=T)
+    treatDF$eCO2_sd <- rowSds(as.matrix(subset(treatDF, select=c(R1, R4, R5))), na.rm=T)
     
     
     ##### output tables

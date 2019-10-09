@@ -4,22 +4,11 @@ make_woodc_treatment_abs_effect_statistics <- function(inDF,
     
     ### Pass in covariate values (assuming 1 value for each ring)
     inDF$Ring <- as.numeric(inDF$Ring)
-    
     cov2 <- lai_variable[lai_variable$Date<="2013-02-06",]
-    #cov2 <- lai_variable[lai_variable$Date=="2012-10-26",]
     covDF2 <- summaryBy(lai_variable~Ring, data=cov2, FUN=mean, keep.names=T)
-    
-    ### Read initial basal area data
-    f12 <- read.csv("temp_files/EucFACE_dendrometers2011-12_RAW.csv")
-    f12$ba <- ((f12$X20.09.2012/2)^2) * pi
-    baDF <- summaryBy(ba~Ring, data=f12, FUN=sum, na.rm=T, keep.names=T)
-    
-    ### return in unit of cm2/m2, which is m2 ha-1
-    baDF$ba_ground_area <- baDF$ba / FACE_ring_area
     
     for (i in 1:6) {
         inDF$Cov2[inDF$Ring==i] <- covDF2$lai_variable[covDF2$Ring==i]
-        inDF$Cov3[inDF$Ring==i] <- baDF$ba_ground_area[baDF$Ring==i]
     }
     
     #### Assign amb and ele factor
@@ -35,17 +24,20 @@ make_woodc_treatment_abs_effect_statistics <- function(inDF,
     inDF$Trt <- as.factor(inDF$Trt)
     inDF$Ring <- as.factor(inDF$Ring)
     inDF$Datef <- as.factor(inDF$Date)
-
+    
     #### Update variable name so that this function can be used across different variables
     colnames(inDF)[var.col] <- "Value"
     
     #### dataframe 
     tDF <- inDF
     
+    ### add annual average LAI for each year and ring
+    tDF$Yr <- as.numeric(year(tDF$Date))
+    
     ### Analyse the variable model
-    ## model 1: no interaction, year as factor, ring random factor, include covariate
+    ## model 1: no interaction, year as factor, ring random factor, include pre-treatment effect
     int.m1 <- "non-interative_with_covariate"
-    modelt1 <- lmer(Value~Trt + Datef +Cov2 + (1|Ring),data=tDF)
+    modelt1 <- lmer(Value~Trt + Datef + Cov2 + (1|Ring),data=tDF)
     
     ## anova
     m1.anova <- Anova(modelt1, test="F")
@@ -70,8 +62,8 @@ make_woodc_treatment_abs_effect_statistics <- function(inDF,
     
     ### Predict the model with a standard LAI value
     newDF <- tDF
-    #newDF$Cov2 <- 1.14815  # initial LAI averages
     newDF$Cov2 <- mean(covDF2$lai_variable)
+    
     newDF$predicted <- predict(out$mod, newdata=newDF)
     
     
