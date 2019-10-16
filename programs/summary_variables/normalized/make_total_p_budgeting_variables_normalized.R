@@ -55,7 +55,6 @@ make_total_p_budgeting_variables_normalized <- function() {
     standing_pue <- make_standing_pue(p_up=total_p_uptake_from_soil)
     
     p_mineralization <- summaryBy(predicted~Ring, FUN=mean, keep.names=T, data=soil_p_mineralization_pred)
-    #p_mineralization$p_mineralization <- with(p_mineralization, predicted * 365/1000)
     p_mineralization$p_mineralization <- with(p_mineralization, predicted)
     
     ### out df

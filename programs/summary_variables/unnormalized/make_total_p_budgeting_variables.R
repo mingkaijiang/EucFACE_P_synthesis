@@ -3,7 +3,8 @@ make_total_p_budgeting_variables <- function() {
     
     ### leaf p retranslocation coefficient
     source("programs/summary_variables/unnormalized/make_leaf_p_retranslocation_coefficient_new.R")
-    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_new()
+    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_new(df1=canopy_p_concentration,
+                                                                              df2=leaflitter_p_concentration)
     
     ### standing P stock
     ### summarize according to year - this ignores bark and twigs

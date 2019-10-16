@@ -806,7 +806,6 @@ summary_table_soil_p_budgets_normalized <- make_soil_p_budgeting_variables_norma
 
 
 
-
 #### 6.3 save output
 write.csv(summary_table_concentration_by_treatment_normalized,
           "plots_tables/summary_table_concentration_by_treatment_normalized.csv")
@@ -837,8 +836,6 @@ write.csv(summary_table_total_p_budgets_normalized,
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 7. Plotting P budget figures
-
-
 source("programs/plot_scripts/make_summary_p_budget_plots.R")
 make_summary_p_budget_plots(inDF=summary_table_total_p_budgets_normalized)
 
