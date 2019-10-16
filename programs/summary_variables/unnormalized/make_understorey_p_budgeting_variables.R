@@ -5,11 +5,11 @@ make_understorey_p_budgeting_variables <- function() {
     source("programs/summary_variables/unnormalized/make_understorey_standing_p_stock.R")
     understorey_standing_p_stock <- make_understorey_standing_p_stock(abg=understorey_p_pool)
     
-    source("programs/summary_variables/unnormalized/make_understorey_p_requirement.R")
+    source("programs/summary_variables/make_understorey_p_requirement.R")
     understorey_p_requirement_table <- make_understorey_p_requirement_table(summary_table_flux_by_treatment)
     
     ### understorey P retranslocation, 
-    source("programs/summary_variables/unnormalized/make_understorey_p_retranslocation.R")
+    source("programs/summary_variables/make_understorey_p_retranslocation.R")
     understorey_p_retranslocation <- make_understorey_p_retranslocation(retrans_calc_method = "Simple",
                                                                         retrans_coef = understorey_p_retranslocation_coefficient,
                                                                         summary_table_flux_by_treatment)

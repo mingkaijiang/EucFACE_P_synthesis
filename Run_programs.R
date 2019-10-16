@@ -794,7 +794,6 @@ source("programs/summary_variables/normalized/make_total_p_budgeting_variables_n
 summary_table_total_p_budgets_normalized <- make_total_p_budgeting_variables_normalized()
 
 
-
 source("programs/summary_variables/normalized/make_overstorey_p_budgeting_variables_normalized.R")
 summary_table_overstorey_p_budgets_normalized <- make_overstorey_p_budgeting_variables_normalized()
 

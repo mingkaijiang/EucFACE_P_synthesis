@@ -5,19 +5,19 @@ make_understorey_p_budgeting_variables_normalized <- function() {
     source("programs/summary_variables/normalized/make_understorey_standing_p_stock_normalized.R")
     understorey_standing_p_stock <- make_understorey_standing_p_stock_normalized(abg=understorey_p_pool_pred)
     
-    source("programs/summary_variables/normalized/make_understorey_p_requirement_normalized.R")
-    understorey_p_requirement_table <- make_understorey_p_requirement_table_normalized(summary_table_flux_by_treatment_normalized)
+    source("programs/summary_variables/make_understorey_p_requirement.R")
+    understorey_p_requirement_table <- make_understorey_p_requirement_table(summary_table_flux_by_treatment_normalized)
     
     ### understorey P retranslocation, 
-    source("programs/summary_variables/normalized/make_understorey_p_retranslocation_normalized.R")
-    understorey_p_retranslocation <- make_understorey_p_retranslocation_normalized(retrans_calc_method = "Simple",
+    source("programs/summary_variables/make_understorey_p_retranslocation.R")
+    understorey_p_retranslocation <- make_understorey_p_retranslocation(retrans_calc_method = "Simple",
                                                                         retrans_coef = understorey_p_retranslocation_coefficient,
                                                                         summary_table_flux_by_treatment_normalized)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation
     source("programs/summary_variables/make_p_uptake_from_soil.R")
     
-    understorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=understorey_p_requirement_table_normalized,
+    understorey_p_uptake_from_soil <- make_p_uptake_from_soil(p_req=understorey_p_requirement_table,
                                                               p_retrans=understorey_p_retranslocation)
     
     ### Uptake/requirement
@@ -38,7 +38,7 @@ make_understorey_p_budgeting_variables_normalized <- function() {
     colnames(out) <- c("terms", "R1", "R2", "R3", "R4", "R5", "R6", "aCO2", "eCO2", "notes")
     
     ### assign values
-    out[out$terms == "understorey standing p stock", 2:7] <- round(understorey_standing_p_stock$understorey_p_pool,2)
+    out[out$terms == "understorey standing p stock", 2:7] <- round(understorey_standing_p_stock$predicted,2)
 
     out[out$terms == "understorey p requirement", 2:9] <- round(understorey_p_requirement_table[1,],2)
 

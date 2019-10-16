@@ -3,16 +3,17 @@ make_overstorey_p_budgeting_variables_normalized <- function() {
     
     ### leaf p retranslocation coefficient
     source("programs/summary_variables/normalized/make_leaf_p_retranslocation_coefficient_normalized.R")
-    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_normalized()
+    leaf_p_retrans_coefficient <- make_leaf_p_retranslocation_coefficient_normalized(df1=canopy_p_concentration_pred,
+                                                                                     df2=leaflitter_p_concentration_pred)
     
     
     ### standing P stock
     ### summarize according to year
     source("programs/summary_variables/normalized/make_overstorey_standing_p_stock_normalized.R")
-    overstorey_standing_p_stock <- make_overstorey_standing_p_stocknormalized(leaf=canopy_p_pool, 
-                                                                              wood=wood_p_pool, 
-                                                                              froot=fineroot_p_pool, 
-                                                                              croot=coarse_root_p_pool)
+    overstorey_standing_p_stock <- make_overstorey_standing_p_stock_normalized(leaf=canopy_p_pool_pred, 
+                                                                              wood=wood_p_pool_pred, 
+                                                                              froot=fineroot_p_pool_pred, 
+                                                                              croot=coarse_root_p_pool_pred)
     
     overstorey_standing_p_stock_avg <- summaryBy(total~Ring, data=overstorey_standing_p_stock, 
                                                  FUN=mean, na.rm=T, keep.names=T)
@@ -20,12 +21,12 @@ make_overstorey_p_budgeting_variables_normalized <- function() {
     
     ### P requirements, i.e. using plant P fluxes 
  
-    source("programs/summary_variables/normalized/make_overstorey_p_requirement_normalized.R")
-    overstorey_p_requirement_table <- make_overstorey_p_requirement_table(summary_table_flux_by_treatment)
+    source("programs/summary_variables/make_overstorey_p_requirement.R")
+    overstorey_p_requirement_table <- make_overstorey_p_requirement_table(summary_table_flux_by_treatment_normalized)
     
     ### overstorey P retranslocation, i.e. canopy P - litterfall P + wood P increment + fineroot P - fineroot litter P
-    source("programs/summary_variables/normalized/make_overstorey_p_retranslocation_normalized.R")
-    overstorey_p_retranslocation <- make_overstorey_p_retranslocation(summary_table_flux_by_treatment)
+    source("programs/summary_variables/make_overstorey_p_retranslocation.R")
+    overstorey_p_retranslocation <- make_overstorey_p_retranslocation(summary_table_flux_by_treatment_normalized)
     
     ### P uptake from soil, i.e. P requirement - P retranslocation
     source("programs/summary_variables/make_p_uptake_from_soil.R")
