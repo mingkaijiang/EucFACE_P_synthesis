@@ -867,7 +867,12 @@ make_summary_p_budget_ring_plots(inDF=summary_table_total_p_budgets_normalized)
 
 
 ### 7.2 the plots requested by Kristine
+myDF <- rbind(summary_table_total_p_budgets_normalized,
+              summary_table_overstorey_p_budgets_normalized,
+              summary_table_understorey_p_budgets_normalized,
+              summary_table_soil_p_budgets_normalized)
 
+make_overall_summary_comparison_plot(myDF=myDF)
 
 
 
