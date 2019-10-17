@@ -1,8 +1,4 @@
-make_summary_p_pools_plots <- function() {
-    
-
-    ## inDF
-    inDF <- summary_table_pool_by_treatment_bootstrap
+make_summary_p_pools_plots <- function(inDF) {
     
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="Wood P Pool"], 

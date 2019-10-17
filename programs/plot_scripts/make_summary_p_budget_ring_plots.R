@@ -1,11 +1,7 @@
-make_summary_p_budget_ring_plots <- function() {
-    ### because this is a per ring plot, we cannot use bootstrapped results!!!
-    
+make_summary_p_budget_ring_plots <- function(inDF) {
     
     ################### Plot all P summary budget plots
     
-    ## Total plant standing P, with components of OA, UA, and belowground
-    inDF <- summary_table_total_p_budgets
     
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$R1[inDF$terms=="total standing p stock"], 

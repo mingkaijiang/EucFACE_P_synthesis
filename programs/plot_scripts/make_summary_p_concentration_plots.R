@@ -1,8 +1,7 @@
-make_summary_p_concentration_plots <- function() {
+make_summary_p_concentration_plots <- function(inDF) {
     
 
     ## inDF
-    inDF <- summary_table_concentration_by_treatment
     inDF$aCO2_sd <- apply(data.frame(inDF$R2, inDF$R3, inDF$R6), 1, sd)
     inDF$eCO2_sd <- apply(data.frame(inDF$R1, inDF$R4, inDF$R5), 1, sd)
     

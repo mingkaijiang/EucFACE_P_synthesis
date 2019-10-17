@@ -1,7 +1,5 @@
-make_summary_p_fluxes_plots <- function() {
-    
-    ## inDF
-    inDF <- summary_table_flux_by_treatment_bootstrap
+make_summary_p_fluxes_plots <- function(inDF) {
+
     
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="Canopy P flux"], 
