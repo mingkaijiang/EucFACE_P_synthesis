@@ -804,7 +804,8 @@ source("programs/summary_variables/normalized/make_soil_p_budgeting_variables_no
 summary_table_soil_p_budgets_normalized <- make_soil_p_budgeting_variables_normalized(sumDF=summary_table_pool_by_treatment_normalized)
 
 
-
+source("programs/summary_variables/normalized/make_belowground_p_standing_normalized.R")
+summary_table_belowground_p_standing_normalized <- make_belowground_p_standing_normalized()
 
 #### 6.3 save output
 write.csv(summary_table_concentration_by_treatment_normalized,
@@ -836,8 +837,16 @@ write.csv(summary_table_total_p_budgets_normalized,
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 7. Plotting P budget figures
+
+### 7.1 combine summarytables
+inDF <- rbind(summary_table_total_p_budgets_normalized,
+              summary_table_overstorey_p_budgets_normalized,
+              summary_table_understorey_p_budgets_normalized,
+              summary_table_soil_p_budgets_normalized)
+
+
 source("programs/plot_scripts/make_summary_p_budget_plots.R")
-make_summary_p_budget_plots(inDF=summary_table_total_p_budgets_normalized)
+make_summary_p_budget_plots(inDF=inDF)
 
 ### This is based on unnormalized data!
 source("programs/plot_scripts/make_summary_p_concentration_plots.R")

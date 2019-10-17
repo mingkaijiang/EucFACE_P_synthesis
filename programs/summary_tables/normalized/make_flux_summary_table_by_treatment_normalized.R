@@ -9,7 +9,7 @@ make_flux_summary_table_by_treatment_normalized <- function() {
     terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
                "Coarse Root P flux","Leaflitter P flux", "Fineroot Litter P flux",
                "Twig litter P flux", "Bark litter P flux","Seed litter P flux", "Frass P flux",
-               "Understorey P flux", "Understorey Litter P flux", "Mineralization P flux")
+               "Understorey P flux", "Understorey Litter P flux", "Mineralization P flux", "Leaching P flux")
     
     treatDF <- data.frame(terms)
     
@@ -37,6 +37,10 @@ make_flux_summary_table_by_treatment_normalized <- function() {
     out <- summaryBy(predicted~Ring,data=fineroot_p_production_pred,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Fine Root P flux", 2:7] <- out$predicted
     
+    ### Fine root litter P flux
+    out <- summaryBy(predicted~Ring,data=fineroot_p_production_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Fineroot Litter P flux", 2:7] <- out$predicted
+    
     ### Coarse root P flux
     out <- summaryBy(predicted~Ring,data=coarse_root_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Coarse Root P flux", 2:7] <- out$predicted
@@ -61,8 +65,6 @@ make_flux_summary_table_by_treatment_normalized <- function() {
     out <- summaryBy(predicted~Ring,data=leaflitter_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Leaflitter P flux", 2:7] <- out$predicted
     
-    ### Fine Root litter flux
-
     
     ### twig litter flux
     out <- summaryBy(predicted~Ring,data=twig_litter_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
@@ -75,6 +77,10 @@ make_flux_summary_table_by_treatment_normalized <- function() {
     ### seed litter flux
     out <- summaryBy(predicted~Ring,data=seed_litter_p_flux_pred,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Seed litter P flux", 2:7] <- out$predicted
+    
+    ### leaching
+    out <- summaryBy(predicted~Ring,data=soil_p_leaching_pred,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Leaching P flux", 2:7] <- out$predicted
     
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)

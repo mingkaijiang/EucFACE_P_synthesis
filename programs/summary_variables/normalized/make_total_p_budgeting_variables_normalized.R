@@ -10,9 +10,7 @@ make_total_p_budgeting_variables_normalized <- function() {
     ### summarize according to year - this ignores bark and twigs
     source("programs/summary_variables/normalized/make_overstorey_standing_p_stock_normalized.R")
     overstorey_standing_p_stock <- make_overstorey_standing_p_stock_normalized(leaf=canopy_p_pool_pred, 
-                                                                    wood=wood_p_pool_pred, 
-                                                                    froot=fineroot_p_pool_pred, 
-                                                                    croot=coarse_root_p_pool_pred)
+                                                                    wood=wood_p_pool_pred)
     
     overstorey_standing_p_stock_avg <- summaryBy(total~Ring, data=overstorey_standing_p_stock, 
                                                  FUN=mean, na.rm=T, keep.names=T)
@@ -21,7 +19,18 @@ make_total_p_budgeting_variables_normalized <- function() {
     source("programs/summary_variables/normalized/make_understorey_standing_p_stock_normalized.R")
     understorey_standing_p_stock <- make_understorey_standing_p_stock_normalized(abg=understorey_p_pool_pred)
     
-    total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$predicted
+    source("programs/summary_variables/normalized/make_belowground_standing_p_stock_normalized.R")
+    belowground_standing_p_stock <- make_belowground_standing_p_stock_normalized(croot=coarse_root_p_pool_pred, 
+                                                                                 froot=fineroot_p_pool_pred)
+    
+    
+    belowground_standing_p_stock_avg <- summaryBy(total~Ring, data=belowground_standing_p_stock, 
+                                                  FUN=mean, na.rm=T, keep.names=T)
+    
+    
+    ### total standing P
+    total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$predicted +
+        belowground_standing_p_stock_avg$total
     
     ### P requirements, i.e. using plant P fluxes 
     source("programs/summary_variables/make_total_p_requirement.R")

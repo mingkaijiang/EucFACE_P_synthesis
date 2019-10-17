@@ -13,18 +13,18 @@ make_summary_p_budget_plots <- function(inDF) {
     plotDF1$neg <- with(plotDF1, mean - sd)
     
     ### Plot 2
-    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="Stand P OA"], 
-                            inDF$eCO2[inDF$terms=="Stand P OA"],
-                            inDF$aCO2[inDF$terms=="Stand P UA"], 
-                            inDF$eCO2[inDF$terms=="Stand P UA"],
+    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="overstorey standing p stock"], 
+                            inDF$eCO2[inDF$terms=="overstorey standing p stock"],
+                            inDF$aCO2[inDF$terms=="understorey standing p stock"], 
+                            inDF$eCO2[inDF$terms=="understorey standing p stock"],
                             inDF$aCO2[inDF$terms=="Stand P Belowground"], 
                             inDF$eCO2[inDF$terms=="Stand P Belowground"]), 
                           NA)
     colnames(plotDF2) <- c("mean", "sd")
-    plotDF2$sd <- c(inDF$aCO2_sd[inDF$terms=="Stand P OA"], 
-                    inDF$eCO2_sd[inDF$terms=="Stand P OA"],
-                    inDF$aCO2_sd[inDF$terms=="Stand P UA"], 
-                    inDF$eCO2_sd[inDF$terms=="Stand P UA"],
+    plotDF2$sd <- c(inDF$aCO2_sd[inDF$terms=="overstorey standing p stock"], 
+                    inDF$eCO2_sd[inDF$terms=="overstorey standing p stock"],
+                    inDF$aCO2_sd[inDF$terms=="understorey standing p stock"], 
+                    inDF$eCO2_sd[inDF$terms=="understorey standing p stock"],
                     inDF$aCO2_sd[inDF$terms=="Stand P Belowground"], 
                     inDF$eCO2_sd[inDF$terms=="Stand P Belowground"])
     plotDF2$Trt <- rep(c("aCO2", "eCO2"), 3)

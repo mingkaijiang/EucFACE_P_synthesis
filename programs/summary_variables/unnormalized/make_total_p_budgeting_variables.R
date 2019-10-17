@@ -10,9 +10,7 @@ make_total_p_budgeting_variables <- function() {
     ### summarize according to year - this ignores bark and twigs
     source("programs/summary_variables/unnormalized/make_overstorey_standing_p_stock.R")
     overstorey_standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
-                                                                    wood=wood_p_pool, 
-                                                                    froot=fineroot_p_pool, 
-                                                                    croot=coarse_root_p_pool)
+                                                                    wood=wood_p_pool)
     
     overstorey_standing_p_stock_avg <- summaryBy(total~Ring, data=overstorey_standing_p_stock, 
                                                  FUN=mean, na.rm=T, keep.names=T)
@@ -21,7 +19,18 @@ make_total_p_budgeting_variables <- function() {
     source("programs/summary_variables/unnormalized/make_understorey_standing_p_stock.R")
     understorey_standing_p_stock <- make_understorey_standing_p_stock(abg=understorey_p_pool)
     
-    total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$understorey_p_pool
+    source("programs/summary_variables/unnormalized/make_belowground_standing_p_stock.R")
+    belowground_standing_p_stock <- make_belowground_standing_p_stock(croot=coarse_root_p_pool, 
+                                                                                 froot=fineroot_p_pool)
+    
+    
+    belowground_standing_p_stock_avg <- summaryBy(total~Ring, data=belowground_standing_p_stock, 
+                                                  FUN=mean, na.rm=T, keep.names=T)
+    
+    
+    ### total P stock
+    total_standing_p_stock <- overstorey_standing_p_stock_avg$total + understorey_standing_p_stock$understorey_p_pool +
+        belowground_standing_p_stock_avg$total
     
     ### P requirements, i.e. using plant P fluxes 
     source("programs/summary_variables/make_total_p_requirement.R")

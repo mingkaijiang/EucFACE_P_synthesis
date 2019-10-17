@@ -11,13 +11,18 @@ make_overstorey_p_budgeting_variables <- function() {
     ### summarize according to year
     source("programs/summary_variables/unnormalized/make_overstorey_standing_p_stock.R")
     overstorey_standing_p_stock <- make_overstorey_standing_p_stock(leaf=canopy_p_pool, 
-                                                                    wood=wood_p_pool, 
-                                                                    froot=fineroot_p_pool, 
-                                                                    croot=coarse_root_p_pool)
+                                                                    wood=wood_p_pool)
     
     overstorey_standing_p_stock_avg <- summaryBy(total~Ring, data=overstorey_standing_p_stock, 
                                                  FUN=mean, na.rm=T, keep.names=T)
     
+    
+    source("programs/summary_variables/unnormalized/make_belowground_standing_p_stock.R")
+    belowground_standing_p_stock <- make_belowground_standing_p_stock(croot=coarse_root_p_pool, 
+                                                                    froot=fineroot_p_pool)
+    
+    belowground_standing_p_stock_avg <- summaryBy(total~Ring, data=belowground_standing_p_stock, 
+                                                 FUN=mean, na.rm=T, keep.names=T)
     
     ### P requirements, i.e. using plant P fluxes 
  
@@ -46,7 +51,8 @@ make_overstorey_p_budgeting_variables <- function() {
                "overstorey p requirement", 
                "overstorey p retranslocated", 
                "overstorey p uptake from soil", 
-               "overstorey uptake over requirement")
+               "overstorey uptake over requirement",
+               "belowground standing p stock")
     
     out <- data.frame(terms, NA, NA, NA, NA, NA, NA, NA, NA, NA)
     colnames(out) <- c("terms", "R1", "R2", "R3", "R4", "R5", "R6", "aCO2", "eCO2", "notes")
@@ -63,6 +69,9 @@ make_overstorey_p_budgeting_variables <- function() {
 
     out[out$terms == "overstorey uptake over requirement", 2:9] <- round(overstorey_p_uptake_over_requirement[1,], 2)
 
+    out[out$terms == "belowground standing p stock", 2:7] <- round(belowground_standing_p_stock_avg$total,2)
+    
+    
     ### aCO2 and eCO2 averages
     out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)
     out$eCO2 <- round(rowMeans(data.frame(out$R1, out$R4, out$R5)) , 4)
