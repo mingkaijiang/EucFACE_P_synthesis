@@ -804,8 +804,8 @@ source("programs/summary_variables/normalized/make_soil_p_budgeting_variables_no
 summary_table_soil_p_budgets_normalized <- make_soil_p_budgeting_variables_normalized(sumDF=summary_table_pool_by_treatment_normalized)
 
 
-source("programs/summary_variables/normalized/make_belowground_p_standing_normalized.R")
-summary_table_belowground_p_standing_normalized <- make_belowground_p_standing_normalized()
+#source("programs/summary_variables/normalized/make_belowground_p_standing_normalized.R")
+#summary_table_belowground_p_standing_normalized <- make_belowground_p_standing_normalized()
 
 #### 6.3 save output
 write.csv(summary_table_concentration_by_treatment_normalized,

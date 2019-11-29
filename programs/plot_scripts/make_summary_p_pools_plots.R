@@ -78,7 +78,7 @@ make_summary_p_pools_plots <- function(inDF) {
               axis.title.y=element_text(size=12),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
-              panel.grid.major=element_line(color="grey"),
+              panel.grid.major=element_blank(),
               legend.position="top")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
@@ -99,7 +99,7 @@ make_summary_p_pools_plots <- function(inDF) {
               axis.title.y=element_text(size=12),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
-              panel.grid.major=element_line(color="grey"),
+              panel.grid.major=element_blank(),
               legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
@@ -119,7 +119,7 @@ make_summary_p_pools_plots <- function(inDF) {
               axis.title.y=element_blank(),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
-              panel.grid.major=element_line(color="grey"),
+              panel.grid.major=element_blank(),
               legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
@@ -139,7 +139,7 @@ make_summary_p_pools_plots <- function(inDF) {
               axis.title.y=element_blank(),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
-              panel.grid.major=element_line(color="grey"),
+              panel.grid.major=element_blank(),
               legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
@@ -155,11 +155,11 @@ make_summary_p_pools_plots <- function(inDF) {
     require(gridExtra)
     
     ## plot 
-    pdf("plots_tables/Summary_P_Pools_Plots.pdf", width=8,height=8)
+    pdf("plots_tables/Summary_P_Pools_Plots.pdf", width=6,height=8)
     bot_row <- plot_grid(p2, p3, p4, ncol=3)
     plot_grid(p1, bot_row,  ncol = 1, rel_widths = c(1, 0.6,0.6,0.6),
               rel_heights=c(1.2, 1, 1, 1))
-    grid.text(grid.labs,x = c(0.12, 0.11, 0.42, 0.75), y = c(0.9, 0.42, 0.42, 0.42),
+    grid.text(grid.labs,x = c(0.15, 0.12, 0.45, 0.75), y = c(0.9, 0.42, 0.42, 0.42),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     

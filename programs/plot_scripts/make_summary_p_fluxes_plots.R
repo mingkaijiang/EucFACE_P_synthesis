@@ -94,7 +94,7 @@ make_summary_p_fluxes_plots <- function(inDF) {
               axis.title.y=element_text(size=12),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
-              panel.grid.major=element_line(color="grey"),
+              panel.grid.major=element_blank(),
               legend.position="top")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
@@ -115,7 +115,7 @@ make_summary_p_fluxes_plots <- function(inDF) {
               axis.title.y=element_text(size=12),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
-              panel.grid.major=element_line(color="grey"),
+              panel.grid.major=element_blank(),
               legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
@@ -135,7 +135,7 @@ make_summary_p_fluxes_plots <- function(inDF) {
               axis.title.y=element_blank(),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
-              panel.grid.major=element_line(color="grey"),
+              panel.grid.major=element_blank(),
               legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
