@@ -232,10 +232,10 @@ make_summary_p_budget_plots <- function(inDF) {
     require(cowplot)
     
     ## plot 
-    pdf("plots_tables/Summary_P_Budget_Plots.pdf", width=8,height=8)
+    pdf("plots_tables/Summary_P_Budget_Plots.pdf", width=6,height=8)
     plot_grid(p3, p4, p5, p6, p1, p2, labels="", ncol=2, align="v", axis = "l",
               rel_heights = c(1, 1, 1.2))
-    grid.text(grid.labs, x = c(0.11, 0.60, 0.11, 0.60, 0.11, 0.60),
+    grid.text(grid.labs, x = c(0.14, 0.63, 0.14, 0.63, 0.14, 0.63),
               y = c(0.95, 0.95, 0.65, 0.65, 0.34, 0.34), 
               gp=gpar(fontsize=14, col="black", fontface="bold"))
     dev.off()
