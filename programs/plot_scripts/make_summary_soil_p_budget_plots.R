@@ -26,6 +26,19 @@ make_summary_soil_p_budget_plots <- function() {
     pDF <- summaryBy(predicted~Trt+Datef, FUN=sd, keep.names=T, data=soil_occluded_p_pool_pred)
     pDF6$sd <- pDF$predicted
     
+    soilpDF <- summaryBy(predicted~Trt, FUN=c(mean, sd), keep.names=T, data=soil_p_pool_pred)
+    pDF6$predicted[pDF6$Trt=="amb"] <- soilpDF$predicted.mean[soilpDF$Trt=="amb"] - (pDF1$predicted[pDF1$Trt=="amb"]+
+                                                                                         pDF2$predicted[pDF2$Trt=="amb"]+
+                                                                                         pDF3$predicted[pDF3$Trt=="amb"]+
+                                                                                         pDF4$predicted[pDF4$Trt=="amb"]+
+                                                                                         pDF5$predicted[pDF5$Trt=="amb"])
+    
+    pDF6$predicted[pDF6$Trt=="ele"] <- soilpDF$predicted.mean[soilpDF$Trt=="ele"] - (pDF1$predicted[pDF1$Trt=="ele"]+
+                                                                                         pDF2$predicted[pDF2$Trt=="ele"]+
+                                                                                         pDF3$predicted[pDF3$Trt=="ele"]+
+                                                                                         pDF4$predicted[pDF4$Trt=="ele"]+
+                                                                                         pDF5$predicted[pDF5$Trt=="ele"])
+    
     pDF7 <- summaryBy(predicted~Trt+Datef, FUN=mean, keep.names=T, data=soil_aqua_p_pool_pred)
     pDF <- summaryBy(predicted~Trt+Datef, FUN=sd, keep.names=T, data=soil_aqua_p_pool_pred)
     pDF7$sd <- pDF$predicted
