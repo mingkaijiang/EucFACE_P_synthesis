@@ -875,7 +875,9 @@ myDF <- rbind(summary_table_total_p_budgets_normalized,
 make_overall_summary_comparison_plot(myDF=myDF)
 
 
-
+### 7.3 soil P as of hedley frac
+### currently the occluded pool is an easy fix
+make_summary_soil_p_budget_plots()
 
 
 
