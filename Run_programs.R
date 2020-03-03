@@ -249,6 +249,11 @@ microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
 
 canopy_p_pool <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
 
+### this is a new function yet to be written
+leaflitter_p_pool <- make_leaflitter_p_pool(p_conc=leaflitter_p_concentration,
+                                            c_pool=leaflitter_c_pool,
+                                            c_frac=c_fraction)
+
 #### 3.7 Canopy production flux
 #canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
 #                                          c_flux=canopy_c_production_flux,

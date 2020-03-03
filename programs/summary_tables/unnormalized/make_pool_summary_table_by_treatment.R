@@ -6,12 +6,13 @@
 make_pool_summary_table_by_treatment <- function() {
     
     ### Define pool variable names
-    terms <- c("Wood P Pool", "Canopy P Pool", "Fine Root P Pool",
+    terms <- c("Wood P Pool", "Canopy P Pool", "Canopy Litter P Pool",
+               "Fine Root P Pool",
                "Coarse Root P Pool", "Understorey P Pool", 
                "Understorey Litter P Pool",
                "Microbial P Pool", "Soil Phosphate P Pool",
                "Soil P Pool", "Mycorrhizal P Pool",
-               "Exhanagable Pi Pool", "Exhanagable Po Pool",
+               "Exchangeable Pi Pool", "Exchangeable Po Pool",
                "Moderately labile Po Pool", "Secondary Fe bound Pi Pool", "Primary Ca bound Pi Pool",
                "Occluded P Pool")
     
@@ -41,6 +42,13 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$timepoint[treatDF$terms == "Canopy P Pool"] <- length(unique(canopy_p_pool$Date))  
     treatDF$notes[treatDF$terms == "Canopy P Pool"] <- "used monthly concentration values to extrapolate"
 
+    ### Canopy Litter P 
+    out <- summaryBy(leaf_p_pool~Ring,data=canopy_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Canopy P Pool", 2:7] <- out$leaf_p_pool
+    treatDF$year_start[treatDF$terms == "Canopy P Pool"] <- min(year(canopy_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Canopy P Pool"] <- max(year(canopy_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Canopy P Pool"] <- length(unique(canopy_p_pool$Date))  
+    treatDF$notes[treatDF$terms == "Canopy P Pool"] <- "used monthly concentration values to extrapolate"
     
     ### Wood P 
     out <- summaryBy(wood_p_pool~Ring,data=wood_p_pool,FUN=mean,keep.names=T,na.rm=T)
@@ -108,21 +116,21 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$timepoint[treatDF$terms == "Soil P Pool"] <- length(unique(soil_p_pool$Date))  
     treatDF$notes[treatDF$terms == "Soil P Pool"] <- "Averaged across all P forms"
     
-    ### Exhanagable Pi Pool
+    ### Exchangeable Pi Pool
     out <- summaryBy(F1_2_Pi_Exhanagable~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Exhanagable Pi Pool", 2:7] <- out$F1_2_Pi_Exhanagable
-    treatDF$year_start[treatDF$terms == "Exhanagable Pi Pool"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$terms == "Exhanagable Pi Pool"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$terms == "Exhanagable Pi Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$terms == "Exhanagable Pi Pool"] <- "unclear depth info"
+    treatDF[treatDF$terms == "Exchangeable Pi Pool", 2:7] <- out$F1_2_Pi_Exhanagable
+    treatDF$year_start[treatDF$terms == "Exchangeable Pi Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Exchangeable Pi Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Exchangeable Pi Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Exchangeable Pi Pool"] <- "unclear depth info"
     
-    ### Exhanagable Po Pool
+    ### Exchangeable Po Pool
     out <- summaryBy(F1_2_Po_Exhanagable~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Exhanagable Po Pool", 2:7] <- out$F1_2_Po_Exhanagable
-    treatDF$year_start[treatDF$terms == "Exhanagable Po Pool"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$terms == "Exhanagable Po Pool"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$terms == "Exhanagable Po Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$terms == "Exhanagable Po Pool"] <- "unclear depth info"
+    treatDF[treatDF$terms == "Exchangeable Po Pool", 2:7] <- out$F1_2_Po_Exhanagable
+    treatDF$year_start[treatDF$terms == "Exchangeable Po Pool"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$terms == "Exchangeable Po Pool"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$terms == "Exchangeable Po Pool"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$terms == "Exchangeable Po Pool"] <- "unclear depth info"
     
     ### Moderately labile Po Pool
     out <- summaryBy(F3_Po_Moderately_labile~Ring,data=soil_p_pool_hedley,FUN=mean,keep.names=T,na.rm=T)
