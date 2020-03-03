@@ -6,7 +6,7 @@ check_microbial_pool_CP_ratios <- function(c_pool, p_pool) {
     i_sd <- sd(as.numeric(temp), na.rm=T)
     
     ### Compute CP ratio for microbial pool outside the ring
-    myDF <- read.csv("~/Documents/Research/Projects/EucFACE_C_Balance/R_repo/data/Microbial_Data_Yolima_outring.csv")
+    myDF <- read.csv("temp_files/Microbial_Data_Yolima_outring.csv")
     temp <- myDF$Microbial.Biomass.C / myDF$P.Microbial.Biomass
     o_mean <- mean(temp, na.rm=T)
     o_sd <- sd(temp, na.rm=T)

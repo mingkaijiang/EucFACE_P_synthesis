@@ -178,7 +178,7 @@ understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
 make_understorey_aboveground_growth_estimate(plotting = T)
 
 ### estimate % live and % dead
-source("programs/summary_variables/make_understorey_percent_live_estimate.R")
+source("programs/summary_variables/unnormalized/make_understorey_percent_live_estimate.R")
 understorey_live_percent <- make_understorey_percent_live_estimate()
 
 #### 2.11 Frass production
@@ -611,6 +611,7 @@ frass_p_production_pred <- make_frassp_conc_treatment_abs_effect_statistics(inDF
                                                                  return.outcome="predicted")
 
 ### Canopy P production flux
+### model failed to converge  --- check back!!!!!!
 canopy_p_flux_pred <- make_canopy_p_flux_treatment_abs_effect_statistics(inDF=canopy_p_flux, 
                                                                       var.col=5,
                                                                       return.outcome="predicted")
@@ -727,11 +728,13 @@ soil_c_pool_pred <- make_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool,
                                                               return.outcome="predicted")
 
 ### Leaf C
+### This function takes a bit of time (1 min) to run!!!!!!!!!!
 canopy_biomass_pool_pred <- make_leafc_treatment_abs_effect_statistics(inDF=canopy_biomass_pool, 
                                                               var.col=3,
                                                               return.outcome="predicted")
 
 ### Wood C pool
+### model failed to converge !!!!!!!
 wood_c_pool_pred <- make_woodc_treatment_abs_effect_statistics(inDF=wood_c_pool, 
                                                                var.col=3,
                                                                return.outcome="predicted") 
@@ -866,6 +869,10 @@ source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
 make_summary_p_budget_ring_plots(inDF=summary_table_total_p_budgets_normalized)
 
 
+
+
+
+######## check later
 ### 7.2 the plots requested by Kristine
 myDF <- rbind(summary_table_total_p_budgets_normalized,
               summary_table_overstorey_p_budgets_normalized,
