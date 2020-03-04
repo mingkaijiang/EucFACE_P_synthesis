@@ -41,9 +41,11 @@ make_canopy_n_concentration <- function() {
         df[df$TREE == i, "Ring"] <- treeDF[treeDF$Tree == i, "Ring"]
     }
     
+    df2 <- subset(df, AGE == "old")
+    
     ### leaf n, average across rings and date, unit = %
     out <- summaryBy(PercN~Ring+Date,
-                      data=df,FUN=mean,keep.names=T,na.rm=T)
+                      data=df2,FUN=mean,keep.names=T,na.rm=T)
 
     return(out)
 

@@ -937,8 +937,10 @@ make_summary_soil_p_budget_plots()
 canopy_n_concentration <- make_canopy_n_concentration()
 
 ### Wood N concentration
-wood_n_concentration <- make_wood_n_concentration(func=mean)
+wood_n_concentration <- make_wood_n_concentration()
 
+### Fineroot N concentration
+fineroot_n_concentration <- make_fineroot_n_concentration()
 
 ### Frass N concentration
 frass_n_concentration <- make_frass_n_concentration()
@@ -951,6 +953,11 @@ soil_inorganic_n_concentration <- make_soil_inorganic_n_concentration()
 
 ### Understorey N concentration
 understorey_n_concentration <- make_understorey_n_concentration()
+
+### microbial N concentration
+
+
+
 
 #### Pools and fluxes
 ### Canopy N pool

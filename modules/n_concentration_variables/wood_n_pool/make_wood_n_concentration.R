@@ -1,4 +1,4 @@
-make_wood_n_concentration <- function(func) {
+make_wood_n_concentration <- function() {
     
     ### download the data
     infile <- "FACE_P0079_RA_Wood_N_conc_RAW_V1.csv"
@@ -29,7 +29,7 @@ make_wood_n_concentration <- function(func) {
     
     ### Wood n, average across rings and date, unit = %
     df.wood <- summaryBy(N_conc~Ring+Date,
-                           data=df,FUN=func,keep.names=T,na.rm=T)
+                           data=df,FUN=mean,keep.names=T,na.rm=T)
     df.wood$month <- month(df.wood$Date)
     df.wood$year <- year(df.wood$Date)
     
