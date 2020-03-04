@@ -19,7 +19,7 @@ make_canopy_p_production_new <- function(c_flux,
     out <- c_flux
     
     for (i in 1:6) {
-        out[out$Ring==i, "PercP"] <- p_conc[p_conc$Ring==i & p_conc$Age=="new", "PercP"]
+        out[out$Ring==i, "PercP"] <- p_conc[p_conc$Ring==i & p_conc$Age=="old", "PercP"]
     }
     
     
