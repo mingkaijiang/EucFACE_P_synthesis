@@ -975,6 +975,7 @@ wood_n_pool <- make_wood_n_pool(n_conc=wood_n_concentration,
 
 
 ### Frass N production
+frass_c_fraction <- make_frass_c_fraction()
 frass_n_production <- make_frass_n_production_flux(n_conc=frass_n_concentration,
                                                    c_flux=frass_c_production_flux,
                                                    c_frac=frass_c_fraction)
