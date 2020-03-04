@@ -8,7 +8,7 @@ make_conc_summary_table_by_treatment_normalized <- function() {
     conc.terms <- c("Wood P Conc", "Canopy P Conc", "Fine Root P Conc", "Coarse Root P Conc",
                     "Leaflitter P Conc","Understorey P Conc", "Understorey Litter P Conc", "Frass P Conc",
                     "Microbial P Conc", "Soil P Conc", "Soil Phosphate P Conc",
-                    "Mycorrhizal P Conc","Exhanagable Pi Conc", "Exhanagable Po Conc",
+                    "Mycorrhizal P Conc","Exchangeable Pi Conc", "Exchangeable Po Conc",
                     "Moderately labile Po Conc", "Secondary Fe bound Pi Conc", "Primary Ca bound Pi Conc",
                     "Occluded P Conc")
     
@@ -35,21 +35,21 @@ make_conc_summary_table_by_treatment_normalized <- function() {
     treatDF$notes[treatDF$conc.terms == "Canopy P Conc"] <- "Only green leaf"
     
     ### Wood P concentration
-    out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Wood P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Wood P Conc"] <- min(year(wood_p_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Wood P Conc"] <- max(year(wood_p_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Wood P Conc"] <- length(unique(wood_p_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Wood P Conc"] <- "un-normalized"
+    #out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Wood P Conc", 2:7] <- out$PercP
+    #treatDF$year_start[treatDF$conc.terms == "Wood P Conc"] <- min(year(wood_p_concentration$Date))    
+    #treatDF$year_end[treatDF$conc.terms == "Wood P Conc"] <- max(year(wood_p_concentration$Date))    
+    #treatDF$timepoint[treatDF$conc.terms == "Wood P Conc"] <- length(unique(wood_p_concentration$Date))  
+    #treatDF$notes[treatDF$conc.terms == "Wood P Conc"] <- "un-normalized"
     
     
     ### Coarse root P concentration
-    out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Coarse Root P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Coarse Root P Conc"] <- min(year(wood_p_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Coarse Root P Conc"] <- max(year(wood_p_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Coarse Root P Conc"] <- length(unique(wood_p_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Coarse Root P Conc"] <- "same as wood"
+    #out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Coarse Root P Conc", 2:7] <- out$PercP
+    #treatDF$year_start[treatDF$conc.terms == "Coarse Root P Conc"] <- min(year(wood_p_concentration$Date))    
+    #treatDF$year_end[treatDF$conc.terms == "Coarse Root P Conc"] <- max(year(wood_p_concentration$Date))    
+    #treatDF$timepoint[treatDF$conc.terms == "Coarse Root P Conc"] <- length(unique(wood_p_concentration$Date))  
+    #treatDF$notes[treatDF$conc.terms == "Coarse Root P Conc"] <- "same as wood"
     
     ### Fine root P concentration
     out <- summaryBy(predicted~Ring,data=fineroot_p_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
@@ -120,52 +120,52 @@ make_conc_summary_table_by_treatment_normalized <- function() {
     treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc"] <- "Top 10 cm"
     
 
-    ### Exhanagable Pi Conc
-    out <- summaryBy(predicted~Ring,data=soil_exhanagable_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Exhanagable Pi Conc", 2:7] <- out$predicted
-    treatDF$year_start[treatDF$conc.terms == "Exhanagable Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Exhanagable Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Exhanagable Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Exhanagable Pi Conc"] <- "unclear depth info"
-    
-    out <- summaryBy(predicted~Ring,data=soil_exhanagable_po_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Exhanagable Po Conc", 2:7] <- out$predicted
-    treatDF$year_start[treatDF$conc.terms == "Exhanagable Po Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Exhanagable Po Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Exhanagable Po Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Exhanagable Po Conc"] <- "unclear depth info"
+    ### Exchangeable Pi Conc
+    #out <- summaryBy(predicted~Ring,data=soil_exchangeable_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Exchangeable Pi Conc", 2:7] <- out$predicted
+    #treatDF$year_start[treatDF$conc.terms == "Exchangeable Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
+    #treatDF$year_end[treatDF$conc.terms == "Exchangeable Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
+    #treatDF$timepoint[treatDF$conc.terms == "Exchangeable Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
+    #treatDF$notes[treatDF$conc.terms == "Exchangeable Pi Conc"] <- "unclear depth info"
+    #
+    #out <- summaryBy(predicted~Ring,data=soil_exchangeable_po_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Exchangeable Po Conc", 2:7] <- out$predicted
+    #treatDF$year_start[treatDF$conc.terms == "Exchangeable Po Conc"] <- min(soil_hedley_p_concentration$Year)    
+    #treatDF$year_end[treatDF$conc.terms == "Exchangeable Po Conc"] <- max(soil_hedley_p_concentration$Year)   
+    #treatDF$timepoint[treatDF$conc.terms == "Exchangeable Po Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
+    #treatDF$notes[treatDF$conc.terms == "Exchangeable Po Conc"] <- "unclear depth info"
     
     ### Moderately labile Po Conc
-    out <- summaryBy(predicted~Ring,data=soil_mlabile_po_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Moderately labile Po Conc", 2:7] <- out$predicted
-    treatDF$year_start[treatDF$conc.terms == "Moderately labile Po Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Moderately labile Po Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Moderately labile Po Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Moderately labile Po Conc"] <- "unclear depth info"
-    
-    ### Secondary Fe bound Pi Conc
-    out <- summaryBy(predicted~Ring,data=soil_secondary_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Secondary Fe bound Pi Conc", 2:7] <- out$predicted
-    treatDF$year_start[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- "unclear depth info"
+    #out <- summaryBy(predicted~Ring,data=soil_mlabile_po_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Moderately labile Po Conc", 2:7] <- out$predicted
+    #treatDF$year_start[treatDF$conc.terms == "Moderately labile Po Conc"] <- min(soil_hedley_p_concentration$Year)    
+    #treatDF$year_end[treatDF$conc.terms == "Moderately labile Po Conc"] <- max(soil_hedley_p_concentration$Year)   
+    #treatDF$timepoint[treatDF$conc.terms == "Moderately labile Po Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
+    #treatDF$notes[treatDF$conc.terms == "Moderately labile Po Conc"] <- "unclear depth info"
+    #
+    #### Secondary Fe bound Pi Conc
+    #out <- summaryBy(predicted~Ring,data=soil_secondary_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Secondary Fe bound Pi Conc", 2:7] <- out$predicted
+    #treatDF$year_start[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
+    #treatDF$year_end[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
+    #treatDF$timepoint[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
+    #treatDF$notes[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- "unclear depth info"
     
     ### Primary Ca bound Pi Conc
-    out <- summaryBy(predicted~Ring,data=soil_primary_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Primary Ca bound Pi Conc", 2:7] <- out$predicted
-    treatDF$year_start[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- "unclear depth info"
-    
-    ### Occluded P Conc
-    out <- summaryBy(predicted~Ring,data=soil_occluded_p_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Occluded P Conc", 2:7] <- out$predicted
-    treatDF$year_start[treatDF$conc.terms == "Occluded P Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Occluded P Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Occluded P Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Occluded P Conc"] <- "unclear depth info"
+    #out <- summaryBy(predicted~Ring,data=soil_primary_pi_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Primary Ca bound Pi Conc", 2:7] <- out$predicted
+    #treatDF$year_start[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
+    #treatDF$year_end[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
+    #treatDF$timepoint[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
+    #treatDF$notes[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- "unclear depth info"
+    #
+    #### Occluded P Conc
+    #out <- summaryBy(predicted~Ring,data=soil_occluded_p_concentration_pred,FUN=mean,keep.names=T,na.rm=T)
+    #treatDF[treatDF$conc.terms == "Occluded P Conc", 2:7] <- out$predicted
+    #treatDF$year_start[treatDF$conc.terms == "Occluded P Conc"] <- min(soil_hedley_p_concentration$Year)    
+    #treatDF$year_end[treatDF$conc.terms == "Occluded P Conc"] <- max(soil_hedley_p_concentration$Year)   
+    #treatDF$timepoint[treatDF$conc.terms == "Occluded P Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
+    #treatDF$notes[treatDF$conc.terms == "Occluded P Conc"] <- "unclear depth info"
 
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)

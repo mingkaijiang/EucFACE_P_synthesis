@@ -433,6 +433,7 @@ summary_microbial_pool_comparison <- check_microbial_pool_CP_ratios(c_pool=summa
 
 #### 5.1: Summary table for the stats 
 #### All stats for fluxes are based on annual rate
+### need to add canopy_litter_p_pool, and understorey_litter_p_pool
 source("programs/stats/generate_stats_abs_covariate.R")
 generate_stats_abs_covariate()
 
@@ -451,33 +452,33 @@ soil_phosphate_concentration_pred <- make_soilp_conc_treatment_abs_effect_statis
                                                                            return.outcome="predicted")
 
 ### hedley P concentrations
-soil_exhanagable_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-                                                                                     var.col=3,
-                                                                                     return.outcome="predicted")
-
-soil_exhanagable_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-                                                                                     var.col=4,
-                                                                                     return.outcome="predicted")
-
-soil_mlabile_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-                                                                                 var.col=5,
-                                                                                 return.outcome="predicted")
-
-soil_secondary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-                                                                                   var.col=6,
-                                                                                   return.outcome="predicted")
-
-soil_primary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-                                                                                 var.col=7,
-                                                                                 return.outcome="predicted")
-
-soil_occluded_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-                                                                                 var.col=8,
-                                                                                 return.outcome="predicted")
-
-soil_aqua_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-                                                                             var.col=9,
-                                                                             return.outcome="predicted")
+#soil_exchangeable_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#                                                                                     var.col=3,
+#                                                                                     return.outcome="predicted")
+#
+#soil_exchangeable_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#                                                                                     var.col=4,
+#                                                                                     return.outcome="predicted")
+#
+#soil_mlabile_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#                                                                                 var.col=5,
+#                                                                                 return.outcome="predicted")
+#
+#soil_secondary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#                                                                                   var.col=6,
+#                                                                                   return.outcome="predicted")
+#
+#soil_primary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#                                                                                 var.col=7,
+#                                                                                 return.outcome="predicted")
+#
+#soil_occluded_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#                                                                                 var.col=8,
+#                                                                                 return.outcome="predicted")
+#
+#soil_aqua_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#                                                                             var.col=9,
+#                                                                             return.outcome="predicted")
 
 
 ### Overstorey Leaf P conc
@@ -530,38 +531,42 @@ soil_phosphate_pool_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF
                                                                            return.outcome="predicted")
 
 ### hedley P pools
-soil_exhanagable_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-                                                                                                 var.col=3,
-                                                                                                 return.outcome="predicted")
-
-soil_exhanagable_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-                                                                                                 var.col=4,
-                                                                                                 return.outcome="predicted")
-
-soil_mlabile_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-                                                                                             var.col=5,
-                                                                                             return.outcome="predicted")
-
-soil_secondary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-                                                                                               var.col=6,
-                                                                                               return.outcome="predicted")
-
-soil_primary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-                                                                                             var.col=7,
-                                                                                             return.outcome="predicted")
-
-soil_occluded_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-                                                                                             var.col=8,
-                                                                                             return.outcome="predicted")
-
-soil_aqua_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-                                                                                         var.col=9,
-                                                                                         return.outcome="predicted")
+#soil_exchangeable_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+#                                                                                                 var.col=3,
+#                                                                                                 return.outcome="predicted")
+#
+#soil_exchangeable_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+#                                                                                                 var.col=4,
+#                                                                                                 return.outcome="predicted")
+#
+#soil_mlabile_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+#                                                                                             var.col=5,
+#                                                                                             return.outcome="predicted")
+#
+#soil_secondary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+#                                                                                               var.col=6,
+#                                                                                               return.outcome="predicted")
+#
+#soil_primary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+#                                                                                             var.col=7,
+#                                                                                             return.outcome="predicted")
+#
+#soil_occluded_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+#                                                                                             var.col=8,
+#                                                                                             return.outcome="predicted")
+#
+#soil_aqua_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+#                                                                                         var.col=9,
+#                                                                                         return.outcome="predicted")
 
 ### Overstorey Leaf P pool
 canopy_p_pool_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
                                                                 var.col=3,
                                                                 return.outcome="predicted")
+
+canopy_litter_p_pool_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=leaflitter_p_pool, 
+                                                                      var.col=3,
+                                                                      return.outcome="predicted")
 
 ### Wood P pool
 wood_p_pool_pred <- make_woodp_pool_treatment_abs_effect_statistics(inDF=wood_p_pool, 
@@ -577,6 +582,11 @@ fineroot_p_pool_pred <- make_frootp_conc_treatment_abs_effect_statistics(inDF=fi
 understorey_p_pool_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
                                                             var.col=3,
                                                             return.outcome="predicted")
+
+
+understorey_litter_p_pool_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
+                                                                         var.col=5,
+                                                                         return.outcome="predicted")
 
 ### Microbial P pool
 microbial_p_pool_pred <- make_micp_conc_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
@@ -795,6 +805,8 @@ source("programs/summary_tables/normalized/make_c_flux_summary_table_by_treatmen
 summary_table_c_flux_by_treatment_normalized <- make_c_flux_summary_table_by_treatment_normalized()
 
 
+
+#### up to this point 12:00 03-04-2020
 
 #### 6.2 summary variables for the budget
 ### Calculate all P budgeting variables

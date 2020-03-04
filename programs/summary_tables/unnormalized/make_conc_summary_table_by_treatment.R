@@ -124,16 +124,16 @@ make_conc_summary_table_by_treatment <- function() {
     
     
     ### Exchangeable Pi Conc
-    out <- summaryBy(F1_2_Pi_Exhanagable~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Exchangeable Pi Conc", 2:7] <- out$F1_2_Pi_Exhanagable
+    out <- summaryBy(F1_2_Pi_Exchangeable~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Exchangeable Pi Conc", 2:7] <- out$F1_2_Pi_Exchangeable
     treatDF$year_start[treatDF$conc.terms == "Exchangeable Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
     treatDF$year_end[treatDF$conc.terms == "Exchangeable Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
     treatDF$timepoint[treatDF$conc.terms == "Exchangeable Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
     treatDF$notes[treatDF$conc.terms == "Exchangeable Pi Conc"] <- "unclear depth info"
     
     ### Exchangeable Po Conc
-    out <- summaryBy(F1_2_Po_Exhanagable~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Exchangeable Po Conc", 2:7] <- out$F1_2_Po_Exhanagable
+    out <- summaryBy(F1_2_Po_Exchangeable~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Exchangeable Po Conc", 2:7] <- out$F1_2_Po_Exchangeable
     treatDF$year_start[treatDF$conc.terms == "Exchangeable Po Conc"] <- min(soil_hedley_p_concentration$Year)    
     treatDF$year_end[treatDF$conc.terms == "Exchangeable Po Conc"] <- max(soil_hedley_p_concentration$Year)   
     treatDF$timepoint[treatDF$conc.terms == "Exchangeable Po Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
