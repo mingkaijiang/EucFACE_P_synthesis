@@ -410,17 +410,27 @@ write.csv(summary_table_total_p_budgets, "plots_tables/summary_table_total_p_bud
 source("programs/summary_variables/unnormalized/make_overstorey_p_budgeting_variables.R")
 summary_table_overstorey_p_budgets <- make_overstorey_p_budgeting_variables()
 
+write.csv(summary_table_overstorey_p_budgets, "plots_tables/summary_table_overstorey_p_budgets_unnormalized.csv", row.names=F)
+
+
 source("programs/summary_variables/unnormalized/make_understorey_p_budgeting_variables.R")
 summary_table_understorey_p_budgets <- make_understorey_p_budgeting_variables()
+
+write.csv(summary_table_understorey_p_budgets, "plots_tables/summary_table_understorey_p_budgets_unnormalized.csv", row.names=F)
+
 
 source("programs/summary_variables/unnormalized/make_soil_p_budgeting_variables.R")
 summary_table_soil_p_budgets <- make_soil_p_budgeting_variables()
 
+write.csv(summary_table_soil_p_budgets, "plots_tables/summary_table_soil_p_budgets_unnormalized.csv", row.names=F)
 
 #### 4.3 Generating CP ratios 
 source("programs/summary_tables/unnormalized/make_cp_ratios.R")
 summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment,
                                     p_pool=summary_table_pool_by_treatment)
+
+write.csv(summary_cp_ratios, "plots_tables/summary_cp_ratios.csv", row.names=F)
+
 
 source("programs/check_variables/check_microbial_pool_CP_ratios.R")
 summary_microbial_pool_comparison <- check_microbial_pool_CP_ratios(c_pool=summary_table_c_pool_by_treatment,
