@@ -16,8 +16,8 @@ make_soil_p_pool_hedley <- function(p_conc, bk_density){
     }
     
     # calculate each P pool in top 10 cm of soil (hence the * 0.1), unit kg m-2
-    p_pool$F1_2_Pi_Exhanagable <- p_conc$F1_2_Pi_Exhanagable * p_conc$bk_kg_m3 * 0.1 / 100
-    p_pool$F1_2_Po_Exhanagable <- p_conc$F1_2_Po_Exhanagable * p_conc$bk_kg_m3 * 0.1 / 100
+    p_pool$F1_2_Pi_Exchangeable <- p_conc$F1_2_Pi_Exchangeable * p_conc$bk_kg_m3 * 0.1 / 100
+    p_pool$F1_2_Po_Exchangeable <- p_conc$F1_2_Po_Exchangeable * p_conc$bk_kg_m3 * 0.1 / 100
     p_pool$F3_Po_Moderately_labile <- p_conc$F3_Po_Moderately_labile * p_conc$bk_kg_m3 * 0.1 / 100
     p_pool$F3_Fe_bound_P_Secondary_mineral <- p_conc$F3_Fe_bound_P_Secondary_mineral * p_conc$bk_kg_m3 * 0.1 / 100
     p_pool$F4_Ca_bound_Primary_Mineral <- p_conc$F4_Ca_bound_Primary_Mineral * p_conc$bk_kg_m3 * 0.1 / 100
@@ -25,8 +25,8 @@ make_soil_p_pool_hedley <- function(p_conc, bk_density){
     p_pool$Total_Aqua_Regia_P <- p_conc$Total_Aqua_Regia_P * p_conc$bk_kg_m3 * 0.1 / 100
 
     # return in unit of g/m2
-    p_pool$F1_2_Pi_Exhanagable <- p_pool$F1_2_Pi_Exhanagable * 1000.0
-    p_pool$F1_2_Po_Exhanagable <- p_pool$F1_2_Po_Exhanagable * 1000.0
+    p_pool$F1_2_Pi_Exchangeable <- p_pool$F1_2_Pi_Exchangeable * 1000.0
+    p_pool$F1_2_Po_Exchangeable <- p_pool$F1_2_Po_Exchangeable * 1000.0
     p_pool$F3_Po_Moderately_labile <- p_pool$F3_Po_Moderately_labile * 1000.0
     p_pool$F3_Fe_bound_P_Secondary_mineral <- p_pool$F3_Fe_bound_P_Secondary_mineral * 1000.0
     p_pool$F4_Ca_bound_Primary_Mineral <- p_pool$F4_Ca_bound_Primary_Mineral * 1000.0

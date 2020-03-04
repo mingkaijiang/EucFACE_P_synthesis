@@ -25,8 +25,8 @@ make_soil_p_budgeting_variables <- function() {
     terms <- c("P mineralization flux",
                "P leaching flux",
                "Soil phosphate P pool", 
-               "Exhanagable Pi pool",
-               "Exhanagable Po pool",
+               "Exchangeable Pi pool",
+               "Exchangeable Po pool",
                "Moderately labile Po pool",
                "Secondary Pi Fe bound pool", 
                "Primary Pi Ca bound pool",
@@ -45,9 +45,9 @@ make_soil_p_budgeting_variables <- function() {
     
     out[out$terms == "Soil phosphate P pool", 2:7] <- round(soil_phosphate$soil_phosphate_p_g_m2,2)
 
-    out[out$terms == "Exhanagable Pi pool", 2:7] <- round(sumDF[sumDF$terms=="Exhanagable Pi Pool",2:7],2)
+    out[out$terms == "Exchangeable Pi pool", 2:7] <- round(sumDF[sumDF$terms=="Exchangeable Pi Pool",2:7],2)
     
-    out[out$terms == "Exhanagable Po pool", 2:7] <- round(sumDF[sumDF$terms=="Exhanagable Po Pool",2:7],2)
+    out[out$terms == "Exchangeable Po pool", 2:7] <- round(sumDF[sumDF$terms=="Exchangeable Po Pool",2:7],2)
     
     out[out$terms == "Moderately labile Po pool", 2:7] <- round(sumDF[sumDF$terms=="Moderately labile Po Pool",2:7],2)
     
@@ -79,9 +79,9 @@ make_soil_p_budgeting_variables <- function() {
     
     out[out$terms == "Soil phosphate P pool","notes"] <- ""
     
-    out[out$terms == "Exhanagable Pi pool", "notes"] <- "Based on Hedley frac"
+    out[out$terms == "Exchangeable Pi pool", "notes"] <- "Based on Hedley frac"
     
-    out[out$terms == "Exhanagable Po pool", "notes"] <- "Based on Hedley frac"
+    out[out$terms == "Exchangeable Po pool", "notes"] <- "Based on Hedley frac"
     
     out[out$terms == "Moderately labile Po pool", "notes"] <- "Based on Hedley frac"
     

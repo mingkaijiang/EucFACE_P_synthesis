@@ -43,12 +43,12 @@ make_pool_summary_table_by_treatment <- function() {
     treatDF$notes[treatDF$terms == "Canopy P Pool"] <- "used monthly concentration values to extrapolate"
 
     ### Canopy Litter P 
-    out <- summaryBy(leaf_p_pool~Ring,data=canopy_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Canopy P Pool", 2:7] <- out$leaf_p_pool
-    treatDF$year_start[treatDF$terms == "Canopy P Pool"] <- min(year(canopy_p_pool$Date))    
-    treatDF$year_end[treatDF$terms == "Canopy P Pool"] <- max(year(canopy_p_pool$Date))    
-    treatDF$timepoint[treatDF$terms == "Canopy P Pool"] <- length(unique(canopy_p_pool$Date))  
-    treatDF$notes[treatDF$terms == "Canopy P Pool"] <- "used monthly concentration values to extrapolate"
+    out <- summaryBy(leaflitter_p_pool~Ring,data=leaflitter_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Canopy Litter P Pool", 2:7] <- out$leaflitter_p_pool
+    treatDF$year_start[treatDF$terms == "Canopy Litter P Pool"] <- min(year(leaflitter_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Canopy Litter P Pool"] <- max(year(leaflitter_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Canopy Litter P Pool"] <- length(unique(leaflitter_p_pool$Date))  
+    treatDF$notes[treatDF$terms == "Canopy Litter P Pool"] <- "calculated based on leaflitter p concentration and leaflitter pool"
     
     ### Wood P 
     out <- summaryBy(wood_p_pool~Ring,data=wood_p_pool,FUN=mean,keep.names=T,na.rm=T)

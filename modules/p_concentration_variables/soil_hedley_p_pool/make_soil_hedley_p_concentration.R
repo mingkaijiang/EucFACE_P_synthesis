@@ -17,10 +17,12 @@ make_soil_hedley_p_concentration <- function(func){
 
     ## only 2013 data is quality checked
     ## for now, to create the code structure, replace 2015 with 2013 data
-    #myDF <- subset(myDF, Year == 2013)
+    myDF2 <- subset(myDF, Year == 2013)
     #myDF2 <- rbind(myDF, myDF)
     #myDF2$Year[25:48] <- 2015
-    myDF2 <- myDF
+    
+    myDF2$F1_2_Po_Exhanagable <- as.numeric(as.character(myDF2$F1_2_Po_Exhanagable))
+
     
     # average plots within ring
     myDF3 <- summaryBy(F1_2_Pi_Exhanagable+F1_2_Po_Exhanagable+F3_Po_Moderately_labile+
@@ -36,6 +38,14 @@ make_soil_hedley_p_concentration <- function(func){
     myDF3$F4_Ca_bound_Primary_Mineral <- myDF3$F4_Ca_bound_Primary_Mineral * 10^-4
     myDF3$F5_6_Occluded <- myDF3$F5_6_Occluded * 10^-4
     myDF3$Total_Aqua_Regia_P <- myDF3$Total_Aqua_Regia_P * 10^-4
+    
+    colnames(myDF3) <- c("Year", "Ring", "F1_2_Pi_Exchangeable", "F1_2_Po_Exchangeable", 
+                         "F3_Po_Moderately_labile", "F3_Fe_bound_P_Secondary_mineral",
+                         "F4_Ca_bound_Primary_Mineral", "F5_6_Occluded", "Total_Aqua_Regia_P")
+    
+    
+    ### test
+    #myDF3$total <- with(myDF3, F1_2_Pi_Exchangeable+F1_2_Po_Exchangeable+F3_Po_Moderately_labile+F3_Fe_bound_P_Secondary_mineral+F4_Ca_bound_Primary_Mineral+F5_6_Occluded)
     
     
     return(myDF3)
