@@ -1089,8 +1089,14 @@ microbial_np_ratio <- make_microbial_np_ratios(n_conc=microbial_n_concentration,
 
 
 
-### make a output table to store all np ratios
+####### make a output table to store all np ratios
 make_summary_table_np_ratios()
+
+
+
+
+
+
 
 
 
