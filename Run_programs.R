@@ -1053,10 +1053,17 @@ canopy_np_ratio <- make_canopy_np_ratios(n_pool=canopy_n_pool,
                                          p_pool=canopy_p_pool)
 
 ### leaflitter N:P ratio
+leaflitter_np_ratio <- make_leaflitter_np_ratios(n_conc=leaflitter_n_concentration,
+                                                 p_conc=leaflitter_p_concentration)
 
 ### wood N:P ratio
+wood_np_ratio <- make_wood_np_ratios(n_conc=wood_n_concentration,
+                                     p_conc=wood_p_concentration)
 
 ### fineroot N:P ratio
+fineroot_np_ratio <- make_fineroot_np_ratios(n_conc=fineroot_n_concentration,
+                                             p_conc=fineroot_p_concentration)
+
 
 ### Frass N:P ratios
 frass_np_ratio <- make_frass_np_ratios(n_conc=frass_n_concentration,
@@ -1074,6 +1081,11 @@ soil_np_ratio <- make_soil_np_ratios(n_pool=soil_n_pool,
 ### readily available N:P ratio (i.e. sum of nitrate and ammonium : phosphate-P)
 readily_available_soil_np_ratio <- make_readily_available_soil_np_ratios(n_pool=soil_inorganic_n_pool,
                                                                          p_pool=soil_phosphate_pool)
+
+
+### microbes
+microbial_np_ratio <- make_microbial_np_ratios(n_conc=microbial_n_concentration,
+                                                   p_conc=microbial_p_concentration)
 
 
 
