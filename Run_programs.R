@@ -449,7 +449,7 @@ plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flu
 
 #### 6.3 P budget summary
 ### Calculate all N budgeting variables
-total_n_budget <- make_total_n_budget()
+total_p_budget <- make_total_p_budget()
 
 
 
