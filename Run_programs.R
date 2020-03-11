@@ -97,7 +97,7 @@ soil_hedley_p_concentration <- make_soil_hedley_p_concentration()
 lai_variable <- make_lai_variable()
 sla_variable <- make_sla_variable()
 
-canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable, sla_option="variable")
+canopy_c_pool <- make_canopy_c_pool(lai_variable, sla_variable, sla_option="variable")
 
 
 #### 2.2 Litter production (leaf, twig, bark, seed)
@@ -233,7 +233,7 @@ microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
 
 #### 3.6 Canopy P pool - only for green leaves
 canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
-                                    biom=canopy_biomass_pool)
+                                    biom=canopy_c_pool)
 
 #canopy_p_pool <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
 
