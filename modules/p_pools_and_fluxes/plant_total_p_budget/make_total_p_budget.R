@@ -9,7 +9,7 @@ make_total_p_budget <- function() {
                "Labile Pi stock",
                "Plant P uptake over requirement",
                "Plant P MRT", 
-               "Plant NUE",
+               "Plant PUE",
                "Overstorey aboveground P stock",
                "Understorey aboveground P stock",
                "Belowground P stock")
@@ -32,7 +32,7 @@ make_total_p_budget <- function() {
     
     out[out$terms == "Plant P MRT", 2:7] <- round(plant_p_MRT$plant_P_MRT,2)
     
-    out[out$terms == "Plant NUE", 2:7] <- round(plant_p_use_efficiency$PUE,2)
+    out[out$terms == "Plant PUE", 2:7] <- round(plant_p_use_efficiency$PUE,2)
     
     out[out$terms == "Overstorey aboveground P stock", 2:7] <- round(vegetation_standing_p_stock$oa,2)
     

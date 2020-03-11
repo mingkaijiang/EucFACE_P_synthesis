@@ -457,11 +457,11 @@ total_p_budget <- make_total_p_budget()
 ##### Step 5. Plotting P budget figures, based on unnormalized data
 #### Note that you need to go into each function to plot!
 source("programs/plot_scripts/make_p_budget_summary_plots.R")
-make_p_budget_summary_plots(inDF=inDF)
+make_p_budget_summary_plots(inDF=total_p_budget)
 
 ### This is based on unnormalized data!
-source("programs/plot_scripts/make_summary_p_concentration_plots.R")
-make_summary_p_concentration_plots(inDF=summary_table_concentration_by_treatment)
+source("programs/plot_scripts/make_p_concentration_summary_plots.R")
+make_p_concentration_summary_plots(inDF=summary_table_concentration)
 
 
 source("programs/plot_scripts/make_summary_p_pools_plots.R")

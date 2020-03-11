@@ -1,4 +1,4 @@
-make_summary_soil_p_budget_plots <- function() {
+make_soil_p_budget_summary_plots <- function() {
     
     ################### Plot all P summary budget plots
     ### summarize each variable

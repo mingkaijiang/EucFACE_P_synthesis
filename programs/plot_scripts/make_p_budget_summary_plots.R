@@ -2,31 +2,31 @@ make_p_budget_summary_plots <- function(inDF) {
     
     ################### Plot all P summary budget plots
     ### Plot 1df
-    plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="total standing p stock"], 
-                            inDF$eCO2[inDF$terms=="total standing p stock"]), 
+    plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="Total plant P stock"], 
+                            inDF$eCO2[inDF$terms=="Total plant P stock"]), 
                           NA)
     colnames(plotDF1) <- c("mean", "sd")
-    plotDF1$sd <- c(inDF$aCO2_sd[inDF$terms=="total standing p stock"], 
-                    inDF$eCO2_sd[inDF$terms=="total standing p stock"])
+    plotDF1$sd <- c(inDF$aCO2_sd[inDF$terms=="Total plant P stock"], 
+                    inDF$eCO2_sd[inDF$terms=="Total plant P stock"])
     plotDF1$Trt <- c("aCO2", "eCO2")
     plotDF1$pos <- with(plotDF1, mean + sd)
     plotDF1$neg <- with(plotDF1, mean - sd)
     
     ### Plot 2
-    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="overstorey standing p stock"], 
-                            inDF$eCO2[inDF$terms=="overstorey standing p stock"],
-                            inDF$aCO2[inDF$terms=="understorey standing p stock"], 
-                            inDF$eCO2[inDF$terms=="understorey standing p stock"],
-                            inDF$aCO2[inDF$terms=="belowground standing p stock"], 
-                            inDF$eCO2[inDF$terms=="belowground standing p stock"]), 
+    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="Overstorey aboveground P stock"], 
+                            inDF$eCO2[inDF$terms=="Overstorey aboveground P stock"],
+                            inDF$aCO2[inDF$terms=="Understorey aboveground P stock"], 
+                            inDF$eCO2[inDF$terms=="Understorey aboveground P stock"],
+                            inDF$aCO2[inDF$terms=="Belowground P stock"], 
+                            inDF$eCO2[inDF$terms=="Belowground P stock"]), 
                           NA)
     colnames(plotDF2) <- c("mean", "sd")
-    plotDF2$sd <- c(inDF$aCO2_sd[inDF$terms=="overstorey standing p stock"], 
-                    inDF$eCO2_sd[inDF$terms=="overstorey standing p stock"],
-                    inDF$aCO2_sd[inDF$terms=="understorey standing p stock"], 
-                    inDF$eCO2_sd[inDF$terms=="understorey standing p stock"],
-                    inDF$aCO2_sd[inDF$terms=="belowground standing p stock"], 
-                    inDF$eCO2_sd[inDF$terms=="belowground standing p stock"])
+    plotDF2$sd <- c(inDF$aCO2_sd[inDF$terms=="Overstorey aboveground P stock"], 
+                    inDF$eCO2_sd[inDF$terms=="Overstorey aboveground P stock"],
+                    inDF$aCO2_sd[inDF$terms=="Understorey aboveground P stock"], 
+                    inDF$eCO2_sd[inDF$terms=="Understorey aboveground P stock"],
+                    inDF$aCO2_sd[inDF$terms=="Belowground P stock"], 
+                    inDF$eCO2_sd[inDF$terms=="Belowground P stock"])
     plotDF2$Trt <- rep(c("aCO2", "eCO2"), 3)
     plotDF2$Variable <- rep(c("OA", "UA", "B"), each=2)
     plotDF2$pos <- with(plotDF2, mean + sd)
@@ -39,48 +39,71 @@ make_p_budget_summary_plots <- function(inDF) {
     
     
     ### Plot 3
-    plotDF3 <- data.frame(c(inDF$aCO2[inDF$terms=="total p requirement"], 
-                            inDF$eCO2[inDF$terms=="total p requirement"]), 
+    plotDF3 <- data.frame(c(inDF$aCO2[inDF$terms=="Total plant P requirement flux"], 
+                            inDF$eCO2[inDF$terms=="Total plant P requirement flux"]), 
                           NA)
     colnames(plotDF3) <- c("mean", "sd")
-    plotDF3$sd <- c(inDF$aCO2_sd[inDF$terms=="total p requirement"], 
-                    inDF$eCO2_sd[inDF$terms=="total p requirement"])
+    plotDF3$sd <- c(inDF$aCO2_sd[inDF$terms=="Total plant P requirement flux"], 
+                    inDF$eCO2_sd[inDF$terms=="Total plant P requirement flux"])
     plotDF3$Trt <- c("aCO2", "eCO2")
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
     
     ### Plot 4
-    plotDF4 <- data.frame(c(inDF$aCO2[inDF$terms=="total p retranslocated"], 
-                            inDF$eCO2[inDF$terms=="total p retranslocated"]), 
+    plotDF4 <- data.frame(c(inDF$aCO2[inDF$terms=="Total plant P retranslocation flux"], 
+                            inDF$eCO2[inDF$terms=="Total plant P retranslocation flux"]), 
                           NA)
     colnames(plotDF4) <- c("mean", "sd")
-    plotDF4$sd <- c(inDF$aCO2_sd[inDF$terms=="total p retranslocated"], 
-                    inDF$eCO2_sd[inDF$terms=="total p retranslocated"])
+    plotDF4$sd <- c(inDF$aCO2_sd[inDF$terms=="Total plant P retranslocation flux"], 
+                    inDF$eCO2_sd[inDF$terms=="Total plant P retranslocation flux"])
     plotDF4$Trt <- c("aCO2", "eCO2")
     plotDF4$pos <- with(plotDF4, mean + sd)
     plotDF4$neg <- with(plotDF4, mean - sd)
     
     ### Plot 5
-    plotDF5 <- data.frame(c(inDF$aCO2[inDF$terms=="total p uptake from soil"], 
-                            inDF$eCO2[inDF$terms=="total p uptake from soil"]), 
+    plotDF5 <- data.frame(c(inDF$aCO2[inDF$terms=="Plant P uptake flux"], 
+                            inDF$eCO2[inDF$terms=="Plant P uptake flux"]), 
                           NA)
     colnames(plotDF5) <- c("mean", "sd")
-    plotDF5$sd <- c(inDF$aCO2_sd[inDF$terms=="total p uptake from soil"], 
-                    inDF$eCO2_sd[inDF$terms=="total p uptake from soil"])
+    plotDF5$sd <- c(inDF$aCO2_sd[inDF$terms=="Plant P uptake flux"], 
+                    inDF$eCO2_sd[inDF$terms=="Plant P uptake flux"])
     plotDF5$Trt <- c("aCO2", "eCO2")
     plotDF5$pos <- with(plotDF5, mean + sd)
     plotDF5$neg <- with(plotDF5, mean - sd)
     
     ### Plot 6
-    plotDF6 <- data.frame(c(inDF$aCO2[inDF$terms=="soil p mineralization"], 
-                            inDF$eCO2[inDF$terms=="soil p mineralization"]), 
+    plotDF6 <- data.frame(c(inDF$aCO2[inDF$terms=="Soil P mineralization flux"], 
+                            inDF$eCO2[inDF$terms=="Soil P mineralization flux"]), 
                           NA)
     colnames(plotDF6) <- c("mean", "sd")
-    plotDF6$sd <- c(inDF$aCO2_sd[inDF$terms=="soil p mineralization"], 
-                    inDF$eCO2_sd[inDF$terms=="soil p mineralization"])
+    plotDF6$sd <- c(inDF$aCO2_sd[inDF$terms=="Soil P mineralization flux"], 
+                    inDF$eCO2_sd[inDF$terms=="Soil P mineralization flux"])
     plotDF6$Trt <- c("aCO2", "eCO2")
     plotDF6$pos <- with(plotDF6, mean + sd)
     plotDF6$neg <- with(plotDF6, mean - sd)
+    
+    ### plot 7
+    plotDF7 <- data.frame(c(inDF$aCO2[inDF$terms=="Plant P MRT"], 
+                            inDF$eCO2[inDF$terms=="Plant P MRT"]), 
+                          NA)
+    colnames(plotDF7) <- c("mean", "sd")
+    plotDF7$sd <- c(inDF$aCO2_sd[inDF$terms=="Plant P MRT"], 
+                    inDF$eCO2_sd[inDF$terms=="Plant P MRT"])
+    plotDF7$Trt <- c("aCO2", "eCO2")
+    plotDF7$pos <- with(plotDF7, mean + sd)
+    plotDF7$neg <- with(plotDF7, mean - sd)
+    
+    
+    ### plot 8
+    plotDF8 <- data.frame(c(inDF$aCO2[inDF$terms=="Plant PUE"], 
+                            inDF$eCO2[inDF$terms=="Plant PUE"]), 
+                          NA)
+    colnames(plotDF8) <- c("mean", "sd")
+    plotDF8$sd <- c(inDF$aCO2_sd[inDF$terms=="Plant PUE"], 
+                    inDF$eCO2_sd[inDF$terms=="Plant PUE"])
+    plotDF8$Trt <- c("aCO2", "eCO2")
+    plotDF8$pos <- with(plotDF8, mean + sd)
+    plotDF8$neg <- with(plotDF8, mean - sd)
     
     ### Plotting
     
@@ -225,65 +248,72 @@ make_p_budget_summary_plots <- function(inDF) {
                          labels=c(expression(aCO[2]),
                                   expression(eCO[2])))
     
+    
+    p7 <- ggplot(plotDF7,
+                 aes(Trt, mean)) + 
+      geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+      geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                    position = position_dodge(0.9), width=0.2, size=0.4) +
+      xlab("") + ylab("MRT (yr)")+
+      theme_linedraw() +
+      ylim(0,10)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position="none")+
+      scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                        labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
 
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    p8 <- ggplot(plotDF8,
+                 aes(Trt, mean)) + 
+      geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+      geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                    position = position_dodge(0.9), width=0.2, size=0.4) +
+      xlab("") + ylab(expression(paste("Plant PUE ( gC" * " " *gP^-1 * " )")))+
+      theme_linedraw() +
+      ylim(0,3000)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position="none")+
+      scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                        labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
+    
+    
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)", "(g)", "(h)")
     
     require(grid)
     require(cowplot)
     
     ## plot 
-    pdf("plots_tables/Summary_P_Budget_Plots.pdf", width=6,height=8)
-    plot_grid(p3, p4, p5, p6, p1, p2, labels="", ncol=2, align="v", axis = "l",
-              rel_heights = c(1, 1, 1.2))
-    grid.text(grid.labs, x = c(0.14, 0.63, 0.14, 0.63, 0.14, 0.63),
-              y = c(0.95, 0.95, 0.65, 0.65, 0.34, 0.34), 
+    pdf("plots_tables/P_Budget_Summary_Plots.pdf", width=10,height=14)
+    plot_grid(p3, p4, p5, p6, p1, p2, p7, p8, labels="", ncol=2, align="v", axis = "l",
+              rel_heights = c(1, 1, 1.2, 1))
+    grid.text(grid.labs, x = c(0.1, 0.6, 0.1, 0.6, 0.1, 0.6, 0.1, 0.6),
+              y = c(0.97, 0.97, 0.73, 0.73, 0.5, 0.5, 0.21, 0.21), 
               gp=gpar(fontsize=14, col="black", fontface="bold"))
-    dev.off()
-    
-    
-    
-    ### Plot 
-    plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="total P MRT in plant"], 
-                            inDF$eCO2[inDF$terms=="total P MRT in plant"]), 
-                          NA)
-    colnames(plotDF1) <- c("mean", "sd")
-    plotDF1$sd <- c(inDF$aCO2_sd[inDF$terms=="total P MRT in plant"], 
-                    inDF$eCO2_sd[inDF$terms=="total P MRT in plant"])
-    plotDF1$Trt <- c("aCO2", "eCO2")
-    plotDF1$pos <- with(plotDF1, mean + sd)
-    plotDF1$neg <- with(plotDF1, mean - sd)
-    
- 
-    
-    p1 <- ggplot(plotDF1,
-                 aes(Trt, mean)) + 
-        geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
-        geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
-                      position = position_dodge(0.9), width=0.2, size=0.4) +
-        xlab("") + ylab("MRT (yr)")+
-        theme_linedraw() +
-        ylim(0,5)+
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=10), 
-              axis.text.x = element_text(size=10),
-              axis.text.y=element_text(size=10),
-              axis.title.y=element_text(size=10),
-              legend.text=element_text(size=10),
-              legend.title=element_text(size=12),
-              panel.grid.major=element_blank(),
-              legend.position="none")+
-        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
-                          labels=c(expression(aCO[2]), expression(eCO[2])))+
-        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
-                            labels=c(expression(aCO[2]), expression(eCO[2])))+
-        scale_x_discrete(limits=c("aCO2","eCO2"),
-                         labels=c(expression(aCO[2]),
-                                  expression(eCO[2])))
-    
-    
-    
-    pdf("plots_tables/Summary_P_Budget_MRT_Plots.pdf", width=8,height=8)
-    plot(p1)
     dev.off()
     
     

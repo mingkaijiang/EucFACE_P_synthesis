@@ -1,4 +1,4 @@
-make_summary_p_fluxes_plots <- function(inDF) {
+make_p_fluxes_summary_plots <- function(inDF) {
 
     
     ### Plot 1

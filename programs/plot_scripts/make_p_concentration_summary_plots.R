@@ -1,15 +1,4 @@
-make_summary_p_concentration_plots <- function(inDF) {
-    
-
-    ## inDF
-    inDF$aCO2_sd <- apply(data.frame(inDF$R2, inDF$R3, inDF$R6), 1, sd)
-    inDF$eCO2_sd <- apply(data.frame(inDF$R1, inDF$R4, inDF$R5), 1, sd)
-    
-    inDF$aCO2 <- inDF$aCO2 
-    inDF$eCO2 <- inDF$eCO2
-    
-    inDF$aCO2_sd <- inDF$aCO2_sd 
-    inDF$eCO2_sd <- inDF$eCO2_sd 
+make_p_concentration_summary_plots <- function(inDF) {
     
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Canopy P Conc"], 
