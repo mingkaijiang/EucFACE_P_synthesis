@@ -451,12 +451,6 @@ plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flu
 ### Calculate all N budgeting variables
 total_p_budget <- make_total_p_budget()
 
-soil_p_budet <- make_soil_p_budget(sumDF=summary_table_pool)
-
-
-
-
-
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 5: Normalize all responses to a pretreatment LAI
