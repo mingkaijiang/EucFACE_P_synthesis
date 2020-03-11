@@ -95,13 +95,10 @@ soil_hedley_p_concentration <- make_soil_hedley_p_concentration()
 
 #### 2.1 Canopy related variables (SLA, LAI, Canopy biomass)
 lai_variable <- make_lai_variable()
-lai_variable_smoothed <- make_smooth_lai_variable(timestep="1 day", kgam=15, return.option="dataframe")
-
 sla_variable <- make_sla_variable()
 
 canopy_biomass_pool <- make_canopy_biomass_pool(lai_variable, sla_variable, sla_option="variable")
 
-canopy_biomass_pool_smoothed <- make_canopy_biomass_pool_smooth_lai(lai_variable_smoothed, sla_variable)
 
 #### 2.2 Litter production (leaf, twig, bark, seed)
 litter_c_production_flux <- make_litter_c_flux(c_fraction)
@@ -117,9 +114,8 @@ canopy_c_production_flux <- leaflitter_c_production_flux
 
 ## based on change in leaf area and litterfall
 ## calculate change in leaf pool as well as litterfall
-dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux, sla_variable=sla_variable)
-
-canopy_c_production_flux_new <- make_canopy_c_production_flux_new(inDF=dLEAF_litter_flux)
+#dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux, sla_variable=sla_variable)
+#canopy_c_production_flux_new <- make_canopy_c_production_flux_new(inDF=dLEAF_litter_flux)
 
 #### 2.4 Wood C pool
 # year 2011-12 data on local directory
@@ -236,10 +232,10 @@ microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
                                           bk_density=soil_bulk_density)
 
 #### 3.6 Canopy P pool - only for green leaves
-#canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
-#                                    biom=canopy_biomass_pool)
+canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
+                                    biom=canopy_biomass_pool)
 
-canopy_p_pool <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
+#canopy_p_pool <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
 
 ### this is a new function yet to be written
 leaflitter_p_pool <- make_leaflitter_p_pool(p_conc=leaflitter_p_concentration,
@@ -247,21 +243,23 @@ leaflitter_p_pool <- make_leaflitter_p_pool(p_conc=leaflitter_p_concentration,
                                             c_frac=c_fraction)
 
 #### 3.7 Canopy production flux
-#canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
-#                                          c_flux=canopy_c_production_flux,
-#                                          c_frac=c_fraction)
+canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
+                                          c_flux=canopy_c_production_flux,
+                                          c_frac=c_fraction)
 
 ## considered both change in LAI and litterfall
-canopy_p_flux <- make_canopy_p_production_new(c_flux=canopy_c_production_flux_new,
-                                                  c_frac=c_fraction)
+#canopy_p_flux <- make_canopy_p_production_new(c_flux=canopy_c_production_flux_new,
+#                                                  c_frac=c_fraction)
 
 
 #### 3.8 Litter P production flux 
 #### Literfall biomass (not C) will be calculated within the function
 #### for data points where we have C but not P, we can create a separte script
 #### and gap-fill P concentration based on average values
-leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration)  
-leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_p_concentration) 
+leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration,
+                                            c_flux=leaflitter_c_production_flux,
+                                            c_frac=c_fraction)  
+#leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_p_concentration) 
 
 
 #### 3.9 Fine root litter P production
@@ -409,7 +407,8 @@ leaf_p_retrans_coefficient <- make_canopy_leaf_p_retranslocation_coefficient(df1
                                                                              df2=leaflitter_p_concentration)
 
 ### understorey leaf p retranslocation coefficient
-understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coefficient()
+understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coefficient(df1=understorey_p_concentration,
+                                                                                    df2=understorey_litter_p_concentration)
 
 ### fineroot retrans
 ### assumed value

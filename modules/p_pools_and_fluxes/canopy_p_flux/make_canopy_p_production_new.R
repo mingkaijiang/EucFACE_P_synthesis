@@ -3,6 +3,7 @@ make_canopy_p_production_new <- function(c_flux,
                                          c_frac){
     
     ### read in P concentration dataset
+    ### this is an old file, don't use!
     df <- read.csv("temp_files/GreenLeaves_allP-clean_Mingkai.csv")
     
     ### setting up the date
