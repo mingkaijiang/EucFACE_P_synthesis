@@ -10,9 +10,6 @@
 #### 1. Compute phosphorus concentrations for major pools and fluxes
 #### 2. Compute biomass pools, production fluxes and litter fluxes
 #### 3. Generate P pools and fluxes
-
-#### 4. Generate P retranslocation coefficients
-
 #### 4. Generate summary tables, based on unnormalized responses
 #### 5. Normalize all responses
 #### 6. Generate summary tables, figures based on normalized relationships
@@ -184,7 +181,6 @@ understorey_live_percent <- make_understorey_percent_live_estimate()
 frass_c_production_flux <- make_frass_c_production_flux()
 
 #### 2.12 Soil C content
-
 ## Ring-specific bulk density
 soil_bulk_density <- make_soil_bulk_density()
 
@@ -227,7 +223,7 @@ soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentrat
 
 #### 3.3 Soil P pool of different bioavailability
 soil_p_pool_hedley <- make_soil_p_pool_hedley(p_conc=soil_hedley_p_concentration,
-                                                            bk_density=soil_bulk_density)
+                                              bk_density=soil_bulk_density)
 
 
 #### 3.4 Soil P mineralization flux
@@ -377,27 +373,37 @@ delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_p
 delta_microbial_p_pool <- make_yearly_delta_pool_function(inDF=microbial_p_pool, var.col=3)
 
 
+
+
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 4: Making P budgeting variables and tables, based on raw data
 #### 4.1 Summary Tables
-source("programs/summary_tables/unnormalized/make_conc_summary_table_by_treatment.R")
-summary_table_concentration_by_treatment <- make_conc_summary_table_by_treatment()
+source("programs/summary_tables/unnormalized/make_conc_summary_table.R")
+summary_table_concentration <- make_conc_summary_table()
 
 ### P pools by treatment and ring
-source("programs/summary_tables/unnormalized/make_pool_summary_table_by_treatment.R")
-summary_table_pool_by_treatment <- make_pool_summary_table_by_treatment()
+source("programs/summary_tables/unnormalized/make_pool_summary_table.R")
+summary_table_pool <- make_pool_summary_table()
 
 ### P fluxes by treatment and ring
-source("programs/summary_tables/unnormalized/make_flux_summary_table_by_treatment.R")
-summary_table_flux_by_treatment <- make_flux_summary_table_by_treatment()
+source("programs/summary_tables/unnormalized/make_flux_summary_table.R")
+summary_table_flux <- make_flux_summary_table()
 
 ### C pools by treatment and ring
-source("programs/summary_tables/unnormalized/make_c_pool_summary_table_by_treatment.R")
-summary_table_c_pool_by_treatment <- make_c_pool_summary_table_by_treatment()
+source("programs/summary_tables/unnormalized/make_c_pool_summary_table.R")
+summary_table_c_pool <- make_c_pool_summary_table()
 
 ### C fluxes by treatment and ring
-source("programs/summary_tables/unnormalized/make_c_flux_summary_table_by_treatment.R")
-summary_table_c_flux_by_treatment <- make_c_flux_summary_table_by_treatment()
+source("programs/summary_tables/unnormalized/make_c_flux_summary_table.R")
+summary_table_c_flux <- make_c_flux_summary_table()
+
+
+### CP ratios
+summary_cn_ratios <- make_cn_ratios(c_pool=summary_table_c_pool,
+                                    p_pool=summary_table_pool,
+                                    c_flux=summary_table_c_flux,
+                                    p_flux=summary_table_flux)
+
 
 
 

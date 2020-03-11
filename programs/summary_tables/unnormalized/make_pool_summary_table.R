@@ -3,7 +3,7 @@
 #### Ignore time but produce time coverage information
 #### This is for pools
 
-make_pool_summary_table_by_treatment <- function() {
+make_pool_summary_table <- function() {
     
     ### Define pool variable names
     terms <- c("Wood P Pool", "Canopy P Pool", "Canopy Litter P Pool",

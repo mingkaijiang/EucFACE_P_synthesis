@@ -2,7 +2,7 @@
 #### To make EucFACE P summary table by CO2 treatment
 #### Ignore time but produce time coverage information
 
-make_conc_summary_table_by_treatment <- function() {
+make_conc_summary_table <- function() {
     
     ### Define concentration variable names
     conc.terms <- c("Wood P Conc", "Canopy P Conc", "Fine Root P Conc", "Coarse Root P Conc",

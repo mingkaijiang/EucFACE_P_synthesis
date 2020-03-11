@@ -3,7 +3,7 @@
 #### Ignore time but produce time coverage information
 #### This is for fluxes
 
-make_flux_summary_table_by_treatment <- function() {
+make_flux_summary_table <- function() {
     
     ### convert daily flux in mg P m2 d-1 to g P m-2 yr-1
     conv <- 365 / 1000
