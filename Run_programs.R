@@ -447,9 +447,39 @@ plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flu
                                                       p_flux=total_plant_p_fluxes)
 
 
-#### 6.3 P budget summary
+#### 4.4 P budget summary
 ### Calculate all N budgeting variables
 total_p_budget <- make_total_p_budget()
+
+
+
+##### ---------------------------------------------------------------------------------------------------------##### 
+##### Step 5. Plotting P budget figures, based on unnormalized data
+#### Note that you need to go into each function to plot!
+source("programs/plot_scripts/make_p_budget_summary_plots.R")
+make_p_budget_summary_plots(inDF=inDF)
+
+### This is based on unnormalized data!
+source("programs/plot_scripts/make_summary_p_concentration_plots.R")
+make_summary_p_concentration_plots(inDF=summary_table_concentration_by_treatment)
+
+
+source("programs/plot_scripts/make_summary_p_pools_plots.R")
+make_summary_p_pools_plots(inDF=summary_table_pool_by_treatment_normalized)
+
+
+source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
+make_summary_p_fluxes_plots(inDF=summary_table_flux_by_treatment_normalized)
+
+
+#### Individial rings
+source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
+make_summary_p_budget_ring_plots(inDF=summary_table_total_p_budgets_normalized)
+
+
+
+
+
 
 
 ##### ---------------------------------------------------------------------------------------------------------##### 

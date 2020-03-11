@@ -1,4 +1,4 @@
-make_summary_p_budget_plots <- function(inDF) {
+make_p_budget_summary_plots <- function(inDF) {
     
     ################### Plot all P summary budget plots
     ### Plot 1df
