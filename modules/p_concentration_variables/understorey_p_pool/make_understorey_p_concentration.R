@@ -1,5 +1,5 @@
 #- Make the understorey P concentration
-make_understorey_p_concentration <- function(func){
+make_understorey_p_concentration <- function(){
     ### download the data 
     # currently there is a data format issue, so read in data from local directory
     download_understorey_p_data()
@@ -20,18 +20,9 @@ make_understorey_p_concentration <- function(func){
     myDF <- rbind(df1, df3)
     
     
-    ### Plot species average comparisons
-    #pdf("plots_tables/Understorey_species_percent_p.pdf")
-    #p <- ggplot(df, aes(Species, PercP)) +   
-    #    geom_boxplot() +
-    #    xlab("Species") + ylab("Leaf P concentration (%)") + 
-    #    ggtitle("Understory species effect")
-    #plot(p)
-    #dev.off()
-    
     ### ring and date specific data
     outDF <- summaryBy(PercP~Ring+Date,
-                             data=myDF,FUN=func,keep.names=T,na.rm=T)
+                             data=myDF,FUN=mean,keep.names=T,na.rm=T)
 
     return(outDF)
     

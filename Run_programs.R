@@ -33,22 +33,22 @@ source("programs/prepare.R")
 ##### Step 1: Generate P concentrations
 
 #### 1.1: Soil P concentrations 
-soil_p_concentration <- make_soil_p_concentration(func=mean)
+soil_p_concentration <- make_soil_p_concentration()
 
 
 #### 1.2: Soil phosphate conc, this returns % of P, not % of PO4!
 #### Only top 10 cm!
-soil_phosphate_concentration <- make_soil_phosphate_concentration(func=mean)
+soil_phosphate_concentration <- make_soil_phosphate_concentration()
 
 #### 1.3 Microbial P conc.
 #### Only top 10 cm!
-microbial_p_concentration <- make_microbial_p_concentration(func=mean)
+microbial_p_concentration <- make_microbial_p_concentration()
 
 
 #### 1.4 Canopy P conc.
-canopy_p_concentration <- make_canopy_p_concentration(func=mean)
+canopy_p_concentration <- make_canopy_p_concentration()
 
-#canopy_p_concentration <- make_canopy_p_concentration_new(func=mean)
+#canopy_p_concentration <- make_canopy_p_concentration_new()
 #compare_canopy_p_conc_datasets(inDF1=canopy_p_concentration_limited_data, inDF2=canopy_p_concentration)
 
 #canopy_p_concentration <- make_canopy_p_concentration_fitted_with_age()
@@ -56,36 +56,36 @@ canopy_p_concentration <- make_canopy_p_concentration(func=mean)
 
 
 #### 1.5 Leaf litter P conc. 
-leaflitter_p_concentration <- make_leaflitter_p_concentration(func=mean)
+leaflitter_p_concentration <- make_leaflitter_p_concentration()
 
 
-#leaflitter_p_concentration <- make_leaflitter_p_concentration_new(func=mean)
+#leaflitter_p_concentration <- make_leaflitter_p_concentration_new()
 
 
 #### 1.6 Wood P conc. 
-wood_p_concentration <- make_wood_p_concentration(func=mean)
+wood_p_concentration <- make_wood_p_concentration()
 
 
 #### 1.7 Frass P conc.
-frass_p_concentration <- make_frass_p_concentration(func=mean)
+frass_p_concentration <- make_frass_p_concentration()
 
 
 #### 1.8 Fineroot P conc.
-fineroot_p_concentration <- make_fineroot_p_concentration(func=mean)
+fineroot_p_concentration <- make_fineroot_p_concentration()
 
 
 #### 1.9 Understorey P conc.
-understorey_p_concentration <- make_understorey_p_concentration(func=mean)
+understorey_p_concentration <- make_understorey_p_concentration()
 
 #### 1.10 Understorey litter P conc.
-understorey_litter_p_concentration <- make_understorey_litter_p_concentration(func=mean)
+understorey_litter_p_concentration <- make_understorey_litter_p_concentration()
 
 
 #### 1.11 Understorey P retranslocation coefficient
 understorey_p_retranslocation_coefficient <- make_understorey_p_retranslocation()
 
 #### 1.12 Hedley fractionation dataset
-soil_hedley_p_concentration <- make_soil_hedley_p_concentration(func=mean)
+soil_hedley_p_concentration <- make_soil_hedley_p_concentration()
 
 
 

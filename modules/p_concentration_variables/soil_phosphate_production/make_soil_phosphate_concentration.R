@@ -1,5 +1,5 @@
 
-make_soil_phosphate_concentration <- function(func) {
+make_soil_phosphate_concentration <- function() {
     
     # phosphate:	Phosphate-P concentrations in kg dry soil (mg/kg) 
     
@@ -24,7 +24,7 @@ make_soil_phosphate_concentration <- function(func) {
     myDF3 <- myDF3[which(myDF3$depth %in% " 0_10cm"),]
 
     # average across rings, dates, and depths, unit: mg/kg PO4-P
-    myDF3.m <- summaryBy(phosphate~date+ring+depth,data=myDF3,FUN=func,keep.names=T,na.rm=T)
+    myDF3.m <- summaryBy(phosphate~date+ring+depth,data=myDF3,FUN=mean,keep.names=T,na.rm=T)
     
     myDF3.m <- myDF3.m[,c("date", "ring", "phosphate")]
     
@@ -34,7 +34,7 @@ make_soil_phosphate_concentration <- function(func) {
     myDF4 <- read.csv(file.path(getToPath(), 
                                 "FACE_RA_P0023_SOILEXTRACTABLENUTRIENTS_L3_20120613-20140310.csv"))
     
-    myDF4.m <- summaryBy(phosphate~date+ring,data=myDF4,FUN=func,keep.names=T,na.rm=T)
+    myDF4.m <- summaryBy(phosphate~date+ring,data=myDF4,FUN=mean,keep.names=T,na.rm=T)
     myDF4.m$date <- as.Date(myDF4.m$date)
     
     # combine both dataframes

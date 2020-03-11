@@ -1,5 +1,5 @@
 #### Make the fine root P concentration
-make_fineroot_p_concentration <- function(func){
+make_fineroot_p_concentration <- function(){
     
     ### download the data
     download_fineroot_p_data()
@@ -12,8 +12,8 @@ make_fineroot_p_concentration <- function(func){
     myDF$date <- as.Date(myDF$Date, "%d-%b-%y")
     
     ### average across rings and dates, for each depth
-    frp.1 <- summaryBy(P.ppm.0~Ring.ID+date,data=myDF,FUN=func,keep.names=T, na.rm=T)
-    frp.2 <- summaryBy(P.ppm30~Ring.ID+date,data=myDF,FUN=func,keep.names=T, na.rm=T)
+    frp.1 <- summaryBy(P.ppm.0~Ring.ID+date,data=myDF,FUN=mean,keep.names=T, na.rm=T)
+    frp.2 <- summaryBy(P.ppm30~Ring.ID+date,data=myDF,FUN=mean,keep.names=T, na.rm=T)
  
     ### convert date to character
     frp.1$date <- as.character(frp.1$date)

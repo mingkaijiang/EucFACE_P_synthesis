@@ -1,5 +1,5 @@
 #- Make the canopy P concentration
-make_canopy_p_concentration <- function(func) {
+make_canopy_p_concentration <- function() {
     ### return ring-specific canopy P data (mg/kg)
 
     ### download the data
@@ -37,7 +37,7 @@ make_canopy_p_concentration <- function(func) {
 
     ### green leaf p, average across rings and date, unit = %
     df.green.p <- summaryBy(PercP~Ring+Date,
-                      data=df.green,FUN=func,keep.names=T,na.rm=T)
+                      data=df.green,FUN=mean,keep.names=T,na.rm=T)
     df.green.p$month <- month(df.green.p$Date)
     df.green.p$year <- year(df.green.p$Date)
     

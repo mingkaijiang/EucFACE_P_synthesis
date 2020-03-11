@@ -1,5 +1,5 @@
 #- Make the soil hedley P concentration
-make_soil_hedley_p_concentration <- function(func){
+make_soil_hedley_p_concentration <- function(){
     # return ring-specific, time series data of soil P content 
     # need to read in multiple P data sources
     # and soil bulk density data
@@ -28,7 +28,7 @@ make_soil_hedley_p_concentration <- function(func){
     myDF3 <- summaryBy(F1_2_Pi_Exhanagable+F1_2_Po_Exhanagable+F3_Po_Moderately_labile+
                            F3_Fe_bound_P_Secondary_mineral+F4_Ca_bound_Primary_Mineral+
                            F5_6_Occluded+Total_Aqua_Regia_P~Year+Ring,
-                       data=myDF2,FUN=func,keep.names=T,na.rm=T)
+                       data=myDF2,FUN=mean,keep.names=T,na.rm=T)
     
     # convert the unit from mg P kg-1 soil to concentration
     myDF3$F1_2_Pi_Exhanagable <- myDF3$F1_2_Pi_Exhanagable * 10^-4
@@ -44,10 +44,7 @@ make_soil_hedley_p_concentration <- function(func){
                          "F4_Ca_bound_Primary_Mineral", "F5_6_Occluded", "Total_Aqua_Regia_P")
     
     
-    ### test
-    #myDF3$total <- with(myDF3, F1_2_Pi_Exchangeable+F1_2_Po_Exchangeable+F3_Po_Moderately_labile+F3_Fe_bound_P_Secondary_mineral+F4_Ca_bound_Primary_Mineral+F5_6_Occluded)
-    
-    
+
     return(myDF3)
     
 }

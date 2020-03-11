@@ -1,5 +1,5 @@
 #- Make the understorey Litter P concentration
-make_understorey_litter_p_concentration <- function(func){
+make_understorey_litter_p_concentration <- function(){
 
     ### read in the most recent harvest data
     df2 <- read.csv("temp_files/understorey_P_concentration_data_2017_06.csv")
@@ -12,7 +12,7 @@ make_understorey_litter_p_concentration <- function(func){
     
     ### ring and date specific data
     outDF <- summaryBy(PercP~Ring+Date,
-                             data=df3,FUN=func,keep.names=T,na.rm=T)
+                             data=df3,FUN=mean,keep.names=T,na.rm=T)
 
     return(outDF)
     
