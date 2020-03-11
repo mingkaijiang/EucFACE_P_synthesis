@@ -8,8 +8,11 @@
 #### 
 #### Code structure:
 #### 1. Compute phosphorus concentrations for major pools and fluxes
-#### 2. Compute biomass pools
+#### 2. Compute biomass pools, production fluxes and litter fluxes
 #### 3. Generate P pools and fluxes
+
+#### 4. Generate P retranslocation coefficients
+
 #### 4. Generate summary tables, based on unnormalized responses
 #### 5. Normalize all responses
 #### 6. Generate summary tables, figures based on normalized relationships
@@ -50,15 +53,12 @@ canopy_p_concentration <- make_canopy_p_concentration()
 
 #canopy_p_concentration <- make_canopy_p_concentration_new()
 #compare_canopy_p_conc_datasets(inDF1=canopy_p_concentration_limited_data, inDF2=canopy_p_concentration)
-
 #canopy_p_concentration <- make_canopy_p_concentration_fitted_with_age()
 
 
 
 #### 1.5 Leaf litter P conc. 
 leaflitter_p_concentration <- make_leaflitter_p_concentration()
-
-
 #leaflitter_p_concentration <- make_leaflitter_p_concentration_new()
 
 
@@ -160,6 +160,11 @@ understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
 
 understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
 
+#make_understorey_pool_size_comparison(understorey_c_pool,
+#                                      understorey_c_pool_2,
+#                                      plotting = T)
+
+
 #### 2.9 Understorey production flux - 1: Varsha's clipping; 2: Matthias's stereo camera
 understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 
@@ -168,14 +173,8 @@ understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fractio
 #### 2.10 understorey litter flux
 understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
 
-
-#source("programs/summary_variables/make_understorey_pool_size_comparison.R")
-#make_understorey_pool_size_comparison(understorey_c_pool,
-#                                      understorey_c_pool_2,
-#                                      plotting = T)
-
 ### estimate biomass growth based on cover data
-make_understorey_aboveground_growth_estimate(plotting = T)
+#make_understorey_aboveground_growth_estimate(plotting = T)
 
 ### estimate % live and % dead
 source("programs/summary_variables/unnormalized/make_understorey_percent_live_estimate.R")
