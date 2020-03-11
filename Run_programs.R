@@ -422,7 +422,40 @@ coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood
 
 
 
-#### 4.2 Summary variables
+#### 4.3 Summary variables
+### vegetation standing P stocks
+vegetation_standing_p_stock <- make_vegetation_standing_p_stock(leaf=canopy_p_pool,
+                                                                wood=wood_p_pool,
+                                                                fineroot=fineroot_p_pool,
+                                                                coarseroot=coarse_root_p_pool,
+                                                                understorey=understorey_p_pool)
+
+
+
+### total plant P requirement flux, retranslocation flux, and uptake flux
+### for total retranslocation flux and uptake flux,
+total_plant_p_fluxes <- make_total_plant_p_fluxes(sumDF=summary_table_flux,
+                                                  wood_retrans_coef=wood_p_retrans_coefficient)
+
+
+### P mean residence time in plant
+plant_p_MRT <- make_plant_P_mean_residence_time(p_stand=vegetation_standing_p_stock,
+                                                p_flux=total_plant_p_fluxes)
+
+### Plant P use efficiency
+plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flux,
+                                                      p_flux=total_plant_p_fluxes)
+
+
+#### 6.3 P budget summary
+### Calculate all N budgeting variables
+total_n_budget <- make_total_n_budget()
+
+
+
+
+
+
 ### Calculate all P budgeting variables
 source("programs/summary_variables/unnormalized/make_total_p_budgeting_variables.R")
 summary_table_total_p_budgets <- make_total_p_budgeting_variables()

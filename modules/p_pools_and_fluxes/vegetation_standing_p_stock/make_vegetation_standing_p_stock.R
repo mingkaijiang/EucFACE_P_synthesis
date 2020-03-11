@@ -1,0 +1,31 @@
+make_vegetation_standing_p_stock <- function(leaf, wood, understorey, fineroot, coarseroot) {
+    
+    ### ignores bark and twigs
+    
+    ### summary dfs by year & ring
+    leaf.y <- summaryBy(leaf_p_pool~Ring, data=leaf, FUN=mean, na.rm=T, keep.names=T)
+    wood.y <- summaryBy(wood_p_pool~Ring, data=wood, FUN=mean, na.rm=T, keep.names=T)
+    froot.y <- summaryBy(fineroot_p_pool~Ring, data=fineroot, FUN=mean, na.rm=T, keep.names=T)
+    croot.y <- summaryBy(coarse_root_p_pool~Ring, data=coarseroot, FUN=mean, na.rm=T, keep.names=T)
+    ua.y <- summaryBy(understorey_p_pool~Ring, data=understorey, FUN=mean, na.rm=T, keep.names=T)
+    
+    ### compute annual averages for each pool and ring
+    out <- cbind(leaf.y, wood.y$wood_p_pool, 
+                 froot.y$fineroot_p_pool,croot.y$coarse_root_p_pool,ua.y$understorey_p_pool)
+    colnames(out) <- c("Ring", "leaf", "wood", "fineroot", "coarseroot", "understorey")
+    
+    ### Calculate total
+    out$total <- with(out, (leaf+wood+fineroot+coarseroot+understorey))
+    
+    ### calculate oa
+    out$oa <- with(out, (leaf+wood))
+    
+    ### calculate belowground
+    out$belowground <- with(out, (fineroot+coarseroot))
+    
+    
+    ### assign aCO2 and eCO2
+    out$Trt <- c("eCO2", "aCO2", "aCO2", "eCO2", "eCO2", "aCO2")
+    
+    return(out)
+}
