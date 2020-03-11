@@ -1,7 +1,5 @@
-make_soil_p_budgeting_variables <- function() {
+make_soil_p_budgeting_variables <- function(sumDF) {
     #### This function calculates all soil P budgeting variables
-    
-    sumDF <- summary_table_pool_by_treatment
     
     ### P mineralization rate
     p_mineralization <- summaryBy(p_mineralization_mg_m2_d~Ring, FUN=mean, keep.names=T, data=soil_p_mineralization)
@@ -95,6 +93,7 @@ make_soil_p_budgeting_variables <- function() {
     
     out[out$terms == "Total soil P pool", "notes"] <- ""
     
+    write.csv(summary_table_soil_p_budgets, "plots_tables/summary_table_soil_p_budgets_unnormalized.csv", row.names=F)
     
     return(out)
     
