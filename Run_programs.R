@@ -415,10 +415,10 @@ understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coeffici
 fineroot_p_retrans_coefficient <- make_fineroot_p_retrans_coefficient(retrans=0.5)
 
 ### wood retrans
-wood_p_retrans_coefficient <- make_stem_p_retrans_coefficient()
+wood_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
 
 ### coarseroot retrans
-coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient()
+coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
 
 
 
