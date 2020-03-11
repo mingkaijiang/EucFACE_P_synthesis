@@ -8,7 +8,7 @@ make_c_pool_summary_table <- function() {
     ### Define pool variable names
     terms <- c("Wood C Pool", "Canopy C Pool", "Fine Root C Pool",
                "Coarse Root C Pool", "Understorey C Pool", 
-               "Microbial C Pool", 
+               "Microbial C Pool", "Leaflitter C Pool",
                "Soil C Pool", "Mycorrhizal C Pool")
     
     treatDF <- data.frame(terms)
@@ -36,6 +36,14 @@ make_c_pool_summary_table <- function() {
     treatDF$year_end[treatDF$terms == "Canopy C Pool"] <- max(year(canopy_biomass_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Canopy C Pool"] <- length(unique(canopy_biomass_pool$Date))  
     treatDF$notes[treatDF$terms == "Canopy C Pool"] <- "Estimated based on LAI and SLA"
+    
+    ### Leaflitter C 
+    out <- summaryBy(leaflitter_pool~Ring,data=leaflitter_c_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Leaflitter C Pool", 2:7] <- out$leaflitter_pool
+    treatDF$year_start[treatDF$terms == "Leaflitter C Pool"] <- min(year(leaflitter_c_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Leaflitter C Pool"] <- max(year(leaflitter_c_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Leaflitter C Pool"] <- length(unique(leaflitter_c_pool$Date))  
+    treatDF$notes[treatDF$terms == "Leaflitter C Pool"] <- "decomposition"
 
     
     ### Wood C 

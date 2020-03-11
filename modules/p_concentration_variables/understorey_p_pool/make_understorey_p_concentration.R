@@ -6,8 +6,17 @@ make_understorey_p_concentration <- function(){
     
     ### read in the file
     df <- read.csv("download/FACE_P0019_RA_leafP-understory_20130509-20151030_L1.csv")
-    df$Date <- as.Date(df$Date, "%d-%b-%y")
     df1 <- df[,c("Date", "Ring", "PercP")]
+    
+    ### the first 6 rows have dates in format different from the other data entries
+    df1.sub1 <- df1[1:6,]
+    df1.sub2 <- df1[-(1:6),]
+    
+    df1.sub1$Date <- as.Date(df1.sub1$Date, "%d-%b-%y")
+    df1.sub2$Date <- paste0("01-", df1.sub2$Date)
+    df1.sub2$Date <- as.Date(df1.sub2$Date, "%d-%b-%y")
+    
+    df1 <- rbind(df1.sub1, df1.sub2)
     
     ### read in the most recent harvest data
     df2 <- read.csv("temp_files/understorey_P_concentration_data_2017_06.csv")

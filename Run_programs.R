@@ -78,10 +78,7 @@ understorey_p_concentration <- make_understorey_p_concentration()
 understorey_litter_p_concentration <- make_understorey_litter_p_concentration()
 
 
-#### 1.11 Understorey P retranslocation coefficient
-understorey_p_retranslocation_coefficient <- make_understorey_p_retranslocation()
-
-#### 1.12 Hedley fractionation dataset
+#### 1.11 Hedley fractionation dataset
 soil_hedley_p_concentration <- make_soil_hedley_p_concentration()
 
 
@@ -399,11 +396,30 @@ summary_table_c_flux <- make_c_flux_summary_table()
 
 
 ### CP ratios
-summary_cn_ratios <- make_cn_ratios(c_pool=summary_table_c_pool,
+source("programs/summary_tables/unnormalized/make_cp_ratios.R")
+summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool,
                                     p_pool=summary_table_pool,
                                     c_flux=summary_table_c_flux,
                                     p_flux=summary_table_flux)
 
+
+#### 4.2 retranslocation coefficients
+### canopy leaf n retranslocation coefficient
+leaf_p_retrans_coefficient <- make_canopy_leaf_p_retranslocation_coefficient(df1=canopy_p_concentration,
+                                                                             df2=leaflitter_p_concentration)
+
+### understorey leaf p retranslocation coefficient
+understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coefficient()
+
+### fineroot retrans
+### assumed value
+fineroot_p_retrans_coefficient <- make_fineroot_p_retrans_coefficient(retrans=0.5)
+
+### wood retrans
+wood_p_retrans_coefficient <- make_stem_p_retrans_coefficient()
+
+### coarseroot retrans
+coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient()
 
 
 

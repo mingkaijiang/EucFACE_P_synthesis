@@ -1,5 +1,5 @@
 #- Make the understorey P retranslocation coefficient
-make_understorey_p_retranslocation <- function(){
+make_understorey_p_retranslocation_coefficient <- function(){
 
     ### read in the most recent harvest data
     df <- read.csv("temp_files/understorey_P_concentration_data_2017_06.csv")
