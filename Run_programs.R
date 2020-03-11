@@ -464,17 +464,17 @@ source("programs/plot_scripts/make_p_concentration_summary_plots.R")
 make_p_concentration_summary_plots(inDF=summary_table_concentration)
 
 
-source("programs/plot_scripts/make_summary_p_pools_plots.R")
-make_summary_p_pools_plots(inDF=summary_table_pool_by_treatment_normalized)
+source("programs/plot_scripts/make_p_pools_summary_plots.R")
+make_p_pools_summary_plots(inDF=summary_table_pool)
 
 
 source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
-make_summary_p_fluxes_plots(inDF=summary_table_flux_by_treatment_normalized)
+make_p_fluxes_summary_plots(inDF=summary_table_flux)
 
 
 #### Individial rings
-source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
-make_summary_p_budget_ring_plots(inDF=summary_table_total_p_budgets_normalized)
+source("programs/plot_scripts/make_p_budget_ring_plots.R")
+make_p_budget_ring_plots(inDF=total_p_budget)
 
 
 
