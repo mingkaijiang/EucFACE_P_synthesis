@@ -459,15 +459,15 @@ total_p_budget <- make_total_p_budget()
 source("programs/plot_scripts/make_p_budget_summary_plots.R")
 make_p_budget_summary_plots(inDF=total_p_budget)
 
-### This is based on unnormalized data!
+### Concentration
 source("programs/plot_scripts/make_p_concentration_summary_plots.R")
 make_p_concentration_summary_plots(inDF=summary_table_concentration)
 
-
+### P pool
 source("programs/plot_scripts/make_p_pools_summary_plots.R")
 make_p_pools_summary_plots(inDF=summary_table_pool)
 
-
+### P flux
 source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
 make_p_fluxes_summary_plots(inDF=summary_table_flux)
 
@@ -477,485 +477,487 @@ source("programs/plot_scripts/make_p_budget_ring_plots.R")
 make_p_budget_ring_plots(inDF=total_p_budget)
 
 
+### Soil hedley P pools
+source("programs/plot_scripts/make_p_budget_ring_plots.R")
+make_soil_p_budget_summary_plots(inDF=summary_table_pool)
 
 
 
 
-
-##### ---------------------------------------------------------------------------------------------------------##### 
-##### Step 5: Normalize all responses to a pretreatment LAI
-
-#### 5.1: Summary table for the stats 
-#### All stats for fluxes are based on annual rate
-### need to add canopy_litter_p_pool, and understorey_litter_p_pool
-source("programs/stats/generate_stats_abs_covariate.R")
-generate_stats_abs_covariate()
-
-
-#### 5.2 re-calculate all variables based on linear mixed effect model 
-
-######## Concentration
-### Soil P conc
-soil_p_concentration_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_concentration, 
-                                                                var.col=3,
-                                                                return.outcome="predicted")
-
-### Soil Phosphate conc
-soil_phosphate_concentration_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_phosphate_concentration, 
-                                                                           var.col=3,
-                                                                           return.outcome="predicted")
-
-### hedley P concentrations
-#soil_exchangeable_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-#                                                                                     var.col=3,
-#                                                                                     return.outcome="predicted")
+###### ---------------------------------------------------------------------------------------------------------##### 
+###### Step 5: Normalize all responses to a pretreatment LAI
 #
-#soil_exchangeable_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-#                                                                                     var.col=4,
-#                                                                                     return.outcome="predicted")
+##### 5.1: Summary table for the stats 
+##### All stats for fluxes are based on annual rate
+#### need to add canopy_litter_p_pool, and understorey_litter_p_pool
+#source("programs/stats/generate_stats_abs_covariate.R")
+#generate_stats_abs_covariate()
 #
-#soil_mlabile_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+#
+##### 5.2 re-calculate all variables based on linear mixed effect model 
+#
+######### Concentration
+#### Soil P conc
+#soil_p_concentration_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_concentration, 
+#                                                                var.col=3,
+#                                                                return.outcome="predicted")
+#
+#### Soil Phosphate conc
+#soil_phosphate_concentration_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_phosphate_concentration, 
+#                                                                           var.col=3,
+#                                                                           return.outcome="predicted")
+#
+#### hedley P concentrations
+##soil_exchangeable_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+##                                                                                     var.col=3,
+##                                                                                     return.outcome="predicted")
+##
+##soil_exchangeable_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+##                                                                                     var.col=4,
+##                                                                                     return.outcome="predicted")
+##
+##soil_mlabile_po_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+##                                                                                 var.col=5,
+##                                                                                 return.outcome="predicted")
+##
+##soil_secondary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+##                                                                                   var.col=6,
+##                                                                                   return.outcome="predicted")
+##
+##soil_primary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+##                                                                                 var.col=7,
+##                                                                                 return.outcome="predicted")
+##
+##soil_occluded_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+##                                                                                 var.col=8,
+##                                                                                 return.outcome="predicted")
+##
+##soil_aqua_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
+##                                                                             var.col=9,
+##                                                                             return.outcome="predicted")
+#
+#
+#### Overstorey Leaf P conc
+#canopy_p_concentration_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_concentration, 
+#                                                                var.col=3,
+#                                                                return.outcome="predicted")
+#
+#### Overstorey Leaf litter P conc
+#leaflitter_p_concentration_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=leaflitter_p_concentration, 
+#                                                                    var.col=3,
+#                                                                    return.outcome="predicted")
+#
+#### Wood P conc
+#### we do not have enough data to perform lmer for wood P concentration
+#
+#### Fineroot P conc
+#fineroot_p_concentration_pred <- make_frootp_conc_treatment_abs_effect_statistics(inDF=fineroot_p_concentration, 
+#                                                               var.col=3,
+#                                                               return.outcome="predicted")
+#
+#### Understorey aboveground P conc
+#understorey_p_concentration_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_concentration, 
+#                                                            var.col=3,
+#                                                            return.outcome="predicted")
+#
+#### Understorey aboveground litter P conc
+#### not possible to construct a model due to limited data
+#
+#### Microbial P conc
+#microbial_p_concentration_pred <- make_micp_conc_treatment_abs_effect_statistics(inDF=microbial_p_concentration, 
+#                                                              var.col=3,
+#                                                              return.outcome="predicted")
+#
+#
+#### Frass P concentration
+#frass_p_concentration_pred <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_concentration, 
+#                                                                 var.col=3,
+#                                                                 return.outcome="predicted")
+#
+#
+######### P fluxes and stocks
+#### Soil P pool
+#soil_p_pool_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool, 
+#                                                                var.col=3,
+#                                                                return.outcome="predicted")
+#
+#### Soil Phosphate pool
+#soil_phosphate_pool_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_phosphate_pool, 
+#                                                                           var.col=3,
+#                                                                           return.outcome="predicted")
+#
+#### hedley P pools
+##soil_exchangeable_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+##                                                                                                 var.col=3,
+##                                                                                                 return.outcome="predicted")
+##
+##soil_exchangeable_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+##                                                                                                 var.col=4,
+##                                                                                                 return.outcome="predicted")
+##
+##soil_mlabile_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+##                                                                                             var.col=5,
+##                                                                                             return.outcome="predicted")
+##
+##soil_secondary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+##                                                                                               var.col=6,
+##                                                                                               return.outcome="predicted")
+##
+##soil_primary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+##                                                                                             var.col=7,
+##                                                                                             return.outcome="predicted")
+##
+##soil_occluded_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+##                                                                                             var.col=8,
+##                                                                                             return.outcome="predicted")
+##
+##soil_aqua_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
+##                                                                                         var.col=9,
+##                                                                                         return.outcome="predicted")
+#
+#### Overstorey Leaf P pool
+#canopy_p_pool_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
+#                                                                var.col=3,
+#                                                                return.outcome="predicted")
+#
+#canopy_litter_p_pool_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=leaflitter_p_pool, 
+#                                                                      var.col=3,
+#                                                                      return.outcome="predicted")
+#
+#### Wood P pool
+#wood_p_pool_pred <- make_woodp_pool_treatment_abs_effect_statistics(inDF=wood_p_pool, 
+#                                                                var.col=3,
+#                                                                return.outcome="predicted")
+#
+#### Fineroot P pool
+#fineroot_p_pool_pred <- make_frootp_conc_treatment_abs_effect_statistics(inDF=fineroot_p_pool, 
+#                                                               var.col=3,
+#                                                               return.outcome="predicted")
+#
+#### Understorey aboveground P pool
+#understorey_p_pool_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
+#                                                            var.col=3,
+#                                                            return.outcome="predicted")
+#
+#
+#understorey_litter_p_pool_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
+#                                                                         var.col=5,
+#                                                                         return.outcome="predicted")
+#
+#### Microbial P pool
+#microbial_p_pool_pred <- make_micp_conc_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
+#                                                              var.col=3,
+#                                                              return.outcome="predicted")
+#
+#
+#### coarse root P pool
+#coarse_root_p_pool_pred <- make_crootp_pool_treatment_abs_effect_statistics(inDF=coarse_root_p_pool, 
+#                                                                  var.col=3,
+#                                                                  return.outcome="predicted")
+#
+#### Leaf litter P flux
+#leaflitter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=leaflitter_p_flux, 
+#                                                                         var.col=5,
+#                                                                         return.outcome="predicted")
+#
+#### twig litter flux
+#twig_litter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=twig_litter_p_flux, 
+#                                                                         var.col=5,
+#                                                                         return.outcome="predicted")
+#
+#### bark litter flux
+#bark_litter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=bark_litter_p_flux, 
+#                                                                         var.col=5,
+#                                                                         return.outcome="predicted")
+#
+#### seed litter flux
+#seed_litter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=seed_litter_p_flux, 
+#                                                                         var.col=5,
+#                                                                         return.outcome="predicted")
+#
+#
+#### Frass P flux
+#frass_p_production_pred <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_production, 
+#                                                                 var.col=5,
+#                                                                 return.outcome="predicted")
+#
+#### Canopy P production flux
+#### model failed to converge  --- check back!!!!!!
+#canopy_p_flux_pred <- make_canopy_p_flux_treatment_abs_effect_statistics(inDF=canopy_p_flux, 
+#                                                                      var.col=5,
+#                                                                      return.outcome="predicted")
+#
+#### Wood production flux
+#wood_p_flux_pred <- make_wood_p_flux_treatment_abs_effect_statistics(inDF=wood_p_flux, 
+#                                                                  var.col=5,
+#                                                                  return.outcome="predicted") 
+#
+#### Fineroot production flux
+#fineroot_p_production_pred <- make_froot_p_flux_treatment_abs_effect_statistics(inDF=fineroot_p_production, 
+#                                                                    var.col=5,
+#                                                                    return.outcome="predicted") 
+#
+#### Coarseroot production
+#coarse_root_p_flux_pred <- make_croot_p_flux_treatment_abs_effect_statistics(inDF=coarse_root_p_flux, 
+#                                                                    var.col=5,
+#                                                                    return.outcome="predicted")
+#
+#### Understorey aboveground production
+#understorey_p_flux_pred <- make_und_p_flux_treatment_abs_effect_statistics(inDF=understorey_p_flux, 
+#                                                                var.col=5,
+#                                                                return.outcome="predicted")
+#
+#### Understory litter flux
+#understorey_litter_p_flux_pred <- make_und_lit_p_flux_treatment_abs_effect_statistics(inDF=understorey_litter_p_flux, 
+#                                                                        var.col=5,
+#                                                                        return.outcome="predicted")
+#
+#### p mineralization flux
+#soil_p_mineralization_pred <- make_mineralization_p_flux_treatment_abs_effect_statistics(inDF=soil_p_mineralization, 
+#                                                                                      var.col=3,
+#                                                                                      return.outcome="predicted")
+#
+#### p leaching flux
+#soil_p_leaching_pred <- make_p_leaching_flux_treatment_abs_effect_statistics(inDF=soil_p_leaching, 
+#                                                                                         var.col=5,
+#                                                                                         return.outcome="predicted")
+#
+#### Delta Soil p
+#delta_soil_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=soil_p_pool_pred)
+#
+#### Delta Leaf p
+#delta_canopy_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=canopy_p_pool_pred)
+#
+#### Delta Wood C pool
+#delta_wood_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=wood_p_pool_pred)
+#
+#### Delta Fineroot C pool
+#delta_fineroot_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=fineroot_p_pool_pred)
+#
+#### Delta Coarseroot C pool
+#delta_coarse_root_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=coarse_root_p_pool_pred)
+#
+#### Delta Understorey aboveground C pool
+#delta_understorey_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=understorey_p_pool_pred)
+#
+#### Delta Microbial C pool
+#delta_microbial_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=microbial_p_pool_pred)
+#
+#
+#
+#
+####### C pools and fluxes
+#### Frass production
+#frass_c_production_flux_pred <- make_frass_treatment_abs_effect_statistics(inDF=frass_c_production_flux, 
+#                                                                        var.col=5,
+#                                                                        return.outcome="predicted")
+#
+#
+#### Leaflitter flux
+#leaflitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=leaflitter_c_production_flux, 
+#                                                                        var.col=3,
+#                                                                        return.outcome="predicted")  
+#
+#### twig litter flux
+#twiglitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=twiglitter_c_production_flux, 
+#                                                                        var.col=3,
+#                                                                        return.outcome="predicted")
+#
+#### bark litter flux
+#barklitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=barklitter_c_production_flux, 
+#                                                                        var.col=3,
+#                                                                        return.outcome="predicted") 
+#
+#### Seed litter flux
+#seedlitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=seedlitter_c_production_flux, 
+#                                                                        var.col=3,
+#                                                                        return.outcome="predicted")
+#
+#### Wood production flux
+#wood_production_flux_pred <- make_wood_prod_treatment_abs_effect_statistics(inDF=wood_c_production, 
+#                                                                            var.col=5,
+#                                                                           return.outcome="predicted") 
+#
+#### Fineroot production flux
+#fineroot_production_flux_pred <- make_froot_prod_treatment_abs_effect_statistics(inDF=fineroot_c_production_flux, 
 #                                                                                 var.col=5,
-#                                                                                 return.outcome="predicted")
+#                                                                                return.outcome="predicted") 
 #
-#soil_secondary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-#                                                                                   var.col=6,
+#### Coarseroot production
+#coarse_root_production_flux_pred <- make_croot_prod_treatment_abs_effect_statistics(inDF=coarse_root_c_flux, 
+#                                                                                    var.col=5,
 #                                                                                   return.outcome="predicted")
 #
-#soil_primary_pi_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-#                                                                                 var.col=7,
-#                                                                                 return.outcome="predicted")
-#
-#soil_occluded_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-#                                                                                 var.col=8,
-#                                                                                 return.outcome="predicted")
-#
-#soil_aqua_p_concentration_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_hedley_p_concentration, 
-#                                                                             var.col=9,
-#                                                                             return.outcome="predicted")
-
-
-### Overstorey Leaf P conc
-canopy_p_concentration_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_concentration, 
-                                                                var.col=3,
-                                                                return.outcome="predicted")
-
-### Overstorey Leaf litter P conc
-leaflitter_p_concentration_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=leaflitter_p_concentration, 
-                                                                    var.col=3,
-                                                                    return.outcome="predicted")
-
-### Wood P conc
-### we do not have enough data to perform lmer for wood P concentration
-
-### Fineroot P conc
-fineroot_p_concentration_pred <- make_frootp_conc_treatment_abs_effect_statistics(inDF=fineroot_p_concentration, 
-                                                               var.col=3,
-                                                               return.outcome="predicted")
-
-### Understorey aboveground P conc
-understorey_p_concentration_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_concentration, 
-                                                            var.col=3,
-                                                            return.outcome="predicted")
-
-### Understorey aboveground litter P conc
-### not possible to construct a model due to limited data
-
-### Microbial P conc
-microbial_p_concentration_pred <- make_micp_conc_treatment_abs_effect_statistics(inDF=microbial_p_concentration, 
-                                                              var.col=3,
-                                                              return.outcome="predicted")
-
-
-### Frass P concentration
-frass_p_concentration_pred <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_concentration, 
-                                                                 var.col=3,
-                                                                 return.outcome="predicted")
-
-
-######## P fluxes and stocks
-### Soil P pool
-soil_p_pool_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool, 
-                                                                var.col=3,
-                                                                return.outcome="predicted")
-
-### Soil Phosphate pool
-soil_phosphate_pool_pred <- make_soilp_conc_treatment_abs_effect_statistics(inDF=soil_phosphate_pool, 
-                                                                           var.col=3,
-                                                                           return.outcome="predicted")
-
-### hedley P pools
-#soil_exchangeable_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-#                                                                                                 var.col=3,
-#                                                                                                 return.outcome="predicted")
-#
-#soil_exchangeable_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-#                                                                                                 var.col=4,
-#                                                                                                 return.outcome="predicted")
-#
-#soil_mlabile_po_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-#                                                                                             var.col=5,
+#### Understorey aboveground production
+#understorey_aboveground_production_flux_pred <- make_und_prod_treatment_abs_effect_statistics(inDF=understorey_c_flux, 
+#                                                                                              var.col=5,
 #                                                                                             return.outcome="predicted")
 #
-#soil_secondary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-#                                                                                               var.col=6,
-#                                                                                               return.outcome="predicted")
+#### Soil C
+#soil_c_pool_pred <- make_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool, 
+#                                                              var.col=3,
+#                                                              return.outcome="predicted")
 #
-#soil_primary_pi_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-#                                                                                             var.col=7,
-#                                                                                             return.outcome="predicted")
+#### Leaf C
+#### This function takes a bit of time (1 min) to run!!!!!!!!!!
+#canopy_biomass_pool_pred <- make_leafc_treatment_abs_effect_statistics(inDF=canopy_biomass_pool, 
+#                                                              var.col=3,
+#                                                              return.outcome="predicted")
 #
-#soil_occluded_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-#                                                                                             var.col=8,
-#                                                                                             return.outcome="predicted")
+#### Wood C pool
+#### model failed to converge !!!!!!!
+#wood_c_pool_pred <- make_woodc_treatment_abs_effect_statistics(inDF=wood_c_pool, 
+#                                                               var.col=3,
+#                                                               return.outcome="predicted") 
 #
-#soil_aqua_p_pool_pred <- make_hedley_soilp_conc_treatment_abs_effect_statistics(inDF=soil_p_pool_hedley, 
-#                                                                                         var.col=9,
-#                                                                                         return.outcome="predicted")
-
-### Overstorey Leaf P pool
-canopy_p_pool_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=canopy_p_pool, 
-                                                                var.col=3,
-                                                                return.outcome="predicted")
-
-canopy_litter_p_pool_pred <- make_leafp_conc_treatment_abs_effect_statistics(inDF=leaflitter_p_pool, 
-                                                                      var.col=3,
-                                                                      return.outcome="predicted")
-
-### Wood P pool
-wood_p_pool_pred <- make_woodp_pool_treatment_abs_effect_statistics(inDF=wood_p_pool, 
-                                                                var.col=3,
-                                                                return.outcome="predicted")
-
-### Fineroot P pool
-fineroot_p_pool_pred <- make_frootp_conc_treatment_abs_effect_statistics(inDF=fineroot_p_pool, 
-                                                               var.col=3,
-                                                               return.outcome="predicted")
-
-### Understorey aboveground P pool
-understorey_p_pool_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
-                                                            var.col=3,
-                                                            return.outcome="predicted")
-
-
-understorey_litter_p_pool_pred <- make_uap_conc_treatment_abs_effect_statistics(inDF=understorey_p_pool, 
-                                                                         var.col=5,
-                                                                         return.outcome="predicted")
-
-### Microbial P pool
-microbial_p_pool_pred <- make_micp_conc_treatment_abs_effect_statistics(inDF=microbial_p_pool, 
-                                                              var.col=3,
-                                                              return.outcome="predicted")
-
-
-### coarse root P pool
-coarse_root_p_pool_pred <- make_crootp_pool_treatment_abs_effect_statistics(inDF=coarse_root_p_pool, 
-                                                                  var.col=3,
-                                                                  return.outcome="predicted")
-
-### Leaf litter P flux
-leaflitter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=leaflitter_p_flux, 
-                                                                         var.col=5,
-                                                                         return.outcome="predicted")
-
-### twig litter flux
-twig_litter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=twig_litter_p_flux, 
-                                                                         var.col=5,
-                                                                         return.outcome="predicted")
-
-### bark litter flux
-bark_litter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=bark_litter_p_flux, 
-                                                                         var.col=5,
-                                                                         return.outcome="predicted")
-
-### seed litter flux
-seed_litter_p_flux_pred <- make_leaf_lit_p_flux_treatment_abs_effect_statistics(inDF=seed_litter_p_flux, 
-                                                                         var.col=5,
-                                                                         return.outcome="predicted")
-
-
-### Frass P flux
-frass_p_production_pred <- make_frassp_conc_treatment_abs_effect_statistics(inDF=frass_p_production, 
-                                                                 var.col=5,
-                                                                 return.outcome="predicted")
-
-### Canopy P production flux
-### model failed to converge  --- check back!!!!!!
-canopy_p_flux_pred <- make_canopy_p_flux_treatment_abs_effect_statistics(inDF=canopy_p_flux, 
-                                                                      var.col=5,
-                                                                      return.outcome="predicted")
-
-### Wood production flux
-wood_p_flux_pred <- make_wood_p_flux_treatment_abs_effect_statistics(inDF=wood_p_flux, 
-                                                                  var.col=5,
-                                                                  return.outcome="predicted") 
-
-### Fineroot production flux
-fineroot_p_production_pred <- make_froot_p_flux_treatment_abs_effect_statistics(inDF=fineroot_p_production, 
-                                                                    var.col=5,
-                                                                    return.outcome="predicted") 
-
-### Coarseroot production
-coarse_root_p_flux_pred <- make_croot_p_flux_treatment_abs_effect_statistics(inDF=coarse_root_p_flux, 
-                                                                    var.col=5,
-                                                                    return.outcome="predicted")
-
-### Understorey aboveground production
-understorey_p_flux_pred <- make_und_p_flux_treatment_abs_effect_statistics(inDF=understorey_p_flux, 
-                                                                var.col=5,
-                                                                return.outcome="predicted")
-
-### Understory litter flux
-understorey_litter_p_flux_pred <- make_und_lit_p_flux_treatment_abs_effect_statistics(inDF=understorey_litter_p_flux, 
-                                                                        var.col=5,
-                                                                        return.outcome="predicted")
-
-### p mineralization flux
-soil_p_mineralization_pred <- make_mineralization_p_flux_treatment_abs_effect_statistics(inDF=soil_p_mineralization, 
-                                                                                      var.col=3,
-                                                                                      return.outcome="predicted")
-
-### p leaching flux
-soil_p_leaching_pred <- make_p_leaching_flux_treatment_abs_effect_statistics(inDF=soil_p_leaching, 
-                                                                                         var.col=5,
-                                                                                         return.outcome="predicted")
-
-### Delta Soil p
-delta_soil_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=soil_p_pool_pred)
-
-### Delta Leaf p
-delta_canopy_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=canopy_p_pool_pred)
-
-### Delta Wood C pool
-delta_wood_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=wood_p_pool_pred)
-
-### Delta Fineroot C pool
-delta_fineroot_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=fineroot_p_pool_pred)
-
-### Delta Coarseroot C pool
-delta_coarse_root_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=coarse_root_p_pool_pred)
-
-### Delta Understorey aboveground C pool
-delta_understorey_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=understorey_p_pool_pred)
-
-### Delta Microbial C pool
-delta_microbial_p_pool_pred <- make_yearly_delta_pool_function_pred(inDF=microbial_p_pool_pred)
-
-
-
-
-###### C pools and fluxes
-### Frass production
-frass_c_production_flux_pred <- make_frass_treatment_abs_effect_statistics(inDF=frass_c_production_flux, 
-                                                                        var.col=5,
-                                                                        return.outcome="predicted")
-
-
-### Leaflitter flux
-leaflitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=leaflitter_c_production_flux, 
-                                                                        var.col=3,
-                                                                        return.outcome="predicted")  
-
-### twig litter flux
-twiglitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=twiglitter_c_production_flux, 
-                                                                        var.col=3,
-                                                                        return.outcome="predicted")
-
-### bark litter flux
-barklitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=barklitter_c_production_flux, 
-                                                                        var.col=3,
-                                                                        return.outcome="predicted") 
-
-### Seed litter flux
-seedlitter_flux_pred <- make_litter_flux_treatment_abs_effect_statistics(inDF=seedlitter_c_production_flux, 
-                                                                        var.col=3,
-                                                                        return.outcome="predicted")
-
-### Wood production flux
-wood_production_flux_pred <- make_wood_prod_treatment_abs_effect_statistics(inDF=wood_c_production, 
-                                                                            var.col=5,
-                                                                           return.outcome="predicted") 
-
-### Fineroot production flux
-fineroot_production_flux_pred <- make_froot_prod_treatment_abs_effect_statistics(inDF=fineroot_c_production_flux, 
-                                                                                 var.col=5,
-                                                                                return.outcome="predicted") 
-
-### Coarseroot production
-coarse_root_production_flux_pred <- make_croot_prod_treatment_abs_effect_statistics(inDF=coarse_root_c_flux, 
-                                                                                    var.col=5,
-                                                                                   return.outcome="predicted")
-
-### Understorey aboveground production
-understorey_aboveground_production_flux_pred <- make_und_prod_treatment_abs_effect_statistics(inDF=understorey_c_flux, 
-                                                                                              var.col=5,
-                                                                                             return.outcome="predicted")
-
-### Soil C
-soil_c_pool_pred <- make_soilc_treatment_abs_effect_statistics(inDF=soil_c_pool, 
-                                                              var.col=3,
-                                                              return.outcome="predicted")
-
-### Leaf C
-### This function takes a bit of time (1 min) to run!!!!!!!!!!
-canopy_biomass_pool_pred <- make_leafc_treatment_abs_effect_statistics(inDF=canopy_biomass_pool, 
-                                                              var.col=3,
-                                                              return.outcome="predicted")
-
-### Wood C pool
-### model failed to converge !!!!!!!
-wood_c_pool_pred <- make_woodc_treatment_abs_effect_statistics(inDF=wood_c_pool, 
-                                                               var.col=3,
-                                                               return.outcome="predicted") 
-
-### Fineroot C pool
-fineroot_c_pool_pred <- make_frootc_treatment_abs_effect_statistics(inDF=fineroot_c_pool, 
-                                                                   var.col=3,
-                                                                   return.outcome="predicted")
-
-### Coarseroot C pool
-coarse_root_c_pool_pred <- make_crootc_treatment_abs_effect_statistics(inDF=coarse_root_c_pool, 
-                                                                       var.col=3,
-                                                                      return.outcome="predicted")
-
-### Understorey aboveground C pool
-understorey_aboveground_c_pool_pred <- make_uac_treatment_abs_effect_statistics(inDF=understorey_c_pool, 
-                                                                               var.col=5,
-                                                                               return.outcome="predicted")
-
-### Microbial C pool
-microbial_c_pool_pred <- make_micc_treatment_abs_effect_statistics(inDF=microbial_c_pool, 
-                                                                 var.col=3,
-                                                                  return.outcome="predicted")
-
-### Mycorrhizal C pool
-mycorrhizal_c_pool_pred <- make_mycc_treatment_abs_effect_statistics(inDF=mycorrhizal_c_pool, 
-                                                                    var.col=3,
-                                                                    return.outcome="predicted")
-
-
-##### ---------------------------------------------------------------------------------------------------------##### 
-##### Step 6: Making P budgeting variables and tables, based on normalized results
-
-#### 6.1 Summary tables for concentrations, fluxes and pools
-### P concentration by treatment and ring
-source("programs/summary_tables/normalized/make_conc_summary_table_by_treatment_normalized.R")
-summary_table_concentration_by_treatment_normalized <- make_conc_summary_table_by_treatment_normalized()
-
-### P pools by treatment and ring
-source("programs/summary_tables/normalized/make_pool_summary_table_by_treatment_normalized.R")
-summary_table_pool_by_treatment_normalized <- make_pool_summary_table_by_treatment_normalized()
-
-### P fluxes by treatment and ring
-source("programs/summary_tables/normalized/make_flux_summary_table_by_treatment_normalized.R")
-summary_table_flux_by_treatment_normalized <- make_flux_summary_table_by_treatment_normalized()
-
-### C pools by treatment and ring
-source("programs/summary_tables/normalized/make_c_pool_summary_table_by_treatment_normalized.R")
-summary_table_c_pool_by_treatment_normalized <- make_c_pool_summary_table_by_treatment_normalized()
-
-### C fluxes by treatment and ring
-source("programs/summary_tables/normalized/make_c_flux_summary_table_by_treatment_normalized.R")
-summary_table_c_flux_by_treatment_normalized <- make_c_flux_summary_table_by_treatment_normalized()
-
-
-
-#### up to this point 12:00 03-04-2020
-
-#### 6.2 summary variables for the budget
-### Calculate all P budgeting variables
-source("programs/summary_variables/normalized/make_total_p_budgeting_variables_normalized.R")
-summary_table_total_p_budgets_normalized <- make_total_p_budgeting_variables_normalized()
-
-
-source("programs/summary_variables/normalized/make_overstorey_p_budgeting_variables_normalized.R")
-summary_table_overstorey_p_budgets_normalized <- make_overstorey_p_budgeting_variables_normalized()
-
-source("programs/summary_variables/normalized/make_understorey_p_budgeting_variables_normalized.R")
-summary_table_understorey_p_budgets_normalized <- make_understorey_p_budgeting_variables_normalized()
-
-source("programs/summary_variables/normalized/make_soil_p_budgeting_variables_normalized.R")
-summary_table_soil_p_budgets_normalized <- make_soil_p_budgeting_variables_normalized(sumDF=summary_table_pool_by_treatment_normalized)
-
-
-#source("programs/summary_variables/normalized/make_belowground_p_standing_normalized.R")
-#summary_table_belowground_p_standing_normalized <- make_belowground_p_standing_normalized()
-
-#### 6.3 save output
-write.csv(summary_table_concentration_by_treatment_normalized,
-          "plots_tables/summary_table_concentration_by_treatment_normalized.csv")
-
-write.csv(summary_table_pool_by_treatment_normalized,
-          "plots_tables/summary_table_pool_by_treatment_normalized.csv")
-
-write.csv(summary_table_flux_by_treatment_normalized,
-          "plots_tables/summary_table_flux_by_treatment_normalized.csv")
-
-write.csv(summary_table_c_pool_by_treatment_normalized,
-          "plots_tables/summary_table_c_pool_by_treatment_normalized.csv")
-
-write.csv(summary_table_c_flux_by_treatment_normalized,
-          "plots_tables/summary_table_c_flux_by_treatment_normalized.csv")
-
-write.csv(summary_table_total_p_budgets_normalized,
-          "plots_tables/summary_table_total_p_budgets_normalized.csv")
-
-### cp ratios
-#source("programs/summary_tables/make_cp_ratios.R")
-#summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_normalized,
-#                                    p_pool=summary_table_pool_by_treatment_normalized)
-#write.csv(summary_cp_ratios,
-#          "plots_tables/summary_table_cp_ratios.csv")
-
-
-
-##### ---------------------------------------------------------------------------------------------------------##### 
-##### Step 7. Plotting P budget figures
-
-### 7.1 combine summary tables
-inDF <- rbind(summary_table_total_p_budgets_normalized,
-              summary_table_overstorey_p_budgets_normalized,
-              summary_table_understorey_p_budgets_normalized,
-              summary_table_soil_p_budgets_normalized)
-
-
-source("programs/plot_scripts/make_summary_p_budget_plots.R")
-make_summary_p_budget_plots(inDF=inDF)
-
-### This is based on unnormalized data!
-source("programs/plot_scripts/make_summary_p_concentration_plots.R")
-make_summary_p_concentration_plots(inDF=summary_table_concentration_by_treatment)
-
-
-source("programs/plot_scripts/make_summary_p_pools_plots.R")
-make_summary_p_pools_plots(inDF=summary_table_pool_by_treatment_normalized)
-
-
-source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
-make_summary_p_fluxes_plots(inDF=summary_table_flux_by_treatment_normalized)
-
-
-#### Individial rings
-source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
-make_summary_p_budget_ring_plots(inDF=summary_table_total_p_budgets_normalized)
-
-
-
-
-
-######## check later
-### 7.2 the plots requested by Kristine
-myDF <- rbind(summary_table_total_p_budgets_normalized,
-              summary_table_overstorey_p_budgets_normalized,
-              summary_table_understorey_p_budgets_normalized,
-              summary_table_soil_p_budgets_normalized)
-
-make_overall_summary_comparison_plot(myDF=myDF)
+#### Fineroot C pool
+#fineroot_c_pool_pred <- make_frootc_treatment_abs_effect_statistics(inDF=fineroot_c_pool, 
+#                                                                   var.col=3,
+#                                                                   return.outcome="predicted")
+#
+#### Coarseroot C pool
+#coarse_root_c_pool_pred <- make_crootc_treatment_abs_effect_statistics(inDF=coarse_root_c_pool, 
+#                                                                       var.col=3,
+#                                                                      return.outcome="predicted")
+#
+#### Understorey aboveground C pool
+#understorey_aboveground_c_pool_pred <- make_uac_treatment_abs_effect_statistics(inDF=understorey_c_pool, 
+#                                                                               var.col=5,
+#                                                                               return.outcome="predicted")
+#
+#### Microbial C pool
+#microbial_c_pool_pred <- make_micc_treatment_abs_effect_statistics(inDF=microbial_c_pool, 
+#                                                                 var.col=3,
+#                                                                  return.outcome="predicted")
+#
+#### Mycorrhizal C pool
+#mycorrhizal_c_pool_pred <- make_mycc_treatment_abs_effect_statistics(inDF=mycorrhizal_c_pool, 
+#                                                                    var.col=3,
+#                                                                    return.outcome="predicted")
+#
+#
+###### ---------------------------------------------------------------------------------------------------------##### 
+###### Step 6: Making P budgeting variables and tables, based on normalized results
+#
+##### 6.1 Summary tables for concentrations, fluxes and pools
+#### P concentration by treatment and ring
+#source("programs/summary_tables/normalized/make_conc_summary_table_by_treatment_normalized.R")
+#summary_table_concentration_by_treatment_normalized <- make_conc_summary_table_by_treatment_normalized()
+#
+#### P pools by treatment and ring
+#source("programs/summary_tables/normalized/make_pool_summary_table_by_treatment_normalized.R")
+#summary_table_pool_by_treatment_normalized <- make_pool_summary_table_by_treatment_normalized()
+#
+#### P fluxes by treatment and ring
+#source("programs/summary_tables/normalized/make_flux_summary_table_by_treatment_normalized.R")
+#summary_table_flux_by_treatment_normalized <- make_flux_summary_table_by_treatment_normalized()
+#
+#### C pools by treatment and ring
+#source("programs/summary_tables/normalized/make_c_pool_summary_table_by_treatment_normalized.R")
+#summary_table_c_pool_by_treatment_normalized <- make_c_pool_summary_table_by_treatment_normalized()
+#
+#### C fluxes by treatment and ring
+#source("programs/summary_tables/normalized/make_c_flux_summary_table_by_treatment_normalized.R")
+#summary_table_c_flux_by_treatment_normalized <- make_c_flux_summary_table_by_treatment_normalized()
+#
+#
+#
+##### up to this point 12:00 03-04-2020
+#
+##### 6.2 summary variables for the budget
+#### Calculate all P budgeting variables
+#source("programs/summary_variables/normalized/make_total_p_budgeting_variables_normalized.R")
+#summary_table_total_p_budgets_normalized <- make_total_p_budgeting_variables_normalized()
+#
+#
+#source("programs/summary_variables/normalized/make_overstorey_p_budgeting_variables_normalized.R")
+#summary_table_overstorey_p_budgets_normalized <- make_overstorey_p_budgeting_variables_normalized()
+#
+#source("programs/summary_variables/normalized/make_understorey_p_budgeting_variables_normalized.R")
+#summary_table_understorey_p_budgets_normalized <- make_understorey_p_budgeting_variables_normalized()
+#
+#source("programs/summary_variables/normalized/make_soil_p_budgeting_variables_normalized.R")
+#summary_table_soil_p_budgets_normalized <- make_soil_p_budgeting_variables_normalized(sumDF=summary_table_pool_by_treatment_normalized)
+#
+#
+##source("programs/summary_variables/normalized/make_belowground_p_standing_normalized.R")
+##summary_table_belowground_p_standing_normalized <- make_belowground_p_standing_normalized()
+#
+##### 6.3 save output
+#write.csv(summary_table_concentration_by_treatment_normalized,
+#          "plots_tables/summary_table_concentration_by_treatment_normalized.csv")
+#
+#write.csv(summary_table_pool_by_treatment_normalized,
+#          "plots_tables/summary_table_pool_by_treatment_normalized.csv")
+#
+#write.csv(summary_table_flux_by_treatment_normalized,
+#          "plots_tables/summary_table_flux_by_treatment_normalized.csv")
+#
+#write.csv(summary_table_c_pool_by_treatment_normalized,
+#          "plots_tables/summary_table_c_pool_by_treatment_normalized.csv")
+#
+#write.csv(summary_table_c_flux_by_treatment_normalized,
+#          "plots_tables/summary_table_c_flux_by_treatment_normalized.csv")
+#
+#write.csv(summary_table_total_p_budgets_normalized,
+#          "plots_tables/summary_table_total_p_budgets_normalized.csv")
+#
+#### cp ratios
+##source("programs/summary_tables/make_cp_ratios.R")
+##summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_normalized,
+##                                    p_pool=summary_table_pool_by_treatment_normalized)
+##write.csv(summary_cp_ratios,
+##          "plots_tables/summary_table_cp_ratios.csv")
+#
+#
+#
+###### ---------------------------------------------------------------------------------------------------------##### 
+###### Step 7. Plotting P budget figures
+#
+#### 7.1 combine summary tables
+#inDF <- rbind(summary_table_total_p_budgets_normalized,
+#              summary_table_overstorey_p_budgets_normalized,
+#              summary_table_understorey_p_budgets_normalized,
+#              summary_table_soil_p_budgets_normalized)
+#
+#
+#source("programs/plot_scripts/make_summary_p_budget_plots.R")
+#make_summary_p_budget_plots(inDF=inDF)
+#
+#### This is based on unnormalized data!
+#source("programs/plot_scripts/make_summary_p_concentration_plots.R")
+#make_summary_p_concentration_plots(inDF=summary_table_concentration_by_treatment)
+#
+#
+#source("programs/plot_scripts/make_summary_p_pools_plots.R")
+#make_summary_p_pools_plots(inDF=summary_table_pool_by_treatment_normalized)
+#
+#
+#source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
+#make_summary_p_fluxes_plots(inDF=summary_table_flux_by_treatment_normalized)
+#
+#
+##### Individial rings
+#source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
+#make_summary_p_budget_ring_plots(inDF=summary_table_total_p_budgets_normalized)
+#
+#
+#
+#
+#
+######### check later
+#### 7.2 the plots requested by Kristine
+#myDF <- rbind(summary_table_total_p_budgets_normalized,
+#              summary_table_overstorey_p_budgets_normalized,
+#              summary_table_understorey_p_budgets_normalized,
+#              summary_table_soil_p_budgets_normalized)
+#
+#make_overall_summary_comparison_plot(myDF=myDF)
 
 
 ### 7.3 soil P as of hedley frac
 ### currently the occluded pool is an easy fix
-make_summary_soil_p_budget_plots()
+#make_summary_soil_p_budget_plots()
 
 
 
