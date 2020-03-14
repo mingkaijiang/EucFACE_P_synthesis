@@ -478,7 +478,7 @@ make_p_budget_ring_plots(inDF=total_p_budget)
 
 
 ### Soil hedley P pools
-source("programs/plot_scripts/make_p_budget_ring_plots.R")
+source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
 make_soil_p_budget_summary_plots(inDF=summary_table_pool)
 
 
