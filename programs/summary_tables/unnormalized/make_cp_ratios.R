@@ -1,9 +1,10 @@
 make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
     ### Compute CP ratio for major pools
     
-    out <- data.frame(c(1:6), NA, NA, NA, NA, NA, NA, NA, NA, NA)
+    out <- data.frame(c(1:6), NA, NA, NA, NA, NA, NA, NA, NA)#, NA)
     colnames(out) <- c("Ring", "canopy", "leaflitter", "wood",
-                       "fineroot", "understorey", "understorey_litter", "frass", "soil", "microbe")
+                       "fineroot", "understorey", #"understorey_litter", 
+                       "frass", "soil", "microbe")
     
     
     ### Compute CP ratio for major pools
@@ -16,8 +17,8 @@ make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
     out$understorey <- as.numeric(c_pool[c_pool$terms == "Understorey C Pool", 2:7]/p_pool[p_pool$terms == "Understorey P Pool",
                                                                                            2:7])
     
-    out$understorey_litter <- as.numeric(c_flux[c_flux$terms == "Understorey Litter C flux", 2:7]/p_flux[p_flux$terms == "Understorey Litter P flux",
-                                                                                           2:7])
+    #out$understorey_litter <- as.numeric(c_flux[c_flux$terms == "Understorey Litter C flux", 2:7]/p_flux[p_flux$terms == "Understorey Litter P flux",
+    #                                                                                       2:7])
     
     out$wood <- as.numeric(c_pool[c_pool$terms == "Wood C Pool", 2:7]/p_pool[p_pool$terms == "Wood P Pool",
                                                                              2:7])
