@@ -487,32 +487,23 @@ make_soil_p_budget_summary_plots(inDF=summary_table_pool)
 ###### Step 6: Normalize all responses to a pretreatment soil conditions
 #
 #### 6.1 Summary Tables
-source("programs/summary_tables/unnormalized/make_pool_summary_table.R")
+source("programs/summary_tables/normalized/make_normalized_concentration_summary_table.R")
 summary_table_concentration_norm <- make_normalized_concentration_summary_table(inDF=summary_table_concentration)
 
 ### P pools by treatment and ring
-source("programs/summary_tables/unnormalized/make_pool_summary_table.R")
-summary_table_pool <- make_pool_summary_table()
 
 ### P fluxes by treatment and ring
-source("programs/summary_tables/unnormalized/make_flux_summary_table.R")
-summary_table_flux <- make_flux_summary_table()
 
 ### C pools by treatment and ring
-source("programs/summary_tables/unnormalized/make_c_pool_summary_table.R")
-summary_table_c_pool <- make_c_pool_summary_table()
 
 ### C fluxes by treatment and ring
-source("programs/summary_tables/unnormalized/make_c_flux_summary_table.R")
-summary_table_c_flux <- make_c_flux_summary_table()
 
+### Delta C pools
+
+### Delta P pools
 
 ### CP ratios
-source("programs/summary_tables/unnormalized/make_cp_ratios.R")
-summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool,
-                                    p_pool=summary_table_pool,
-                                    c_flux=summary_table_c_flux,
-                                    p_flux=summary_table_flux)
+
 
 
 #### 4.2 retranslocation coefficients

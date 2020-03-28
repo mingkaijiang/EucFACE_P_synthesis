@@ -19,16 +19,22 @@ make_normalized_concentration_summary_table <- function(inDF) {
   ### return in unit of cm2/m2, which is m2 ha-1
   baDF$ba_ground_area <- baDF$ba / FACE_ring_area
   
+  ### Read initial soil P concentration
+  spDF <- subset(soil_p_concentration, Date=="2012-06-17")
+  
+  ### Read initial soil P pool
+  sbDF <- subset(soil_p_pool, Date=="2012-06-17")
+  
   #### assign covariate
   for (i in 1:6) {
     stDF$Cov1[stDF$Ring==i] <- baDF$ba_ground_area[baDF$Ring==i]
-    #stDF$Cov2[stDF$Ring==i] <- xx
-    #stDF$Cov3[stDF$Ring==i] <- yy
+    stDF$Cov2[stDF$Ring==i] <- spDF$PercP[spDF$Ring==i]
+    stDF$Cov3[stDF$Ring==i] <- sbDF$soil_p_g_m2[sbDF$Ring==i]
   }
   
   #### Assign factors
   stDF$Trt <- as.factor(stDF$Trt)
-
+  
   #### prepare loop
   terms <- unique(inDF$conc.terms)
   
@@ -38,7 +44,7 @@ make_normalized_concentration_summary_table <- function(inDF) {
     stDF$Value <- as.numeric(tDF[1,2:7])
     
     ## linear model with a covariate
-    modelt1 <- lm(Value~Trt + Cov1,data=stDF)
+    modelt1 <- lm(Value~Trt + Cov3,data=stDF)
     
     ## Check ele - amb diff
     summ1 <- summary(glht(modelt1, linfct = mcp(Trt = "Tukey")))
@@ -57,14 +63,14 @@ make_normalized_concentration_summary_table <- function(inDF) {
     
     ## predict responses with a standard pre-existing value
     newDF <- stDF
-    newDF$Cov1 <- mean(stDF$Cov1)
+    newDF$Cov3 <- mean(stDF$Cov3)
     newDF$predicted <- predict(out$mod, newdata=newDF)
     
     outDF[outDF$conc.terms==terms[i], 2:7] <- newDF$predicted
     
   } 
   
-
+  
   ### calculate treatment averages
   outDF$aCO2 <- round(rowMeans(subset(outDF, select=c(R2, R3, R6)), na.rm=T), 5)
   outDF$eCO2 <- round(rowMeans(subset(outDF, select=c(R1, R4, R5)), na.rm=T), 5)
@@ -78,12 +84,17 @@ make_normalized_concentration_summary_table <- function(inDF) {
   ###### percent differences (eCO2 - aCO2) / aCO2 * 100
   outDF$percent_diff <- round((outDF$eCO2 - outDF$aCO2) / (outDF$aCO2) * 100, 2)
   
+  ### outDF
+  outDF$notes <- "normalized with soil P pool"
   
-    write.csv(outDF, "plots_tables/summary_table_P_concentration_normalized.csv", 
-              row.names=F)
-    
-    ##### output tables
-    return(outDF)
-      
+  outDF$timepoint <- "annualized"
+  
+  ### save output
+  write.csv(outDF, "plots_tables/summary_table_P_concentration_normalized.csv", 
+            row.names=F)
+  
+  ##### output tables
+  return(outDF)
+  
 }
 
