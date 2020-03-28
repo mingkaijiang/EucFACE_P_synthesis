@@ -8,7 +8,7 @@ make_conc_summary_table <- function() {
     conc.terms <- c("Wood P Conc", "Canopy P Conc", "Fine Root P Conc", "Coarse Root P Conc",
                     "Leaflitter P Conc","Understorey P Conc", "Understorey Litter P Conc", "Frass P Conc",
                     "Microbial P Conc", "Soil P Conc", "Soil Phosphate P Conc",
-                    "Mycorrhizal P Conc", "Exchangeable Pi Conc", "Exchangeable Po Conc",
+                    "Exchangeable Pi Conc", "Exchangeable Po Conc",
                     "Moderately labile Po Conc", "Secondary Fe bound Pi Conc", "Primary Ca bound Pi Conc",
                     "Occluded P Conc")
     
@@ -173,7 +173,7 @@ make_conc_summary_table <- function() {
     
     
     ### Mycorrhizal P concentration
-    treatDF$notes[treatDF$conc.terms == "Mycorrhizal P Conc"] <- "Data not yet available"
+    #treatDF$notes[treatDF$conc.terms == "Mycorrhizal P Conc"] <- "Data not yet available"
     
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
