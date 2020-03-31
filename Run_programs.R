@@ -11,7 +11,7 @@
 #### 2. Compute biomass pools, production fluxes and litter fluxes
 #### 3. Generate P pools and fluxes
 #### 4. Generate summary tables, based on unnormalized responses
-#### 5. Plots
+#### 5. Generate un-normalized plots
 #### 6. Generate normalized responses 
 #### 7. Generate normalized plots
 
@@ -457,6 +457,10 @@ total_p_budget <- make_total_p_budget()
 #### Note that you need to go into each function to plot!
 norm <- "unnormalized"
 
+##### Note: for the following plotting script, you will need to go into the function
+####        and then plot. 
+####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
+####        then open the function, then plot. 
 source("programs/plot_scripts/make_p_budget_summary_plots.R")
 make_p_budget_summary_plots(inDF=total_p_budget,
                             norm=norm)
@@ -574,6 +578,10 @@ total_p_budget_norm <- make_normalized_total_p_budget()
 norm <- "normalized"
 
 
+##### Note: for the following plotting script, you will need to go into the function
+####        and then plot. 
+####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
+####        then open the function, then plot. 
 source("programs/plot_scripts/make_p_budget_summary_plots.R")
 make_p_budget_summary_plots(inDF=total_p_budget_norm,
                             norm=norm)
