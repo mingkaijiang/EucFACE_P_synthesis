@@ -467,7 +467,7 @@ source("programs/plot_scripts/make_p_pools_summary_plots.R")
 make_p_pools_summary_plots(inDF=summary_table_pool)
 
 ### P flux
-source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
+source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
 make_p_fluxes_summary_plots(inDF=summary_table_flux)
 
 
@@ -491,16 +491,21 @@ source("programs/summary_tables/normalized/make_normalized_concentration_summary
 summary_table_concentration_norm <- make_normalized_concentration_summary_table(inDF=summary_table_concentration)
 
 ### P pools by treatment and ring
+source("programs/summary_tables/normalized/make_normalized_pool_summary_table.R")
+summary_table_pool_norm <- make_normalized_pool_summary_table(inDF=summary_table_pool)
 
 ### P fluxes by treatment and ring
+source("programs/summary_tables/normalized/make_normalized_flux_summary_table.R")
+summary_table_flux_norm <- make_normalized_flux_summary_table(inDF=summary_table_flux)
 
 ### C pools by treatment and ring
+source("programs/summary_tables/normalized/make_normalized_c_pool_summary_table.R")
+summary_table_c_pool_norm <- make_normalized_c_pool_summary_table(inDF=summary_table_c_pool)
 
 ### C fluxes by treatment and ring
+source("programs/summary_tables/normalized/make_normalized_c_flux_summary_table.R")
+summary_table_c_flux_norm <- make_normalized_c_flux_summary_table(inDF=summary_table_c_flux)
 
-### Delta C pools
-
-### Delta P pools
 
 ### CP ratios
 
@@ -557,52 +562,7 @@ plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flu
 total_p_budget <- make_total_p_budget()
 
 ###### ---------------------------------------------------------------------------------------------------------##### 
-###### Step 7: Making P budgeting variables and tables, based on normalized results
-#
-##### 6.1 Summary tables for concentrations, fluxes and pools
-#### P concentration by treatment and ring
-#source("programs/summary_tables/normalized/make_conc_summary_table_by_treatment_normalized.R")
-#summary_table_concentration_by_treatment_normalized <- make_conc_summary_table_by_treatment_normalized()
-#
-#### P pools by treatment and ring
-#source("programs/summary_tables/normalized/make_pool_summary_table_by_treatment_normalized.R")
-#summary_table_pool_by_treatment_normalized <- make_pool_summary_table_by_treatment_normalized()
-#
-#### P fluxes by treatment and ring
-#source("programs/summary_tables/normalized/make_flux_summary_table_by_treatment_normalized.R")
-#summary_table_flux_by_treatment_normalized <- make_flux_summary_table_by_treatment_normalized()
-#
-#### C pools by treatment and ring
-#source("programs/summary_tables/normalized/make_c_pool_summary_table_by_treatment_normalized.R")
-#summary_table_c_pool_by_treatment_normalized <- make_c_pool_summary_table_by_treatment_normalized()
-#
-#### C fluxes by treatment and ring
-#source("programs/summary_tables/normalized/make_c_flux_summary_table_by_treatment_normalized.R")
-#summary_table_c_flux_by_treatment_normalized <- make_c_flux_summary_table_by_treatment_normalized()
-#
-#
-#
-##### up to this point 12:00 03-04-2020
-#
-##### 6.2 summary variables for the budget
-#### Calculate all P budgeting variables
-#source("programs/summary_variables/normalized/make_total_p_budgeting_variables_normalized.R")
-#summary_table_total_p_budgets_normalized <- make_total_p_budgeting_variables_normalized()
-#
-#
-#source("programs/summary_variables/normalized/make_overstorey_p_budgeting_variables_normalized.R")
-#summary_table_overstorey_p_budgets_normalized <- make_overstorey_p_budgeting_variables_normalized()
-#
-#source("programs/summary_variables/normalized/make_understorey_p_budgeting_variables_normalized.R")
-#summary_table_understorey_p_budgets_normalized <- make_understorey_p_budgeting_variables_normalized()
-#
-#source("programs/summary_variables/normalized/make_soil_p_budgeting_variables_normalized.R")
-#summary_table_soil_p_budgets_normalized <- make_soil_p_budgeting_variables_normalized(sumDF=summary_table_pool_by_treatment_normalized)
-#
-#
-##source("programs/summary_variables/normalized/make_belowground_p_standing_normalized.R")
-##summary_table_belowground_p_standing_normalized <- make_belowground_p_standing_normalized()
-#
+
 ##### 6.3 save output
 #write.csv(summary_table_concentration_by_treatment_normalized,
 #          "plots_tables/summary_table_concentration_by_treatment_normalized.csv")

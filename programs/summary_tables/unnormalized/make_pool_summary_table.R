@@ -11,7 +11,7 @@ make_pool_summary_table <- function() {
                "Coarse Root P Pool", "Understorey P Pool", 
                "Understorey Litter P Pool",
                "Microbial P Pool", "Soil Phosphate P Pool",
-               "Soil P Pool", "Mycorrhizal P Pool",
+               "Soil P Pool", 
                "Exchangeable Pi Pool", "Exchangeable Po Pool",
                "Moderately labile Po Pool", "Secondary Fe bound Pi Pool", "Primary Ca bound Pi Pool",
                "Occluded P Pool")
@@ -167,7 +167,7 @@ make_pool_summary_table <- function() {
     
     
     ### Mycorrhizal P pool
-    treatDF$notes[treatDF$terms == "Mycorrhizal P Pool"] <- "Data not yet available"
+    #treatDF$notes[treatDF$terms == "Mycorrhizal P Pool"] <- "Data not yet available"
     
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
