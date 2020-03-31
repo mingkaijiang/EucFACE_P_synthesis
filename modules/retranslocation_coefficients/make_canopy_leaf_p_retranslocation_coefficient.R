@@ -58,9 +58,6 @@ make_canopy_leaf_p_retranslocation_coefficient <- function(df1, df2){
     
     outDF2 <- summaryBy(retrans_coef~Ring, FUN=mean, data=outDF, keep.names=T)
     
-    ###
-    #sumDF <- summaryBy(retrans_coef~CO2, data=outDF, FUN=mean, keep.names=T)
-    
     return(outDF2)
     
 }

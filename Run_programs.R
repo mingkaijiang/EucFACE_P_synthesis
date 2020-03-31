@@ -508,62 +508,60 @@ summary_table_c_flux_norm <- make_normalized_c_flux_summary_table(inDF=summary_t
 
 
 ### CP ratios
+source("programs/summary_tables/normalized/make_normalized_cp_ratios.R")
+summary_cp_ratios_norm <- make_normalized_cp_ratios(c_pool=summary_table_c_pool_norm,
+                                                    p_pool=summary_table_pool_norm,
+                                                    c_flux=summary_table_c_flux_norm,
+                                                    p_flux=summary_table_flux_norm)
+
+
+#### 6.2 retranslocation coefficients
+#### canopy leaf n retranslocation coefficient
+#leaf_p_retrans_coefficient <- make_canopy_leaf_p_retranslocation_coefficient(df1=canopy_p_concentration,
+#                                                                             df2=leaflitter_p_concentration)
+#
+#### understorey leaf p retranslocation coefficient
+#understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coefficient(df1=understorey_p_concentration,
+#                                                                                    df2=understorey_litter_p_concentration)
+#
+#### fineroot retrans
+#### assumed value
+#fineroot_p_retrans_coefficient <- make_fineroot_p_retrans_coefficient(retrans=0.5)
+#
+#### wood retrans
+#wood_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
+#
+#### coarseroot retrans
+#coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
 
 
 
-#### 4.2 retranslocation coefficients
-### canopy leaf n retranslocation coefficient
-leaf_p_retrans_coefficient <- make_canopy_leaf_p_retranslocation_coefficient(df1=canopy_p_concentration,
-                                                                             df2=leaflitter_p_concentration)
-
-### understorey leaf p retranslocation coefficient
-understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coefficient(df1=understorey_p_concentration,
-                                                                                    df2=understorey_litter_p_concentration)
-
-### fineroot retrans
-### assumed value
-fineroot_p_retrans_coefficient <- make_fineroot_p_retrans_coefficient(retrans=0.5)
-
-### wood retrans
-wood_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
-
-### coarseroot retrans
-coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
-
-
-
-#### 4.3 Summary variables
+#### 6.3 Summary variables
 ### vegetation standing P stocks
-vegetation_standing_p_stock <- make_vegetation_standing_p_stock(leaf=canopy_p_pool,
-                                                                wood=wood_p_pool,
-                                                                fineroot=fineroot_p_pool,
-                                                                coarseroot=coarse_root_p_pool,
-                                                                understorey=understorey_p_pool)
+vegetation_standing_p_stock_norm <- make_normalized_vegetation_standing_p_stock(inDF=summary_table_pool_norm)
 
 
 
 ### total plant P requirement flux, retranslocation flux, and uptake flux
 ### for total retranslocation flux and uptake flux,
-total_plant_p_fluxes <- make_total_plant_p_fluxes(sumDF=summary_table_flux,
-                                                  wood_retrans_coef=wood_p_retrans_coefficient)
+total_plant_p_fluxes_norm <- make_total_plant_p_fluxes(sumDF=summary_table_flux_norm,
+                                                       wood_retrans_coef=wood_p_retrans_coefficient)
 
 
 ### P mean residence time in plant
-plant_p_MRT <- make_plant_P_mean_residence_time(p_stand=vegetation_standing_p_stock,
-                                                p_flux=total_plant_p_fluxes)
+plant_p_MRT_norm <- make_plant_P_mean_residence_time(p_stand=vegetation_standing_p_stock_norm,
+                                                p_flux=total_plant_p_fluxes_norm)
 
 ### Plant P use efficiency
-plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flux,
-                                                      p_flux=total_plant_p_fluxes)
+plant_p_use_efficiency_norm <- make_plant_P_use_efficiency(c_flux=summary_table_c_flux_norm,
+                                                      p_flux=total_plant_p_fluxes_norm)
 
 
-#### 4.4 P budget summary
-### Calculate all N budgeting variables
-total_p_budget <- make_total_p_budget()
+#### 6.4 P budget summary
+total_p_budget_norm <- make_normalized_total_p_budget()
 
-###### ---------------------------------------------------------------------------------------------------------##### 
 
-##### 6.3 save output
+##### 6.5 save output
 #write.csv(summary_table_concentration_by_treatment_normalized,
 #          "plots_tables/summary_table_concentration_by_treatment_normalized.csv")
 #
@@ -591,6 +589,7 @@ total_p_budget <- make_total_p_budget()
 #
 #
 #
+
 ###### ---------------------------------------------------------------------------------------------------------##### 
 ###### Step 7. Plotting P budget figures
 #
