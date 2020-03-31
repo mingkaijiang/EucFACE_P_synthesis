@@ -18,29 +18,29 @@ make_normalized_total_p_budget <- function() {
     colnames(out) <- c("terms", "R1", "R2", "R3", "R4", "R5", "R6", "aCO2", "eCO2")
     
     ### assign values
-    out[out$terms == "Total plant P stock", 2:7] <- round(vegetation_standing_p_stock$total,2)
+    out[out$terms == "Total plant P stock", 2:7] <- round(vegetation_standing_p_stock_norm$total,2)
     
-    out[out$terms == "Total plant P requirement flux", 2:7] <- round(total_plant_p_fluxes$Total_plant_P_requirement_flux,2)
+    out[out$terms == "Total plant P requirement flux", 2:7] <- round(total_plant_p_fluxes_norm$Total_plant_P_requirement_flux,2)
     
-    out[out$terms == "Total plant P retranslocation flux", 2:7] <- round(total_plant_p_fluxes$Total_plant_retranslocation_P_flux,2)
+    out[out$terms == "Total plant P retranslocation flux", 2:7] <- round(total_plant_p_fluxes_norm$Total_plant_retranslocation_P_flux,2)
     
-    out[out$terms == "Plant P uptake flux", 2:7] <- round(total_plant_p_fluxes$Total_plant_uptake_P_flux,2)
+    out[out$terms == "Plant P uptake flux", 2:7] <- round(total_plant_p_fluxes_norm$Total_plant_uptake_P_flux,2)
     
-    out[out$terms == "Soil P mineralization flux", 2:7] <- round(summary_table_flux[summary_table_flux$terms=="Mineralization P flux",2:7],2)
+    out[out$terms == "Soil P mineralization flux", 2:7] <- round(summary_table_flux_norm[summary_table_flux_norm$terms=="Mineralization P flux",2:7],2)
     
-    out[out$terms == "Plant P uptake over requirement", 2:7] <- round(total_plant_p_fluxes$Total_uptake_over_requirement_ratio,2)
+    out[out$terms == "Plant P uptake over requirement", 2:7] <- round(total_plant_p_fluxes_norm$Total_uptake_over_requirement_ratio,2)
     
-    out[out$terms == "Plant P MRT", 2:7] <- round(plant_p_MRT$plant_P_MRT,2)
+    out[out$terms == "Plant P MRT", 2:7] <- round(plant_p_MRT_norm$plant_P_MRT,2)
     
-    out[out$terms == "Plant PUE", 2:7] <- round(plant_p_use_efficiency$PUE,2)
+    out[out$terms == "Plant PUE", 2:7] <- round(plant_p_use_efficiency_norm$PUE,2)
     
-    out[out$terms == "Overstorey aboveground P stock", 2:7] <- round(vegetation_standing_p_stock$oa,2)
+    out[out$terms == "Overstorey aboveground P stock", 2:7] <- round(vegetation_standing_p_stock_norm$oa,2)
     
-    out[out$terms == "Understorey aboveground P stock", 2:7] <- round(vegetation_standing_p_stock$understorey,2)
+    out[out$terms == "Understorey aboveground P stock", 2:7] <- round(vegetation_standing_p_stock_norm$understorey,2)
     
-    out[out$terms == "Belowground P stock", 2:7] <- round(vegetation_standing_p_stock$belowground,2)
+    out[out$terms == "Belowground P stock", 2:7] <- round(vegetation_standing_p_stock_norm$belowground,2)
     
-    out[out$terms == "Labile Pi stock", 2:7] <- round(summary_table_pool[summary_table_pool$terms=="Exchangeable Pi Pool", 2:7],2)
+    out[out$terms == "Labile Pi stock", 2:7] <- round(summary_table_pool_norm[summary_table_pool_norm$terms=="Exchangeable Pi Pool", 2:7],2)
     
     
     

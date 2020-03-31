@@ -351,7 +351,8 @@ make_p_budget_ring_plots <- function(inDF) {
     require(cowplot)
     
     ## plot 
-    pdf("plots_tables/P_Budget_Ring_Plots.pdf", width=8,height=12)
+    pdf(paste0("plots_tables/P_Budget_Ring_Plots_", norm, ".pdf"),
+        width=8,height=12)
     plot_grid(p2, p1, p3, p4, p8, p5, p9, p6, labels="", ncol=2, align="v", axis = "l")
     grid.text(grid.labs, x = c(0.12, 0.62, 0.12, 0.62, 0.12, 0.62, 0.12, 0.62),
               y = c(0.97, 0.97, 0.72, 0.72, 0.47, 0.47, 0.23, 0.23), 

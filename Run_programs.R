@@ -455,30 +455,38 @@ total_p_budget <- make_total_p_budget()
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 5. Plotting P budget figures, based on unnormalized data
 #### Note that you need to go into each function to plot!
+norm <- "unnormalized"
+
 source("programs/plot_scripts/make_p_budget_summary_plots.R")
-make_p_budget_summary_plots(inDF=total_p_budget)
+make_p_budget_summary_plots(inDF=total_p_budget,
+                            norm=norm)
 
 ### Concentration
 source("programs/plot_scripts/make_p_concentration_summary_plots.R")
-make_p_concentration_summary_plots(inDF=summary_table_concentration)
+make_p_concentration_summary_plots(inDF=summary_table_concentration,
+                                   norm=norm)
 
 ### P pool
 source("programs/plot_scripts/make_p_pools_summary_plots.R")
-make_p_pools_summary_plots(inDF=summary_table_pool)
+make_p_pools_summary_plots(inDF=summary_table_pool,
+                           norm=norm)
 
 ### P flux
 source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
-make_p_fluxes_summary_plots(inDF=summary_table_flux)
+make_p_fluxes_summary_plots(inDF=summary_table_flux,
+                            norm=norm)
 
 
 #### Individial rings
 source("programs/plot_scripts/make_p_budget_ring_plots.R")
-make_p_budget_ring_plots(inDF=total_p_budget)
+make_p_budget_ring_plots(inDF=total_p_budget,
+                         norm=norm)
 
 
 ### Soil hedley P pools
 source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
-make_soil_p_budget_summary_plots(inDF=summary_table_pool)
+make_soil_p_budget_summary_plots(inDF=summary_table_pool,
+                                 norm=norm)
 
 
 
@@ -561,83 +569,41 @@ plant_p_use_efficiency_norm <- make_plant_P_use_efficiency(c_flux=summary_table_
 total_p_budget_norm <- make_normalized_total_p_budget()
 
 
-##### 6.5 save output
-#write.csv(summary_table_concentration_by_treatment_normalized,
-#          "plots_tables/summary_table_concentration_by_treatment_normalized.csv")
-#
-#write.csv(summary_table_pool_by_treatment_normalized,
-#          "plots_tables/summary_table_pool_by_treatment_normalized.csv")
-#
-#write.csv(summary_table_flux_by_treatment_normalized,
-#          "plots_tables/summary_table_flux_by_treatment_normalized.csv")
-#
-#write.csv(summary_table_c_pool_by_treatment_normalized,
-#          "plots_tables/summary_table_c_pool_by_treatment_normalized.csv")
-#
-#write.csv(summary_table_c_flux_by_treatment_normalized,
-#          "plots_tables/summary_table_c_flux_by_treatment_normalized.csv")
-#
-#write.csv(summary_table_total_p_budgets_normalized,
-#          "plots_tables/summary_table_total_p_budgets_normalized.csv")
-#
-#### cp ratios
-##source("programs/summary_tables/make_cp_ratios.R")
-##summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool_by_treatment_normalized,
-##                                    p_pool=summary_table_pool_by_treatment_normalized)
-##write.csv(summary_cp_ratios,
-##          "plots_tables/summary_table_cp_ratios.csv")
-#
-#
-#
-
 ###### ---------------------------------------------------------------------------------------------------------##### 
-###### Step 7. Plotting P budget figures
-#
-#### 7.1 combine summary tables
-#inDF <- rbind(summary_table_total_p_budgets_normalized,
-#              summary_table_overstorey_p_budgets_normalized,
-#              summary_table_understorey_p_budgets_normalized,
-#              summary_table_soil_p_budgets_normalized)
-#
-#
-#source("programs/plot_scripts/make_summary_p_budget_plots.R")
-#make_summary_p_budget_plots(inDF=inDF)
-#
-#### This is based on unnormalized data!
-#source("programs/plot_scripts/make_summary_p_concentration_plots.R")
-#make_summary_p_concentration_plots(inDF=summary_table_concentration_by_treatment)
-#
-#
-#source("programs/plot_scripts/make_summary_p_pools_plots.R")
-#make_summary_p_pools_plots(inDF=summary_table_pool_by_treatment_normalized)
-#
-#
-#source("programs/plot_scripts/make_summary_p_fluxes_plots.R")
-#make_summary_p_fluxes_plots(inDF=summary_table_flux_by_treatment_normalized)
-#
-#
-##### Individial rings
-#source("programs/plot_scripts/make_summary_p_budget_ring_plots.R")
-#make_summary_p_budget_ring_plots(inDF=summary_table_total_p_budgets_normalized)
-#
-#
-#
-#
-#
-######### check later
-#### 7.2 the plots requested by Kristine
-#myDF <- rbind(summary_table_total_p_budgets_normalized,
-#              summary_table_overstorey_p_budgets_normalized,
-#              summary_table_understorey_p_budgets_normalized,
-#              summary_table_soil_p_budgets_normalized)
-#
-#make_overall_summary_comparison_plot(myDF=myDF)
+###### Step 7. Plotting P budget figures, based on normalized responses
+norm <- "normalized"
 
 
-### 7.3 soil P as of hedley frac
-### currently the occluded pool is an easy fix
-#make_summary_soil_p_budget_plots()
+source("programs/plot_scripts/make_p_budget_summary_plots.R")
+make_p_budget_summary_plots(inDF=total_p_budget_norm,
+                            norm=norm)
 
+### Concentration
+source("programs/plot_scripts/make_p_concentration_summary_plots.R")
+make_p_concentration_summary_plots(inDF=summary_table_concentration_norm,
+                                   norm=norm)
+
+### P pool
+source("programs/plot_scripts/make_p_pools_summary_plots.R")
+make_p_pools_summary_plots(inDF=summary_table_pool_norm,
+                           norm=norm)
+
+### P flux
+source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
+make_p_fluxes_summary_plots(inDF=summary_table_flux_norm,
+                            norm=norm)
+
+
+#### Individial rings
+source("programs/plot_scripts/make_p_budget_ring_plots.R")
+make_p_budget_ring_plots(inDF=total_p_budget_norm,
+                         norm=norm)
+
+
+### Soil hedley P pools
+source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
+make_soil_p_budget_summary_plots(inDF=summary_table_pool_norm,
+                                 norm=norm)
 
 
 
