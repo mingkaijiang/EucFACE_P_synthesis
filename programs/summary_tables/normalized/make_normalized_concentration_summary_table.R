@@ -44,7 +44,7 @@ make_normalized_concentration_summary_table <- function(inDF) {
     stDF$Value <- as.numeric(tDF[1,2:7])
     
     ## linear model with a covariate
-    modelt1 <- lm(Value~Trt + Cov3,data=stDF)
+    modelt1 <- lm(Value~Trt+Cov3,data=stDF)
     
     ## Check ele - amb diff
     summ1 <- summary(glht(modelt1, linfct = mcp(Trt = "Tukey")))
