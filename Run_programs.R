@@ -243,7 +243,7 @@ canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
 
 #canopy_p_pool <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
 
-### this is a new function yet to be written
+### forest floor leaf litter pool
 leaflitter_p_pool <- make_leaflitter_p_pool(p_conc=leaflitter_p_concentration,
                                             c_pool=leaflitter_c_pool,
                                             c_frac=c_fraction)
@@ -257,6 +257,14 @@ canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
 #canopy_p_flux <- make_canopy_p_production_new(c_flux=canopy_c_production_flux_new,
 #                                                  c_frac=c_fraction)
 
+#### 3.13 Frass P production
+#### Used C fraction for frass to convert c production back to frass biomass
+#### We have more p conc than c flux so no need to gap fill. 
+frass_c_fraction <- make_frass_c_fraction()
+frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
+                                                   c_flux=frass_c_production_flux,
+                                                   c_frac=frass_c_fraction)
+
 
 #### 3.8 Litter P production flux 
 #### Literfall biomass (not C) will be calculated within the function
@@ -265,6 +273,7 @@ canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
 leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration,
                                             c_flux=leaflitter_c_production_flux,
                                             c_frac=c_fraction)  
+
 #leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_p_concentration) 
 
 
@@ -278,9 +287,13 @@ fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_co
 #### 3.10 Other litterfall
 twig_litter_p_flux <- make_twiglitter_p_flux(p_conc=wood_p_concentration, 
                                              litter_flux=twiglitter_c_production_flux)  
+
+## bark P concentration provided by Kristine
 bark_litter_p_flux <- make_barklitter_p_flux(p_conc=wood_p_concentration, 
                                              litter_flux=barklitter_c_production_flux)  
-seed_litter_p_flux <- make_seedlitter_p_flux(p_conc=wood_p_concentration, 
+
+## assume leaf p concentration
+seed_litter_p_flux <- make_seedlitter_p_flux(p_conc=canopy_p_concentration, 
                                              litter_flux=seedlitter_c_production_flux)  
 
 #### 3.11 Wood P pool   
@@ -297,23 +310,16 @@ wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
 #### standing dead p pool
 standing_dead_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
                                          c_pool=standing_dead_c_pool,
-                                         case_consideration = "sapwood")
+                                         case_consideration = "total")
 
 #### 3.12 wood p flux
 wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
                                       c_flux=wood_c_production)
 
 #### Standing dead P flux
-standing_dead_p_flux <- make_standing_dead_p_flux(p_conc=wood_p_concentration,
-                                                  c_flux=standing_dead_c_flux)
+#standing_dead_p_flux <- make_standing_dead_p_flux(p_conc=wood_p_concentration,
+#                                                  c_flux=standing_dead_c_flux)
 
-#### 3.13 Frass P production
-#### Used C fraction for frass to convert c production back to frass biomass
-#### We have more p conc than c flux so no need to gap fill. 
-frass_c_fraction <- make_frass_c_fraction()
-frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
-                                                   c_flux=frass_c_production_flux,
-                                                   c_frac=frass_c_fraction)
 
 #### 3.14 Fine root P biomass pool
 fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
@@ -349,16 +355,16 @@ understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_p
                                               c_frac=c_fraction_ud)
 
 ### 3.18 Coarse root P pool
-### should add heartwood P concentration to replace part of coarse root P pool
+### currently assuming sapwood P concentration, should replace it with heartwood?
 coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
-                                                c_pool=coarse_root_c_pool,
-                                                c_frac=c_fraction)
+                                              c_pool=coarse_root_c_pool,
+                                              c_frac=c_fraction)
 
 
 ### 3.19 Coarse root P flux
 coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
-                                                c_flux=coarse_root_c_flux,
-                                                c_frac=c_fraction)
+                                              c_flux=coarse_root_c_flux,
+                                              c_frac=c_fraction)
 
 
 ### 3.20 delta P pools

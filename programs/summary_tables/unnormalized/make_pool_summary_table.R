@@ -6,14 +6,23 @@
 make_pool_summary_table <- function() {
     
     ### Define pool variable names
-    terms <- c("Wood P Pool", "Canopy P Pool", "Canopy Litter P Pool",
+    terms <- c("Total Wood P Pool", 
+               "Sapwood P Pool",
+               "Canopy P Pool", 
+               "Forestfloor Leaf Litter P Pool",
                "Fine Root P Pool",
-               "Coarse Root P Pool", "Understorey P Pool", 
+               "Coarse Root P Pool", 
+               "Understorey P Pool", 
                "Understorey Litter P Pool",
-               "Microbial P Pool", "Soil Phosphate P Pool",
+               "Standing Dead Wood P Pool",
+               "Microbial P Pool", 
+               "Soil Phosphate P Pool",
                "Soil P Pool", 
-               "Exchangeable Pi Pool", "Exchangeable Po Pool",
-               "Moderately labile Po Pool", "Secondary Fe bound Pi Pool", "Primary Ca bound Pi Pool",
+               "Exchangeable Pi Pool", 
+               "Exchangeable Po Pool",
+               "Moderately labile Po Pool", 
+               "Secondary Fe bound Pi Pool", 
+               "Primary Ca bound Pi Pool",
                "Occluded P Pool")
     
     treatDF <- data.frame(terms)
@@ -42,21 +51,45 @@ make_pool_summary_table <- function() {
     treatDF$timepoint[treatDF$terms == "Canopy P Pool"] <- length(unique(canopy_p_pool$Date))  
     treatDF$notes[treatDF$terms == "Canopy P Pool"] <- "used monthly concentration values to extrapolate"
 
-    ### Canopy Litter P 
+    ### Forestfloor Leaf litter
     out <- summaryBy(leaflitter_p_pool~Ring,data=leaflitter_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Canopy Litter P Pool", 2:7] <- out$leaflitter_p_pool
-    treatDF$year_start[treatDF$terms == "Canopy Litter P Pool"] <- min(year(leaflitter_p_pool$Date))    
-    treatDF$year_end[treatDF$terms == "Canopy Litter P Pool"] <- max(year(leaflitter_p_pool$Date))    
-    treatDF$timepoint[treatDF$terms == "Canopy Litter P Pool"] <- length(unique(leaflitter_p_pool$Date))  
-    treatDF$notes[treatDF$terms == "Canopy Litter P Pool"] <- "calculated based on leaflitter p concentration and leaflitter pool"
+    treatDF[treatDF$terms == "Forestfloor Leaf Litter P Pool", 2:7] <- out$leaflitter_p_pool
+    treatDF$year_start[treatDF$terms == "Forestfloor Leaf Litter P Pool"] <- min(year(leaflitter_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Forestfloor Leaf Litter P Pool"] <- max(year(leaflitter_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Forestfloor Leaf Litter P Pool"] <- length(unique(leaflitter_p_pool$Date))  
+    treatDF$notes[treatDF$terms == "Forestfloor Leaf Litter P Pool"] <- "calculated based on leaflitter p concentration and leaflitter pool"
     
     ### Wood P 
     out <- summaryBy(wood_p_pool~Ring,data=wood_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Wood P Pool", 2:7] <- out$wood_p_pool
-    treatDF$year_start[treatDF$terms == "Wood P Pool"] <- min(year(wood_p_pool$Date))    
-    treatDF$year_end[treatDF$terms == "Wood P Pool"] <- max(year(wood_p_pool$Date))    
-    treatDF$timepoint[treatDF$terms == "Wood P Pool"] <- length(unique(wood_p_pool$Date)) 
-    treatDF$notes[treatDF$terms == "Wood P Pool"] <- "Based on single time point concentration measurement"
+    treatDF[treatDF$terms == "Total Wood P Pool", 2:7] <- out$wood_p_pool
+    treatDF$year_start[treatDF$terms == "Total Wood P Pool"] <- min(year(wood_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Total Wood P Pool"] <- max(year(wood_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Total Wood P Pool"] <- length(unique(wood_p_pool$Date)) 
+    treatDF$notes[treatDF$terms == "Total Wood P Pool"] <- "Based on single time point concentration measurement"
+    
+    ### Sapwood P 
+    out <- summaryBy(wood_p_pool~Ring,data=sapwood_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Sapwood P Pool", 2:7] <- out$wood_p_pool
+    treatDF$year_start[treatDF$terms == "Sapwood P Pool"] <- min(year(wood_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Sapwood P Pool"] <- max(year(wood_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Sapwood P Pool"] <- length(unique(wood_p_pool$Date)) 
+    treatDF$notes[treatDF$terms == "Sapwood P Pool"] <- "Based on single time point concentration measurement"
+    
+    ### Standing dead
+    out <- summaryBy(wood_p_pool~Ring,data=standing_dead_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF$R1[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==1]
+    treatDF$R2[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==2]
+    treatDF$R5[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==5]
+    treatDF$R6[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==6]
+    
+    ## hard wired
+    treatDF$R3[treatDF$terms == "Standing Dead Wood P Pool"] <- 0.0
+    treatDF$R4[treatDF$terms == "Standing Dead Wood P Pool"] <- 0.0
+    
+    treatDF$year_start[treatDF$terms == "Standing Dead Wood P Pool"] <- min(year(wood_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Standing Dead Wood P Pool"] <- max(year(wood_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Standing Dead Wood P Pool"] <- length(unique(wood_p_pool$Date)) 
+    treatDF$notes[treatDF$terms == "Standing Dead Wood P Pool"] <- "Based on single time point concentration measurement"
     
     
     ### Fine root P pool
