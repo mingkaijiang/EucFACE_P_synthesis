@@ -51,7 +51,10 @@ make_dLAI_litter <- function(litter, sla_variable){
     tDF$leaflit <- tDF$leaf_flux / 1000 * tDF$Days
     
     
-    out <- tDF[,c("Date", "Ring", "dLEAF", "leaflit", "dLAI", "LAI", "leaf_pool", "Start_date", "End_date", "Days", "SLA",
+    out <- tDF[,c("Date", "Ring", 
+                  "dLEAF", "leaflit", "dLAI", "LAI", "leaf_pool", 
+                  "Start_date", "End_date", "Days", 
+                  "SLA",
                   "LAIchange", "dnegLAI", "dposLAI", "absdLAI")]
     
     return(out)

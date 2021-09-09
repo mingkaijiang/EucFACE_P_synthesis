@@ -1,4 +1,4 @@
-make_understorey_aboveground_production_flux <- function(c_frac) {
+make_understorey_aboveground_production_flux_clipping <- function(c_frac) {
     
     ### currently only Varsha's harvest data on HIEv
     download_understorey_aboveground_data()

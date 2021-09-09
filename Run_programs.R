@@ -188,20 +188,27 @@ soil_bulk_density <- make_soil_bulk_density()
 #### return sum of all depths
 soil_c_pool <- make_soil_c_pool(soil_bulk_density)
 
+
 #### Microbial C pool
 #### this pool has data only at 0-10cm depth - Cat's data
 microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
+
 #### Yolima's data
+### data no longer exists, ignore this
 #microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
+
+
 
 #### Soil mycorrhizal pool
 #### But we don't have a P concentration for it and 
 #### therefore it's not included in the P budget
 mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
 
+
 #### Coarse root C pool 
-coarse_root_c_pool <- make_coarse_root_pool(c_fraction, fr_pool=fineroot_c_pool) 
+coarse_root_c_pool <- make_coarse_root_pool(c_fraction, 
+                                            fr_pool=fineroot_c_pool) 
 
 
 #### Leaf litter pool - forest floor leaf litter pool
@@ -225,8 +232,14 @@ canopy_c_production_flux <- leaflitter_c_production_flux
 
 ## based on change in leaf area and litterfall
 ## calculate change in leaf pool as well as litterfall
-dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux, sla_variable=sla_variable)
+dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux, 
+                                      sla_variable=sla_variable)
+
 canopy_c_production_flux_new <- make_canopy_c_production_flux_new(inDF=dLEAF_litter_flux)
+
+make_canopy_production_flux_comparison(inDF1=canopy_c_production_flux,
+                                       inDF2=canopy_c_production_flux_new,
+                                       plot.option = T)
 
 
 #### 2.5 Wood C production
@@ -244,9 +257,15 @@ fineroot_c_production_flux <- make_fineroot_c_production_flux()
 #### Understorey production flux 
 #### - 1: Varsha's clipping
 #### - 2: Matthias's stereo camera
-understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
+understorey_c_flux_clipping <- make_understorey_aboveground_production_flux_clipping(c_fraction_ud)
 
-understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
+understorey_c_flux_camera <- make_understorey_aboveground_production_flux_camera(c_fraction_ud)
+
+
+make_canopy_production_flux_comparison(inDF1=understorey_c_flux_clipping ,
+                                       inDF2=understorey_c_flux_camera,
+                                       plot.option = T)
+
 
 #### understorey litter flux
 ### basically understorey dead 
