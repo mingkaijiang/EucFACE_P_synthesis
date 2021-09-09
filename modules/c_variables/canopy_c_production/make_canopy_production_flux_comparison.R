@@ -3,12 +3,12 @@ make_canopy_production_flux_comparison <- function(inDF1,
                                                    plot.option) {
     
     ### calculate means across rings
-    DF1 <- inDF1[,c("Date", "Ring", "leaf_flux")]
+    DF1 <- inDF1[,c("Date", "Ring", "understorey_production_flux")]
     
-    DF2 <- inDF2[,c("Date", "Ring", "leaf_flux")]
+    DF2 <- inDF2[,c("Date", "Ring", "understorey_production_flux")]
     
     myDF <- merge(DF1, DF2, by=c("Date", "Ring"), all=T)
-    colnames(myDF) <- c("Date", "Ring", "litterfall", "litterfall_dLeaf")
+    colnames(myDF) <- c("Date", "Ring", "clipping", "camera")
     
     plotDF <- melt(myDF, id.var=c("Date", "Ring"))
     
@@ -18,10 +18,10 @@ make_canopy_production_flux_comparison <- function(inDF1,
             geom_point() + 
             stat_smooth() +
             facet_wrap(~variable)+
-            ylab("Canopy C production flux (mg C m-2 d-1)")
+            ylab("Understorey C production flux (mg C m-2 d-1)")
         
         
-        pdf("plots_tables/checks/canopy_production_flux_comparison.pdf", 
+        pdf("plots_tables/checks/understorey_production_flux_comparison.pdf", 
             width=8, height=4)
         
         plot(p1)

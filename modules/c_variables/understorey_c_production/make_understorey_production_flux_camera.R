@@ -45,14 +45,16 @@ make_understorey_aboveground_production_flux_camera <- function(c_frac) {
     
     #- drop NA rows
     out <- out[complete.cases(out),]
-    df <- out[Reduce(`&`, lapply(out, is.finite)),]
+    #df <- out[Reduce(`&`, lapply(out, is.finite)),]
     
-    df$ndays <- as.numeric(df$End_date - df$Start_date) + 1
+    #df$ndays <- as.numeric(df$End_date - df$Start_date) + 1
     
     
     #- format dataframe to return
-    out <-df[,c("Start_date", "End_date", "Date", "Ring","understorey_production_flux", "ndays")]
-    colnames(out) <- c("Start_date", "End_date", "Date", "Ring", "understorey_production_flux", "Days")
+    out <-out[,c("Start_date", "End_date", "Date", "Ring","understorey_production_flux")]
+    out$Days <- as.numeric(out$End_date - out$Start_date) + 1
+    
+    #colnames(out) <- c("Start_date", "End_date", "Date", "Ring", "understorey_production_flux", "Days")
     
     return(out)
 }

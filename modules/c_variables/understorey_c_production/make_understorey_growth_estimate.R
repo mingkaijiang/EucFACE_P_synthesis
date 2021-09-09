@@ -28,17 +28,17 @@ make_understorey_aboveground_growth_estimate <- function(plotting) {
     colnames(out) <- c("Start_date", "End_date", "Date", "Ring", "Daily_growth", "Days")
     
     if (plotting == T) {
-        #pdf("plots_tables/understorey_growth_estimated_from_cover.pdf")
-        #
-        #p <- ggplot(out, aes(Date, Daily_growth, color=factor(Ring))) +   
-        #    geom_point(size = 5) + geom_line() + 
-        #    xlab("Date") + ylab("Understorey Growth (% cover change / day)") + 
-        #    scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
-        #                                "#FF4040", "#8B0000", "#0000FF"))
-        #
-        #plot(p)
-        #
-        #dev.off()
+        pdf("plots_tables/checks/understorey_growth_estimated_from_cover.pdf")
+        
+        p <- ggplot(out, aes(Date, Daily_growth, color=factor(Ring))) +   
+            geom_point(size = 5) + geom_line() + 
+            xlab("Date") + ylab("Understorey Growth (% cover change / day)") + 
+            scale_color_manual(values=c("#FF7F50", "#00FFFF", "#6495ED",
+                                        "#FF4040", "#8B0000", "#0000FF"))
+        
+        plot(p)
+        
+        dev.off()
     } else {
         return(out)
     }

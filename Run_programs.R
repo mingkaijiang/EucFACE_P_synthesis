@@ -259,20 +259,20 @@ fineroot_c_production_flux <- make_fineroot_c_production_flux()
 #### - 2: Matthias's stereo camera
 understorey_c_flux_clipping <- make_understorey_aboveground_production_flux_clipping(c_fraction_ud)
 
-understorey_c_flux_camera <- make_understorey_aboveground_production_flux_camera(c_fraction_ud)
-
-
-make_canopy_production_flux_comparison(inDF1=understorey_c_flux_clipping ,
-                                       inDF2=understorey_c_flux_camera,
-                                       plot.option = T)
+### we need to follow the C budget and therefore this is ignored.
+#understorey_c_flux_camera <- make_understorey_aboveground_production_flux_camera(c_frac=c_fraction_ud)
+#
+#
+#make_canopy_production_flux_comparison(inDF1=understorey_c_flux_clipping,
+#                                       inDF2=understorey_c_flux_camera,
+#                                       plot.option = T)
+### estimate biomass growth based on cover data
+#make_understorey_aboveground_growth_estimate(plotting = T)
 
 
 #### understorey litter flux
 ### basically understorey dead 
 understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
-
-### estimate biomass growth based on cover data
-#make_understorey_aboveground_growth_estimate(plotting = T)
 
 
 #### Frass production
@@ -284,23 +284,116 @@ coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool)
 
 
 
-##### ---------------------------------------------------------------------------------------------------------##### 
-##### Step 3: Generating P pools and fluxes
-#### 3.1 Soil P pool
+
+########################################################################################## 
+########################################################################################## 
+#####
+##### Step 4: Generating P pools and fluxes
+#####
+
+
+############################## P Pools ###############################
+
+#### Soil P pool
+#### top 10 cm only
 soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
                                 bk_density=soil_bulk_density)
 
-#### 3.2 Soil phosphate pool
-### This is additional to the microbial PO4-P pool
-### The microbial pool needs to have one step further to break the cell when extracting
-### So this pool is more readily available to plants. 
+#### Soil phosphate pool
+#### Top 10 cm only
+#### Note:
+#### This is additional to the microbial PO4-P pool
+#### The microbial pool needs to have one step further 
+#### to break the cell when extracting.
+#### So this pool is more readily available to plants. 
 soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentration,
                                                 bk_density=soil_bulk_density)
 
-#### 3.3 Soil P pool of different bioavailability
+
+#### Soil P pool of different bioavailability
 soil_p_pool_hedley <- make_soil_p_pool_hedley(p_conc=soil_hedley_p_concentration,
                                               bk_density=soil_bulk_density)
 
+
+#### Microbial P pool 
+#### Top 10 cm
+microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
+                                          bk_density=soil_bulk_density)
+
+
+
+#### Canopy P pool - only for green leaves
+canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
+                                    biom=canopy_c_pool)
+
+canopy_p_pool_new <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
+
+
+make_canopy_P_pool_comparison(inDF1=canopy_p_pool,
+                              inDF2=canopy_p_pool_new,
+                              plot.option = T)
+
+
+
+### Forest floor leaf litter pool
+leaflitter_p_pool <- make_leaflitter_p_pool(p_conc=leaflitter_p_concentration,
+                                            c_pool=leaflitter_c_pool,
+                                            c_frac=c_fraction)
+
+
+
+#### Wood P pool 
+wood_p_pool <- make_wood_p_pool(p_conc=sapwood_p_concentration,
+                                c_pool=wood_c_pool,
+                                case_consideration = "total")
+
+sapwood_p_pool <- make_wood_p_pool(p_conc=sapwood_p_concentration,
+                                   c_pool=wood_c_pool,
+                                   case_consideration = "sapwood")
+
+
+heartwood_p_pool <- make_wood_p_pool(p_conc=sapwood_p_concentration,
+                                     c_pool=wood_c_pool,
+                                     case_consideration = "heartwood")
+
+
+#### Standing dead p pool
+standing_dead_p_pool <- make_wood_p_pool(p_conc=sapwood_p_concentration,
+                                         c_pool=standing_dead_c_pool,
+                                         case_consideration = "total")
+
+
+#### Fine root P biomass pool
+fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
+                                        c_pool=fineroot_c_pool)
+
+
+#### Understorey P pool, assume both species contributed equally
+#### Also because p_conc and c_pool do not match in time,
+#### we are taking the average of p_conc and apply it to c_pool
+#### Here we can use Matthias's stereo camera estimate (2) or 
+#### Varsha's harvest data (1) to extrapolate for p pool
+#### It makes more sense to use harvest at this stage in time!
+#### Also, if use Varsha's harvest data, we can use either total or live part of biomass
+understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
+                                              p_lit_conc=understorey_litter_p_concentration,
+                                              c_pool=understorey_c_pool,
+                                              c_frac=c_fraction_ud,
+                                              live_or_total = "Total")
+
+
+
+### 3.18 Coarse root P pool
+### currently assuming sapwood P concentration
+coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=sapwood_p_concentration,
+                                              c_pool=coarse_root_c_pool,
+                                              c_frac=c_fraction)
+
+
+
+
+
+############################## P fluxes ###############################
 
 #### 3.4 Soil P mineralization flux
 #### It is assumed that the mineralization data is for top 10 cm only!
@@ -309,21 +402,6 @@ soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
 #### Soil P leaching rate
 soil_p_leaching <- make_soil_p_leaching_flux()
 
-#### 3.5 Microbial P pool 
-#### Top 10 cm
-microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
-                                          bk_density=soil_bulk_density)
-
-#### 3.6 Canopy P pool - only for green leaves
-canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
-                                    biom=canopy_c_pool)
-
-canopy_p_pool_new <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
-
-### forest floor leaf litter pool
-leaflitter_p_pool <- make_leaflitter_p_pool(p_conc=leaflitter_p_concentration,
-                                            c_pool=leaflitter_c_pool,
-                                            c_frac=c_fraction)
 
 #### 3.7 Canopy production flux
 canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
@@ -373,25 +451,6 @@ bark_litter_p_flux <- make_barklitter_p_flux(p_conc=wood_p_concentration,
 seed_litter_p_flux <- make_seedlitter_p_flux(p_conc=canopy_p_concentration, 
                                              litter_flux=seedlitter_c_production_flux)  
 
-#### 3.11 Wood P pool   
-sapwood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                   c_pool=wood_c_pool,
-                                   case_consideration = "sapwood")
-
-
-wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                c_pool=wood_c_pool,
-                                case_consideration = "total")
-
-heartwood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                     c_pool=wood_c_pool,
-                                     case_consideration = "heartwood")
-
-
-#### standing dead p pool
-standing_dead_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                         c_pool=standing_dead_c_pool,
-                                         case_consideration = "total")
 
 #### 3.12 wood p flux
 wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
@@ -402,26 +461,11 @@ wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
 #                                                  c_flux=standing_dead_c_flux)
 
 
-#### 3.14 Fine root P biomass pool
-fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
-                                        c_pool=fineroot_c_pool)
 
 #### 3.15 Fine root P production flux
 fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
                                                     c_flux=fineroot_c_production_flux)
 
-#### 3.16 Understorey P pool, assume both species contributed equally
-#### Also because p_conc and c_pool do not match in time,
-#### we are taking the average of p_conc and apply it to c_pool
-#### Here we can use Matthias's stereo camera estimate (2) or 
-#### Varsha's harvest data (1) to extrapolate for p pool
-#### It makes more sense to use harvest at this stage in time!
-#### Also, if use Varsha's harvest data, we can use either total or live part of biomass
-understorey_p_pool <- make_understorey_p_pool(p_conc=understorey_p_concentration,
-                                              p_lit_conc=understorey_litter_p_concentration,
-                                              c_pool=understorey_c_pool,
-                                              c_frac=c_fraction_ud,
-                                              live_or_total = "Total")
 
 #### 3.17 Understorey production flux
 #### Here we can use either stereo camera estimate of biomass (2) or
@@ -435,12 +479,6 @@ understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_p
                                               c_flux=understorey_litter_c_flux,
                                               c_frac=c_fraction_ud)
 
-### 3.18 Coarse root P pool
-### currently assuming sapwood P concentration
-coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
-                                              c_pool=coarse_root_c_pool,
-                                              c_frac=c_fraction)
-
 
 ### 3.19 Coarse root P flux
 coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
@@ -448,7 +486,12 @@ coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
                                               c_frac=c_fraction)
 
 
-### 3.20 delta P pools
+############################## P retranslocation fluxes ###############################
+
+
+
+############################## delta P Pools ###############################
+
 delta_soil_p_pool <- make_yearly_delta_pool_function(inDF=soil_p_pool, var.col=3)
 
 delta_canopy_p_pool <- make_yearly_delta_pool_function(inDF=canopy_p_pool, var.col=3)
