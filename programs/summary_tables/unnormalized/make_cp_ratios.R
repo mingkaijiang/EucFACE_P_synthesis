@@ -1,18 +1,25 @@
 make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
     ### Compute CP ratio for major pools
     
-    out <- data.frame(c(1:6), NA, NA, NA, NA, NA, NA, NA, NA)#, NA)
-    colnames(out) <- c("Ring", "canopy", "leaflitter", "wood",
-                       "sapwood", "heartwood",
-                       "fineroot", "understorey", #"understorey_litter", 
-                       "frass", "soil", "microbe")
+    out <- data.frame(c(1:6), NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
+    colnames(out) <- c("Ring", 
+                       "canopy", 
+                       "leaflitter", 
+                       "wood",
+                       "sapwood", 
+                       "heartwood",
+                       "fineroot", 
+                       "understorey", #"understorey_litter", 
+                       "frass", 
+                       "soil", 
+                       "microbe")
     
     
     ### Compute CP ratio for major pools
     out$canopy <- as.numeric(c_pool[c_pool$terms == "Canopy C Pool", 2:7]/p_pool[p_pool$terms == "Canopy P Pool",
                                                                                  2:7])
     
-    out$leaflitter <- as.numeric(c_pool[c_pool$terms == "Leaflitter C Pool", 2:7]/p_pool[p_pool$terms == "Canopy Litter P Pool",
+    out$leaflitter <- as.numeric(c_pool[c_pool$terms == "Leaflitter C Pool", 2:7]/p_pool[p_pool$terms == "Forestfloor Leaf Litter P Pool",
                                                                                          2:7])
     
     out$understorey <- as.numeric(c_pool[c_pool$terms == "Understorey C Pool", 2:7]/p_pool[p_pool$terms == "Understorey P Pool",
@@ -21,7 +28,13 @@ make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
     #out$understorey_litter <- as.numeric(c_flux[c_flux$terms == "Understorey Litter C flux", 2:7]/p_flux[p_flux$terms == "Understorey Litter P flux",
     #                                                                                       2:7])
     
-    out$wood <- as.numeric(c_pool[c_pool$terms == "Wood C Pool", 2:7]/p_pool[p_pool$terms == "Wood P Pool",
+    out$wood <- as.numeric(c_pool[c_pool$terms == "Wood C Pool", 2:7]/p_pool[p_pool$terms == "Total Wood P Pool",
+                                                                             2:7])
+    
+    out$sapwood <- as.numeric(c_pool[c_pool$terms == "Sapwood C Pool", 2:7]/p_pool[p_pool$terms == "Sapwood P Pool",
+                                                                             2:7])
+    
+    out$heartwood <- as.numeric(c_pool[c_pool$terms == "Heartwood C Pool", 2:7]/p_pool[p_pool$terms == "Heartwood P Pool",
                                                                              2:7])
     
     out$fineroot <- as.numeric(c_pool[c_pool$terms == "Fine Root C Pool", 2:7]/p_pool[p_pool$terms == "Fine Root P Pool",

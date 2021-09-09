@@ -421,6 +421,13 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool,
                                     p_flux=summary_table_flux)
 
 
+## to do: 
+##       1. move retranslocation calculation up earlier
+##       2. add retranslocation flux
+##       3. update summary tables with retranslocation flux included
+##       4. then move forward beyond this point. 
+
+
 #### 4.2 retranslocation coefficients
 ### canopy leaf n retranslocation coefficient
 leaf_p_retrans_coefficient <- make_canopy_leaf_p_retranslocation_coefficient(df1=canopy_p_concentration,
