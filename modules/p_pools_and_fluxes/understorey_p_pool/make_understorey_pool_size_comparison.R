@@ -18,7 +18,8 @@ make_understorey_pool_size_comparison <- function(inDF1, inDF2, plotting) {
     plotDF <- melt(myDF, id.var="Date")
     
     if (plotting == T) {
-        pdf("plots_tables/understorey_pool_size_comparison.pdf", width=8, height=4)
+        
+        pdf("plots_tables/understorey_pool/understorey_pool_size_comparison.pdf", width=8, height=4)
         
         p <- ggplot(plotDF, aes(Date,value)) + 
             geom_point() + 

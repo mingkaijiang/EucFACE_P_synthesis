@@ -49,6 +49,7 @@ vignettes/*.pdf
 /temp_files/*.csv
 *.csv
 *.nc
+*.pdf
 
 # html
 *.html

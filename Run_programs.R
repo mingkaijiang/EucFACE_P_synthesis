@@ -6,13 +6,20 @@
 ####
 #### Written by: Mingkai Jiang (m.jiang@westernsydney.edu.au)
 #### 
-#### Code structure:
+####                              CODE STRUCTURE                
+####
 #### 1. Compute phosphorus concentrations for major pools and fluxes
+####
 #### 2. Compute biomass pools, production fluxes and litter fluxes
+####
 #### 3. Generate P pools and fluxes
+####
 #### 4. Generate summary tables, based on unnormalized responses
+####
 #### 5. Generate un-normalized plots
+####
 #### 6. Generate normalized responses 
+####
 #### 7. Generate normalized plots
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
@@ -28,23 +35,34 @@ source("programs/prepare.R")
 
 
 
-##### ---------------------------------------------------------------------------------------------------------##### 
+########################################################################################## 
+########################################################################################## 
+#####
 ##### Step 1: Generate P concentrations
+#####
 
-#### 1.1: Soil P concentrations 
+############################## Soil ###############################
+
+#### Soil P concentrations 
 soil_p_concentration <- make_soil_p_concentration()
 
 
-#### 1.2: Soil phosphate conc, this returns % of P, not % of PO4!
+#### Soil phosphate conc, this returns % of P, not % of PO4!
 #### Only top 10 cm!
 soil_phosphate_concentration <- make_soil_phosphate_concentration()
 
-#### 1.3 Microbial P conc.
+
+#### Microbial P conc.
 #### Only top 10 cm!
 microbial_p_concentration <- make_microbial_p_concentration()
 
+#### Hedley fractionation dataset
+soil_hedley_p_concentration <- make_soil_hedley_p_concentration()
 
-#### 1.4 Canopy P conc.
+
+############################## Plant ###############################
+
+#### Canopy P conc.
 canopy_p_concentration <- make_canopy_p_concentration()
 
 #canopy_p_concentration <- make_canopy_p_concentration_new()
@@ -53,55 +71,147 @@ canopy_p_concentration <- make_canopy_p_concentration()
 
 
 
-#### 1.5 Leaf litter P conc. 
+#### Leaf litter P conc. 
 leaflitter_p_concentration <- make_leaflitter_p_concentration()
 #leaflitter_p_concentration <- make_leaflitter_p_concentration_new()
 
 
-#### 1.6 Wood P conc. 
-wood_p_concentration <- make_wood_p_concentration()
+#### Wood P conc. 
+sapwood_p_concentration <- make_wood_p_concentration()
 
 
-#### 1.7 Frass P conc.
+#### Frass P conc.
 ### frass flux needs to added to canopy P demand each year.
 frass_p_concentration <- make_frass_p_concentration()
 
 
-#### 1.8 Fineroot P conc.
+#### Fineroot P conc.
 ### top 30 cm of soil
 fineroot_p_concentration <- make_fineroot_p_concentration()
 
 
-#### 1.9 Understorey P conc.
+#### Understorey P conc.
 understorey_p_concentration <- make_understorey_p_concentration()
 
-#### 1.10 Understorey litter P conc.
+
+#### Understorey litter P conc.
 understorey_litter_p_concentration <- make_understorey_litter_p_concentration()
 
 
-#### 1.11 Hedley fractionation dataset
-soil_hedley_p_concentration <- make_soil_hedley_p_concentration()
+
+
+########################################################################################## 
+########################################################################################## 
+#####
+##### Step 2: Calculate retranslocation coefficients
+#####
+
+plant_p_retranslocation_coefficients <- calculate_plant_p_retranslocation_coefficients(canopy_p_concentration,
+                                                                                       leaflitter_p_concentration,
+                                                                                       understorey_p_concentration,
+                                                                                       understorey_litter_p_concentration,
+                                                                                       sapwood_p_concentration,
+                                                                                       fineroot_retranslocation_coefficient = retrans_froot,
+                                                                                       plot.option = T)
 
 
 
+########################################################################################## 
+########################################################################################## 
+#####
+##### Step 3: Preparing C related variables
+#####
+##### Note: 
+##### For all C pools, unit in g C m-2,
+##### For all C fluxes, output rate in unit of mg C m-2 d-1, 
+##### and the period over which this rate applies.
+##### Then assign the P concentration to C pools and fluxes. 
+##### Note: % P of total dry biomass should not be directly applied to C result, 
+##### as amount of C is not amount of dry weight !!!
 
-##### ---------------------------------------------------------------------------------------------------------##### 
-##### Step 2: preparing C related variables
-#### For all C pools, unit in g C m-2,
-#### For all C fluxes, output rate in unit of mg C m-2 d-1, and the period over which this rate applies
-#### Then assign the P concentration to C pools and fluxes. 
-#### Note: % P of total dry biomass should not be directly applied to C result, 
-#### as amount of C is not amount of dry weight !!!
 
+############################## Pools ###############################
 
-#### 2.1 Canopy related variables (SLA, LAI, Canopy biomass)
+#### Canopy related variables (SLA, LAI, Canopy biomass)
 lai_variable <- make_lai_variable()
 sla_variable <- make_sla_variable()
 
-canopy_c_pool <- make_canopy_c_pool(lai_variable, sla_variable, sla_option="variable")
+canopy_c_pool <- make_canopy_c_pool(lai_variable, 
+                                    sla_variable, 
+                                    sla_option="variable")
 
 
-#### 2.2 Litter production (leaf, twig, bark, seed)
+#### Wood C pool
+# year 2011-12 data on local directory
+# we have sapwood and heartwood in the dataframe
+# excluded dead trees (before 2018)
+wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
+                                c_frac=c_fraction)
+
+### wood c without excluding mortality
+#wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
+#                                            c_frac=c_fraction)
+
+
+
+### standing dead wood c pool
+### only 4 rings have mortality data
+### We know there are more trees died.
+### only report the max standing dead
+standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
+                                                  c_frac=c_fraction)
+
+
+#### Fineroot pool
+fineroot_c_pool <- make_fineroot_c_pool()
+
+
+#### Understorey aboveground biomass 
+### - 1: Varsha's clipping; 
+### - 2: Matthias's stereo camera
+### we have live and dead fraction based on clipping method
+understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
+                                                          strip_area)
+
+understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
+
+make_understorey_pool_size_comparison(understorey_c_pool,
+                                      understorey_c_pool_2,
+                                      plotting = T)
+
+
+
+#### Soil C content
+#### Ring-specific bulk density
+soil_bulk_density <- make_soil_bulk_density()
+
+#### return sum of all depths
+soil_c_pool <- make_soil_c_pool(soil_bulk_density)
+
+#### Microbial C pool
+#### this pool has data only at 0-10cm depth - Cat's data
+microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
+
+#### Yolima's data
+#microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
+
+#### Soil mycorrhizal pool
+#### But we don't have a P concentration for it and 
+#### therefore it's not included in the P budget
+mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
+
+#### Coarse root C pool 
+coarse_root_c_pool <- make_coarse_root_pool(c_fraction, fr_pool=fineroot_c_pool) 
+
+
+#### Leaf litter pool - forest floor leaf litter pool
+leaflitter_c_pool <- make_leaflitter_pool(c_fraction)
+
+
+
+############################## Fluxes ###############################
+
+#### Ltter production (leaf, twig, bark, seed)
 litter_c_production_flux <- make_litter_c_flux(c_fraction)
 
 leaflitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "leaf_flux", "Start_date", "End_date", "Days")]
@@ -118,23 +228,6 @@ canopy_c_production_flux <- leaflitter_c_production_flux
 dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux, sla_variable=sla_variable)
 canopy_c_production_flux_new <- make_canopy_c_production_flux_new(inDF=dLEAF_litter_flux)
 
-#### 2.4 Wood C pool
-# year 2011-12 data on local directory
-# we have sapwood and heartwood in it
-# excluded dead trees (before 2018)
-wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
-                                c_frac=c_fraction)
-
-### wood c without excluding mortality
-#wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
-#                                            c_frac=c_fraction)
-
-### standing dead wood c pool
-### only 4 rings have mortality data
-### We know there are more trees died.
-### only report the max standing dead
-standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
-                                                  c_frac=c_fraction)
 
 #### 2.5 Wood C production
 wood_c_production <- make_wood_production_flux(wood_c_pool)
@@ -142,31 +235,18 @@ wood_c_production <- make_wood_production_flux(wood_c_pool)
 ## standing dead wood c flux
 #standing_dead_c_flux <- make_standing_dead_c_flux(standing_dead_c_pool)
 
-#### 2.6 Fineroot pool
-fineroot_c_pool <- make_fineroot_c_pool()
 
-#### 2.7 Fineroot production
+#### Fineroot production
 fineroot_c_production_flux <- make_fineroot_c_production_flux()
 
-#### 2.8 Understorey aboveground biomass 
-### - 1: Varsha's clipping; 2: Matthias's stereo camera
-### we have live and dead fraction based on clipping method
-understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
-                                                          strip_area)
-
-understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
-
-#make_understorey_pool_size_comparison(understorey_c_pool,
-#                                      understorey_c_pool_2,
-#                                      plotting = T)
 
 
-#### 2.9 Understorey production flux - 1: Varsha's clipping; 2: Matthias's stereo camera
+#### Understorey production flux - 1: Varsha's clipping; 2: Matthias's stereo camera
 understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 
 understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
 
-#### 2.10 understorey litter flux
+#### understorey litter flux
 ### basically understorey dead 
 understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
 
@@ -177,34 +257,12 @@ understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
 source("programs/summary_variables/unnormalized/make_understorey_percent_live_estimate.R")
 understorey_live_percent <- make_understorey_percent_live_estimate()
 
-#### 2.11 Frass production
+#### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()
 
-#### 2.12 Soil C content
-## Ring-specific bulk density
-soil_bulk_density <- make_soil_bulk_density()
 
-# return sum of all depths
-soil_c_pool <- make_soil_c_pool(soil_bulk_density)
-
-#### 2.13 Microbial C pool
-# this pool has data only at 0-10cm depth - Cat's data
-microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
-
-### Yolima's data
-#microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
-
-#### 2.14 Soil mycorrhizal pool
-mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
-
-#### 2.15 Coarse root C pool 
-coarse_root_c_pool <- make_coarse_root_pool(c_fraction, fr_pool=fineroot_c_pool) 
-
-#### 2.16 Coarse root C production
+#### Coarse root C production
 coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool) 
-
-#### 2.17 Leaf litter pool - forest floor leaf litter pool
-leaflitter_c_pool <- make_leaflitter_pool(c_fraction)
 
 
 
@@ -427,25 +485,6 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool,
 ##       3. update summary tables with retranslocation flux included
 ##       4. then move forward beyond this point. 
 
-
-#### 4.2 retranslocation coefficients
-### canopy leaf n retranslocation coefficient
-leaf_p_retrans_coefficient <- make_canopy_leaf_p_retranslocation_coefficient(df1=canopy_p_concentration,
-                                                                             df2=leaflitter_p_concentration)
-
-### understorey leaf p retranslocation coefficient
-understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coefficient(df1=understorey_p_concentration,
-                                                                                    df2=understorey_litter_p_concentration)
-
-### fineroot retrans
-### assumed value
-fineroot_p_retrans_coefficient <- make_fineroot_p_retrans_coefficient(retrans=0.5)
-
-### wood retrans
-wood_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
-
-### coarseroot retrans
-coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
 
 
 

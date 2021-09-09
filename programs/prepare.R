@@ -1,5 +1,23 @@
 
-if(!dir.exists("download"))dir.create("download")
+if(!dir.exists("download")) {
+    dir.create("download")
+}
+
+if(!dir.exists("plots_tables")) {
+    dir.create("plots_tables")
+}
+
+if(!dir.exists("plots_tables/checks")) {
+    dir.create("plots_tables/checks")
+}
+
+if(!dir.exists("plots_tables/summary_tables")) {
+    dir.create("plots_tables/summary_tables")
+}
+
+if(!dir.exists("plots_tables/output")) {
+    dir.create("plots_tables/output")
+}
 
 if(!require(HIEv)){
   stop("Install the HIEv package first from bitbucket.org/remkoduursma/HIEv")
