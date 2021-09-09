@@ -41,6 +41,11 @@ make_canopy_p_concentration <- function() {
     df.green.p$month <- month(df.green.p$Date)
     df.green.p$year <- year(df.green.p$Date)
     
+    
+    ### check new and old leaf difference
+    #sumDF <- summaryBy(PercP+LMA~Ring+Age, FUN=c(mean, sd), 
+    #                   data=df, na.rm=T, keep.names=T)
+    
     return(df.green.p[,1:3])
 
 }

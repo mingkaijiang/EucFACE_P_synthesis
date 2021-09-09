@@ -63,10 +63,12 @@ wood_p_concentration <- make_wood_p_concentration()
 
 
 #### 1.7 Frass P conc.
+### frass flux needs to added to canopy P demand each year.
 frass_p_concentration <- make_frass_p_concentration()
 
 
 #### 1.8 Fineroot P conc.
+### top 30 cm of soil
 fineroot_p_concentration <- make_fineroot_p_concentration()
 
 
@@ -113,29 +115,31 @@ canopy_c_production_flux <- leaflitter_c_production_flux
 
 ## based on change in leaf area and litterfall
 ## calculate change in leaf pool as well as litterfall
-#dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux, sla_variable=sla_variable)
-#canopy_c_production_flux_new <- make_canopy_c_production_flux_new(inDF=dLEAF_litter_flux)
+dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux, sla_variable=sla_variable)
+canopy_c_production_flux_new <- make_canopy_c_production_flux_new(inDF=dLEAF_litter_flux)
 
 #### 2.4 Wood C pool
 # year 2011-12 data on local directory
+# we have sapwood and heartwood in it
+# excluded dead trees (before 2018)
 wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
                                 c_frac=c_fraction)
 
-# wood c without excluding mortality
-# mortality is not a big issue here as only one tree was marked dead!
-# missing data? Tree shrinking? Measurement error?
+### wood c without excluding mortality
 #wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
 #                                            c_frac=c_fraction)
 
-## standing dead wood c pool
+### standing dead wood c pool
+### only 4 rings have mortality data
+### We know there are more trees died.
 standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
-                                                       c_frac=c_fraction)
+                                                  c_frac=c_fraction)
 
 #### 2.5 Wood C production
 wood_c_production <- make_wood_production_flux(wood_c_pool)
 
 ## standing dead wood c flux
-standing_dead_c_flux <- make_standing_dead_c_flux(standing_dead_c_pool)
+#standing_dead_c_flux <- make_standing_dead_c_flux(standing_dead_c_pool)
 
 #### 2.6 Fineroot pool
 fineroot_c_pool <- make_fineroot_c_pool()
@@ -143,7 +147,9 @@ fineroot_c_pool <- make_fineroot_c_pool()
 #### 2.7 Fineroot production
 fineroot_c_production_flux <- make_fineroot_c_production_flux()
 
-#### 2.8 Understorey aboveground biomass - 1: Varsha's clipping; 2: Matthias's stereo camera
+#### 2.8 Understorey aboveground biomass 
+### - 1: Varsha's clipping; 2: Matthias's stereo camera
+### we have live and dead fraction based on clipping method
 understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
                                                           strip_area)
 
@@ -160,6 +166,7 @@ understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud
 understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
 
 #### 2.10 understorey litter flux
+### basically understorey dead 
 understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
 
 ### estimate biomass growth based on cover data
@@ -186,7 +193,7 @@ microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 ### Yolima's data
 #microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
 
-#### 2.14 Soil mycorrhizal production
+#### 2.14 Soil mycorrhizal pool
 mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
 
 #### 2.15 Coarse root C pool 
@@ -195,7 +202,7 @@ coarse_root_c_pool <- make_coarse_root_pool(c_fraction, fr_pool=fineroot_c_pool)
 #### 2.16 Coarse root C production
 coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool) 
 
-#### 2.17 Leaf litter pool
+#### 2.17 Leaf litter pool - forest floor leaf litter pool
 leaflitter_c_pool <- make_leaflitter_pool(c_fraction)
 
 
