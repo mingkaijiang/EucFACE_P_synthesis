@@ -9,9 +9,18 @@ make_c_flux_summary_table <- function() {
     conv <- 365 / 1000
     
     ### Define production variable names
-    terms <- c("Wood C flux", "Canopy C flux", "Fine Root C flux",
-               "Coarse Root C flux","Leaflitter C flux", "Fineroot Litter C flux",
-               "Frass C flux","Understorey C flux", "Understorey Litter C flux")
+    terms <- c("Wood C flux", 
+               "Canopy C flux", 
+               "Fine Root C flux",
+               "Coarse Root C flux",
+               "Leaflitter C flux", 
+               "Twig litter C flux", 
+               "Bark litter C flux", 
+               "Seed litter C flux", 
+               "Fineroot Litter C flux",
+               "Frass C flux",
+               "Understorey C flux", 
+               "Understorey Litter C flux")
     
     treatDF <- data.frame(terms)
     treatDF$R1 <- rep(NA, length(treatDF$terms))
@@ -111,6 +120,38 @@ make_c_flux_summary_table <- function() {
     treatDF$year_end[treatDF$terms == "Leaflitter C flux"] <- max(year(leaflitter_c_production_flux$Date))    
     treatDF$timepoint[treatDF$terms == "Leaflitter C flux"] <- length(unique(leaflitter_c_production_flux$Date))  
     treatDF$notes[treatDF$terms == "Leaflitter C flux"] <- "Only leaves, exclude twig, barks and seeds"
+    
+    ### Twig litter flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Twig litter C flux", i+1] <- with(twiglitter_c_production_flux[twiglitter_c_production_flux$Ring ==i,],
+                                                                 sum(twig_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Twig litter C flux"] <- min(year(twiglitter_c_production_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Twig litter C flux"] <- max(year(twiglitter_c_production_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Twig litter C flux"] <- length(unique(twiglitter_c_production_flux$Date))  
+    treatDF$notes[treatDF$terms == "Twig litter C flux"] <- ""
+    
+    ### Bark litter flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Bark litter C flux", i+1] <- with(barklitter_c_production_flux[barklitter_c_production_flux$Ring ==i,],
+                                                                  sum(bark_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Bark litter C flux"] <- min(year(barklitter_c_production_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Bark litter C flux"] <- max(year(barklitter_c_production_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Bark litter C flux"] <- length(unique(barklitter_c_production_flux$Date))  
+    treatDF$notes[treatDF$terms == "Bark litter C flux"] <- ""
+    
+    
+    ### Seed litter flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Seed litter C flux", i+1] <- with(seedlitter_c_production_flux[seedlitter_c_production_flux$Ring ==i,],
+                                                                  sum(seed_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Seed litter C flux"] <- min(year(seedlitter_c_production_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Seed litter C flux"] <- max(year(seedlitter_c_production_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Seed litter C flux"] <- length(unique(seedlitter_c_production_flux$Date))  
+    treatDF$notes[treatDF$terms == "Seed litter C flux"] <- ""
+    
     
     ### Fine Root litter flux
     # assume it's the same as fine root production flux

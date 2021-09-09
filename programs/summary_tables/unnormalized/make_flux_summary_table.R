@@ -9,10 +9,19 @@ make_flux_summary_table <- function() {
     conv <- 365 / 1000
     
     ### Define production variable names
-    terms <- c("Wood P flux", "Canopy P flux", "Fine Root P flux",
-               "Coarse Root P flux","Leaflitter P flux", "Fineroot Litter P flux",
-               "Twig litter P flux", "Bark litter P flux","Seed litter P flux", "Frass P flux",
-               "Understorey P flux", "Understorey Litter P flux", "Mineralization P flux",
+    terms <- c("Wood P flux",                # include retranslocated and new uptake flux
+               "Canopy P flux",              # include retranslocated and new uptake flux
+               "Fine Root P flux",           # include retranslocated and new uptake flux
+               "Coarse Root P flux",         # include retranslocated and new uptake flux
+               "Leaflitter P flux",          # Proxy for new uptake
+               "Fineroot Litter P flux",     # Proxy for new uptake
+               "Twig litter P flux",         # to be included in the new uptake
+               "Bark litter P flux",         # to be included in the new uptake
+               "Seed litter P flux",         # to be included in the new uptake
+               "Frass P flux",               # to be included in the new uptake
+               "Understorey P flux",         # include retranslocated and new uptake flux
+               "Understorey Litter P flux",  # Proxy for new uptake 
+               "Mineralization P flux",
                "Leaching P flux")
     
     treatDF <- data.frame(terms)

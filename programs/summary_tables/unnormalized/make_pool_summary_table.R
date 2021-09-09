@@ -8,6 +8,7 @@ make_pool_summary_table <- function() {
     ### Define pool variable names
     terms <- c("Total Wood P Pool", 
                "Sapwood P Pool",
+               "Heartwood P Pool",
                "Canopy P Pool", 
                "Forestfloor Leaf Litter P Pool",
                "Fine Root P Pool",
@@ -74,6 +75,14 @@ make_pool_summary_table <- function() {
     treatDF$year_end[treatDF$terms == "Sapwood P Pool"] <- max(year(wood_p_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Sapwood P Pool"] <- length(unique(wood_p_pool$Date)) 
     treatDF$notes[treatDF$terms == "Sapwood P Pool"] <- "Based on single time point concentration measurement"
+    
+    ### Heartwood P 
+    out <- summaryBy(wood_p_pool~Ring,data=heartwood_p_pool,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Heartwood P Pool", 2:7] <- out$wood_p_pool
+    treatDF$year_start[treatDF$terms == "Heartwood P Pool"] <- min(year(wood_p_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Heartwood P Pool"] <- max(year(wood_p_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Heartwood P Pool"] <- length(unique(wood_p_pool$Date)) 
+    treatDF$notes[treatDF$terms == "Heartwood P Pool"] <- "Based on single time point concentration measurement"
     
     ### Standing dead
     out <- summaryBy(wood_p_pool~Ring,data=standing_dead_p_pool,FUN=mean,keep.names=T,na.rm=T)
