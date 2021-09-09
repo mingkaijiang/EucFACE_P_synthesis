@@ -360,7 +360,7 @@ understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_p
                                               c_frac=c_fraction_ud)
 
 ### 3.18 Coarse root P pool
-### currently assuming sapwood P concentration, should replace it with heartwood?
+### currently assuming sapwood P concentration
 coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=wood_p_concentration,
                                               c_pool=coarse_root_c_pool,
                                               c_frac=c_fraction)
