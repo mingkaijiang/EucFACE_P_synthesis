@@ -269,14 +269,17 @@ fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_co
                                                             p_retrans=0.5)
 
 #### 3.10 Other litterfall
-twig_litter_p_flux <- make_twiglitter_p_flux(p_conc=wood_p_concentration, litter_flux=twiglitter_c_production_flux)  
-bark_litter_p_flux <- make_barklitter_p_flux(p_conc=wood_p_concentration, litter_flux=barklitter_c_production_flux)  
-seed_litter_p_flux <- make_seedlitter_p_flux(p_conc=wood_p_concentration, litter_flux=seedlitter_c_production_flux)  
+twig_litter_p_flux <- make_twiglitter_p_flux(p_conc=wood_p_concentration, 
+                                             litter_flux=twiglitter_c_production_flux)  
+bark_litter_p_flux <- make_barklitter_p_flux(p_conc=wood_p_concentration, 
+                                             litter_flux=barklitter_c_production_flux)  
+seed_litter_p_flux <- make_seedlitter_p_flux(p_conc=wood_p_concentration, 
+                                             litter_flux=seedlitter_c_production_flux)  
 
 #### 3.11 Wood P pool   
 sapwood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
-                                c_pool=wood_c_pool,
-                                case_consideration = "sapwood")
+                                   c_pool=wood_c_pool,
+                                   case_consideration = "sapwood")
 
 
 wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
@@ -295,7 +298,7 @@ wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
 
 #### Standing dead P flux
 standing_dead_p_flux <- make_standing_dead_p_flux(p_conc=wood_p_concentration,
-                                               c_flux=standing_dead_c_flux)
+                                                  c_flux=standing_dead_c_flux)
 
 #### 3.13 Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass
@@ -615,7 +618,8 @@ make_soil_p_budget_summary_plots(inDF=summary_table_pool_norm,
 
 
 
-
+### compare microbial CNP vs global dataset (Xu et al., 2013)
+microbial_concentration_global_comparison(microbial_p_concentration)
 
 
 

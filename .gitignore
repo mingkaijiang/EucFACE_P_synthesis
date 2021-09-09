@@ -47,6 +47,8 @@ vignettes/*.pdf
 /plots_tables/*.pdf
 /plots_tables/*.csv
 /temp_files/*.csv
+*.csv
+*.nc
 
 # html
 *.html
