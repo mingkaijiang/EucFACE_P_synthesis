@@ -148,16 +148,11 @@ canopy_c_pool <- make_canopy_c_pool(lai_variable,
 wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
                                 c_frac=c_fraction)
 
-### wood c without excluding mortality
-#wood_c_pool_total <- make_wood_c_pool_total(ring_area=FACE_ring_area,
-#                                            c_frac=c_fraction)
-
-
 
 ### standing dead wood c pool
-### only 4 rings have mortality data
+### only 4 rings have mortality data - dataset incomplete
 ### We know there are more trees died.
-### only report the max standing dead
+### only report the max standing dead (i.e. 2018 value)
 standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
                                                   c_frac=c_fraction)
 
@@ -167,17 +162,22 @@ fineroot_c_pool <- make_fineroot_c_pool()
 
 
 #### Understorey aboveground biomass 
-### - 1: Varsha's clipping; 
+### - 1: Varsha's clipping
 ### - 2: Matthias's stereo camera
 ### we have live and dead fraction based on clipping method
-understorey_c_pool <- make_understorey_aboveground_c_pool(c_fraction_ud,
-                                                          strip_area)
+### We decide to use clipping method to estimate the relative proportion of live and dead 
+### then we use stereo camera approach to estimate the total biomass
 
-understorey_c_pool_2 <- make_understorey_aboveground_c_pool_2(c_fraction_ud)
+### estimate % live and % dead
+understorey_c_pool_clipping <- make_understorey_aboveground_c_pool_clipping(c_fraction_ud,
+                                                                            strip_area)
 
-make_understorey_pool_size_comparison(understorey_c_pool,
-                                      understorey_c_pool_2,
-                                      plotting = T)
+understorey_c_pool <- make_understorey_aboveground_c_pool_camera(c_frac=c_fraction_ud,
+                                                                 plot.option=T)
+
+make_understorey_pool_size_comparison(inDF1=understorey_c_pool_clipping,
+                                      inDF2=understorey_c_pool,
+                                      plot.option = T)
 
 
 
@@ -241,7 +241,9 @@ fineroot_c_production_flux <- make_fineroot_c_production_flux()
 
 
 
-#### Understorey production flux - 1: Varsha's clipping; 2: Matthias's stereo camera
+#### Understorey production flux 
+#### - 1: Varsha's clipping
+#### - 2: Matthias's stereo camera
 understorey_c_flux <- make_understorey_aboveground_production_flux(c_fraction_ud)
 
 understorey_c_flux_2 <- make_understorey_aboveground_production_flux_2(c_fraction_ud)
@@ -253,9 +255,6 @@ understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
 ### estimate biomass growth based on cover data
 #make_understorey_aboveground_growth_estimate(plotting = T)
 
-### estimate % live and % dead
-source("programs/summary_variables/unnormalized/make_understorey_percent_live_estimate.R")
-understorey_live_percent <- make_understorey_percent_live_estimate()
 
 #### Frass production
 frass_c_production_flux <- make_frass_c_production_flux()

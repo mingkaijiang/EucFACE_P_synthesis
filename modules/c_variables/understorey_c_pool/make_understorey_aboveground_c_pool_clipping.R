@@ -1,5 +1,5 @@
-make_understorey_aboveground_c_pool <- function(c_frac,
-                                                strip_area) {
+make_understorey_aboveground_c_pool_clipping <- function(c_frac,
+                                                         strip_area) {
     
     
     ### download data
