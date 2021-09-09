@@ -119,8 +119,12 @@ make_standing_dead_c_pool <- function(ring_area, c_frac) {
     out.dat$sap_pool <- out.dat$sap_pool * c_frac * 1000
     out.dat$heart_pool <- out.dat$heart_pool * c_frac * 1000    
     
+    ## last date
+    last.date <- max(out.dat$Date)
+    
     ### format dataframe to return
-    wood_pool <- out.dat[,c("Date", "Ring", "wood_pool", "sap_pool", "heart_pool")]
+    wood_pool <- out.dat[out.dat$Date==last.date,
+                         c("Date", "Ring", "wood_pool", "sap_pool", "heart_pool")]
     
     return(wood_pool)
 }

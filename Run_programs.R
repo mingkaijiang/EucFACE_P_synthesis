@@ -132,6 +132,7 @@ wood_c_pool <- make_wood_c_pool(ring_area=FACE_ring_area,
 ### standing dead wood c pool
 ### only 4 rings have mortality data
 ### We know there are more trees died.
+### only report the max standing dead
 standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
                                                   c_frac=c_fraction)
 
@@ -241,7 +242,7 @@ microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
 canopy_p_pool <- make_canopy_p_pool(p_conc=canopy_p_concentration,
                                     biom=canopy_c_pool)
 
-#canopy_p_pool <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
+canopy_p_pool_new <- make_canopy_p_pool_smoothed(biom=dLEAF_litter_flux)
 
 ### forest floor leaf litter pool
 leaflitter_p_pool <- make_leaflitter_p_pool(p_conc=leaflitter_p_concentration,
@@ -254,8 +255,8 @@ canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
                                           c_frac=c_fraction)
 
 ## considered both change in LAI and litterfall
-#canopy_p_flux <- make_canopy_p_production_new(c_flux=canopy_c_production_flux_new,
-#                                                  c_frac=c_fraction)
+canopy_p_flux_new <- make_canopy_p_production_new(c_flux=canopy_c_production_flux_new,
+                                                  c_frac=c_fraction)
 
 #### 3.13 Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass
@@ -305,6 +306,10 @@ sapwood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
 wood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
                                 c_pool=wood_c_pool,
                                 case_consideration = "total")
+
+heartwood_p_pool <- make_wood_p_pool(p_conc=wood_p_concentration,
+                                     c_pool=wood_c_pool,
+                                     case_consideration = "heartwood")
 
 
 #### standing dead p pool

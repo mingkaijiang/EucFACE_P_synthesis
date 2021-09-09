@@ -3,6 +3,7 @@ make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
     
     out <- data.frame(c(1:6), NA, NA, NA, NA, NA, NA, NA, NA)#, NA)
     colnames(out) <- c("Ring", "canopy", "leaflitter", "wood",
+                       "sapwood", "heartwood",
                        "fineroot", "understorey", #"understorey_litter", 
                        "frass", "soil", "microbe")
     

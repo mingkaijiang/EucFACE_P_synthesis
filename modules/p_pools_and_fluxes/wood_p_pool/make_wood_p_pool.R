@@ -12,6 +12,8 @@ make_wood_p_pool <- function(p_conc, c_pool, case_consideration) {
         #out$wood_p_pool <- (out$wood_pool / c_fraction * out$PercP / 100) 
     } else if (case_consideration == "sapwood") {
         out$wood_p_pool <- out$sap_pool / c_fraction * out$PercP / 100
+    } else if (case_consideration == "heartwood") {
+        out$wood_p_pool <- (out$heart_pool / c_fraction * 0.004 / 100)
     }
 
     outDF <- out[complete.cases(out),]
