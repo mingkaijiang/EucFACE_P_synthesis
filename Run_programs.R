@@ -613,9 +613,14 @@ plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flu
 total_p_budget <- make_total_p_budget()
 
 
+#### to do as of 10-09-2021
+### 1. update the p budget
+### 2. move forward beyond this point for plotting
+### 3. check ways to increase plant P uptake? quite impossible
+
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
-##### Step 5. Plotting P budget figures, based on unnormalized data
+##### Step 6. Plotting P budget figures, based on unnormalized data
 #### Note that you need to go into each function to plot!
 norm <- "unnormalized"
 
