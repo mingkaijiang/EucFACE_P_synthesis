@@ -87,7 +87,7 @@ microbial_concentration_global_comparison <- function(microbial_p_concentration)
         xlab("")+
         ylab("Microbial P concentration (%)")
     
-    pdf("plots_tables/microbial_P_global_comparison.pdf", width=8, height=5)
+    pdf("plots_tables/output/microbial_P_global_comparison.pdf", width=8, height=5)
     plot(p1)
     dev.off()
     

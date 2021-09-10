@@ -271,8 +271,8 @@ make_p_budget_ring_plots <- function(inDF) {
         xlab("") + ylab("Uptake over requirement (%)")+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_blank(), 
-              axis.text.x = element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
               axis.text.y=element_text(size=10),
               axis.title.y=element_text(size=10),
               legend.text=element_text(size=10),
@@ -351,7 +351,7 @@ make_p_budget_ring_plots <- function(inDF) {
     require(cowplot)
     
     ## plot 
-    pdf(paste0("plots_tables/P_Budget_Ring_Plots_", norm, ".pdf"),
+    pdf(paste0("plots_tables/output/P_Budget_Ring_Plots_", norm, ".pdf"),
         width=8,height=12)
     plot_grid(p2, p1, p3, p4, p8, p5, p9, p6, labels="", ncol=2, align="v", axis = "l")
     grid.text(grid.labs, x = c(0.12, 0.62, 0.12, 0.62, 0.12, 0.62, 0.12, 0.62),

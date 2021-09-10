@@ -36,14 +36,14 @@ make_p_concentration_summary_plots <- function(inDF) {
     ### Plot 3
     plotDF3 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Fine Root P Conc"], 
                             inDF$eCO2[inDF$conc.terms=="Fine Root P Conc"],
-                            inDF$aCO2[inDF$conc.terms=="Wood P Conc"], 
-                            inDF$eCO2[inDF$conc.terms=="Wood P Conc"]), 
+                            inDF$aCO2[inDF$conc.terms=="Sapwood P Conc"], 
+                            inDF$eCO2[inDF$conc.terms=="Sapwood P Conc"]), 
                           NA, NA)
     colnames(plotDF3) <- c("mean", "sd", "Variable")
     plotDF3$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Fine Root P Conc"], 
                     inDF$eCO2_sd[inDF$conc.terms=="Fine Root P Conc"],
-                    inDF$aCO2_sd[inDF$conc.terms=="Wood P Conc"], 
-                    inDF$eCO2_sd[inDF$conc.terms=="Wood P Conc"])
+                    inDF$aCO2_sd[inDF$conc.terms=="Sapwood P Conc"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Sapwood P Conc"])
     plotDF3$Variable <- rep(c("Fine Root", "Sapwood"), each=2)
     plotDF3$Trt <- rep(c("aCO2", "eCO2"), 2)
     plotDF3$pos <- with(plotDF3, mean + sd)
@@ -225,7 +225,7 @@ make_p_concentration_summary_plots <- function(inDF) {
     require(cowplot)
     
     ## plot 
-    pdf(paste0("plots_tables/P_Concentration_Summary_Plots_", norm, ".pdf"),
+    pdf(paste0("plots_tables/output/P_Concentration_Summary_Plots_", norm, ".pdf"),
         width=8,height=8)
     plot_grid(p1, p4, p2, p5, p3, p6, labels="", ncol=2, align="v", axis = "l",
               rel_heights = c(1, 1, 1.2))

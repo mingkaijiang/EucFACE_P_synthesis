@@ -610,18 +610,18 @@ plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flu
 
 
 #### P budget summary
-total_p_budget <- make_total_p_budget()
+total_p_budget <- make_total_p_budget(summary_table_flux,
+                                      summary_table_pool,
+                                      vegetation_standing_p_stock,
+                                      plant_p_MRT,
+                                      plant_p_use_efficiency)
 
 
-#### to do as of 10-09-2021
-### 1. update the p budget
-### 2. move forward beyond this point for plotting
-### 3. check ways to increase plant P uptake? quite impossible
-
-
-##### ---------------------------------------------------------------------------------------------------------##### 
+########################################################################################## 
+########################################################################################## 
+#####
 ##### Step 6. Plotting P budget figures, based on unnormalized data
-#### Note that you need to go into each function to plot!
+#####
 norm <- "unnormalized"
 
 ##### Note: for the following plotting script, you will need to go into the function
@@ -659,13 +659,19 @@ source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
 make_soil_p_budget_summary_plots(inDF=summary_table_pool,
                                  norm=norm)
 
+### compare microbial CNP vs global dataset (Xu et al., 2013)
+microbial_concentration_global_comparison(microbial_p_concentration)
 
 
 
-###### ---------------------------------------------------------------------------------------------------------##### 
-###### Step 6: Normalize all responses to a pretreatment soil conditions
+
+
+########################################################################################## 
+########################################################################################## 
+#####
+###### Step 7: Normalize all responses to a pretreatment soil conditions
 #
-#### 6.1 Summary Tables
+#### Summary Tables
 source("programs/summary_tables/normalized/make_normalized_concentration_summary_table.R")
 summary_table_concentration_norm <- make_normalized_concentration_summary_table(inDF=summary_table_concentration)
 
@@ -741,7 +747,7 @@ total_p_budget_norm <- make_normalized_total_p_budget()
 
 
 ###### ---------------------------------------------------------------------------------------------------------##### 
-###### Step 7. Plotting P budget figures, based on normalized responses
+###### Step 8. Plotting P budget figures, based on normalized responses
 norm <- "normalized"
 
 
@@ -780,10 +786,6 @@ source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
 make_soil_p_budget_summary_plots(inDF=summary_table_pool_norm,
                                  norm=norm)
 
-
-
-### compare microbial CNP vs global dataset (Xu et al., 2013)
-microbial_concentration_global_comparison(microbial_p_concentration)
 
 
 

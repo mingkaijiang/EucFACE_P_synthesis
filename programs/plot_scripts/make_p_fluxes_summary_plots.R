@@ -68,13 +68,22 @@ make_p_fluxes_summary_plots <- function(inDF) {
     
     ### Plot 3
     plotDF3 <- data.frame(c(inDF$aCO2[inDF$terms=="Mineralization P flux"], 
-                            inDF$eCO2[inDF$terms=="Mineralization P flux"]), 
+                            inDF$eCO2[inDF$terms=="Mineralization P flux"],
+                            inDF$aCO2[inDF$terms=="Total vegetation retranslocation P flux"], 
+                            inDF$eCO2[inDF$terms=="Total vegetation retranslocation P flux"],
+                            inDF$aCO2[inDF$terms=="Total vegetation uptake P flux"], 
+                            inDF$eCO2[inDF$terms=="Total vegetation uptake P flux"]), 
                           NA, NA)
     colnames(plotDF3) <- c("mean", "sd", "Variable")
     plotDF3$sd <- c(inDF$aCO2_sd[inDF$terms=="Mineralization P flux"], 
-                    inDF$eCO2_sd[inDF$terms=="Mineralization P flux"])
-    plotDF3$Variable <- rep(c("P mineralization rate"), each=2)
-    plotDF3$Trt <- rep(c("aCO2", "eCO2"), 1)
+                    inDF$eCO2_sd[inDF$terms=="Mineralization P flux"],
+                    inDF$aCO2_sd[inDF$terms=="Total vegetation retranslocation P flux"], 
+                    inDF$eCO2_sd[inDF$terms=="Total vegetation retranslocation P flux"],
+                    inDF$aCO2_sd[inDF$terms=="Total vegetation uptake P flux"], 
+                    inDF$eCO2_sd[inDF$terms=="Total vegetation uptake P flux"])
+    plotDF3$Variable <- rep(c("P mineralization rate", "P retranslocation flux",
+                              "P uptake flux"), each=2)
+    plotDF3$Trt <- rep(c("aCO2", "eCO2"), 3)
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
     
@@ -152,8 +161,8 @@ make_p_fluxes_summary_plots <- function(inDF) {
     require(gridExtra)
     
     ## plot 
-    pdf(paste0("plots_tables/P_Fluxes_Summary_Plots_", norm, ".pdf"),
-        width=8,height=8)
+    pdf(paste0("plots_tables/output/P_Fluxes_Summary_Plots_", norm, ".pdf"),
+        width=12,height=8)
     bot_row <- plot_grid(p2, p3, ncol=2)
     plot_grid(p1, bot_row,  ncol = 1, rel_widths = c(1, 1, 0.2),
               rel_heights=c(1.2, 1, 1))

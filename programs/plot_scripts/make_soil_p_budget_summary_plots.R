@@ -55,7 +55,7 @@ make_soil_p_budget_summary_plots <- function(inDF) {
 
 
     ## plot 
-    pdf(paste0("plots_tables/Soil_P_Budget_Plots_", norm, ".pdf"), 
+    pdf(paste0("plots_tables/output/Soil_P_Budget_Plots_", norm, ".pdf"), 
         width=8,height=8)
     plot(p1)
     dev.off()

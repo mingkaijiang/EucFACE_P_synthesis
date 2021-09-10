@@ -18,7 +18,9 @@ make_p_budget_summary_plots <- function(inDF, norm) {
                             inDF$aCO2[inDF$terms=="Understorey aboveground P stock"], 
                             inDF$eCO2[inDF$terms=="Understorey aboveground P stock"],
                             inDF$aCO2[inDF$terms=="Belowground P stock"], 
-                            inDF$eCO2[inDF$terms=="Belowground P stock"]), 
+                            inDF$eCO2[inDF$terms=="Belowground P stock"],
+                            inDF$aCO2[inDF$terms=="Dead P stock"], 
+                            inDF$eCO2[inDF$terms=="Dead P stock"]), 
                           NA)
     colnames(plotDF2) <- c("mean", "sd")
     plotDF2$sd <- c(inDF$aCO2_sd[inDF$terms=="Overstorey aboveground P stock"], 
@@ -26,9 +28,11 @@ make_p_budget_summary_plots <- function(inDF, norm) {
                     inDF$aCO2_sd[inDF$terms=="Understorey aboveground P stock"], 
                     inDF$eCO2_sd[inDF$terms=="Understorey aboveground P stock"],
                     inDF$aCO2_sd[inDF$terms=="Belowground P stock"], 
-                    inDF$eCO2_sd[inDF$terms=="Belowground P stock"])
-    plotDF2$Trt <- rep(c("aCO2", "eCO2"), 3)
-    plotDF2$Variable <- rep(c("OA", "UA", "B"), each=2)
+                    inDF$eCO2_sd[inDF$terms=="Belowground P stock"],
+                    inDF$aCO2_sd[inDF$terms=="Dead P stock"], 
+                    inDF$eCO2_sd[inDF$terms=="Dead P stock"])
+    plotDF2$Trt <- rep(c("aCO2", "eCO2"), 4)
+    plotDF2$Variable <- rep(c("OA", "UA", "B", "D"), each=2)
     plotDF2$pos <- with(plotDF2, mean + sd)
     plotDF2$neg <- with(plotDF2, mean - sd)
     aC <- sum(plotDF2$mean[plotDF2$Trt=="aCO2"])
@@ -144,8 +148,11 @@ make_p_budget_summary_plots <- function(inDF, norm) {
             axis.ticks = element_blank(),
             plot.title=element_text(size=14, face="bold"),
             legend.position="bottom")+
-        scale_fill_manual(name="Component", values = c("UA" = "green", "OA" = "darkgreen", "B" = "orange"),
-                          labels=c("B","OA", "UA"))
+        scale_fill_manual(name="Component", values = c("UA" = "green", 
+                                                       "OA" = "darkgreen", 
+                                                       "B" = "orange",
+                                                       "D" = "brown"),
+                          labels=c("B", "D", "OA", "UA"))
     
     p3 <- ggplot(plotDF3,
                  aes(Trt, mean)) + 
@@ -154,7 +161,7 @@ make_p_budget_summary_plots <- function(inDF, norm) {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         xlab("") + ylab(expression(paste("P requirement (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(0, 1.5)+
+        ylim(0, 1.0)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -179,7 +186,7 @@ make_p_budget_summary_plots <- function(inDF, norm) {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         xlab("") + ylab(expression(paste("P retranslocation (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(0, 1.5)+
+        ylim(0, 1.0)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -204,7 +211,7 @@ make_p_budget_summary_plots <- function(inDF, norm) {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         xlab("") + ylab(expression(paste("P uptake (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(0, 1.5)+
+        ylim(0, 1.0)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -230,7 +237,7 @@ make_p_budget_summary_plots <- function(inDF, norm) {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         xlab("") + ylab(expression(paste("Soil P mineralization (g P ", m^-2, " ", yr^-1, ")")))+
         theme_linedraw() +
-        ylim(0, 1.5)+
+        ylim(0, 1.0)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -308,9 +315,11 @@ make_p_budget_summary_plots <- function(inDF, norm) {
     require(cowplot)
     
     ## plot 
-    pdf(paste0("plots_tables/P_Budget_Summary_Plots_", norm, ".pdf"), 
+    pdf(paste0("plots_tables/output/P_Budget_Summary_Plots_", norm, ".pdf"), 
         width=10,height=14)
-    plot_grid(p3, p4, p5, p6, p1, p2, p7, p8, labels="", ncol=2, align="v", axis = "l",
+    plot_grid(p3, p4, p5, p6, 
+              p1, p2, p7, p8, 
+              labels="", ncol=2, align="v", axis = "l",
               rel_heights = c(1, 1, 1.2, 1))
     grid.text(grid.labs, x = c(0.1, 0.6, 0.1, 0.6, 0.1, 0.6, 0.1, 0.6),
               y = c(0.97, 0.97, 0.73, 0.73, 0.5, 0.5, 0.21, 0.21), 

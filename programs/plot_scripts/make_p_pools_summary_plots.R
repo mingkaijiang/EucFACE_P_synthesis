@@ -1,8 +1,12 @@
 make_p_pools_summary_plots <- function(inDF) {
     
     ### Plot 1
-    plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="Wood P Pool"], 
-                            inDF$eCO2[inDF$terms=="Wood P Pool"],
+    plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="Total Wood P Pool"], 
+                            inDF$eCO2[inDF$terms=="Total Wood P Pool"],
+                            inDF$aCO2[inDF$terms=="Sapwood P Pool"], 
+                            inDF$eCO2[inDF$terms=="Sapwood P Pool"],
+                            inDF$aCO2[inDF$terms=="Heartwood P Pool"], 
+                            inDF$eCO2[inDF$terms=="Heartwood P Pool"],
                             inDF$aCO2[inDF$terms=="Canopy P Pool"], 
                             inDF$eCO2[inDF$terms=="Canopy P Pool"],
                             inDF$aCO2[inDF$terms=="Fine Root P Pool"], 
@@ -10,11 +14,21 @@ make_p_pools_summary_plots <- function(inDF) {
                             inDF$aCO2[inDF$terms=="Coarse Root P Pool"], 
                             inDF$eCO2[inDF$terms=="Coarse Root P Pool"],
                             inDF$aCO2[inDF$terms=="Understorey P Pool"], 
-                            inDF$eCO2[inDF$terms=="Understorey P Pool"]), 
+                            inDF$eCO2[inDF$terms=="Understorey P Pool"],
+                            inDF$aCO2[inDF$terms=="Forestfloor Leaf Litter P Pool"], 
+                            inDF$eCO2[inDF$terms=="Forestfloor Leaf Litter P Pool"],
+                            inDF$aCO2[inDF$terms=="Understorey Litter P Pool"], 
+                            inDF$eCO2[inDF$terms=="Understorey Litter P Pool"],
+                            inDF$aCO2[inDF$terms=="Standing Dead Wood P Pool"], 
+                            inDF$eCO2[inDF$terms=="Standing Dead Wood P Pool"]), 
                           NA, NA)
     colnames(plotDF1) <- c("mean", "sd", "Variable")
-    plotDF1$sd <- c(inDF$aCO2_sd[inDF$terms=="Wood P Pool"], 
-                    inDF$eCO2_sd[inDF$terms=="Wood P Pool"],
+    plotDF1$sd <- c(inDF$aCO2_sd[inDF$terms=="Total Wood P Pool"], 
+                    inDF$eCO2_sd[inDF$terms=="Total Wood P Pool"],
+                    inDF$aCO2_sd[inDF$terms=="Sapwood P Pool"], 
+                    inDF$eCO2_sd[inDF$terms=="Sapwood P Pool"],
+                    inDF$aCO2_sd[inDF$terms=="Heartwood P Pool"], 
+                    inDF$eCO2_sd[inDF$terms=="Heartwood P Pool"],
                     inDF$aCO2_sd[inDF$terms=="Canopy P Pool"], 
                     inDF$eCO2_sd[inDF$terms=="Canopy P Pool"],
                     inDF$aCO2_sd[inDF$terms=="Fine Root P Pool"], 
@@ -22,9 +36,19 @@ make_p_pools_summary_plots <- function(inDF) {
                     inDF$aCO2_sd[inDF$terms=="Coarse Root P Pool"], 
                     inDF$eCO2_sd[inDF$terms=="Coarse Root P Pool"],
                     inDF$aCO2_sd[inDF$terms=="Understorey P Pool"], 
-                    inDF$eCO2_sd[inDF$terms=="Understorey P Pool"])
-    plotDF1$Variable <- rep(c("Wood", "Canopy", "Fine Root", "Coarse Root", "Understorey"), each=2)
-    plotDF1$Trt <- rep(c("aCO2", "eCO2"), 5)
+                    inDF$eCO2_sd[inDF$terms=="Understorey P Pool"],
+                    inDF$aCO2_sd[inDF$terms=="Forestfloor Leaf Litter P Pool"], 
+                    inDF$eCO2_sd[inDF$terms=="Forestfloor Leaf Litter P Pool"],
+                    inDF$aCO2_sd[inDF$terms=="Understorey Litter P Pool"], 
+                    inDF$eCO2_sd[inDF$terms=="Understorey Litter P Pool"],
+                    inDF$aCO2_sd[inDF$terms=="Standing Dead Wood P Pool"], 
+                    inDF$eCO2_sd[inDF$terms=="Standing Dead Wood P Pool"])
+    plotDF1$Variable <- rep(c("Wood", "Sapwood", "Heartwood", 
+                              "Canopy", "Fine Root", 
+                              "Coarse Root", "Understorey",
+                              "Forestfloor Litter", "Understorey Litter",
+                              "Standing Dead"), each=2)
+    plotDF1$Trt <- rep(c("aCO2", "eCO2"), 10)
     plotDF1$pos <- with(plotDF1, mean + sd)
     plotDF1$neg <- with(plotDF1, mean - sd)
     
@@ -155,8 +179,8 @@ make_p_pools_summary_plots <- function(inDF) {
     require(gridExtra)
     
     ## plot 
-    pdf(paste0("plots_tables/P_Pools_Summary_Plots_", norm, ".pdf"),
-        width=6,height=8)
+    pdf(paste0("plots_tables/output/P_Pools_Summary_Plots_", norm, ".pdf"),
+        width=12,height=8)
     bot_row <- plot_grid(p2, p3, p4, ncol=3)
     plot_grid(p1, bot_row,  ncol = 1, rel_widths = c(1, 0.6,0.6,0.6),
               rel_heights=c(1.2, 1, 1, 1))
