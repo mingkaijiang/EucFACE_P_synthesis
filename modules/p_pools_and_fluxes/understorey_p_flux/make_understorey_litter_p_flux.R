@@ -9,7 +9,8 @@ make_understorey_litter_p_flux <- function(p_conc, c_flux, c_frac){
     }
     
     ### calculate P flux mg P m-2 d-1
-    c_flux$understorey_litter_p_flux <- c_flux$understorey_litter_flux / c_frac * c_flux$PercP / 100
+    c_flux$understorey_litter_p_flux <- c_flux$understorey_production_flux / c_frac * c_flux$PercP / 100
+    #c_flux$understorey_litter_p_flux <- c_flux$understorey_litter_flux / c_frac * c_flux$PercP / 100
     
     outDF <- c_flux[,c("Date", "Start_date", "End_date", "Ring", "understorey_litter_p_flux", "Days")]
     

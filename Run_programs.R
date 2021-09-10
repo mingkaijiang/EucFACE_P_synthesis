@@ -458,12 +458,12 @@ fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_co
 
 
 #### Other litterfall
-twig_litter_p_flux <- make_twiglitter_p_flux(p_conc=wood_p_concentration, 
+twig_litter_p_flux <- make_twiglitter_p_flux(p_conc=sapwood_p_concentration, 
                                              litter_flux=twiglitter_c_production_flux)  
 
 
 ## bark P concentration provided by Kristine
-bark_litter_p_flux <- make_barklitter_p_flux(p_conc=wood_p_concentration, 
+bark_litter_p_flux <- make_barklitter_p_flux(p_conc=sapwood_p_concentration, 
                                              litter_flux=barklitter_c_production_flux)  
 
 ## assume leaf p concentration
@@ -492,8 +492,9 @@ understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration
                                               c_frac=c_fraction_ud)
 
 
-understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_p_concentration,
-                                                            c_flux=understorey_litter_c_flux,
+understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_litter_p_concentration,
+                                                            c_flux=understorey_c_flux_clipping,
+                                                            #c_flux=understorey_litter_c_flux,
                                                             c_frac=c_fraction_ud)
 
 
