@@ -519,33 +519,39 @@ sapwood_P_retranslocation_flux <- calculate_sapwood_P_retranslocation_flux(tflux
                                                                            retransDF=plant_p_retranslocation_coefficients)
 
 
-coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux(tflux=fineroot_p_production,
-                                                                                 lflux=fineroot_litter_p_flux,
+coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux(tflux=coarse_root_p_flux,
                                                                                  retransDF=plant_p_retranslocation_coefficients)
 
 
 ############################## delta P Pools ###############################
 
-delta_soil_p_pool <- make_yearly_delta_pool_function(inDF=soil_p_pool, var.col=3)
+delta_soil_p_pool <- make_yearly_delta_pool_function(inDF=soil_p_pool, 
+                                                     var.col=3)
 
-delta_canopy_p_pool <- make_yearly_delta_pool_function(inDF=canopy_p_pool, var.col=3)
+delta_canopy_p_pool <- make_yearly_delta_pool_function(inDF=canopy_p_pool, 
+                                                       var.col=3)
 
-delta_wood_p_pool <- make_yearly_delta_pool_function(inDF=wood_p_pool, var.col=3)
+delta_wood_p_pool <- make_yearly_delta_pool_function(inDF=wood_p_pool, 
+                                                     var.col=3)
 
-delta_fineroot_p_pool <- make_yearly_delta_pool_function(inDF=fineroot_p_pool, var.col=3)
+delta_fineroot_p_pool <- make_yearly_delta_pool_function(inDF=fineroot_p_pool, 
+                                                         var.col=3)
 
-delta_coarse_root_p_pool <- make_yearly_delta_pool_function(inDF=coarse_root_p_pool, var.col=3)
+delta_coarse_root_p_pool <- make_yearly_delta_pool_function(inDF=coarse_root_p_pool, 
+                                                            var.col=3)
 
-delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_pool, var.col=3)
+delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_pool, 
+                                                            var.col=3)
 
-delta_microbial_p_pool <- make_yearly_delta_pool_function(inDF=microbial_p_pool, var.col=3)
+delta_microbial_p_pool <- make_yearly_delta_pool_function(inDF=microbial_p_pool, 
+                                                          var.col=3)
 
 
 
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
-##### Step 4: Making P budgeting variables and tables, based on raw data
-#### 4.1 Summary Tables
+##### Step 5: Making P budgeting variables and tables, based on raw data
+#### Summary Tables
 source("programs/summary_tables/unnormalized/make_conc_summary_table.R")
 summary_table_concentration <- make_conc_summary_table()
 
