@@ -50,31 +50,27 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     
 
     # plotting time series
-    #pdf("plots_tables/soil_p_mineralization_over_time.pdf")
-    #
-    ## compare eCO2 and aCO2 treatment
-    #myDF.out[myDF.out$Ring == 1, "CO2"] <- "eCO2"
-    #myDF.out[myDF.out$Ring == 4, "CO2"] <- "eCO2"
-    #myDF.out[myDF.out$Ring == 5, "CO2"] <- "eCO2"
-    #
-    #myDF.out[myDF.out$Ring == 2, "CO2"] <- "aCO2"
-    #myDF.out[myDF.out$Ring == 3, "CO2"] <- "aCO2"
-    #myDF.out[myDF.out$Ring == 6, "CO2"] <- "aCO2"
-    #
-    ## check CO2 treatment averages
-    #test1 <- summaryBy(p_mineralization_mg_m2_d~CO2, 
-    #                   data=myDF.out, FUN=mean, keep.names=T, na.rm=T)
+    pdf("plots_tables/checks/soil_p_mineralization_over_time.pdf")
     
-    ## plotting
-    #p <- ggplot(myDF.out, aes(Date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
-    #    geom_point(size = 5) +
-    #    xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)")# + 
-    #    #annotate("text", x = "2013-10-22", y = 4, 
-    #    #         label = paste0("aCO2 = ", round(test1[1,2], 2))) +
-    #    #annotate("text", x = "2013-10-22", y = 3.8, 
-    #    #         label = paste0("eCO2 = ", round(test1[2,2], 2)))
-    #plot(p) 
-    #dev.off()
+    # compare eCO2 and aCO2 treatment
+    myDF.out[myDF.out$Ring == 1, "CO2"] <- "eCO2"
+    myDF.out[myDF.out$Ring == 4, "CO2"] <- "eCO2"
+    myDF.out[myDF.out$Ring == 5, "CO2"] <- "eCO2"
+    
+    myDF.out[myDF.out$Ring == 2, "CO2"] <- "aCO2"
+    myDF.out[myDF.out$Ring == 3, "CO2"] <- "aCO2"
+    myDF.out[myDF.out$Ring == 6, "CO2"] <- "aCO2"
+    
+    # check CO2 treatment averages
+    test1 <- summaryBy(p_mineralization_mg_m2_d~CO2, 
+                       data=myDF.out, FUN=mean, keep.names=T, na.rm=T)
+
+    # plotting
+    p <- ggplot(myDF.out, aes(Date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
+        geom_point(size = 5) +
+        xlab("Date") + ylab("P mineralization rate (mg m-2 d-1)") 
+    plot(p) 
+    dev.off()
     
     # Shun's GCB paper indicates that P mineralization rate was higher
     # under eCO2, but here it is lower. 

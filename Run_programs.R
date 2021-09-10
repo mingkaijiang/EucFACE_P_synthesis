@@ -395,26 +395,38 @@ coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=sapwood_p_concentration,
 
 ############################## P fluxes ###############################
 
-#### 3.4 Soil P mineralization flux
+#### Soil P mineralization flux
+#### Note:
 #### It is assumed that the mineralization data is for top 10 cm only!
+#### Also, this is no longer mineralization flux as according to Yolima's new definition
+#### Will need to consult Yolima to revise this flux.
 soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
+
 
 #### Soil P leaching rate
 soil_p_leaching <- make_soil_p_leaching_flux()
 
 
-#### 3.7 Canopy production flux
+#### Canopy production flux
 canopy_p_flux <- make_canopy_p_production(p_conc=canopy_p_concentration,
                                           c_flux=canopy_c_production_flux,
                                           c_frac=c_fraction)
+
 
 ## considered both change in LAI and litterfall
 canopy_p_flux_new <- make_canopy_p_production_new(c_flux=canopy_c_production_flux_new,
                                                   c_frac=c_fraction)
 
-#### 3.13 Frass P production
+
+make_canopy_P_flux_comparison(inDF1=canopy_p_flux,
+                              inDF2=canopy_p_flux_new,
+                              plot.option = T)
+
+#### Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass
 #### We have more p conc than c flux so no need to gap fill. 
+#### This needs to be added to new canopy p production requirement and the
+#### total P budget. 
 frass_c_fraction <- make_frass_c_fraction()
 frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
                                                    c_flux=frass_c_production_flux,
@@ -432,16 +444,23 @@ leaflitter_p_flux <- make_leaflitter_p_flux(p_conc=leaflitter_p_concentration,
 #leaflitter_p_flux_gap_fill <- make_leaflitter_p_flux_gap_fill(p_conc=leaflitter_p_concentration) 
 
 
-#### 3.9 Fine root litter P production
+#### Fine root P production flux
+fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
+                                                    c_flux=fineroot_c_production_flux)
+
+
+#### Fine root litter P production
 ### assuming P retranslocation coefficient for fine root is 50%
 ### and fine root c production flux is fine root c litter flux
 fineroot_litter_p_flux <- make_fineroot_litter_p_production(p_conc=fineroot_p_concentration,
                                                             c_flux=fineroot_c_production_flux,
-                                                            p_retrans=0.5)
+                                                            p_retrans=retrans_froot)
 
-#### 3.10 Other litterfall
+
+#### Other litterfall
 twig_litter_p_flux <- make_twiglitter_p_flux(p_conc=wood_p_concentration, 
                                              litter_flux=twiglitter_c_production_flux)  
+
 
 ## bark P concentration provided by Kristine
 bark_litter_p_flux <- make_barklitter_p_flux(p_conc=wood_p_concentration, 
@@ -452,42 +471,57 @@ seed_litter_p_flux <- make_seedlitter_p_flux(p_conc=canopy_p_concentration,
                                              litter_flux=seedlitter_c_production_flux)  
 
 
-#### 3.12 wood p flux
-wood_p_flux <- make_wood_p_production(p_conc=wood_p_concentration,
+#### Wood p flux
+wood_p_flux <- make_wood_p_production(p_conc=sapwood_p_concentration,
                                       c_flux=wood_c_production)
 
-#### Standing dead P flux
-#standing_dead_p_flux <- make_standing_dead_p_flux(p_conc=wood_p_concentration,
-#                                                  c_flux=standing_dead_c_flux)
 
-
-
-#### 3.15 Fine root P production flux
-fineroot_p_production <- make_fineroot_p_production(p_conc=fineroot_p_concentration,
-                                                    c_flux=fineroot_c_production_flux)
-
-
-#### 3.17 Understorey production flux
-#### Here we can use either stereo camera estimate of biomass (2) or
-#### Harvest biomass data (1) to calculate p flux
-#### Currently, we are using harvest estimate
-understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
-                                              c_flux=understorey_c_flux,
-                                              c_frac=c_fraction_ud)
-
-understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_p_concentration,
-                                              c_flux=understorey_litter_c_flux,
-                                              c_frac=c_fraction_ud)
-
-
-### 3.19 Coarse root P flux
-coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=wood_p_concentration,
+### Coarse root P flux
+coarse_root_p_flux <- make_coarse_root_p_flux(p_conc=sapwood_p_concentration,
                                               c_flux=coarse_root_c_flux,
                                               c_frac=c_fraction)
 
 
+
+#### Understorey production flux
+#### Here we can use either stereo camera estimate of biomass (2) or
+#### Harvest biomass data (1) to calculate p flux
+#### Currently, we are using harvest estimate
+understorey_p_flux <- make_understorey_p_flux(p_conc=understorey_p_concentration,
+                                              c_flux=understorey_c_flux_clipping,
+                                              c_frac=c_fraction_ud)
+
+
+understorey_litter_p_flux <- make_understorey_litter_p_flux(p_conc=understorey_p_concentration,
+                                                            c_flux=understorey_litter_c_flux,
+                                                            c_frac=c_fraction_ud)
+
+
+
 ############################## P retranslocation fluxes ###############################
 
+canopy_P_retranslocation_flux <- calculate_canopy_P_retranslocation_flux(tflux=canopy_p_flux,
+                                                                         lflux=leaflitter_p_flux,
+                                                                         retransDF=plant_p_retranslocation_coefficients)
+
+
+fineroot_P_retranslocation_flux <- calculate_fineroot_P_retranslocation_flux(tflux=fineroot_p_production,
+                                                                             lflux=fineroot_litter_p_flux,
+                                                                             retransDF=plant_p_retranslocation_coefficients)
+
+
+understorey_P_retranslocation_flux <- calculate_understorey_P_retranslocation_flux(tflux=understorey_p_flux,
+                                                                                   lflux=understorey_litter_p_flux,
+                                                                                   retransDF=plant_p_retranslocation_coefficients)
+
+
+sapwood_P_retranslocation_flux <- calculate_sapwood_P_retranslocation_flux(tflux=wood_p_flux,
+                                                                           retransDF=plant_p_retranslocation_coefficients)
+
+
+coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux(tflux=fineroot_p_production,
+                                                                                 lflux=fineroot_litter_p_flux,
+                                                                                 retransDF=plant_p_retranslocation_coefficients)
 
 
 ############################## delta P Pools ###############################
