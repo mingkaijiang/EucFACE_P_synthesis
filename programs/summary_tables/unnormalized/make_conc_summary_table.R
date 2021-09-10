@@ -212,8 +212,8 @@ make_conc_summary_table <- function() {
     tmpDF1 <- treatDF[,c("conc.terms", "aCO2", "eCO2")]
     tmpDF2 <- treatDF[,c("conc.terms", "aCO2_sd", "eCO2_sd")]
     
-    plotDF1 <- melt(tmpDF1, id.var="conc.terms")
-    plotDF2 <- melt(tmpDF2, id.var="conc.terms")
+    plotDF1 <- reshape::melt(tmpDF1, id.var="conc.terms")
+    plotDF2 <- reshape::melt(tmpDF2, id.var="conc.terms")
     colnames(plotDF2) <- c("conc.terms", "variable", "value_sd")
     plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
     

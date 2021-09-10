@@ -550,8 +550,14 @@ delta_microbial_p_pool <- make_yearly_delta_pool_function(inDF=microbial_p_pool,
 
 
 
-##### ---------------------------------------------------------------------------------------------------------##### 
+########################################################################################## 
+########################################################################################## 
+#####
 ##### Step 5: Making P budgeting variables and tables, based on raw data
+#####
+
+############################## summary tables ###############################
+
 #### Summary Tables
 source("programs/summary_tables/unnormalized/make_conc_summary_table.R")
 summary_table_concentration <- make_conc_summary_table()
@@ -581,34 +587,22 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool,
                                     p_flux=summary_table_flux)
 
 
-## to do: 
-##       1. move retranslocation calculation up earlier
-##       2. add retranslocation flux
-##       3. update summary tables with retranslocation flux included
-##       4. then move forward beyond this point. 
+############################## Budget tables ###############################
 
-
-
-
-#### 4.3 Summary variables
 ### vegetation standing P stocks
 vegetation_standing_p_stock <- make_vegetation_standing_p_stock(leaf=canopy_p_pool,
                                                                 wood=wood_p_pool,
                                                                 fineroot=fineroot_p_pool,
                                                                 coarseroot=coarse_root_p_pool,
-                                                                understorey=understorey_p_pool)
+                                                                understorey=understorey_p_pool,
+                                                                dead=standing_dead_p_pool,
+                                                                forestfloor=leaflitter_p_pool)
 
-
-
-### total plant P requirement flux, retranslocation flux, and uptake flux
-### for total retranslocation flux and uptake flux,
-total_plant_p_fluxes <- make_total_plant_p_fluxes(sumDF=summary_table_flux,
-                                                  wood_retrans_coef=wood_p_retrans_coefficient)
 
 
 ### P mean residence time in plant
 plant_p_MRT <- make_plant_P_mean_residence_time(p_stand=vegetation_standing_p_stock,
-                                                p_flux=total_plant_p_fluxes)
+                                                p_flux=summary_table_flux)
 
 ### Plant P use efficiency
 plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flux,

@@ -1,4 +1,10 @@
-make_vegetation_standing_p_stock <- function(leaf, wood, understorey, fineroot, coarseroot) {
+make_vegetation_standing_p_stock <- function(leaf, 
+                                             wood, 
+                                             understorey, 
+                                             fineroot, 
+                                             coarseroot,
+                                             dead,
+                                             forestfloor) {
     
     ### ignores bark and twigs
     
@@ -8,20 +14,31 @@ make_vegetation_standing_p_stock <- function(leaf, wood, understorey, fineroot, 
     froot.y <- summaryBy(fineroot_p_pool~Ring, data=fineroot, FUN=mean, na.rm=T, keep.names=T)
     croot.y <- summaryBy(coarse_root_p_pool~Ring, data=coarseroot, FUN=mean, na.rm=T, keep.names=T)
     ua.y <- summaryBy(understorey_p_pool~Ring, data=understorey, FUN=mean, na.rm=T, keep.names=T)
+    dead.y <- summaryBy(wood_p_pool~Ring, data=dead, FUN=mean, na.rm=T, keep.names=T)
+    forestfloor.y <- summaryBy(leaflitter_p_pool~Ring, data=forestfloor, FUN=mean, na.rm=T, keep.names=T)
     
     ### compute annual averages for each pool and ring
     out <- cbind(leaf.y, wood.y$wood_p_pool, 
-                 froot.y$fineroot_p_pool,croot.y$coarse_root_p_pool,ua.y$understorey_p_pool)
-    colnames(out) <- c("Ring", "leaf", "wood", "fineroot", "coarseroot", "understorey")
+                 froot.y$fineroot_p_pool,
+                 croot.y$coarse_root_p_pool,
+                 ua.y$understorey_p_pool,
+                 dead.y$wood_p_pool,
+                 forestfloor.y$leaflitter_p_pool)
+    colnames(out) <- c("Ring", "leaf", "wood", 
+                       "fineroot", "coarseroot", "understorey",
+                       "dead", "forestfloor")
     
     ### Calculate total
-    out$total <- with(out, (leaf+wood+fineroot+coarseroot+understorey))
+    out$total <- with(out, (leaf+wood+fineroot+coarseroot+understorey+dead+forestfloor))
     
     ### calculate oa
     out$oa <- with(out, (leaf+wood))
     
     ### calculate belowground
     out$belowground <- with(out, (fineroot+coarseroot))
+    
+    ### caclulate total dead
+    out$litter <- with(out, (forestfloor+dead))
     
     
     ### assign aCO2 and eCO2

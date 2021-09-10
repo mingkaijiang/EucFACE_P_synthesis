@@ -126,5 +126,24 @@ make_standing_dead_c_pool <- function(ring_area, c_frac) {
     wood_pool <- out.dat[out.dat$Date==last.date,
                          c("Date", "Ring", "wood_pool", "sap_pool", "heart_pool")]
     
-    return(wood_pool)
+    r3 <- data.frame("Date"=unique(wood_pool$Date),
+                     "Ring"=3,
+                     wood_pool=0,
+                     sap_pool=0,
+                     heart_pool=0)
+    
+    r4 <- data.frame("Date"=unique(wood_pool$Date),
+                     "Ring"=4,
+                     wood_pool=0,
+                     sap_pool=0,
+                     heart_pool=0)
+    
+    tmpDF <- rbind(r3, r4)
+    
+    outDF <- rbind(tmpDF, wood_pool)
+    
+    outDF <- outDF[order(outDF$Date, outDF$Ring),]
+    
+    
+    return(outDF)
 }

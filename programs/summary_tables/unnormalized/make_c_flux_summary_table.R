@@ -9,8 +9,8 @@ make_c_flux_summary_table <- function() {
     conv <- 365 / 1000
     
     ### Define production variable names
-    terms <- c("Wood C flux", 
-               "Canopy C flux", 
+    terms <- c("Canopy C flux", 
+               "Wood C flux", 
                "Fine Root C flux",
                "Coarse Root C flux",
                "Leaflitter C flux", 
@@ -83,12 +83,12 @@ make_c_flux_summary_table <- function() {
     
     ### Understorey C flux
     for (i in c(1:6)) {
-        treatDF[treatDF$terms == "Understorey C flux", i+1] <- with(understorey_c_flux[understorey_c_flux$Ring ==i,],
+        treatDF[treatDF$terms == "Understorey C flux", i+1] <- with(understorey_c_flux_clipping[understorey_c_flux_clipping$Ring ==i,],
                                                                     sum(understorey_production_flux*Days)/sum(Days)) * conv
     }
-    treatDF$year_start[treatDF$terms == "Understorey C flux"] <- min(year(understorey_c_flux$Date))    
-    treatDF$year_end[treatDF$terms == "Understorey C flux"] <- max(year(understorey_c_flux$Date))    
-    treatDF$timepoint[treatDF$terms == "Understorey C flux"] <- length(unique(understorey_c_flux$Date))  
+    treatDF$year_start[treatDF$terms == "Understorey C flux"] <- min(year(understorey_c_flux_clipping$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey C flux"] <- max(year(understorey_c_flux_clipping$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey C flux"] <- length(unique(understorey_c_flux_clipping$Date))  
     treatDF$notes[treatDF$terms == "Understorey C flux"] <- "Harvest data"
     
     ### Understorey Litter C flux
@@ -178,6 +178,29 @@ make_c_flux_summary_table <- function() {
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
     write.csv(treatDF, "plots_tables/summary_tables/summary_table_C_flux_unnormalized.csv", row.names=F)
+    
+    
+    ### plot
+    tmpDF1 <- treatDF[,c("terms", "aCO2", "eCO2")]
+    tmpDF2 <- treatDF[,c("terms", "aCO2_sd", "eCO2_sd")]
+    
+    plotDF1 <- reshape::melt(tmpDF1, id.var="terms")
+    plotDF2 <- reshape::melt(tmpDF2, id.var="terms")
+    colnames(plotDF2) <- c("terms", "variable", "value_sd")
+    plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
+    
+    plotDF <- merge(plotDF1, plotDF2, by=c("terms", "variable"))
+    plotDF$terms <- gsub(" C flux", "", plotDF$terms)
+    
+    p1 <- ggplot(plotDF, aes(terms, value, group=variable))+
+      geom_point(aes(fill=variable), pch=21) +
+      geom_errorbar(aes(ymin=value-value_sd, ymax=value+value_sd),
+                    width=0.2)+
+      coord_flip()
+    
+    pdf("plots_tables/summary_tables/C_flux_comparison.pdf")
+    plot(p1)
+    dev.off()
     
     ##### output tables
     return(treatDF)

@@ -6,11 +6,11 @@
 make_c_pool_summary_table <- function() {
     
     ### Define pool variable names
-    terms <- c("Wood C Pool", 
+    terms <- c("Canopy C Pool", 
+               "Wood C Pool", 
                "Sapwood C Pool", 
                "Heartwood C Pool",
                "Standing Dead Wood C Pool",
-               "Canopy C Pool", 
                "Fine Root C Pool",
                "Coarse Root C Pool", 
                "Understorey C Pool", 
@@ -80,15 +80,7 @@ make_c_pool_summary_table <- function() {
     
     ### Standing Dead Wood C 
     out <- summaryBy(wood_pool~Ring,data=standing_dead_c_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF$R1[treatDF$terms == "Standing Dead Wood C Pool"] <- out$wood_pool[out$Ring==1]
-    treatDF$R2[treatDF$terms == "Standing Dead Wood C Pool"] <- out$wood_pool[out$Ring==2]
-    treatDF$R5[treatDF$terms == "Standing Dead Wood C Pool"] <- out$wood_pool[out$Ring==5]
-    treatDF$R6[treatDF$terms == "Standing Dead Wood C Pool"] <- out$wood_pool[out$Ring==6]
-    
-    ## hard wired
-    treatDF$R3[treatDF$terms == "Standing Dead Wood C Pool"] <- 0.0
-    treatDF$R4[treatDF$terms == "Standing Dead Wood C Pool"] <- 0.0
-    
+    treatDF[treatDF$terms == "Standing Dead Wood C Pool",2:7] <- out$wood_pool
     treatDF$year_start[treatDF$terms == "Standing Dead Wood C Pool"] <- min(year(wood_c_pool$Date))    
     treatDF$year_end[treatDF$terms == "Standing Dead Wood C Pool"] <- max(year(wood_c_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Standing Dead Wood C Pool"] <- length(unique(wood_c_pool$Date)) 
@@ -162,6 +154,28 @@ make_c_pool_summary_table <- function() {
     
     write.csv(treatDF, "plots_tables/summary_tables/summary_table_C_pool_unnormalized.csv", row.names=F)
     
+    
+    ### plot
+    tmpDF1 <- treatDF[,c("terms", "aCO2", "eCO2")]
+    tmpDF2 <- treatDF[,c("terms", "aCO2_sd", "eCO2_sd")]
+    
+    plotDF1 <- reshape::melt(tmpDF1, id.var="terms")
+    plotDF2 <- reshape::melt(tmpDF2, id.var="terms")
+    colnames(plotDF2) <- c("terms", "variable", "value_sd")
+    plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
+    
+    plotDF <- merge(plotDF1, plotDF2, by=c("terms", "variable"))
+    plotDF$terms <- gsub(" C Pool", "", plotDF$terms)
+    
+    p1 <- ggplot(plotDF, aes(terms, value, group=variable))+
+      geom_point(aes(fill=variable), pch=21) +
+      geom_errorbar(aes(ymin=value-value_sd, ymax=value+value_sd),
+                    width=0.2)+
+      coord_flip()
+    
+    pdf("plots_tables/summary_tables/C_pool_comparison.pdf")
+    plot(p1)
+    dev.off()
     
     ##### output tables
     return(treatDF)

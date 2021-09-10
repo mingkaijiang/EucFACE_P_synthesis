@@ -1,10 +1,10 @@
 
 #### To make EucFACE P summary table by CO2 treatment
-#### Ignore time but produce time coverage information
-#### This is for fluxes
-
 make_flux_summary_table <- function() {
-    
+
+    #### Ignore time but produce time coverage information
+    #### This is for fluxes
+  
     ### convert daily flux in mg P m2 d-1 to g P m-2 yr-1
     conv <- 365 / 1000
     
@@ -21,11 +21,14 @@ make_flux_summary_table <- function() {
                "Frass P flux",               # to be included in the new uptake
                "Understorey P flux",         # include retranslocated and new uptake flux
                "Understorey Litter P flux",  # Proxy for new uptake 
-               "Canopy retrans P flux",
+               "Canopy retrans P flux",     
                "Sapwood retrans P flux",
                "Fineroot retrans P flux",
                "Coarseroot retrans P flux",
                "Understorey retrans P flux",
+               "Total vegetation production P flux",
+               "Total vegetation retranslocation P flux",
+               "Total vegetation uptake P flux",
                "Mineralization P flux",
                "Leaching P flux")
     
@@ -190,6 +193,104 @@ make_flux_summary_table <- function() {
     treatDF$timepoint[treatDF$terms == "Leaching P flux"] <- length(unique(soil_p_leaching$Date))  
     treatDF$notes[treatDF$terms == "Leaching P flux"] <- "drainage 20 ml/d"
     
+    
+    
+    ###  Canopy retrans P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Canopy retrans P flux", i+1] <- with(canopy_P_retranslocation_flux[canopy_P_retranslocation_flux$Ring ==i,],
+                                                               sum(canopy_p_retrans_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Canopy retrans P flux"] <- min(year(canopy_P_retranslocation_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Canopy retrans P flux"] <- max(year(canopy_P_retranslocation_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Canopy retrans P flux"] <- length(unique(canopy_P_retranslocation_flux$Date))  
+    treatDF$notes[treatDF$terms == "Canopy retrans P flux"] <- "calculated as diff of canopy production and litterfall"
+    
+    
+    ###  Sapwood retrans P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Sapwood retrans P flux", i+1] <- with(sapwood_P_retranslocation_flux[sapwood_P_retranslocation_flux$Ring ==i,],
+                                                                     sum(sapwood_p_retrans_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Sapwood retrans P flux"] <- min(year(sapwood_P_retranslocation_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Sapwood retrans P flux"] <- max(year(sapwood_P_retranslocation_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Sapwood retrans P flux"] <- length(unique(sapwood_P_retranslocation_flux$Date))  
+    treatDF$notes[treatDF$terms == "Sapwood retrans P flux"] <- "heartwood and sapwood P conc."
+    
+    ###  Coarseroot retrans P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Coarseroot retrans P flux", i+1] <- with(coarseroot_P_retranslocation_flux[coarseroot_P_retranslocation_flux$Ring ==i,],
+                                                                      sum(coarseroot_p_retrans_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Coarseroot retrans P flux"] <- min(year(coarseroot_P_retranslocation_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Coarseroot retrans P flux"] <- max(year(coarseroot_P_retranslocation_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Coarseroot retrans P flux"] <- length(unique(coarseroot_P_retranslocation_flux$Date))  
+    treatDF$notes[treatDF$terms == "Coarseroot retrans P flux"] <- "heartwood and sapwood P conc."
+    
+    ###  Fineroot retrans P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Fineroot retrans P flux", i+1] <- with(fineroot_P_retranslocation_flux[fineroot_P_retranslocation_flux$Ring ==i,],
+                                                                         sum(fineroot_p_retrans_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Fineroot retrans P flux"] <- min(year(fineroot_P_retranslocation_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Fineroot retrans P flux"] <- max(year(fineroot_P_retranslocation_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Fineroot retrans P flux"] <- length(unique(fineroot_P_retranslocation_flux$Date))  
+    treatDF$notes[treatDF$terms == "Fineroot retrans P flux"] <- "assumed"
+    
+    
+    ###  Understorey retrans P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Understorey retrans P flux", i+1] <- with(understorey_P_retranslocation_flux[understorey_P_retranslocation_flux$Ring ==i,],
+                                                                       sum(understorey_p_retrans_flux*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Understorey retrans P flux"] <- min(year(understorey_P_retranslocation_flux$Date))    
+    treatDF$year_end[treatDF$terms == "Understorey retrans P flux"] <- max(year(understorey_P_retranslocation_flux$Date))    
+    treatDF$timepoint[treatDF$terms == "Understorey retrans P flux"] <- length(unique(understorey_P_retranslocation_flux$Date))  
+    treatDF$notes[treatDF$terms == "Understorey retrans P flux"] <- "production - litterfall"
+    
+    
+    
+    ###  Total vegetation production P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Total vegetation production P flux", i+1] <- sum(c(treatDF[treatDF$terms == "Canopy P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Wood P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Fine Root P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Coarse Root P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Twig P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Bark P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Seed P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Frass P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
+    }
+    
+    
+    ###  Total vegetation production P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Total vegetation production P flux", i+1] <- sum(c(treatDF[treatDF$terms == "Canopy P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Wood P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Fine Root P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Coarse Root P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Twig P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Bark P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Seed P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Frass P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
+    }
+    
+    ###  Total vegetation retranslocation P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Total vegetation retranslocation P flux", i+1] <- sum(c(treatDF[treatDF$terms == "Canopy retrans P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Sapwood retrans P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Fineroot retrans P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Coarseroot retrans P flux", i+1],
+                                                                                   treatDF[treatDF$terms == "Understorey retrans P flux", i+1]), na.rm=T)
+    }
+    
+    ###  Total vegetation uptake P flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Total vegetation uptake P flux", i+1] <- treatDF[treatDF$terms == "Total vegetation production P flux", i+1] - treatDF[treatDF$terms == "Total vegetation retranslocation P flux", i+1]
+    }
+    
+    
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
     treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)    
@@ -210,13 +311,13 @@ make_flux_summary_table <- function() {
     tmpDF1 <- treatDF[,c("terms", "aCO2", "eCO2")]
     tmpDF2 <- treatDF[,c("terms", "aCO2_sd", "eCO2_sd")]
     
-    plotDF1 <- melt(tmpDF1, id.var="terms")
-    plotDF2 <- melt(tmpDF2, id.var="terms")
+    plotDF1 <- reshape::melt(tmpDF1, id.var="terms")
+    plotDF2 <- reshape::melt(tmpDF2, id.var="terms")
     colnames(plotDF2) <- c("terms", "variable", "value_sd")
     plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
     
     plotDF <- merge(plotDF1, plotDF2, by=c("terms", "variable"))
-    plotDF$terms <- gsub(" P Pool", "", plotDF$terms)
+    plotDF$terms <- gsub(" P flux", "", plotDF$terms)
     
     p1 <- ggplot(plotDF, aes(terms, value, group=variable))+
       geom_point(aes(fill=variable), pch=21) +

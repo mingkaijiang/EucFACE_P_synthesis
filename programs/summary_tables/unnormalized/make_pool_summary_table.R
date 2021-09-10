@@ -86,15 +86,7 @@ make_pool_summary_table <- function() {
     
     ### Standing dead
     out <- summaryBy(wood_p_pool~Ring,data=standing_dead_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF$R1[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==1]
-    treatDF$R2[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==2]
-    treatDF$R5[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==5]
-    treatDF$R6[treatDF$terms == "Standing Dead Wood P Pool"] <- out$wood_p_pool[out$Ring==6]
-    
-    ## hard wired
-    treatDF$R3[treatDF$terms == "Standing Dead Wood P Pool"] <- 0.0
-    treatDF$R4[treatDF$terms == "Standing Dead Wood P Pool"] <- 0.0
-    
+    treatDF[treatDF$terms == "Standing Dead Wood P Pool", 2:7] <- out$wood_p_pool
     treatDF$year_start[treatDF$terms == "Standing Dead Wood P Pool"] <- min(year(wood_p_pool$Date))    
     treatDF$year_end[treatDF$terms == "Standing Dead Wood P Pool"] <- max(year(wood_p_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Standing Dead Wood P Pool"] <- length(unique(wood_p_pool$Date)) 
@@ -231,8 +223,8 @@ make_pool_summary_table <- function() {
     tmpDF1 <- treatDF[,c("terms", "aCO2", "eCO2")]
     tmpDF2 <- treatDF[,c("terms", "aCO2_sd", "eCO2_sd")]
     
-    plotDF1 <- melt(tmpDF1, id.var="terms")
-    plotDF2 <- melt(tmpDF2, id.var="terms")
+    plotDF1 <- reshape::melt(tmpDF1, id.var="terms")
+    plotDF2 <- reshape::melt(tmpDF2, id.var="terms")
     colnames(plotDF2) <- c("terms", "variable", "value_sd")
     plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
     
