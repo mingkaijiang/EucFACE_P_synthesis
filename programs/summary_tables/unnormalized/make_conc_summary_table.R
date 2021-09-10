@@ -5,12 +5,23 @@
 make_conc_summary_table <- function() {
     
     ### Define concentration variable names
-    conc.terms <- c("Sapwood P Conc", "Heartwood P Conc",
-                    "Canopy P Conc", "Fine Root P Conc", "Coarse Root P Conc",
-                    "Leaflitter P Conc","Understorey P Conc", "Understorey Litter P Conc", "Frass P Conc",
-                    "Microbial P Conc", "Soil P Conc", "Soil Phosphate P Conc",
-                    "Exchangeable Pi Conc", "Exchangeable Po Conc",
-                    "Moderately labile Po Conc", "Secondary Fe bound Pi Conc", "Primary Ca bound Pi Conc",
+    conc.terms <- c("Canopy P Conc", 
+                    "Sapwood P Conc", 
+                    "Heartwood P Conc",
+                    "Fine Root P Conc", 
+                    "Coarse Root P Conc",
+                    "Leaflitter P Conc",
+                    "Understorey P Conc", 
+                    "Understorey Litter P Conc", 
+                    "Frass P Conc",
+                    "Microbial P Conc", 
+                    "Soil P Conc", 
+                    "Soil Phosphate P Conc",
+                    "Exchangeable Pi Conc", 
+                    "Exchangeable Po Conc",
+                    "Moderately labile Po Conc", 
+                    "Secondary Fe bound Pi Conc", 
+                    "Primary Ca bound Pi Conc",
                     "Occluded P Conc")
     
     treatDF <- data.frame(conc.terms)
@@ -41,19 +52,19 @@ make_conc_summary_table <- function() {
 
     
     ### Sapwood P concentration
-    out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(PercP~Ring,data=sapwood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$conc.terms == "Sapwood P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Sapwood P Conc"] <- min(year(wood_p_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Sapwood P Conc"] <- max(year(wood_p_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Sapwood P Conc"] <- length(unique(wood_p_concentration$Date)) 
+    treatDF$year_start[treatDF$conc.terms == "Sapwood P Conc"] <- min(year(sapwood_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Sapwood P Conc"] <- max(year(sapwood_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Sapwood P Conc"] <- length(unique(sapwood_p_concentration$Date)) 
     treatDF$notes[treatDF$conc.terms == "Sapwood P Conc"] <- "Only one data point per ring"
     
     ### Coarse root P concentration
-    out <- summaryBy(PercP~Ring,data=wood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
+    out <- summaryBy(PercP~Ring,data=sapwood_p_concentration,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$conc.terms == "Coarse Root P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Coarse Root P Conc"] <- min(year(wood_p_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Coarse Root P Conc"] <- max(year(wood_p_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Coarse Root P Conc"] <- length(unique(wood_p_concentration$Date)) 
+    treatDF$year_start[treatDF$conc.terms == "Coarse Root P Conc"] <- min(year(sapwood_p_concentration$Date))    
+    treatDF$year_end[treatDF$conc.terms == "Coarse Root P Conc"] <- max(year(sapwood_p_concentration$Date))    
+    treatDF$timepoint[treatDF$conc.terms == "Coarse Root P Conc"] <- length(unique(sapwood_p_concentration$Date)) 
     treatDF$notes[treatDF$conc.terms == "Coarse Root P Conc"] <- "Used wood P concentration"
     
     
@@ -193,8 +204,31 @@ make_conc_summary_table <- function() {
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
+    ### save
+    write.csv(treatDF, "plots_tables/summary_tables/summary_table_P_concentration_unnormalized.csv", row.names=F)
     
-    write.csv(treatDF, "plots_tables/summary_table_P_concentration_unnormalized.csv", row.names=F)
+    
+    ### plot
+    tmpDF1 <- treatDF[,c("conc.terms", "aCO2", "eCO2")]
+    tmpDF2 <- treatDF[,c("conc.terms", "aCO2_sd", "eCO2_sd")]
+    
+    plotDF1 <- melt(tmpDF1, id.var="conc.terms")
+    plotDF2 <- melt(tmpDF2, id.var="conc.terms")
+    colnames(plotDF2) <- c("conc.terms", "variable", "value_sd")
+    plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
+    
+    plotDF <- merge(plotDF1, plotDF2, by=c("conc.terms", "variable"))
+    plotDF$conc.terms <- gsub(" P Conc", "", plotDF$conc.terms)
+    
+    p1 <- ggplot(plotDF, aes(conc.terms, value, group=variable))+
+      geom_point(aes(fill=variable), pch=21) +
+      geom_errorbar(aes(ymin=value-value_sd, ymax=value+value_sd),
+                    width=0.2)+
+      coord_flip()
+    
+    pdf("plots_tables/summary_tables/P_concentration_comparison.pdf")
+    plot(p1)
+    dev.off()
     
     ##### output tables
     return(treatDF)

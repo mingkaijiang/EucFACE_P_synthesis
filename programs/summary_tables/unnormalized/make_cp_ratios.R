@@ -49,7 +49,7 @@ make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
     out$microbe <- as.numeric(c_pool[c_pool$terms == "Microbial C Pool", 2:7]/p_pool[p_pool$terms == "Microbial P Pool",
                                                                                      2:7])
     
-    write.csv(out, "plots_tables/summary_cp_ratios.csv", row.names=F)
+    write.csv(out, "plots_tables/summary_tables/summary_cp_ratios.csv", row.names=F)
     
     
     return(out)

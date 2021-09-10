@@ -9,8 +9,8 @@ make_flux_summary_table <- function() {
     conv <- 365 / 1000
     
     ### Define production variable names
-    terms <- c("Wood P flux",                # include retranslocated and new uptake flux
-               "Canopy P flux",              # include retranslocated and new uptake flux
+    terms <- c("Canopy P flux",              # include retranslocated and new uptake flux
+               "Wood P flux",                # include retranslocated and new uptake flux
                "Fine Root P flux",           # include retranslocated and new uptake flux
                "Coarse Root P flux",         # include retranslocated and new uptake flux
                "Leaflitter P flux",          # Proxy for new uptake
@@ -21,6 +21,11 @@ make_flux_summary_table <- function() {
                "Frass P flux",               # to be included in the new uptake
                "Understorey P flux",         # include retranslocated and new uptake flux
                "Understorey Litter P flux",  # Proxy for new uptake 
+               "Canopy retrans P flux",
+               "Sapwood retrans P flux",
+               "Fineroot retrans P flux",
+               "Coarseroot retrans P flux",
+               "Understorey retrans P flux",
                "Mineralization P flux",
                "Leaching P flux")
     
@@ -198,8 +203,30 @@ make_flux_summary_table <- function() {
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
-    write.csv(treatDF, "plots_tables/summary_table_P_flux_unnormalized.csv", row.names=F)
+    write.csv(treatDF, "plots_tables/summary_tables/summary_table_P_flux_unnormalized.csv", row.names=F)
     
+    
+    ### plot
+    tmpDF1 <- treatDF[,c("terms", "aCO2", "eCO2")]
+    tmpDF2 <- treatDF[,c("terms", "aCO2_sd", "eCO2_sd")]
+    
+    plotDF1 <- melt(tmpDF1, id.var="terms")
+    plotDF2 <- melt(tmpDF2, id.var="terms")
+    colnames(plotDF2) <- c("terms", "variable", "value_sd")
+    plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
+    
+    plotDF <- merge(plotDF1, plotDF2, by=c("terms", "variable"))
+    plotDF$terms <- gsub(" P Pool", "", plotDF$terms)
+    
+    p1 <- ggplot(plotDF, aes(terms, value, group=variable))+
+      geom_point(aes(fill=variable), pch=21) +
+      geom_errorbar(aes(ymin=value-value_sd, ymax=value+value_sd),
+                    width=0.2)+
+      coord_flip()
+    
+    pdf("plots_tables/summary_tables/P_flux_comparison.pdf")
+    plot(p1)
+    dev.off()
     
     ##### output tables
     return(treatDF)

@@ -1,15 +1,15 @@
 
-#### To make EucFACE P summary table by CO2 treatment
-#### Ignore time but produce time coverage information
-#### This is for pools
-
 make_pool_summary_table <- function() {
     
+  #### To make EucFACE P summary table by CO2 treatment
+  #### Ignore time but produce time coverage information
+  #### This is for pools
+  
     ### Define pool variable names
-    terms <- c("Total Wood P Pool", 
+    terms <- c("Canopy P Pool", 
+               "Total Wood P Pool", 
                "Sapwood P Pool",
                "Heartwood P Pool",
-               "Canopy P Pool", 
                "Forestfloor Leaf Litter P Pool",
                "Fine Root P Pool",
                "Coarse Root P Pool", 
@@ -224,8 +224,30 @@ make_pool_summary_table <- function() {
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
-    write.csv(treatDF, "plots_tables/summary_table_P_pool_unnormalized.csv", row.names=F)
+    write.csv(treatDF, "plots_tables/summary_tables/summary_table_P_pool_unnormalized.csv", row.names=F)
     
+    
+    ### plot
+    tmpDF1 <- treatDF[,c("terms", "aCO2", "eCO2")]
+    tmpDF2 <- treatDF[,c("terms", "aCO2_sd", "eCO2_sd")]
+    
+    plotDF1 <- melt(tmpDF1, id.var="terms")
+    plotDF2 <- melt(tmpDF2, id.var="terms")
+    colnames(plotDF2) <- c("terms", "variable", "value_sd")
+    plotDF2$variable <- gsub("_sd", "", plotDF2$variable)
+    
+    plotDF <- merge(plotDF1, plotDF2, by=c("terms", "variable"))
+    plotDF$terms <- gsub(" P Pool", "", plotDF$terms)
+    
+    p1 <- ggplot(plotDF, aes(terms, value, group=variable))+
+      geom_point(aes(fill=variable), pch=21) +
+      geom_errorbar(aes(ymin=value-value_sd, ymax=value+value_sd),
+                    width=0.2)+
+      coord_flip()
+    
+    pdf("plots_tables/summary_tables/P_pool_comparison.pdf")
+    plot(p1)
+    dev.off()
     
     ##### output tables
     return(treatDF)
