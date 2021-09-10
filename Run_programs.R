@@ -606,11 +606,10 @@ plant_p_MRT <- make_plant_P_mean_residence_time(p_stand=vegetation_standing_p_st
 
 ### Plant P use efficiency
 plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flux,
-                                                      p_flux=total_plant_p_fluxes)
+                                                      p_flux=summary_table_flux)
 
 
-#### 4.4 P budget summary
-### Calculate all N budgeting variables
+#### P budget summary
 total_p_budget <- make_total_p_budget()
 
 

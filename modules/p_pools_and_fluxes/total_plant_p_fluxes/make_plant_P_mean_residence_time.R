@@ -1,8 +1,13 @@
 make_plant_P_mean_residence_time <- function(p_stand, p_flux) {
     
     
-    out <- data.frame(p_stand$Ring, p_stand$Trt, p_stand$total, p_flux$Total_plant_uptake_P_flux)
-    colnames(out) <- c("Ring", "Trt", "Total_standing_P_stock", "Total_plant_P_uptake_flux")
+    tmp1 <- data.frame("Ring" = p_stand$Ring, "Trt" = p_stand$Trt, 
+                      "Total_standing_P_stock" = p_stand$total)
+    
+    tmp2 <- as.numeric(p_flux[p_flux$terms=="Total vegetation uptake P flux",2:7])
+    
+    out <- data.frame(tmp1, 
+                      "Total_plant_P_uptake_flux"=tmp2)
     
     out$plant_P_MRT <- with(out, Total_standing_P_stock / Total_plant_P_uptake_flux)
     
