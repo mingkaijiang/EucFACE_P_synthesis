@@ -33,6 +33,8 @@ source("programs/prepare.R")
 #### turn warnings off globally
 # options(warn=-1)
 
+#### Ring-specific bulk density
+soil_bulk_density <- make_soil_bulk_density()
 
 
 ########################################################################################## 
@@ -42,6 +44,10 @@ source("programs/prepare.R")
 #####
 
 ############################## Soil ###############################
+
+
+belowground_P_working_sheet()
+
 
 #### Soil P concentrations 
 soil_p_concentration <- make_soil_p_concentration()
@@ -182,8 +188,6 @@ make_understorey_pool_size_comparison(inDF1=understorey_c_pool_clipping,
 
 
 #### Soil C content
-#### Ring-specific bulk density
-soil_bulk_density <- make_soil_bulk_density()
 
 #### return sum of all depths
 soil_c_pool <- make_soil_c_pool(soil_bulk_density)
