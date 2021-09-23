@@ -31,7 +31,10 @@ belowground_P_working_sheet <- function (bk_density) {
     t1 <- lm(Pmin~Pmic, data=mgDF)
     summary(t1)
     
-    p1 <- ggplot(mgDF, aes(Pmic, Pmin))+
+    #t2 <- lm(Pmin~Pmic, data=mgDF[mgDF$ring==6,])
+    #summary(t2)
+    
+    p1 <- ggplot(mgDF, aes(Pmic, Pmin, group=as.character(ring)))+
         geom_point(aes(col=as.character(ring)))+
         geom_smooth(method="lm"); p1
     
@@ -74,7 +77,8 @@ belowground_P_working_sheet <- function (bk_density) {
     outDF2 <- summaryBy(Pmin_mg_m2_yr~ring, FUN=sum,
                         data=outDF, na.rm=T, keep.names=T)
     
+    ### end
     return(outDF2)
     
-    ### end
+    
 }
