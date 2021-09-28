@@ -253,9 +253,9 @@ dLEAF_litter_flux <- make_dLAI_litter(litter=leaflitter_c_production_flux,
 
 canopy_c_production_flux_new <- make_canopy_c_production_flux_new(inDF=dLEAF_litter_flux)
 
-make_canopy_production_flux_comparison(inDF1=canopy_c_production_flux,
-                                       inDF2=canopy_c_production_flux_new,
-                                       plot.option = T)
+#make_canopy_production_flux_comparison(inDF1=canopy_c_production_flux,
+#                                       inDF2=canopy_c_production_flux_new,
+#                                       plot.option = T)
 
 
 #### 2.5 Wood C production
@@ -314,8 +314,17 @@ coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool)
 soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
                                 bk_density=soil_bulk_density)
 
+### Soil inorganic pool - 60 cm
+soil_inorganic_p_pool <- make_soil_inorganic_p_pool(p_conc=soil_inorganic_p_concentration,
+                                                    bk_density=soil_bulk_density)
+
+
+### soil organic pool - 60 cm
+soil_organic_p_pool <- make_soil_organic_p_pool(p_conc=soil_organic_p_concentration,
+                                                    bk_density=soil_bulk_density)
+
 #### Soil phosphate pool
-#### Top 10 cm only
+#### Top 60 cm
 #### Note:
 #### This is additional to the microbial PO4-P pool
 #### The microbial pool needs to have one step further 
@@ -326,12 +335,13 @@ soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentrat
 
 
 #### Soil P pool of different bioavailability
+#### Top 10 cm only
 soil_p_pool_hedley <- make_soil_p_pool_hedley(p_conc=soil_hedley_p_concentration,
                                               bk_density=soil_bulk_density)
 
 
 #### Microbial P pool 
-#### Top 10 cm
+#### Top 60 cm
 microbial_p_pool <- make_microbial_p_pool(p_conc=microbial_p_concentration,
                                           bk_density=soil_bulk_density)
 
