@@ -48,15 +48,18 @@ soil_bulk_density <- make_soil_bulk_density()
 
 ############################## Soil ###############################
 
-
-#belowground_P_working_sheet()
-
-
 #### Soil P concentrations 
 ### three depth: 0 - 10 cm
 ###              10 - 30 cm
 ###              30 - 60 cm
 soil_p_concentration <- make_soil_p_concentration()
+
+
+### based on Klause's data
+soil_inorganic_p_concentration <- make_soil_inorganic_p_concentration()
+
+### based on Klause's data
+soil_organic_p_concentration <- make_soil_organic_p_concentration()
 
 
 #### Soil phosphate conc, this returns % of P, not % of PO4!
@@ -68,6 +71,7 @@ soil_phosphate_concentration <- make_soil_phosphate_concentration()
 #### Microbial P conc.
 #### Top 60 cm
 microbial_p_concentration <- make_microbial_p_concentration()
+
 
 #### Hedley fractionation dataset
 ### top 10 cm
@@ -172,6 +176,7 @@ standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
 
 
 #### Fineroot pool
+# top 30 cm
 fineroot_c_pool <- make_fineroot_c_pool()
 
 
@@ -196,9 +201,8 @@ make_understorey_pool_size_comparison(inDF1=understorey_c_pool_clipping,
 
 
 #### Soil C content
-#### return sum of all depths - currently top 30cm, but we can do top 60cm
-soil_c_pool <- make_soil_c_pool(bk_density=soil_bulk_density,
-                                return="by_depths")
+#### return soil C by depths
+soil_c_pool <- make_soil_c_pool(bk_density=soil_bulk_density)
 
 
 #### Microbial C pool

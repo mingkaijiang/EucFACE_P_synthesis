@@ -48,9 +48,49 @@ make_microbial_p_concentration <- function() {
     colnames(newdf.out) <- c("Date", "Ring", "PercP", "Depth")
     
     newdf.out$Depth <- gsub("0-10", "0_10", newdf.out$Depth)
-    newdf.out$Depth <- gsub("10-30", "10_30", newdf.out$Depth)
+    newdf.out$Depth <- gsub(" 10-30", "10_30", newdf.out$Depth)
     
-    df.out <- rbind(df.out, newdf.out)
+    
+    ### calculate trt-averaged depth reduction
+    newdf.out$Trt[newdf.out$Ring%in%c(1,4,5)] <- "eCO2"
+    newdf.out$Trt[newdf.out$Ring%in%c(2,3,6)] <- "aCO2"
+    
+    tmpDF2 <- summaryBy(PercP~Depth+Trt, FUN=mean, data=newdf.out, keep.names=T)
+    
+    tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$PercP[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$PercP[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
+    tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$PercP[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$PercP[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
+    
+    tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$PercP[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]/tmpDF2$PercP[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
+    tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$PercP[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]/tmpDF2$PercP[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
+    
+    
+    # update earlier datasets
+    df.out$Trt[df.out$Ring%in%c(1,4,5)] <- "eCO2"
+    df.out$Trt[df.out$Ring%in%c(2,3,6)] <- "aCO2"
+    
+    df.out2 <- df.out3 <- df.out
+    df.out2$Depth <- "10_30"
+    df.out3$Depth <- "transition"
+    
+    df.out2$Rev[df.out2$Trt=="aCO2"] <- df.out2$PercP[df.out2$Trt=="aCO2"] * tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]
+    df.out2$Rev[df.out2$Trt=="eCO2"] <- df.out2$PercP[df.out2$Trt=="eCO2"] * tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]
+    
+    df.out3$Rev[df.out3$Trt=="aCO2"] <- df.out3$PercP[df.out3$Trt=="aCO2"] * tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]
+    df.out3$Rev[df.out3$Trt=="eCO2"] <- df.out3$PercP[df.out3$Trt=="eCO2"] * tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]
+    
+    df.out2 <- df.out2[,c("Date", "Ring", "Depth", "Rev")]
+    df.out3 <- df.out3[,c("Date", "Ring", "Depth", "Rev")]
+    colnames(df.out2) <- colnames(df.out3) <- c("Date", "Ring", "Depth", "PercP")
+    
+    df.out <- df.out[,c("Date", "Ring", "Depth", "PercP")]
+    
+    updDF <- rbind(df.out, rbind(df.out2, df.out3))
+    
+    newdf.out <- newdf.out[,c("Date", "Ring", "Depth", "PercP")]
+    
+    df.out <- rbind(updDF, newdf.out)
+    
+    df.out <- df.out[order(df.out$Date, df.out$Ring, df.out$Depth),]
     
     
     ### plot
