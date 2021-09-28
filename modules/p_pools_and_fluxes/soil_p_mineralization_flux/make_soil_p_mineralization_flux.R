@@ -1,5 +1,6 @@
 
-make_soil_p_mineralization_flux <- function(bk_density) {
+make_soil_p_mineralization_flux <- function(bk_density,
+                                            which.variable) {
     
     # download the data
     download_soil_p_mineralization_data()
@@ -20,25 +21,66 @@ make_soil_p_mineralization_flux <- function(bk_density) {
     myDF <- rbind(myDF1, myDF2)
     
     
-    # average across rings, dates, and depths, unit: mg/kg/d 
-    myDF.m <- summaryBy(P_mineralisation~date+ring,data=myDF,FUN=mean,keep.names=T,na.rm=T)
+    # average across rings, dates, depth only for top 10cm, unit: mg/kg/d 
+    myDF.m <- summaryBy(P_mineralisation~date+ring,data=myDF,
+                        FUN=mean,keep.names=T,na.rm=T)
     
-
-    # obtain ring averaged soil bulk density (0 - 10 cm only)
-    bk_density <- subset(bk_density, Depth == "0-10cm")
+    # assign depth
+    myDF.m$Depth <- "0_10"
     
-    # add bulk density
-    for (i in 1:6){
-        myDF.m[myDF.m$ring == i, "bk_density"] <- bk_density[bk_density$ring == i, "bulk_density_kg_m3"] 
+    # read in tmpDF
+    # read in the Oct 2018 Johanna data at deeper depths
+    tmpDF <- read.csv("temp_files/belowground_P_working_sheet.csv")
+    tmpDF$Date <- as.Date(tmpDF$Date, format="%d/%m/%y")
+    
+    if (which.variable == "Pmic") {
+        names(tmpDF)[names(tmpDF)=="Pmic"] <- "Ref_var"
+    } else if (which.variable == "Cmic") {
+        names(tmpDF)[names(tmpDF)=="Cmic"] <- "Ref_var"
+    } else if (which.variable == "SoilC") {
+        names(tmpDF)[names(tmpDF)=="SoilC"] <- "Ref_var"
     }
     
-    # from mg kg-1 d-1 to mg m-2 d-1
-    myDF.m$p_mineralization_mg_m2_d <- myDF.m$P_mineralisation * myDF.m$bk_density * 0.1 
+    tmpDF <- tmpDF[,c("Date", "Ring", "Depth", "Ref_var")]
 
-    # output table
-    myDF.out <- myDF.m[,c("date", "ring", "p_mineralization_mg_m2_d")]
-    colnames(myDF.out) <- c("Date", "Ring", "p_mineralization_mg_m2_d")
+    ### assign ring-specific reduction relationship
+    for (i in 1:6) {
+        tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="10_30"] <- tmpDF$Ref_var[tmpDF$Ring==i&tmpDF$Depth=="10_30"]/tmpDF$Ref_var[tmpDF$Ring==i&tmpDF$Depth=="0_10"]
+        tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="transition"] <- tmpDF$Ref_var[tmpDF$Ring==i&tmpDF$Depth=="transition"]/tmpDF$Ref_var[tmpDF$Ring==i&tmpDF$Depth=="0_10"]
+    }
     
+    ### calculate mineralization rate at deeper soil depths
+    for (i in 1:6) {
+        myDF.m$Pmin_10_30[myDF.m$ring==i] <- myDF.m$P_mineralisation[myDF.m$ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="10_30"]
+        myDF.m$Pmin_transition[myDF.m$ring==i] <- myDF.m$P_mineralisation[myDF.m$ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="transition"]
+    }
+
+    myDF1 <- myDF.m[,c("date", "ring", "Depth", "P_mineralisation")]
+    myDF2 <- myDF.m[,c("date", "ring", "Depth", "Pmin_10_30")]
+    myDF3 <- myDF.m[,c("date", "ring", "Depth", "Pmin_transition")]
+    
+    myDF2$Depth <- "10_30"
+    myDF3$Depth <- "transition"
+    
+    colnames(myDF1) <- colnames(myDF2) <- colnames(myDF3) <- c("Date", "Ring", "Depth", "P_mineralisation")
+    
+    myDF <- rbind(myDF1, rbind(myDF2, myDF3))
+    
+    ### merge
+    p_conc <- merge(myDF, bk_density, by=c("Ring", "Depth"))
+    
+    
+    # calculate p mineralization rate, from mg kg-1 d-1 to mg m-2 d-1
+    p_conc$p_mineralization_mg_m2_d <- ifelse(p_conc$Depth=="0_10", p_conc$P_mineralisation * p_conc$bulk_density_kg_m3 * 0.1, 
+                                              ifelse(p_conc$Depth=="10_30", p_conc$P_mineralisation * p_conc$bulk_density_kg_m3 * 0.2,
+                                                     ifelse(p_conc$Depth=="transition", p_conc$P_mineralisation * p_conc$bulk_density_kg_m3 * 0.3, NA)))
+    
+    myDF.m <- summaryBy(p_mineralization_mg_m2_d~Date+Ring+Depth, FUN=mean, data=p_conc,
+                        na.rm=T, keep.names=T)
+    
+    # output table
+    myDF.out <- myDF.m[,c("Date", "Ring", "Depth", "p_mineralization_mg_m2_d")]
+
     ### year 2016 only has one value, which is in Jan, decided to group it with 2015
     #myDF.out$Date <- gsub("2016-01-21", "2015-01-21", myDF.out$Date)
     

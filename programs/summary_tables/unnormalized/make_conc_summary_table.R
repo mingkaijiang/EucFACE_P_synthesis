@@ -14,15 +14,27 @@ make_conc_summary_table <- function() {
                     "Understorey P Conc", 
                     "Understorey Litter P Conc", 
                     "Frass P Conc",
-                    "Microbial P Conc", 
-                    "Soil P Conc", 
-                    "Soil Phosphate P Conc",
-                    "Exchangeable Pi Conc", 
-                    "Exchangeable Po Conc",
-                    "Moderately labile Po Conc", 
-                    "Secondary Fe bound Pi Conc", 
-                    "Primary Ca bound Pi Conc",
-                    "Occluded P Conc")
+                    "Microbial P Conc 0-10cm", 
+                    "Microbial P Conc 10-30cm", 
+                    "Microbial P Conc 30-60cm", 
+                    "Soil P Conc 0-10cm", 
+                    "Soil P Conc 10-30cm", 
+                    "Soil P Conc 30-60cm", 
+                    "Soil Inorg P Conc 0-10cm", 
+                    "Soil Inorg P Conc 10-30cm", 
+                    "Soil Inorg P Conc 30-60cm", 
+                    "Soil Org P Conc 0-10cm", 
+                    "Soil Org P Conc 10-30cm", 
+                    "Soil Org P Conc 30-60cm", 
+                    "Soil Phosphate P Conc 0-10cm",
+                    "Soil Phosphate P Conc 10-30cm",
+                    "Soil Phosphate P Conc 30-60cm",
+                    "Exchangeable Pi Conc 0-10cm", 
+                    "Exchangeable Po Conc 0-10cm",
+                    "Moderately labile Po Conc 0-10cm", 
+                    "Secondary Fe bound Pi Conc 0-10cm", 
+                    "Primary Ca bound Pi Conc 0-10cm",
+                    "Occluded P Conc 0-10cm")
     
     treatDF <- data.frame(conc.terms)
     treatDF$R1 <- rep(NA, length(treatDF$conc.terms))
@@ -111,77 +123,202 @@ make_conc_summary_table <- function() {
     treatDF$notes[treatDF$conc.terms == "Frass P Conc"] <- "Direct measurement"
     
     ### Microbial P concentration
-    out <- summaryBy(PercP~Ring,data=microbial_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Microbial P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Microbial P Conc"] <- min(year(microbial_p_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Microbial P Conc"] <- max(year(microbial_p_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Microbial P Conc"] <- length(unique(microbial_p_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Microbial P Conc"] <- "Top 10 cm"
+    out <- summaryBy(PercP~Ring,
+                     data=microbial_p_concentration[microbial_p_concentration$Depth=="0_10",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Microbial P Conc 0-10cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Microbial P Conc 0-10cm"] <- min(year(microbial_p_concentration$Date[microbial_p_concentration$Depth=="0_10"]))    
+    treatDF$year_end[treatDF$conc.terms == "Microbial P Conc 0-10cm"] <- max(year(microbial_p_concentration$Date[microbial_p_concentration$Depth=="0_10"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Microbial P Conc 0-10cm"] <- length(unique(microbial_p_concentration$Date[microbial_p_concentration$Depth=="0_10"]))  
+    treatDF$notes[treatDF$conc.terms == "Microbial P Conc 0-10cm"] <- "Top 10 cm"
+    
+    
+    ### Microbial P concentration
+    out <- summaryBy(PercP~Ring,
+                     data=microbial_p_concentration[microbial_p_concentration$Depth=="10_30",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Microbial P Conc 10-30cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Microbial P Conc 10-30cm"] <- min(year(microbial_p_concentration$Date[microbial_p_concentration$Depth=="10_30"]))    
+    treatDF$year_end[treatDF$conc.terms == "Microbial P Conc 10-30cm"] <- max(year(microbial_p_concentration$Date[microbial_p_concentration$Depth=="10_30"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Microbial P Conc 10-30cm"] <- length(unique(microbial_p_concentration$Date[microbial_p_concentration$Depth=="10_30"]))  
+    treatDF$notes[treatDF$conc.terms == "Microbial P Conc 10-30cm"] <- ""
+    
+    
+    ### Microbial P concentration
+    out <- summaryBy(PercP~Ring,
+                     data=microbial_p_concentration[microbial_p_concentration$Depth=="transition",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Microbial P Conc 30-60cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Microbial P Conc 30-60cm"] <- min(year(microbial_p_concentration$Date[microbial_p_concentration$Depth=="transition"]))    
+    treatDF$year_end[treatDF$conc.terms == "Microbial P Conc 30-60cm"] <- max(year(microbial_p_concentration$Date[microbial_p_concentration$Depth=="transition"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Microbial P Conc 30-60cm"] <- length(unique(microbial_p_concentration$Date[microbial_p_concentration$Depth=="transition"]))  
+    treatDF$notes[treatDF$conc.terms == "Microbial P Conc 30-60cm"] <- "transition"
+    
     
     ### Soil P concentration
-    out <- summaryBy(PercP~Ring,data=soil_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Soil P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Soil P Conc"] <- min(year(soil_p_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Soil P Conc"] <- max(year(soil_p_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Soil P Conc"] <- length(unique(soil_p_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Soil P Conc"] <- "Averaged across all P forms"
+    out <- summaryBy(PercP~Ring,data=soil_p_concentration[soil_p_concentration$Depth=="0_10",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil P Conc 0-10cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil P Conc 0-10cm"] <- min(year(soil_p_concentration$Date[soil_p_concentration$Depth=="0_10"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil P Conc 0-10cm"] <- max(year(soil_p_concentration$Date[soil_p_concentration$Depth=="0_10"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil P Conc 0-10cm"] <- length(unique(soil_p_concentration$Date[soil_p_concentration$Depth=="0_10"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil P Conc 0-10cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil P concentration
+    out <- summaryBy(PercP~Ring,data=soil_p_concentration[soil_p_concentration$Depth=="10_30",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil P Conc 10-30cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil P Conc 10-30cm"] <- min(year(soil_p_concentration$Date[soil_p_concentration$Depth=="10_30"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil P Conc 10-30cm"] <- max(year(soil_p_concentration$Date[soil_p_concentration$Depth=="10_30"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil P Conc 10-30cm"] <- length(unique(soil_p_concentration$Date[soil_p_concentration$Depth=="10_30"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil P Conc 10-30cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil P concentration
+    out <- summaryBy(PercP~Ring,data=soil_p_concentration[soil_p_concentration$Depth=="transition",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil P Conc 30-60cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil P Conc 30-60cm"] <- min(year(soil_p_concentration$Date[soil_p_concentration$Depth=="transition"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil P Conc 30-60cm"] <- max(year(soil_p_concentration$Date[soil_p_concentration$Depth=="transition"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil P Conc 30-60cm"] <- length(unique(soil_p_concentration$Date[soil_p_concentration$Depth=="transition"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil P Conc 30-60cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil Inorganic P concentration
+    out <- summaryBy(PercP~Ring,data=soil_inorganic_p_concentration[soil_inorganic_p_concentration$Depth=="0_10",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Inorg P Conc 0-10cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Inorg P Conc 0-10cm"] <- min(year(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="0_10"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Inorg P Conc 0-10cm"] <- max(year(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="0_10"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Inorg P Conc 0-10cm"] <- length(unique(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="0_10"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Inorg P Conc 0-10cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil Inorg P concentration
+    out <- summaryBy(PercP~Ring,data=soil_inorganic_p_concentration[soil_inorganic_p_concentration$Depth=="10_30",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Inorg P Conc 10-30cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Inorg P Conc 10-30cm"] <- min(year(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="10_30"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Inorg P Conc 10-30cm"] <- max(year(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="10_30"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Inorg P Conc 10-30cm"] <- length(unique(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="10_30"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Inorg P Conc 10-30cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil Inorg P concentration
+    out <- summaryBy(PercP~Ring,data=soil_inorganic_p_concentration[soil_inorganic_p_concentration$Depth=="transition",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Inorg P Conc 30-60cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Inorg P Conc 30-60cm"] <- min(year(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="transition"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Inorg P Conc 30-60cm"] <- max(year(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="transition"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Inorg P Conc 30-60cm"] <- length(unique(soil_inorganic_p_concentration$Date[soil_inorganic_p_concentration$Depth=="transition"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Inorg P Conc 30-60cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil Organic P concentration
+    out <- summaryBy(PercP~Ring,data=soil_organic_p_concentration[soil_organic_p_concentration$Depth=="0_10",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Org P Conc 0-10cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Org P Conc 0-10cm"] <- min(year(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="0_10"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Org P Conc 0-10cm"] <- max(year(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="0_10"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Org P Conc 0-10cm"] <- length(unique(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="0_10"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Org P Conc 0-10cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil Org P concentration
+    out <- summaryBy(PercP~Ring,data=soil_organic_p_concentration[soil_organic_p_concentration$Depth=="10_30",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Org P Conc 10-30cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Org P Conc 10-30cm"] <- min(year(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="10_30"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Org P Conc 10-30cm"] <- max(year(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="10_30"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Org P Conc 10-30cm"] <- length(unique(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="10_30"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Org P Conc 10-30cm"] <- "Averaged across all P forms"
+    
+    
+    ### Soil Org P concentration
+    out <- summaryBy(PercP~Ring,data=soil_organic_p_concentration[soil_organic_p_concentration$Depth=="transition",],
+                     FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Org P Conc 30-60cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Org P Conc 30-60cm"] <- min(year(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="transition"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Org P Conc 30-60cm"] <- max(year(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="transition"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Org P Conc 30-60cm"] <- length(unique(soil_organic_p_concentration$Date[soil_organic_p_concentration$Depth=="transition"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Org P Conc 30-60cm"] <- "Averaged across all P forms"
+    
+    
     
     ### Soil Phosphate P concentration
-    out <- summaryBy(PercP~Ring,data=soil_phosphate_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Soil Phosphate P Conc", 2:7] <- out$PercP
-    treatDF$year_start[treatDF$conc.terms == "Soil Phosphate P Conc"] <- min(year(soil_phosphate_concentration$Date))    
-    treatDF$year_end[treatDF$conc.terms == "Soil Phosphate P Conc"] <- max(year(soil_phosphate_concentration$Date))    
-    treatDF$timepoint[treatDF$conc.terms == "Soil Phosphate P Conc"] <- length(unique(soil_phosphate_concentration$Date))  
-    treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc"] <- "Top 10 cm"
+    out <- summaryBy(PercP~Ring,data=soil_phosphate_concentration[soil_phosphate_concentration$Depth=="0_10",],FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Phosphate P Conc 0-10cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Phosphate P Conc 0-10cm"] <- min(year(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="0_10"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Phosphate P Conc 0-10cm"] <- max(year(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="0_10"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Phosphate P Conc 0-10cm"] <- length(unique(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="0_10"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc 0-10cm"] <- "Top 10 cm"
+    
+    ### Soil Phosphate P concentration
+    out <- summaryBy(PercP~Ring,data=soil_phosphate_concentration[soil_phosphate_concentration$Depth=="10_30",],FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Phosphate P Conc 10-30cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Phosphate P Conc 10-30cm"] <- min(year(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="10_30"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Phosphate P Conc 10-30cm"] <- max(year(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="10_30"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Phosphate P Conc 10-30cm"] <- length(unique(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="10_30"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc 10-30cm"] <- "Top 10-30 cm"
+    
+    
+    ### Soil Phosphate P concentration
+    out <- summaryBy(PercP~Ring,data=soil_phosphate_concentration[soil_phosphate_concentration$Depth=="transition",],FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$conc.terms == "Soil Phosphate P Conc 30-60cm", 2:7] <- out$PercP
+    treatDF$year_start[treatDF$conc.terms == "Soil Phosphate P Conc 30-60cm"] <- min(year(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="transition"]))    
+    treatDF$year_end[treatDF$conc.terms == "Soil Phosphate P Conc 30-60cm"] <- max(year(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="transition"]))    
+    treatDF$timepoint[treatDF$conc.terms == "Soil Phosphate P Conc 30-60cm"] <- length(unique(soil_phosphate_concentration$Date[soil_phosphate_concentration$Depth=="transition"]))  
+    treatDF$notes[treatDF$conc.terms == "Soil Phosphate P Conc 30-60cm"] <- "Top 30-60 cm"
     
     
     ### Exchangeable Pi Conc
     out <- summaryBy(F1_2_Pi_Exchangeable~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Exchangeable Pi Conc", 2:7] <- out$F1_2_Pi_Exchangeable
-    treatDF$year_start[treatDF$conc.terms == "Exchangeable Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Exchangeable Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Exchangeable Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Exchangeable Pi Conc"] <- "unclear depth info"
+    treatDF[treatDF$conc.terms == "Exchangeable Pi Conc 0-10cm", 2:7] <- out$F1_2_Pi_Exchangeable
+    treatDF$year_start[treatDF$conc.terms == "Exchangeable Pi Conc 0-10cm"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$conc.terms == "Exchangeable Pi Conc 0-10cm"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$conc.terms == "Exchangeable Pi Conc 0-10cm"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$conc.terms == "Exchangeable Pi Conc 0-10cm"] <- " 0-10cm"
     
     ### Exchangeable Po Conc
     out <- summaryBy(F1_2_Po_Exchangeable~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Exchangeable Po Conc", 2:7] <- out$F1_2_Po_Exchangeable
-    treatDF$year_start[treatDF$conc.terms == "Exchangeable Po Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Exchangeable Po Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Exchangeable Po Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Exchangeable Po Conc"] <- "unclear depth info"
+    treatDF[treatDF$conc.terms == "Exchangeable Po Conc 0-10cm", 2:7] <- out$F1_2_Po_Exchangeable
+    treatDF$year_start[treatDF$conc.terms == "Exchangeable Po Conc 0-10cm"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$conc.terms == "Exchangeable Po Conc 0-10cm"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$conc.terms == "Exchangeable Po Conc 0-10cm"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$conc.terms == "Exchangeable Po Conc 0-10cm"] <- " 0-10cm"
     
     ### Moderately labile Po Conc
     out <- summaryBy(F3_Po_Moderately_labile~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Moderately labile Po Conc", 2:7] <- out$F3_Po_Moderately_labile
-    treatDF$year_start[treatDF$conc.terms == "Moderately labile Po Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Moderately labile Po Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Moderately labile Po Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Moderately labile Po Conc"] <- "unclear depth info"
+    treatDF[treatDF$conc.terms == "Moderately labile Po Conc 0-10cm", 2:7] <- out$F3_Po_Moderately_labile
+    treatDF$year_start[treatDF$conc.terms == "Moderately labile Po Conc 0-10cm"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$conc.terms == "Moderately labile Po Conc 0-10cm"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$conc.terms == "Moderately labile Po Conc 0-10cm"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$conc.terms == "Moderately labile Po Conc 0-10cm"] <- " 0-10cm"
     
     ### Secondary Fe bound Pi Conc
     out <- summaryBy(F3_Fe_bound_P_Secondary_mineral~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Secondary Fe bound Pi Conc", 2:7] <- out$F3_Fe_bound_P_Secondary_mineral
-    treatDF$year_start[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Secondary Fe bound Pi Conc"] <- "unclear depth info"
+    treatDF[treatDF$conc.terms == "Secondary Fe bound Pi Conc 0-10cm", 2:7] <- out$F3_Fe_bound_P_Secondary_mineral
+    treatDF$year_start[treatDF$conc.terms == "Secondary Fe bound Pi Conc 0-10cm"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$conc.terms == "Secondary Fe bound Pi Conc 0-10cm"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$conc.terms == "Secondary Fe bound Pi Conc 0-10cm"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$conc.terms == "Secondary Fe bound Pi Conc 0-10cm"] <- " 0-10cm"
     
     ### Primary Ca bound Pi Conc
     out <- summaryBy(F4_Ca_bound_Primary_Mineral~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Primary Ca bound Pi Conc", 2:7] <- out$F4_Ca_bound_Primary_Mineral
-    treatDF$year_start[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Primary Ca bound Pi Conc"] <- "unclear depth info"
+    treatDF[treatDF$conc.terms == "Primary Ca bound Pi Conc 0-10cm", 2:7] <- out$F4_Ca_bound_Primary_Mineral
+    treatDF$year_start[treatDF$conc.terms == "Primary Ca bound Pi Conc 0-10cm"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$conc.terms == "Primary Ca bound Pi Conc 0-10cm"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$conc.terms == "Primary Ca bound Pi Conc 0-10cm"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$conc.terms == "Primary Ca bound Pi Conc 0-10cm"] <- " 0-10cm"
     
     ### Occluded P Conc
     out <- summaryBy(F5_6_Occluded~Ring,data=soil_hedley_p_concentration,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$conc.terms == "Occluded P Conc", 2:7] <- out$F5_6_Occluded
-    treatDF$year_start[treatDF$conc.terms == "Occluded P Conc"] <- min(soil_hedley_p_concentration$Year)    
-    treatDF$year_end[treatDF$conc.terms == "Occluded P Conc"] <- max(soil_hedley_p_concentration$Year)   
-    treatDF$timepoint[treatDF$conc.terms == "Occluded P Conc"] <- length(unique(soil_hedley_p_concentration$Year))  
-    treatDF$notes[treatDF$conc.terms == "Occluded P Conc"] <- "unclear depth info"
+    treatDF[treatDF$conc.terms == "Occluded P Conc 0-10cm", 2:7] <- out$F5_6_Occluded
+    treatDF$year_start[treatDF$conc.terms == "Occluded P Conc 0-10cm"] <- min(soil_hedley_p_concentration$Year)    
+    treatDF$year_end[treatDF$conc.terms == "Occluded P Conc 0-10cm"] <- max(soil_hedley_p_concentration$Year)   
+    treatDF$timepoint[treatDF$conc.terms == "Occluded P Conc 0-10cm"] <- length(unique(soil_hedley_p_concentration$Year))  
+    treatDF$notes[treatDF$conc.terms == "Occluded P Conc 0-10cm"] <- " 0-10cm"
     
     
     ### Mycorrhizal P concentration

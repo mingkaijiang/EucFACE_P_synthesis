@@ -422,13 +422,15 @@ coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=sapwood_p_concentration,
 
 #### Soil P mineralization flux
 #### Note:
-#### It is assumed that the mineralization data is for top 10 cm only!
-#### Also, this is no longer mineralization flux as according to Yolima's new definition
-#### Will need to consult Yolima to revise this flux.
-soil_p_mineralization <- make_soil_p_mineralization_flux(soil_bulk_density)
+#### It is assumed that the mineralization data is for 60 cm depth.
+#### extrapolated based on data from top 10 cm. 
+#### This is the net mineralization flux (i.e. gross - immobilization)
+soil_p_mineralization <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
+                                                         which.variable="Pmic")
 
 
 #### Soil P leaching rate
+### This number is incorrect, need to revisit !!!!!!!!!!!!!!
 soil_p_leaching <- make_soil_p_leaching_flux()
 
 
@@ -551,8 +553,15 @@ coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux
 
 ############################## delta P Pools ###############################
 
-delta_soil_p_pool <- make_yearly_delta_pool_function(inDF=soil_p_pool, 
-                                                     var.col=3)
+
+#### need to revisit the following two, as depth has not been considered properly
+#delta_soil_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=soil_p_pool, 
+#                                                                var.col=4)
+#
+#delta_microbial_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=microbial_p_pool, 
+#                                                                     var.col=4)
+
+
 
 delta_canopy_p_pool <- make_yearly_delta_pool_function(inDF=canopy_p_pool, 
                                                        var.col=3)
@@ -569,8 +578,6 @@ delta_coarse_root_p_pool <- make_yearly_delta_pool_function(inDF=coarse_root_p_p
 delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_pool, 
                                                             var.col=3)
 
-delta_microbial_p_pool <- make_yearly_delta_pool_function(inDF=microbial_p_pool, 
-                                                          var.col=3)
 
 
 
