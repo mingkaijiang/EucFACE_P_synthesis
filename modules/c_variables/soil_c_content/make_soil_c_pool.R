@@ -74,10 +74,10 @@ make_soil_c_pool <- function(bk_density, return="shallow"){
     #------
     #- sum across layers on each date, if "return" is "all_depths"
     if(return=="all_depths"){
-        dat.s <- summaryBy(totCgm2~Plot+Ring+Date,data=mydat,FUN=sum,keep.names=T)
+        dat.s <- summaryBy(totCgm2~plot+ring+Date,data=mydat,FUN=sum,keep.names=T)
         names(dat.s)[4] <- "soil_carbon_pool"
         #- average across plots within each ring
-        dat.s.m <- summaryBy(soil_carbon_pool~Date+Ring,data=dat.s,FUN=mean,keep.names=T)
+        dat.s.m <- summaryBy(soil_carbon_pool~Date+ring,data=dat.s,FUN=mean,keep.names=T)
         dat.s.m$Ring <- as.numeric(dat.s.m$Ring)
         
     }
@@ -89,19 +89,26 @@ make_soil_c_pool <- function(bk_density, return="shallow"){
         #- average across plots within each ring
         dat.s.m <- summaryBy(soil_carbon_pool~Date+ring,data=dat.s,FUN=mean,keep.names=T)
         dat.s.m$Ring <- as.numeric(dat.s.m$ring)
-        
+        dat.s.m$Depth <- "0_10"
+        dat.s.m <- dat.s.m[,c("Date", "Ring", "Depth", "soil_carbon_pool")]
+
     }
     
     #- return by depth, ring, if "return" is "by_depths"
     if(return=="by_depths"){
-        dat.s <- summaryBy(totCgm2~Plot+Ring+Date+Depth,data=mydat,FUN=sum,keep.names=T)
+        dat.s <- summaryBy(totC_g_m2~plot+ring+Date+depth,data=mydat,FUN=sum,keep.names=T)
         names(dat.s)[5] <- "soil_carbon_pool"
         
         
-        dat.s.m <- summaryBy(soil_carbon_pool~Date+Ring+Depth,data=dat.s,FUN=mean,keep.names=T)
-        dat.s.m$Ring <- as.numeric(dat.s.m$Ring)
+        dat.s.m <- summaryBy(soil_carbon_pool~Date+ring+depth,data=dat.s,FUN=mean,keep.names=T)
+        dat.s.m$ring <- as.numeric(dat.s.m$ring)
         
-        dat.s.m <- dat.s.m[,c("Date", "Ring", "soil_carbon_pool", "Depth")]
+        dat.s.m <- dat.s.m[,c("Date", "ring", "depth", "soil_carbon_pool")]
+        colnames(dat.s.m) <- c("Date", "Ring", "Depth", "soil_carbon_pool")
+        
+        dat.s.m$Depth <- gsub("0-10cm", "0_10", dat.s.m$Depth)
+        dat.s.m$Depth <- gsub("10-20cm", "10_20", dat.s.m$Depth)
+        dat.s.m$Depth <- gsub("20-30cm", "20_30", dat.s.m$Depth)
         
     }
     

@@ -38,6 +38,7 @@ make_soil_phosphate_concentration <- function() {
     
     myDF3 <- myDF3[,c("date", "ring", "depth", "phosphate")]
     myDF4 <- myDF4[,c("date", "ring", "depth", "phosphate")]
+    myDF4$date <- as.Date(myDF4$date, "%Y-%m-%d")
     
     # combine both dataframes
     myDF <- rbind(myDF4, myDF3)
@@ -107,7 +108,7 @@ make_soil_phosphate_concentration <- function() {
     # output table
     out <- outDF[,c("Date", "Ring", "Depth", "PercP")]
 
-    out$Ring <- as.character(outDF$Ring)
+    #out$Ring <- as.character(outDF$Ring)
     
     ### plot
     p1 <- ggplot(out, aes(Date, PercP, group=Ring))+

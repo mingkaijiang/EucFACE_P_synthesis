@@ -34,6 +34,9 @@ source("programs/prepare.R")
 # options(warn=-1)
 
 #### Ring-specific bulk density
+### 3 depths profile: 0 - 10,
+###                   10 - 30,
+###                   30 - 60 (transition)
 soil_bulk_density <- make_soil_bulk_density()
 
 
@@ -51,8 +54,8 @@ soil_bulk_density <- make_soil_bulk_density()
 
 #### Soil P concentrations 
 ### three depth: 0 - 10 cm
-###              10 - 20 cm
-###              20 - 30 cm, but mostly missing
+###              10 - 30 cm
+###              30 - 60 cm
 soil_p_concentration <- make_soil_p_concentration()
 
 
@@ -193,9 +196,9 @@ make_understorey_pool_size_comparison(inDF1=understorey_c_pool_clipping,
 
 
 #### Soil C content
-
-#### return sum of all depths
-soil_c_pool <- make_soil_c_pool(soil_bulk_density)
+#### return sum of all depths - currently top 30cm, but we can do top 60cm
+soil_c_pool <- make_soil_c_pool(bk_density=soil_bulk_density,
+                                return="by_depths")
 
 
 #### Microbial C pool
@@ -303,8 +306,7 @@ coarse_root_c_flux <- make_coarse_root_production_flux(coarse_root_c_pool)
 
 ############################## P Pools ###############################
 
-#### Soil P pool
-#### top 10 cm only
+#### Soil P pool - top 60 cm
 soil_p_pool <- make_soil_p_pool(p_conc=soil_p_concentration,
                                 bk_density=soil_bulk_density)
 

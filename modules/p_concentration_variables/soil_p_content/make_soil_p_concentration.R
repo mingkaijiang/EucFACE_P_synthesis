@@ -33,12 +33,34 @@ make_soil_p_concentration <- function(){
     myDF <- rbind(myDF2, myDF3, myDF4, myDF5)
     myDF$Date <- dmy(myDF$Date)
     
+    myDF$depth <- gsub(" 0-10cm", "0_10", myDF$depth)
+    myDF$depth <- gsub("0-10cm", "0_10", myDF$depth)
+    myDF$depth <- gsub(" 10-20cm", "10_30", myDF$depth)
+    myDF$depth <- gsub("10-20cm", "10_30", myDF$depth)
+    myDF$depth <- gsub(" 20-30cm", "10_30", myDF$depth)
+    myDF$depth <- gsub("20-30cm", "10_30", myDF$depth)
+    
+    myDF <- myDF[,c("Date", "ring", "depth", "totP_ppm")]
+    colnames(myDF) <- c("Date", "Ring", "Depth", "totP_ppm")
+    
+    
+    
+    # read in the Oct 2018 Johanna data at deeper depths
+    tmpDF <- read.csv("temp_files/belowground_P_working_sheet.csv")
+    
+    tmpDF <- tmpDF[,c("Date", "Ring", "Depth", "TotalP")]
+    colnames(tmpDF) <- c("Date", "Ring", "Depth", "totP_ppm")
+    tmpDF$Date <- as.Date(tmpDF$Date, format="%d/%m/%y")
+    
+    mgDF <- rbind(myDF, tmpDF)
+    
+    #p1 <- ggplot(mgDF, aes(Date, totP_ppm))+
+    #    geom_point(aes(pch=Depth, col=Ring)); p1
+    
     # average across depths first, unit: ppm which is mg/kg
-    myDF.m <- summaryBy(totP_ppm~Date+ring+depth,
-                        data=myDF,FUN=mean,keep.names=T,na.rm=T)
+    myDF.m <- summaryBy(totP_ppm~Date+Ring+Depth,
+                        data=mgDF,FUN=mean,keep.names=T,na.rm=T)
     
-    
-    myDF.m <- data.frame(lapply(myDF.m, trimws), stringsAsFactors = FALSE)
     
     myDF.m$totP_ppm <- as.numeric(myDF.m$totP_ppm)
     
@@ -46,13 +68,11 @@ make_soil_p_concentration <- function(){
     
     myDF.m <- myDF.m[complete.cases(myDF.m),]
 
-    myDF.out <- myDF.m[,c("Date", "ring", "depth", "PercP")]
-    colnames(myDF.out) <- c("Date", "Ring", "Depth", "PercP")
+    myDF.out <- myDF.m[,c("Date", "Ring", "Depth", "PercP")]
+
+    #p1 <- ggplot(myDF.out, aes(Date, PercP))+
+    #    geom_point(aes(pch=Depth, col=Ring)); p1
     
-    ### replace depth info
-    myDF.out$Depth <- gsub("0-10cm", "0_10", myDF.out$Depth)
-    myDF.out$Depth <- gsub("10-20cm", "10_20", myDF.out$Depth)
-    myDF.out$Depth <- gsub("20-30cm", "20_30", myDF.out$Depth)
     
     return(myDF.out)
     
