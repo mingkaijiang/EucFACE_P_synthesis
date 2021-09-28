@@ -34,7 +34,9 @@ make_total_p_budget <- function(summary_table_flux,
     
     out[out$terms == "Plant P uptake flux", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Total vegetation uptake P flux", 2:7]),2)
     
-    out[out$terms == "Soil P mineralization flux", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Mineralization P flux",2:7]),2)
+    out[out$terms == "Soil P mineralization flux", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Mineralization P flux 0-10cm",2:7]+
+                                                                                summary_table_flux[summary_table_flux$terms=="Mineralization P flux 10-30cm",2:7]+
+                                                                                summary_table_flux[summary_table_flux$terms=="Mineralization P flux 30-60cm",2:7]),2)
     
     out[out$terms == "Plant P uptake over requirement", 2:7] <- round(as.numeric(out[out$terms=="Plant P uptake flux", 2:7])/as.numeric(out[out$terms=="Total plant P requirement flux", 2:7]),2)
     

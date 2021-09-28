@@ -14,9 +14,9 @@ make_c_pool_summary_table <- function() {
                "Fine Root C Pool",
                "Coarse Root C Pool", 
                "Understorey C Pool", 
-               "Microbial C Pool", 
+               "Microbial C Pool",
                "Leaflitter C Pool",
-               "Soil C Pool", 
+               "Soil C Pool",
                "Mycorrhizal C Pool")
     
     treatDF <- data.frame(terms)
@@ -113,17 +113,21 @@ make_c_pool_summary_table <- function() {
 
     
     ### Microbial C pool
-    out <- summaryBy(Cmic_g_m2~Ring,data=microbial_c_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Microbial C Pool", 2:7] <- out$Cmic_g_m2
+    out1 <- summaryBy(Cmic_g_m2~Ring+Depth,data=microbial_c_pool,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(Cmic_g_m2~Ring,data=out1,FUN=sum,keep.names=T,na.rm=T)
+    
+    treatDF[treatDF$terms == "Microbial C Pool", 2:7] <- out2$Cmic_g_m2
     treatDF$year_start[treatDF$terms == "Microbial C Pool"] <- min(year(microbial_c_pool$date))    
     treatDF$year_end[treatDF$terms == "Microbial C Pool"] <- max(year(microbial_c_pool$date))    
     treatDF$timepoint[treatDF$terms == "Microbial C Pool"] <- length(unique(microbial_c_pool$date))  
-    treatDF$notes[treatDF$terms == "Microbial C Pool"] <- "Top 10 cm, may have problem during extraction"
+    treatDF$notes[treatDF$terms == "Microbial C Pool"] <- "all depth"
     
     
     ### Soil C pool
-    out <- summaryBy(soil_carbon_pool~Ring,data=soil_c_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Soil C Pool", 2:7] <- out$soil_carbon_pool
+    out1 <- summaryBy(soil_carbon_pool~Ring+Depth,data=soil_c_pool,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(soil_carbon_pool~Ring,data=out1,FUN=sum,keep.names=T,na.rm=T)
+    
+    treatDF[treatDF$terms == "Soil C Pool", 2:7] <- out2$soil_carbon_pool
     treatDF$year_start[treatDF$terms == "Soil C Pool"] <- min(year(soil_c_pool$Date))    
     treatDF$year_end[treatDF$terms == "Soil C Pool"] <- max(year(soil_c_pool$Date))    
     treatDF$timepoint[treatDF$terms == "Soil C Pool"] <- length(unique(soil_c_pool$Date))  
@@ -131,12 +135,14 @@ make_c_pool_summary_table <- function() {
     
 
     ### Mycorrhizal C pool
-    out <- summaryBy(mycorrhizal_c_pool~Ring,data=mycorrhizal_c_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Mycorrhizal C Pool", 2:7]  <- out$mycorrhizal_c_pool
+    out1 <- summaryBy(mycorrhizal_c_pool~Ring+Depth,data=mycorrhizal_c_pool,FUN=mean,keep.names=T,na.rm=T)
+    out2 <- summaryBy(mycorrhizal_c_pool~Ring,data=out1,FUN=sum,keep.names=T,na.rm=T)
+    
+    treatDF[treatDF$terms == "Mycorrhizal C Pool", 2:7]  <- out2$mycorrhizal_c_pool
     treatDF$year_start[treatDF$terms == "Mycorrhizal C Pool"] <- min(year(mycorrhizal_c_pool$Date))
     treatDF$year_end[treatDF$terms == "Mycorrhizal C Pool"] <- max(year(mycorrhizal_c_pool$Date))
     treatDF$timepoint[treatDF$terms == "Mycorrhizal C Pool"] <- length(unique(mycorrhizal_c_pool$Date))
-    treatDF$notes[treatDF$terms == "Mycorrhizal C Pool"]  <- "For 0 - 30 cm depth, assumed 70% sand"
+    treatDF$notes[treatDF$terms == "Mycorrhizal C Pool"]  <- "all"
     
     
     ### calculate treatment averages

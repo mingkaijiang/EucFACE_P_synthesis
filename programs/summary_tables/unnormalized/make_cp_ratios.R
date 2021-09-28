@@ -44,11 +44,15 @@ make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
     out$frass <- as.numeric(c_flux[c_flux$terms == "Frass C flux", 2:7]/p_flux[p_flux$terms == "Frass P flux",
                                                                                2:7])
     
-    out$soil <- as.numeric(c_pool[c_pool$terms == "Soil C Pool", 2:7]/p_pool[p_pool$terms == "Soil P Pool",
-                                                                             2:7])
     
-    out$microbe <- as.numeric(c_pool[c_pool$terms == "Microbial C Pool", 2:7]/p_pool[p_pool$terms == "Microbial P Pool",
-                                                                                     2:7])
+    
+    out$soil <- as.numeric(c_pool[c_pool$terms == "Soil C Pool", 2:7]/(p_pool[p_pool$terms == "Soil P Pool 0-10cm",2:7]+
+                                                                           p_pool[p_pool$terms == "Soil P Pool 10-30cm",2:7]+
+                                                                           p_pool[p_pool$terms == "Soil P Pool 30-60cm",2:7]))
+    
+    out$microbe <- as.numeric(c_pool[c_pool$terms == "Microbial C Pool", 2:7]/(p_pool[p_pool$terms == "Microbial P Pool 0-10cm",2:7]+
+                                                                                   p_pool[p_pool$terms == "Microbial P Pool 10-30cm",2:7]+
+                                                                                   p_pool[p_pool$terms == "Microbial P Pool 30-60cm",2:7]))
     
     write.csv(out, "plots_tables/summary_tables/summary_cp_ratios.csv", row.names=F)
     
