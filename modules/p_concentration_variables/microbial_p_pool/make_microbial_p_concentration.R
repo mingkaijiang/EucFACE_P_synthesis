@@ -29,6 +29,8 @@ make_microbial_p_concentration <- function() {
     df.out <- df.m[,c("date", "ring", "PercP")]
     colnames(df.out) <- c("Date", "Ring", "PercP")
     
+    df.out$Depth <- "0_10"
+    
     
     ### this is august/sep 2017 data
     newdf <- read.csv("temp_files/MASTER_Mic_P_biomass_P0091.csv")
@@ -40,12 +42,39 @@ make_microbial_p_concentration <- function() {
     ### 
     newdf.m <- summaryBy(mic_P_mg.kg~ring+depth+Date, data=newdf, 
                          FUN=mean, na.rm=T, keep.names=T)
-    newdf.s <- subset(newdf.m, depth == "0-10")
-    newdf.s$PercP <- newdf.s$mic_P_mg.kg * 10^-4
-    newdf.out <- newdf.s[,c("Date", "ring", "PercP")]
-    colnames(newdf.out) <- c("Date", "Ring", "PercP")
+    #newdf.s <- subset(newdf.m, depth == "0-10")
+    newdf.m$PercP <- newdf.m$mic_P_mg.kg * 10^-4
+    newdf.out <- newdf.m[,c("Date", "ring", "PercP", "depth")]
+    colnames(newdf.out) <- c("Date", "Ring", "PercP", "Depth")
+    
+    newdf.out$Depth <- gsub("0-10", "0_10", newdf.out$Depth)
+    newdf.out$Depth <- gsub("10-30", "10_30", newdf.out$Depth)
     
     df.out <- rbind(df.out, newdf.out)
+    
+    
+    ### plot
+    p1 <- ggplot(df.out, aes(Date, PercP, group=Ring))+
+        geom_point(aes(pch=Depth, col=Ring, fill=Ring))
+    
+    ### calculate average PercP per depth
+    plotDF <- summaryBy(PercP~Depth, data=df.out, FUN=mean, keep.names=T, na.rm=T)
+    
+    p2 <- ggplot(plotDF, aes(Depth, PercP))+
+        geom_point()
+    
+    ### subtract PercP in Johanna's dataset
+    subDF <- subset(df.out, Date=="2017-09-01")
+    
+    p3 <- ggplot(subDF, aes(Depth, PercP))+
+        geom_point()
+    
+    pdf("plots_tables/checks/MicP_check.pdf")
+    plot(p1)
+    plot(p2)
+    plot(p3)
+    dev.off()
+    
     
     return(df.out)
     

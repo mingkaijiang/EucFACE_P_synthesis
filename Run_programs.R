@@ -46,23 +46,28 @@ soil_bulk_density <- make_soil_bulk_density()
 ############################## Soil ###############################
 
 
-belowground_P_working_sheet()
+#belowground_P_working_sheet()
 
 
 #### Soil P concentrations 
+### three depth: 0 - 10 cm
+###              10 - 20 cm
+###              20 - 30 cm, but mostly missing
 soil_p_concentration <- make_soil_p_concentration()
 
 
 #### Soil phosphate conc, this returns % of P, not % of PO4!
-#### Only top 10 cm!
+#### Only top 10 cm in the earlier datasets (with additional 0 - 2 cm depth)
+#### but Johanna's 2018 data has a complete depth profile (up to transition zone)
 soil_phosphate_concentration <- make_soil_phosphate_concentration()
 
 
 #### Microbial P conc.
-#### Only top 10 cm!
+#### Top 60 cm
 microbial_p_concentration <- make_microbial_p_concentration()
 
 #### Hedley fractionation dataset
+### top 10 cm
 soil_hedley_p_concentration <- make_soil_hedley_p_concentration()
 
 

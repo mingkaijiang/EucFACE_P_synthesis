@@ -34,7 +34,8 @@ make_soil_p_concentration <- function(){
     myDF$Date <- dmy(myDF$Date)
     
     # average across depths first, unit: ppm which is mg/kg
-    myDF.m <- summaryBy(totP_ppm~Date+ring,data=myDF,FUN=mean,keep.names=T,na.rm=T)
+    myDF.m <- summaryBy(totP_ppm~Date+ring+depth,
+                        data=myDF,FUN=mean,keep.names=T,na.rm=T)
     
     
     myDF.m <- data.frame(lapply(myDF.m, trimws), stringsAsFactors = FALSE)
@@ -45,8 +46,13 @@ make_soil_p_concentration <- function(){
     
     myDF.m <- myDF.m[complete.cases(myDF.m),]
 
-    myDF.out <- myDF.m[,c("Date", "ring", "PercP")]
-    colnames(myDF.out) <- c("Date", "Ring", "PercP")
+    myDF.out <- myDF.m[,c("Date", "ring", "depth", "PercP")]
+    colnames(myDF.out) <- c("Date", "Ring", "Depth", "PercP")
+    
+    ### replace depth info
+    myDF.out$Depth <- gsub("0-10cm", "0_10", myDF.out$Depth)
+    myDF.out$Depth <- gsub("10-20cm", "10_20", myDF.out$Depth)
+    myDF.out$Depth <- gsub("20-30cm", "20_30", myDF.out$Depth)
     
     return(myDF.out)
     
