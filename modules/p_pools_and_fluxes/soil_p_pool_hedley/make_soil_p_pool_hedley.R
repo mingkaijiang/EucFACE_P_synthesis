@@ -6,13 +6,13 @@ make_soil_p_pool_hedley <- function(p_conc, bk_density){
     ### averaging bulk density across depths
     #bk <- summaryBy(bulk_density_kg_m3~ring, data=bk_density, FUN=mean,
     #                keep.names=T, na.rm=T)
-    bk <- subset(bk_density, Depth == "0-10cm")
+    bk <- subset(bk_density, Depth == "0_10")
     
     p_pool <- p_conc
     
     # assign bulk density onto each ring and each depth
     for (i in 1:6) {
-        p_conc[p_conc$Ring == i, "bk_kg_m3"] <- bk[bk$ring == i, "bulk_density_kg_m3"] 
+        p_conc[p_conc$Ring == i, "bk_kg_m3"] <- bk[bk$Ring == i, "bulk_density_kg_m3"] 
     }
     
     # calculate each P pool in top 10 cm of soil (hence the * 0.1), unit kg m-2

@@ -29,7 +29,9 @@ make_flux_summary_table <- function() {
                "Total vegetation production P flux",
                "Total vegetation retranslocation P flux",
                "Total vegetation uptake P flux",
-               "Mineralization P flux",
+               "Mineralization P flux 0-10cm",
+               "Mineralization P flux 10-30cm",
+               "Mineralization P flux 30-60cm",
                "Leaching P flux")
     
     treatDF <- data.frame(terms)
@@ -175,13 +177,33 @@ make_flux_summary_table <- function() {
     
     ###  P mineralization flux
     for (i in c(1:6)) {
-        treatDF[treatDF$terms == "Mineralization P flux", i+1] <- with(soil_p_mineralization[soil_p_mineralization$Ring ==i,],
+        treatDF[treatDF$terms == "Mineralization P flux 0-10cm", i+1] <- with(soil_p_mineralization[soil_p_mineralization$Ring ==i&soil_p_mineralization$Depth =="0_10",],
                                                                     sum(p_mineralization_mg_m2_d*Days)/sum(Days)) * conv
     }
-    treatDF$year_start[treatDF$terms == "Mineralization P flux"] <- min(year(soil_p_mineralization$Date))    
-    treatDF$year_end[treatDF$terms == "Mineralization P flux"] <- max(year(soil_p_mineralization$Date))    
-    treatDF$timepoint[treatDF$terms == "Mineralization P flux"] <- length(unique(soil_p_mineralization$Date))  
-    treatDF$notes[treatDF$terms == "Mineralization P flux"] <- "obtained"
+    treatDF$year_start[treatDF$terms == "Mineralization P flux 0-10cm"] <- min(year(soil_p_mineralization$Date[soil_p_mineralization$Depth =="0_10"]))    
+    treatDF$year_end[treatDF$terms == "Mineralization P flux 0-10cm"] <- max(year(soil_p_mineralization$Date[soil_p_mineralization$Depth =="0_10"]))    
+    treatDF$timepoint[treatDF$terms == "Mineralization P flux 0-10cm"] <- length(unique(soil_p_mineralization$Date[soil_p_mineralization$Depth =="0_10"]))  
+    treatDF$notes[treatDF$terms == "Mineralization P flux 0-10cm"] <- " 0-10cm"
+    
+    ###  P mineralization flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Mineralization P flux 10-30cm", i+1] <- with(soil_p_mineralization[soil_p_mineralization$Ring ==i&soil_p_mineralization$Depth =="10_30",],
+                                                                            sum(p_mineralization_mg_m2_d*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Mineralization P flux 10-30cm"] <- min(year(soil_p_mineralization$Date[soil_p_mineralization$Depth =="10_30"]))    
+    treatDF$year_end[treatDF$terms == "Mineralization P flux 10-30cm"] <- max(year(soil_p_mineralization$Date[soil_p_mineralization$Depth =="10_30"]))    
+    treatDF$timepoint[treatDF$terms == "Mineralization P flux 10-30cm"] <- length(unique(soil_p_mineralization$Date[soil_p_mineralization$Depth =="10_30"]))  
+    treatDF$notes[treatDF$terms == "Mineralization P flux 10-30cm"] <- " 10-30cm"
+    
+    ###  P mineralization flux
+    for (i in c(1:6)) {
+      treatDF[treatDF$terms == "Mineralization P flux 30-60cm", i+1] <- with(soil_p_mineralization[soil_p_mineralization$Ring ==i&soil_p_mineralization$Depth =="transition",],
+                                                                            sum(p_mineralization_mg_m2_d*Days)/sum(Days)) * conv
+    }
+    treatDF$year_start[treatDF$terms == "Mineralization P flux 30-60cm"] <- min(year(soil_p_mineralization$Date[soil_p_mineralization$Depth =="transition"]))    
+    treatDF$year_end[treatDF$terms == "Mineralization P flux 30-60cm"] <- max(year(soil_p_mineralization$Date[soil_p_mineralization$Depth =="transition"]))    
+    treatDF$timepoint[treatDF$terms == "Mineralization P flux 30-60cm"] <- length(unique(soil_p_mineralization$Date[soil_p_mineralization$Depth =="transition"]))  
+    treatDF$notes[treatDF$terms == "Mineralization P flux 30-60cm"] <- " 30-60cm"
     
     ###  P leaching flux
     for (i in c(1:6)) {
