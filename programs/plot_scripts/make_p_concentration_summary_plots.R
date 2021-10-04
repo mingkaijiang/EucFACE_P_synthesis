@@ -1,4 +1,4 @@
-make_p_concentration_summary_plots <- function(inDF) {
+make_p_concentration_summary_plots <- function(inDF,norm) {
     
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Canopy P Conc"], 
@@ -62,33 +62,67 @@ make_p_concentration_summary_plots <- function(inDF) {
     plotDF4$neg <- with(plotDF4, mean - sd)
     
     ### Plot 5
-    plotDF5 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Soil P Conc"], 
-                            inDF$eCO2[inDF$conc.terms=="Soil P Conc"],
-                            inDF$aCO2[inDF$conc.terms=="Microbial P Conc"], 
-                            inDF$eCO2[inDF$conc.terms=="Microbial P Conc"]), 
+    plotDF5 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Soil P Conc 0-10cm"], 
+                            inDF$eCO2[inDF$conc.terms=="Soil P Conc 0-10cm"],
+                            inDF$aCO2[inDF$conc.terms=="Microbial P Conc 0-10cm"], 
+                            inDF$eCO2[inDF$conc.terms=="Microbial P Conc 0-10cm"]), 
                           NA, NA)
     colnames(plotDF5) <- c("mean", "sd", "Variable")
-    plotDF5$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Soil P Conc"], 
-                    inDF$eCO2_sd[inDF$conc.terms=="Soil P Conc"],
-                    inDF$aCO2_sd[inDF$conc.terms=="Microbial P Conc"], 
-                    inDF$eCO2_sd[inDF$conc.terms=="Microbial P Conc"])
-    plotDF5$Variable <- rep(c("Soil", "Microbe"), each=2)
+    plotDF5$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Soil P Conc 0-10cm"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Soil P Conc 0-10cm"],
+                    inDF$aCO2_sd[inDF$conc.terms=="Microbial P Conc 0-10cm"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Microbial P Conc 0-10cm"])
+    plotDF5$Variable <- rep(c("Soil 0-10cm", "Microbe 0-10cm"), each=2)
     plotDF5$Trt <- rep(c("aCO2", "eCO2"), 2)
     plotDF5$pos <- with(plotDF5, mean + sd)
     plotDF5$neg <- with(plotDF5, mean - sd)
     
     ### Plot 6
-    plotDF6 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Soil Phosphate P Conc"], 
-                            inDF$eCO2[inDF$conc.terms=="Soil Phosphate P Conc"]), 
+    plotDF6 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Soil Phosphate P Conc 0-10cm"], 
+                            inDF$eCO2[inDF$conc.terms=="Soil Phosphate P Conc 0-10cm"]), 
                           NA, NA)
     colnames(plotDF6) <- c("mean", "sd", "Variable")
-    plotDF6$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Soil Phosphate P Conc"], 
-                    inDF$eCO2_sd[inDF$conc.terms=="Soil Phosphate P Conc"])
-    plotDF6$Variable <- rep(c("Soil Phosphate"), each=2)
+    plotDF6$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Soil Phosphate P Conc 0-10cm"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Soil Phosphate P Conc 0-10cm"])
+    plotDF6$Variable <- rep(c("Soil Phosphate 0-10cm"), each=2)
     plotDF6$Trt <- rep(c("aCO2", "eCO2"), 1)
     plotDF6$pos <- with(plotDF6, mean + sd)
     plotDF6$neg <- with(plotDF6, mean - sd)
 
+    
+    ### plotDF7
+    plotDF7 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Soil P Conc 10-30cm"], 
+                            inDF$eCO2[inDF$conc.terms=="Soil P Conc 10-30cm"],
+                            inDF$aCO2[inDF$conc.terms=="Microbial P Conc 10-30cm"], 
+                            inDF$eCO2[inDF$conc.terms=="Microbial P Conc 10-30cm"]), 
+                          NA, NA)
+    colnames(plotDF7) <- c("mean", "sd", "Variable")
+    plotDF7$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Soil P Conc 10-30cm"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Soil P Conc 10-30cm"],
+                    inDF$aCO2_sd[inDF$conc.terms=="Microbial P Conc 10-30cm"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Microbial P Conc 10-30cm"])
+    plotDF7$Variable <- rep(c("Soil 10-30cm", "Microbe 10-30cm"), each=2)
+    plotDF7$Trt <- rep(c("aCO2", "eCO2"), 2)
+    plotDF7$pos <- with(plotDF7, mean + sd)
+    plotDF7$neg <- with(plotDF7, mean - sd)
+    
+    
+    ### plotDF8
+    plotDF8 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Soil P Conc 30-60cm"], 
+                            inDF$eCO2[inDF$conc.terms=="Soil P Conc 30-60cm"],
+                            inDF$aCO2[inDF$conc.terms=="Microbial P Conc 30-60cm"], 
+                            inDF$eCO2[inDF$conc.terms=="Microbial P Conc 30-60cm"]), 
+                          NA, NA)
+    colnames(plotDF8) <- c("mean", "sd", "Variable")
+    plotDF8$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Soil P Conc 30-60cm"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Soil P Conc 30-60cm"],
+                    inDF$aCO2_sd[inDF$conc.terms=="Microbial P Conc 30-60cm"], 
+                    inDF$eCO2_sd[inDF$conc.terms=="Microbial P Conc 30-60cm"])
+    plotDF8$Variable <- rep(c("Soil 30-60cm", "Microbe 30-60cm"), each=2)
+    plotDF8$Trt <- rep(c("aCO2", "eCO2"), 2)
+    plotDF8$pos <- with(plotDF8, mean + sd)
+    plotDF8$neg <- with(plotDF8, mean - sd)
+    
     
     ### Plotting
     p1 <- ggplot(plotDF1, aes(x=Variable, y=mean))+
@@ -203,7 +237,7 @@ make_p_concentration_summary_plots <- function(inDF) {
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="P concentration (%)")+
         theme_linedraw() +
-        ylim(0,0.0002)+
+        ylim(0,0.0003)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -219,18 +253,62 @@ make_p_concentration_summary_plots <- function(inDF) {
                             labels=c(expression(aCO[2]), expression(eCO[2])))
     
     
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    p7 <- ggplot(plotDF7, aes(x=Variable, y=mean))+
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
+        geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                      position = position_dodge(0.9), width=0.2, size=0.4) +
+        labs(x="", y="P concentration (%)")+
+        theme_linedraw() +
+        ylim(0,0.01)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=12),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))
+    
+    
+    p8 <- ggplot(plotDF8, aes(x=Variable, y=mean))+
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
+        geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                      position = position_dodge(0.9), width=0.2, size=0.4) +
+        labs(x="", y="P concentration (%)")+
+        theme_linedraw() +
+        ylim(0,0.01)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=12),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))
+    
+    
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)", "(g)", "(h)")
     
     require(grid)
     require(cowplot)
     
     ## plot 
     pdf(paste0("plots_tables/output/P_Concentration_Summary_Plots_", norm, ".pdf"),
-        width=8,height=8)
-    plot_grid(p1, p4, p2, p5, p3, p6, labels="", ncol=2, align="v", axis = "l",
-              rel_heights = c(1, 1, 1.2))
-    grid.text(grid.labs, x = c(0.15, 0.65, 0.15, 0.65, 0.15, 0.65),
-              y = c(0.95, 0.95, 0.65, 0.65, 0.34, 0.34), 
+        width=8,height=12)
+    plot_grid(p1, p4, p2, p5, p7, p8, p3, p6, labels="", ncol=2, align="v", axis = "l",
+              rel_heights = c(1, 1, 1, 1.2))
+    grid.text(grid.labs, x = c(0.15, 0.65, 0.15, 0.65, 0.15, 0.65, 0.15, 0.65),
+              y = c(0.96, 0.96, 0.75, 0.75, 0.5, 0.5, 0.24, 0.24), 
               gp=gpar(fontsize=14, col="black", fontface="bold"))
     dev.off()
     

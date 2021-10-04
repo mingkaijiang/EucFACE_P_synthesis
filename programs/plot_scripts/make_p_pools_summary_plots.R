@@ -1,4 +1,4 @@
-make_p_pools_summary_plots <- function(inDF) {
+make_p_pools_summary_plots <- function(inDF,norm) {
     
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$aCO2[inDF$terms=="Total Wood P Pool"], 
@@ -53,38 +53,62 @@ make_p_pools_summary_plots <- function(inDF) {
     plotDF1$neg <- with(plotDF1, mean - sd)
     
     ### Plot 2
-    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="Microbial P Pool"], 
-                            inDF$eCO2[inDF$terms=="Microbial P Pool"]), 
+    plotDF2 <- data.frame(c(inDF$aCO2[inDF$terms=="Microbial P Pool 0-10cm"], 
+                            inDF$eCO2[inDF$terms=="Microbial P Pool 0-10cm"],
+                            inDF$aCO2[inDF$terms=="Microbial P Pool 10-30cm"], 
+                            inDF$eCO2[inDF$terms=="Microbial P Pool 10-30cm"],
+                            inDF$aCO2[inDF$terms=="Microbial P Pool 30-60cm"], 
+                            inDF$eCO2[inDF$terms=="Microbial P Pool 30-60cm"]), 
                           NA, NA)
     colnames(plotDF2) <- c("mean", "sd", "Variable")
-    plotDF2$sd <- c(inDF$aCO2_sd[inDF$terms=="Microbial P Pool"], 
-                    inDF$eCO2_sd[inDF$terms=="Microbial P Pool"])
-    plotDF2$Variable <- rep(c("Microbe"), each=2)
-    plotDF2$Trt <- rep(c("aCO2", "eCO2"), 1)
+    plotDF2$sd <- c(inDF$aCO2_sd[inDF$terms=="Microbial P Pool 0-10cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Microbial P Pool 0-10cm"],
+                    inDF$aCO2_sd[inDF$terms=="Microbial P Pool 10-30cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Microbial P Pool 10-30cm"],
+                    inDF$aCO2_sd[inDF$terms=="Microbial P Pool 30-60cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Microbial P Pool 30-60cm"])
+    plotDF2$Variable <- rep(c("Microbe 0-10cm","Microbe 10-30cm","Microbe 30-60cm"), each=2)
+    plotDF2$Trt <- rep(c("aCO2", "eCO2"), 3)
     plotDF2$pos <- with(plotDF2, mean + sd)
     plotDF2$neg <- with(plotDF2, mean - sd)
     
     ### Plot 3
-    plotDF3 <- data.frame(c(inDF$aCO2[inDF$terms=="Soil Phosphate P Pool"], 
-                            inDF$eCO2[inDF$terms=="Soil Phosphate P Pool"]), 
+    plotDF3 <- data.frame(c(inDF$aCO2[inDF$terms=="Soil Phosphate P Pool 0-10cm"], 
+                            inDF$eCO2[inDF$terms=="Soil Phosphate P Pool 0-10cm"],
+                            inDF$aCO2[inDF$terms=="Soil Phosphate P Pool 10-30cm"], 
+                            inDF$eCO2[inDF$terms=="Soil Phosphate P Pool 10-30cm"],
+                            inDF$aCO2[inDF$terms=="Soil Phosphate P Pool 30-60cm"], 
+                            inDF$eCO2[inDF$terms=="Soil Phosphate P Pool 30-60cm"]), 
                           NA, NA)
     colnames(plotDF3) <- c("mean", "sd", "Variable")
-    plotDF3$sd <- c(inDF$aCO2_sd[inDF$terms=="Soil Phosphate P Pool"], 
-                    inDF$eCO2_sd[inDF$terms=="Soil Phosphate P Pool"])
-    plotDF3$Variable <- rep(c("Soil Phosphate"), each=2)
-    plotDF3$Trt <- rep(c("aCO2", "eCO2"), 1)
+    plotDF3$sd <- c(inDF$aCO2_sd[inDF$terms=="Soil Phosphate P Pool 0-10cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Soil Phosphate P Pool 0-10cm"],
+                    inDF$aCO2_sd[inDF$terms=="Soil Phosphate P Pool 10-30cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Soil Phosphate P Pool 10-30cm"],
+                    inDF$aCO2_sd[inDF$terms=="Soil Phosphate P Pool 30-60cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Soil Phosphate P Pool 30-60cm"])
+    plotDF3$Variable <- rep(c("Soil Phosphate  0-10cm","Soil Phosphate  10-30cm","Soil Phosphate  30-60cm"), each=2)
+    plotDF3$Trt <- rep(c("aCO2", "eCO2"), 3)
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
     
     ### Plot 4
-    plotDF4 <- data.frame(c(inDF$aCO2[inDF$terms=="Soil P Pool"], 
-                            inDF$eCO2[inDF$terms=="Soil P Pool"]), 
+    plotDF4 <- data.frame(c(inDF$aCO2[inDF$terms=="Soil P Pool 0-10cm"], 
+                            inDF$eCO2[inDF$terms=="Soil P Pool 0-10cm"],
+                            inDF$aCO2[inDF$terms=="Soil P Pool 10-30cm"], 
+                            inDF$eCO2[inDF$terms=="Soil P Pool 10-30cm"],
+                            inDF$aCO2[inDF$terms=="Soil P Pool 30-60cm"], 
+                            inDF$eCO2[inDF$terms=="Soil P Pool 30-60cm"]), 
                           NA, NA)
     colnames(plotDF4) <- c("mean", "sd", "Variable")
-    plotDF4$sd <- c(inDF$aCO2_sd[inDF$terms=="Soil P Pool"], 
-                    inDF$eCO2_sd[inDF$terms=="Soil P Pool"])
-    plotDF4$Variable <- rep(c("Soil"), each=2)
-    plotDF4$Trt <- rep(c("aCO2", "eCO2"), 1)
+    plotDF4$sd <- c(inDF$aCO2_sd[inDF$terms=="Soil P Pool 0-10cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Soil P Pool 0-10cm"],
+                    inDF$aCO2_sd[inDF$terms=="Soil P Pool 10-30cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Soil P Pool 10-30cm"],
+                    inDF$aCO2_sd[inDF$terms=="Soil P Pool 30-60cm"], 
+                    inDF$eCO2_sd[inDF$terms=="Soil P Pool 30-60cm"])
+    plotDF4$Variable <- rep(c("Soil 0-10cm","Soil 10-30cm","Soil 30-60cm"), each=2)
+    plotDF4$Trt <- rep(c("aCO2", "eCO2"), 3)
     plotDF4$pos <- with(plotDF4, mean + sd)
     plotDF4$neg <- with(plotDF4, mean - sd)
     

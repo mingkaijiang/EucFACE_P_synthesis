@@ -1,4 +1,4 @@
-make_p_budget_ring_plots <- function(inDF) {
+make_p_budget_ring_plots <- function(inDF, norm) {
     
     ################### Plot all P summary budget plots
     
