@@ -429,8 +429,35 @@ coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=sapwood_p_concentration,
 #### It is assumed that the mineralization data is for 60 cm depth.
 #### extrapolated based on data from top 10 cm. 
 #### This is the net mineralization flux (i.e. gross - immobilization)
-soil_p_mineralization <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
+soil_p_mineralization <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+                                                         fineroot_c_pool=fineroot_c_pool,
                                                          which.variable="Pmic")
+
+soil_p_mineralization2 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+                                                                  fineroot_c_pool=fineroot_c_pool,
+                                                                  which.variable="Pmic")
+
+#soil_p_mineralization2 <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
+#                                                          fineroot_c_pool=fineroot_c_pool,
+#                                                          which.variable="Cmic")
+
+soil_p_mineralization3 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+                                                          fineroot_c_pool=fineroot_c_pool,
+                                                          which.variable="SoilC")
+
+soil_p_mineralization4 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+                                                          fineroot_c_pool=fineroot_c_pool,
+                                                          which.variable="FinerootC")
+
+### combine the estimated soil p mineralization flux
+compare_soil_p_mineralization_fluxes(flux1=soil_p_mineralization, 
+                                     flux2=soil_p_mineralization2, 
+                                     flux3=soil_p_mineralization3,
+                                     flux4=soil_p_mineralization4,
+                                     name1="Pmic",
+                                     name2="Cmic",
+                                     name3="SoilC",
+                                     name4="FinerootC")
 
 
 #### Soil P leaching rate

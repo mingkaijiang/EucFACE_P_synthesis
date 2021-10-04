@@ -117,9 +117,9 @@ make_c_pool_summary_table <- function() {
     out2 <- summaryBy(Cmic_g_m2~Ring,data=out1,FUN=sum,keep.names=T,na.rm=T)
     
     treatDF[treatDF$terms == "Microbial C Pool", 2:7] <- out2$Cmic_g_m2
-    treatDF$year_start[treatDF$terms == "Microbial C Pool"] <- min(year(microbial_c_pool$date))    
-    treatDF$year_end[treatDF$terms == "Microbial C Pool"] <- max(year(microbial_c_pool$date))    
-    treatDF$timepoint[treatDF$terms == "Microbial C Pool"] <- length(unique(microbial_c_pool$date))  
+    treatDF$year_start[treatDF$terms == "Microbial C Pool"] <- min(year(microbial_c_pool$Date))    
+    treatDF$year_end[treatDF$terms == "Microbial C Pool"] <- max(year(microbial_c_pool$Date))    
+    treatDF$timepoint[treatDF$terms == "Microbial C Pool"] <- length(unique(microbial_c_pool$Date))  
     treatDF$notes[treatDF$terms == "Microbial C Pool"] <- "all depth"
     
     

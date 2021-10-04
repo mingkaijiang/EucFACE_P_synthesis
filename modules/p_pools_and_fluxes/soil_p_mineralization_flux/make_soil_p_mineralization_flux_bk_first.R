@@ -1,5 +1,5 @@
 
-make_soil_p_mineralization_flux <- function(bk_density,
+make_soil_p_mineralization_flux_bk_first <- function(bk_density,
                                             fineroot_c_pool,
                                             which.variable) {
     
@@ -28,8 +28,16 @@ make_soil_p_mineralization_flux <- function(bk_density,
     
     # assign depth
     myDF.m$Depth <- "0_10"
+    names(myDF.m)[names(myDF.m)=="ring"] <- "Ring"
     
     # merge with soil bulk density to calculate mineralization flux in unit of mg/m3/d
+    bk_density <- bk_density[bk_density$Depth=="0_10",]
+    
+    myDF <- merge(myDF.m, bk_density, by=c("Ring", "Depth"))
+    
+    # convert from mg/m3/d to mg/m2/d
+    myDF$p_min_mg_m2_d <- with(myDF, P_mineralisation*bulk_density_kg_m3 * 0.1)
+    
     
     # read in tmpDF
     # read in the Oct 2018 Johanna data at deeper depths
@@ -77,35 +85,24 @@ make_soil_p_mineralization_flux <- function(bk_density,
     
     ### calculate mineralization rate at deeper soil depths
     for (i in 1:6) {
-        myDF.m$Pmin_10_30[myDF.m$ring==i] <- myDF.m$P_mineralisation[myDF.m$ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="10_30"]
-        myDF.m$Pmin_transition[myDF.m$ring==i] <- myDF.m$P_mineralisation[myDF.m$ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="transition"]
+        myDF$Pmin_10_30[myDF$Ring==i] <- myDF$p_min_mg_m2_d[myDF$Ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="10_30"]
+        myDF$Pmin_transition[myDF$Ring==i] <- myDF$p_min_mg_m2_d[myDF$Ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="transition"]
     }
 
-    myDF1 <- myDF.m[,c("date", "ring", "Depth", "P_mineralisation")]
-    myDF2 <- myDF.m[,c("date", "ring", "Depth", "Pmin_10_30")]
-    myDF3 <- myDF.m[,c("date", "ring", "Depth", "Pmin_transition")]
+    myDF1 <- myDF[,c("date", "Ring", "Depth", "p_min_mg_m2_d")]
+    myDF2 <- myDF[,c("date", "Ring", "Depth", "Pmin_10_30")]
+    myDF3 <- myDF[,c("date", "Ring", "Depth", "Pmin_transition")]
     
     myDF2$Depth <- "10_30"
     myDF3$Depth <- "transition"
     
-    colnames(myDF1) <- colnames(myDF2) <- colnames(myDF3) <- c("Date", "Ring", "Depth", "P_mineralisation")
+    colnames(myDF1) <- colnames(myDF2) <- colnames(myDF3) <- c("Date", "Ring", "Depth", "p_mineralization_mg_m2_d")
     
     myDF <- rbind(myDF1, rbind(myDF2, myDF3))
     
-    ### merge
-    p_conc <- merge(myDF, bk_density, by=c("Ring", "Depth"))
-    
-    
-    # calculate p mineralization rate, from mg kg-1 d-1 to mg m-2 d-1
-    p_conc$p_mineralization_mg_m2_d <- ifelse(p_conc$Depth=="0_10", p_conc$P_mineralisation * p_conc$bulk_density_kg_m3 * 0.1, 
-                                              ifelse(p_conc$Depth=="10_30", p_conc$P_mineralisation * p_conc$bulk_density_kg_m3 * 0.2,
-                                                     ifelse(p_conc$Depth=="transition", p_conc$P_mineralisation * p_conc$bulk_density_kg_m3 * 0.3, NA)))
-    
-    myDF.m <- summaryBy(p_mineralization_mg_m2_d~Date+Ring+Depth, FUN=mean, data=p_conc,
-                        na.rm=T, keep.names=T)
     
     # output table
-    myDF.out <- myDF.m[,c("Date", "Ring", "Depth", "p_mineralization_mg_m2_d")]
+    myDF.out <- myDF[,c("Date", "Ring", "Depth", "p_mineralization_mg_m2_d")]
 
     ### year 2016 only has one value, which is in Jan, decided to group it with 2015
     #myDF.out$Date <- gsub("2016-01-21", "2015-01-21", myDF.out$Date)
