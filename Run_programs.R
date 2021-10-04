@@ -176,7 +176,7 @@ standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
 
 
 #### Fineroot pool
-# top 30 cm
+# top 60 cm
 fineroot_c_pool <- make_fineroot_c_pool()
 
 
