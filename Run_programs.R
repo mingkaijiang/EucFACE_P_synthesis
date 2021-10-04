@@ -266,6 +266,10 @@ wood_c_production <- make_wood_production_flux(wood_c_pool)
 
 
 #### Fineroot production
+#### we can only estimate fineroot c production for top 30 cm,
+#### but the 30 - 60 cm fienroot biomass is tiny (3% of total), and therefore 
+#### we assume the production flux is small and negligible
+####
 fineroot_c_production_flux <- make_fineroot_c_production_flux()
 
 
@@ -430,7 +434,8 @@ soil_p_mineralization <- make_soil_p_mineralization_flux(bk_density=soil_bulk_de
 
 
 #### Soil P leaching rate
-### This number is incorrect, need to revisit !!!!!!!!!!!!!!
+#### estimated based on deep depth (35 - 75 cm) lysimeter data
+#### and multiply by water flux of 20 mL m-2 d-1 (over-estimate)
 soil_p_leaching <- make_soil_p_leaching_flux()
 
 

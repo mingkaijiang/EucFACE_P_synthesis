@@ -18,7 +18,9 @@ make_soil_p_leaching_flux <- function() {
     outDF <- subset(outDF, depth == "deep")
     
     # leaching term converted from mg/l to mg m-2 d-1
-    outDF$phosphate_leaching_flux <- outDF$phosphate * 0.02 # leaching estimate is simplified! 20 ml m-2 d-1
+    # phosphate: Dissolved phosphate-P concentrations in soil solution (mg/l)
+    # leaching estimate is simplified! 20 ml m-2 d-1
+    outDF$phosphate_leaching_flux <- outDF$phosphate * 0.02 
     
     #- drop NA rows
     outDF <- outDF[complete.cases(outDF),]
