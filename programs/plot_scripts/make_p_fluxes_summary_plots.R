@@ -170,7 +170,7 @@ make_p_fluxes_summary_plots <- function(inDF,norm) {
     require(gridExtra)
     
     ## plot 
-    pdf(paste0("plots_tables/output/P_Fluxes_Summary_Plots_", norm, ".pdf"),
+    pdf(paste0("plots_tables/output/", norm, "/P_Fluxes_Summary_Plots_", norm, ".pdf"),
         width=12,height=8)
     bot_row <- plot_grid(p2, p3, ncol=2)
     plot_grid(p1, bot_row,  ncol = 1, rel_widths = c(1, 1, 0.2),

@@ -1,4 +1,5 @@
-make_total_p_budget <- function(summary_table_flux,
+make_total_p_budget <- function(norm, 
+                                summary_table_flux,
                                 summary_table_pool,
                                 vegetation_standing_p_stock,
                                 plant_p_MRT,
@@ -68,7 +69,8 @@ make_total_p_budget <- function(summary_table_flux,
     out$eCO2_sd <- rowSds(as.matrix(subset(out, select=c(R1, R4, R5))), na.rm=T)
     
     ### save
-    write.csv(out, "plots_tables/summary_tables/total_p_budget_unnormalized.csv", row.names=F)
+    write.csv(out, paste0("plots_tables/summary_tables/", norm, 
+                          "total_p_budget_unnormalized.csv"), row.names=F)
     
     
     return(out)

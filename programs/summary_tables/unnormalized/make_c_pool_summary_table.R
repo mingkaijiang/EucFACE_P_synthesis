@@ -3,7 +3,7 @@
 #### Ignore time but produce time coverage information
 #### This is for pools
 
-make_c_pool_summary_table <- function() {
+make_c_pool_summary_table <- function(norm) {
     
     ### Define pool variable names
     terms <- c("Canopy C Pool", 
@@ -158,7 +158,9 @@ make_c_pool_summary_table <- function() {
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
-    write.csv(treatDF, "plots_tables/summary_tables/summary_table_C_pool_unnormalized.csv", row.names=F)
+    write.csv(treatDF, 
+              paste0("plots_tables/summary_tables/", norm, 
+                     "summary_table_C_pool_unnormalized.csv"), row.names=F)
     
     
     ### plot
@@ -179,7 +181,7 @@ make_c_pool_summary_table <- function() {
                     width=0.2)+
       coord_flip()
     
-    pdf("plots_tables/summary_tables/C_pool_comparison.pdf")
+    pdf(paste0("plots_tables/summary_tables/", norm, "C_pool_comparison.pdf"))
     plot(p1)
     dev.off()
     

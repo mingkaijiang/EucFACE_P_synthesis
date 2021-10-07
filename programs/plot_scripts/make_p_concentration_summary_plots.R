@@ -303,7 +303,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
     require(cowplot)
     
     ## plot 
-    pdf(paste0("plots_tables/output/P_Concentration_Summary_Plots_", norm, ".pdf"),
+    pdf(paste0("plots_tables/output/", norm, "/P_Concentration_Summary_Plots_", norm, ".pdf"),
         width=8,height=12)
     plot_grid(p1, p4, p2, p5, p7, p8, p3, p6, labels="", ncol=2, align="v", axis = "l",
               rel_heights = c(1, 1, 1, 1.2))

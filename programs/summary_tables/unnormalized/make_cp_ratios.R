@@ -1,4 +1,4 @@
-make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
+make_cp_ratios <- function(norm, c_pool, p_pool, c_flux, p_flux) {
     ### Compute CP ratio for major pools
     
     out <- data.frame(c(1:6), NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
@@ -54,7 +54,8 @@ make_cp_ratios <- function(c_pool, p_pool, c_flux, p_flux) {
                                                                                    p_pool[p_pool$terms == "Microbial P Pool 10-30cm",2:7]+
                                                                                    p_pool[p_pool$terms == "Microbial P Pool 30-60cm",2:7]))
     
-    write.csv(out, "plots_tables/summary_tables/summary_cp_ratios.csv", row.names=F)
+    write.csv(out, paste0("plots_tables/summary_tables/", norm, "summary_cp_ratios.csv"),
+              row.names=F)
     
     
     return(out)

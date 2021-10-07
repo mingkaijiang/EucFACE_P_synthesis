@@ -20,7 +20,9 @@
 ####
 #### 6. Generate normalized responses 
 ####
-#### 7. Generate normalized plots
+#### 7. Explore covariates
+####
+#### 8. Generate normalized plots
 
 ##### ---------------------------------------------------------------------------------------------------------##### 
 ##### Step 0: Prepare the repository (clean and read in necessary packages)
@@ -624,28 +626,29 @@ delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_p
 
 #### Summary Tables
 source("programs/summary_tables/unnormalized/make_conc_summary_table.R")
-summary_table_concentration <- make_conc_summary_table()
+summary_table_concentration <- make_conc_summary_table(norm="unnormalized")
 
 ### P pools by treatment and ring
 source("programs/summary_tables/unnormalized/make_pool_summary_table.R")
-summary_table_pool <- make_pool_summary_table()
+summary_table_pool <- make_pool_summary_table(norm="unnormalized")
 
 ### P fluxes by treatment and ring
 source("programs/summary_tables/unnormalized/make_flux_summary_table.R")
-summary_table_flux <- make_flux_summary_table()
+summary_table_flux <- make_flux_summary_table(norm="unnormalized")
 
 ### C pools by treatment and ring
 source("programs/summary_tables/unnormalized/make_c_pool_summary_table.R")
-summary_table_c_pool <- make_c_pool_summary_table()
+summary_table_c_pool <- make_c_pool_summary_table(norm="unnormalized")
 
 ### C fluxes by treatment and ring
 source("programs/summary_tables/unnormalized/make_c_flux_summary_table.R")
-summary_table_c_flux <- make_c_flux_summary_table()
+summary_table_c_flux <- make_c_flux_summary_table(norm="unnormalized")
 
 
 ### CP ratios
 source("programs/summary_tables/unnormalized/make_cp_ratios.R")
-summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool,
+summary_cp_ratios <- make_cp_ratios(norm="unnormalized",
+                                    c_pool=summary_table_c_pool,
                                     p_pool=summary_table_pool,
                                     c_flux=summary_table_c_flux,
                                     p_flux=summary_table_flux)
@@ -654,7 +657,8 @@ summary_cp_ratios <- make_cp_ratios(c_pool=summary_table_c_pool,
 ############################## Budget tables ###############################
 
 ### vegetation standing P stocks
-vegetation_standing_p_stock <- make_vegetation_standing_p_stock(leaf=canopy_p_pool,
+vegetation_standing_p_stock <- make_vegetation_standing_p_stock(norm="unnormalized",
+                                                                leaf=canopy_p_pool,
                                                                 wood=wood_p_pool,
                                                                 fineroot=fineroot_p_pool,
                                                                 coarseroot=coarse_root_p_pool,
@@ -665,16 +669,19 @@ vegetation_standing_p_stock <- make_vegetation_standing_p_stock(leaf=canopy_p_po
 
 
 ### P mean residence time in plant
-plant_p_MRT <- make_plant_P_mean_residence_time(p_stand=vegetation_standing_p_stock,
+plant_p_MRT <- make_plant_P_mean_residence_time(norm="unnormalized",
+                                                p_stand=vegetation_standing_p_stock,
                                                 p_flux=summary_table_flux)
 
 ### Plant P use efficiency
-plant_p_use_efficiency <- make_plant_P_use_efficiency(c_flux=summary_table_c_flux,
+plant_p_use_efficiency <- make_plant_P_use_efficiency(norm="unnormalized",
+                                                      c_flux=summary_table_c_flux,
                                                       p_flux=summary_table_flux)
 
 
 #### P budget summary
-total_p_budget <- make_total_p_budget(summary_table_flux,
+total_p_budget <- make_total_p_budget(norm="unnormalized",
+                                      summary_table_flux,
                                       summary_table_pool,
                                       vegetation_standing_p_stock,
                                       plant_p_MRT,
@@ -694,39 +701,39 @@ norm <- "unnormalized"
 ####        then open the function, then plot. 
 source("programs/plot_scripts/make_p_budget_summary_plots.R")
 make_p_budget_summary_plots(inDF=total_p_budget,
-                            norm=norm)
+                            norm="unnormalized")
 
 ### Concentration
 source("programs/plot_scripts/make_p_concentration_summary_plots.R")
 make_p_concentration_summary_plots(inDF=summary_table_concentration,
-                                   norm=norm)
+                                   norm="unnormalized")
 
 ### P pool
 source("programs/plot_scripts/make_p_pools_summary_plots.R")
 make_p_pools_summary_plots(inDF=summary_table_pool,
-                           norm=norm)
+                           norm="unnormalized")
 
 ### P flux
 source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
 make_p_fluxes_summary_plots(inDF=summary_table_flux,
-                            norm=norm)
+                            norm="unnormalized")
 
 
 #### Individial rings
 source("programs/plot_scripts/make_p_budget_ring_plots.R")
 make_p_budget_ring_plots(inDF=total_p_budget,
-                         norm=norm)
+                         norm="unnormalized")
 
 
 ### Soil hedley P pools
 source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
 make_soil_p_budget_summary_plots(inDF=summary_table_pool,
-                                 norm=norm)
+                                 norm="unnormalized")
 
 
 ### compare microbial CNP vs global dataset (Xu et al., 2013)
-microbial_concentration_global_comparison(microbial_p_concentration)
-
+microbial_concentration_global_comparison(norm="unnormalized",
+                                          microbial_p_concentration)
 
 
 
@@ -734,7 +741,16 @@ microbial_concentration_global_comparison(microbial_p_concentration)
 ########################################################################################## 
 ########################################################################################## 
 #####
-###### Step 7: Normalize all responses to a pretreatment soil conditions
+##### Step 7. Explore pre-treatment data for covariate
+#####
+
+
+
+
+########################################################################################## 
+########################################################################################## 
+#####
+###### Step 8: Normalize all responses to a pretreatment soil conditions
 #
 #### Summary Tables
 source("programs/summary_tables/normalized/make_normalized_concentration_summary_table.R")
@@ -765,26 +781,6 @@ summary_cp_ratios_norm <- make_normalized_cp_ratios(c_pool=summary_table_c_pool_
                                                     p_flux=summary_table_flux_norm)
 
 
-#### 6.2 retranslocation coefficients
-#### canopy leaf n retranslocation coefficient
-#leaf_p_retrans_coefficient <- make_canopy_leaf_p_retranslocation_coefficient(df1=canopy_p_concentration,
-#                                                                             df2=leaflitter_p_concentration)
-#
-#### understorey leaf p retranslocation coefficient
-#understorey_p_retrans_coefficient <- make_understorey_p_retranslocation_coefficient(df1=understorey_p_concentration,
-#                                                                                    df2=understorey_litter_p_concentration)
-#
-#### fineroot retrans
-#### assumed value
-#fineroot_p_retrans_coefficient <- make_fineroot_p_retrans_coefficient(retrans=0.5)
-#
-#### wood retrans
-#wood_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
-#
-#### coarseroot retrans
-#coarseroot_p_retrans_coefficient <- make_stem_p_retrans_coefficient(sapwood=wood_p_concentration)
-
-
 
 #### 6.3 Summary variables
 ### vegetation standing P stocks
@@ -812,7 +808,7 @@ total_p_budget_norm <- make_normalized_total_p_budget()
 
 
 ###### ---------------------------------------------------------------------------------------------------------##### 
-###### Step 8. Plotting P budget figures, based on normalized responses
+###### Step 9. Plotting P budget figures, based on normalized responses
 norm <- "normalized"
 
 

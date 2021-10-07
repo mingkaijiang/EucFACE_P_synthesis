@@ -1,5 +1,5 @@
 
-make_pool_summary_table <- function() {
+make_pool_summary_table <- function(norm) {
     
   #### To make EucFACE P summary table by CO2 treatment
   #### Ignore time but produce time coverage information
@@ -358,7 +358,9 @@ make_pool_summary_table <- function() {
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
-    write.csv(treatDF, "plots_tables/summary_tables/summary_table_P_pool_unnormalized.csv", row.names=F)
+    write.csv(treatDF, paste0("plots_tables/summary_tables/", 
+                              norm, "summary_table_P_pool_unnormalized.csv"), 
+              row.names=F)
     
     
     ### plot
@@ -379,7 +381,7 @@ make_pool_summary_table <- function() {
                     width=0.2)+
       coord_flip()
     
-    pdf("plots_tables/summary_tables/P_pool_comparison.pdf")
+    pdf(paste0("plots_tables/summary_tables/", norm, "P_pool_comparison.pdf"))
     plot(p1)
     dev.off()
     

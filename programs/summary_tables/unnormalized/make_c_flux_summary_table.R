@@ -3,7 +3,7 @@
 #### Ignore time but produce time coverage information
 #### This is for fluxes
 
-make_c_flux_summary_table <- function() {
+make_c_flux_summary_table <- function(norm) {
     
     ### convert daily flux in mg C m2 d-1 to g C m-2 yr-1
     conv <- 365 / 1000
@@ -177,7 +177,9 @@ make_c_flux_summary_table <- function() {
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
-    write.csv(treatDF, "plots_tables/summary_tables/summary_table_C_flux_unnormalized.csv", row.names=F)
+    write.csv(treatDF, 
+              paste0("plots_tables/summary_tables/", norm, 
+                     "summary_table_C_flux_unnormalized.csv"), row.names=F)
     
     
     ### plot
@@ -198,7 +200,7 @@ make_c_flux_summary_table <- function() {
                     width=0.2)+
       coord_flip()
     
-    pdf("plots_tables/summary_tables/C_flux_comparison.pdf")
+    pdf(paste0("plots_tables/summary_tables/", norm, "C_flux_comparison.pdf"))
     plot(p1)
     dev.off()
     

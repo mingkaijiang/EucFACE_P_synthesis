@@ -203,7 +203,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
     require(gridExtra)
     
     ## plot 
-    pdf(paste0("plots_tables/output/P_Pools_Summary_Plots_", norm, ".pdf"),
+    pdf(paste0("plots_tables/output/", norm, "/P_Pools_Summary_Plots_", norm, ".pdf"),
         width=12,height=8)
     bot_row <- plot_grid(p2, p3, p4, ncol=3)
     plot_grid(p1, bot_row,  ncol = 1, rel_widths = c(1, 0.6,0.6,0.6),

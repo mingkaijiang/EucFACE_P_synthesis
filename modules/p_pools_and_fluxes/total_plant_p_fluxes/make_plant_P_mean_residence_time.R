@@ -1,4 +1,4 @@
-make_plant_P_mean_residence_time <- function(p_stand, p_flux) {
+make_plant_P_mean_residence_time <- function(norm, p_stand, p_flux) {
     
     
     tmp1 <- data.frame("Ring" = p_stand$Ring, "Trt" = p_stand$Trt, 

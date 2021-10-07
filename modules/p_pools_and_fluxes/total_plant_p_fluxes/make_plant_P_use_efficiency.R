@@ -1,4 +1,4 @@
-make_plant_P_use_efficiency <- function(c_flux, p_flux) {
+make_plant_P_use_efficiency <- function(norm, c_flux, p_flux) {
     
     
     ### NPP df

@@ -1,4 +1,5 @@
-make_vegetation_standing_p_stock <- function(leaf, 
+make_vegetation_standing_p_stock <- function(norm, 
+                                             leaf, 
                                              wood, 
                                              understorey, 
                                              fineroot, 

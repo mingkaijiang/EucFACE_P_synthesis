@@ -315,7 +315,7 @@ make_p_budget_summary_plots <- function(inDF, norm) {
     require(cowplot)
     
     ## plot 
-    pdf(paste0("plots_tables/output/P_Budget_Summary_Plots_", norm, ".pdf"), 
+    pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, ".pdf"), 
         width=10,height=14)
     plot_grid(p3, p4, p5, p6, 
               p1, p2, p7, p8, 
