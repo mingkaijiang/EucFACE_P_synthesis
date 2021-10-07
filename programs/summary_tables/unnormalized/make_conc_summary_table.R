@@ -342,7 +342,8 @@ make_conc_summary_table <- function(norm) {
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
     ### save
-    write.csv(treatDF, "plots_tables/summary_tables/summary_table_P_concentration_unnormalized.csv", row.names=F)
+    write.csv(treatDF, paste0("plots_tables/summary_tables/", norm, 
+                              "/summary_table_P_concentration_unnormalized.csv"), row.names=F)
     
     
     ### plot

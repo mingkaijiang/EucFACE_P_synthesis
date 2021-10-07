@@ -70,7 +70,7 @@ make_total_p_budget <- function(norm,
     
     ### save
     write.csv(out, paste0("plots_tables/summary_tables/", norm, 
-                          "total_p_budget_unnormalized.csv"), row.names=F)
+                          "/total_p_budget_unnormalized.csv"), row.names=F)
     
     
     return(out)

@@ -327,7 +327,7 @@ make_flux_summary_table <- function(norm) {
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
     write.csv(treatDF, paste0("plots_tables/summary_tables/", norm, 
-                              "summary_table_P_flux_unnormalized.csv"), row.names=F)
+                              "/summary_table_P_flux_unnormalized.csv"), row.names=F)
     
     
     ### plot
@@ -348,7 +348,7 @@ make_flux_summary_table <- function(norm) {
                     width=0.2)+
       coord_flip()
     
-    pdf(paste0("plots_tables/summary_tables/", norm, "P_flux_comparison.pdf"))
+    pdf(paste0("plots_tables/summary_tables/", norm, "/P_flux_comparison.pdf"))
     plot(p1)
     dev.off()
     
