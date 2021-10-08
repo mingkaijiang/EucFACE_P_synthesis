@@ -765,9 +765,13 @@ corDF.adj <- adjust_covariate_for_statistical_input(corDF=corDF,
 
 
 ### synthesize all statistics based on covariate and save to a table
+### it returns all the stats, 
+### and plot all the comparisons between obs and predicted values
+###
 synthesize_covariate_adjustment_statistics(corDF.adj=corDF.adj,
                                            return.outcome="model",
                                            plot.comparison=T,
+                                           covariate.name=covariate.name,
                                            canopy_c_pool=canopy_c_pool,
                                            wood_c_pool=wood_c_pool,
                                            standing_dead_c_pool=standing_dead_c_pool,
@@ -820,6 +824,13 @@ synthesize_covariate_adjustment_statistics(corDF.adj=corDF.adj,
                                            understorey_litter_p_flux=understorey_litter_p_flux)
 
 
+
+
+########################################################################################## 
+########################################################################################## 
+#####
+###### Step 8: Normalize all responses to a pretreatment soil conditions
+
 #### Now we will need to revise all the pools and flux calculations
 soil_p_pool_norm <- adjust_p_variables_with_covariate(inDF=soil_p_pool, 
                                                       corDF.adj=corDF.adj, 
@@ -827,12 +838,9 @@ soil_p_pool_norm <- adjust_p_variables_with_covariate(inDF=soil_p_pool,
                                                       with.depth.profile=T,
                                                       plot.comparison=T,
                                                       return.outcome="predicted") 
-    
 
-########################################################################################## 
-########################################################################################## 
-#####
-###### Step 8: Normalize all responses to a pretreatment soil conditions
+
+
 #
 #### Summary Tables
 source("programs/summary_tables/normalized/make_normalized_concentration_summary_table.R")

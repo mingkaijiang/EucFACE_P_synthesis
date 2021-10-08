@@ -1,6 +1,7 @@
 adjust_p_variables_with_covariate <- function(inDF, 
                                               corDF.adj, 
                                               var.col,
+                                              ignore.date=F,
                                               with.depth.profile,
                                               plot.comparison,
                                               return.outcome) {
@@ -46,13 +47,24 @@ adjust_p_variables_with_covariate <- function(inDF,
     
     ### Analyse the variable model
     ## model 1: no interaction, year as factor, ring random factor, include pre-treatment effect
-    if (with.depth.profile==T) {
-        modelt1 <- lmer(Value~Trt + Depth + Datef + covariate + (1|Ring),
-                        data=inDF)
-    } else if (with.depth.profile == F) {
-        modelt1 <- lmer(Value~Trt + covariate + (1|Ring),
-                        data=inDF)
+    if (ignore.date==T) {
+        if (with.depth.profile==T) {
+            modelt1 <- lmer(Value~Trt + Depth + covariate + (1|Ring),
+                            data=inDF)
+        } else if (with.depth.profile == F) {
+            modelt1 <- lmer(Value~Trt + covariate + (1|Ring),
+                            data=inDF)
+        }
+    } else {
+        if (with.depth.profile==T) {
+            modelt1 <- lmer(Value~Trt + Depth + Datef + covariate + (1|Ring),
+                            data=inDF)
+        } else if (with.depth.profile == F) {
+            modelt1 <- lmer(Value~Trt + covariate + (1|Ring),
+                            data=inDF)
+        }
     }
+    
     
     
     ## anova

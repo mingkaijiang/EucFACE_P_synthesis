@@ -1,6 +1,7 @@
 synthesize_covariate_adjustment_statistics <- function(corDF.adj,
                                                        return.outcome="model",
                                                        plot.comparison=T,
+                                                       covariate.name,
                                                        canopy_c_pool,
                                                        wood_c_pool,
                                                        standing_dead_c_pool,
@@ -75,12 +76,12 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     
     
     ### standing dead wood c pool
-    standing_dead_c_pool_stat <- adjust_p_variables_with_covariate(inDF=standing_dead_c_pool, 
-                                                                   corDF.adj=corDF.adj, 
-                                                                   var.col=3,
-                                                                   with.depth.profile=F,
-                                                                   plot.comparison=plot.comparison,
-                                                                   return.outcome=return.outcome) 
+    #standing_dead_c_pool_stat <- adjust_p_variables_with_covariate(inDF=standing_dead_c_pool, 
+    #                                                               corDF.adj=corDF.adj, 
+    #                                                               var.col=3,
+    #                                                               with.depth.profile=F,
+    #                                                               plot.comparison=plot.comparison,
+    #                                                               return.outcome=return.outcome) 
     
     
     
@@ -88,8 +89,8 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     # top 60 cm
     fineroot_c_pool_stat <- adjust_p_variables_with_covariate(inDF=fineroot_c_pool, 
                                                          corDF.adj=corDF.adj, 
-                                                         var.col=4,
-                                                         with.depth.profile=T,
+                                                         var.col=3,
+                                                         with.depth.profile=F,
                                                          plot.comparison=plot.comparison,
                                                          return.outcome=return.outcome) 
     
@@ -98,7 +99,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ### estimate % live and % dead
     understorey_c_pool_stat <- adjust_p_variables_with_covariate(inDF=understorey_c_pool, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome) 
@@ -108,8 +109,8 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### return soil C by depths
     soil_c_pool_stat <- adjust_p_variables_with_covariate(inDF=soil_c_pool, 
                                                           corDF.adj=corDF.adj, 
-                                                          var.col=3,
-                                                          with.depth.profile=F,
+                                                          var.col=4,
+                                                          with.depth.profile=T,
                                                           plot.comparison=plot.comparison,
                                                           return.outcome=return.outcome) 
     
@@ -118,8 +119,8 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### this pool has data only at 0-10cm depth - Cat's data
     microbial_c_pool_stat <- adjust_p_variables_with_covariate(inDF=microbial_c_pool, 
                                                                corDF.adj=corDF.adj, 
-                                                               var.col=3,
-                                                               with.depth.profile=F,
+                                                               var.col=4,
+                                                               with.depth.profile=T,
                                                                plot.comparison=plot.comparison,
                                                                return.outcome=return.outcome) 
     
@@ -128,8 +129,8 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### therefore it's not included in the P budget
     mycorrhizal_c_pool_stat <- adjust_p_variables_with_covariate(inDF=mycorrhizal_c_pool, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
-                                                                 with.depth.profile=F,
+                                                                 var.col=4,
+                                                                 with.depth.profile=T,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome) 
     
@@ -146,7 +147,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Leaf litter pool - forest floor leaf litter pool
     leaflitter_c_pool_stat <- adjust_p_variables_with_covariate(inDF=leaflitter_c_pool, 
                                                                 corDF.adj=corDF.adj, 
-                                                                var.col=3,
+                                                                var.col=6,
                                                                 with.depth.profile=F,
                                                                 plot.comparison=plot.comparison,
                                                                 return.outcome=return.outcome) 
@@ -199,7 +200,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### 2.5 Wood C production
     wood_c_production_stat <- adjust_p_variables_with_covariate(inDF=wood_c_production, 
                                                                 corDF.adj=corDF.adj, 
-                                                                var.col=3,
+                                                                var.col=5,
                                                                 with.depth.profile=F,
                                                                 plot.comparison=plot.comparison,
                                                                 return.outcome=return.outcome) 
@@ -212,7 +213,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ####
     fineroot_c_production_flux_stat <- adjust_p_variables_with_covariate(inDF=fineroot_c_production_flux, 
                                                                          corDF.adj=corDF.adj, 
-                                                                         var.col=3,
+                                                                         var.col=5,
                                                                          with.depth.profile=F,
                                                                          plot.comparison=plot.comparison,
                                                                          return.outcome=return.outcome) 
@@ -224,7 +225,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### - 2: Matthias's stereo camera
     understorey_c_flux_clipping_stat <- adjust_p_variables_with_covariate(inDF=understorey_c_flux_clipping, 
                                                                           corDF.adj=corDF.adj, 
-                                                                          var.col=3,
+                                                                          var.col=5,
                                                                           with.depth.profile=F,
                                                                           plot.comparison=plot.comparison,
                                                                           return.outcome=return.outcome) 
@@ -235,7 +236,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ### basically understorey dead 
     understorey_litter_c_flux_stat <- adjust_p_variables_with_covariate(inDF=understorey_litter_c_flux, 
                                                                         corDF.adj=corDF.adj, 
-                                                                        var.col=3,
+                                                                        var.col=5,
                                                                         with.depth.profile=F,
                                                                         plot.comparison=plot.comparison,
                                                                         return.outcome=return.outcome) 
@@ -244,7 +245,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Frass production
     frass_c_production_flux_stat <- adjust_p_variables_with_covariate(inDF=frass_c_production_flux, 
                                                                       corDF.adj=corDF.adj, 
-                                                                      var.col=3,
+                                                                      var.col=5,
                                                                       with.depth.profile=F,
                                                                       plot.comparison=plot.comparison,
                                                                       return.outcome=return.outcome) 
@@ -253,7 +254,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Coarse root C production
     coarse_root_c_flux_stat <- adjust_p_variables_with_covariate(inDF=coarse_root_c_flux, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome) 
@@ -273,16 +274,17 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Soil P pool - top 60 cm
     soil_p_pool_stat <- adjust_p_variables_with_covariate(inDF=soil_p_pool, 
                                                           corDF.adj=corDF.adj, 
-                                                          var.col=3,
-                                                          with.depth.profile=F,
+                                                          var.col=4,
+                                                          with.depth.profile=T,
                                                           plot.comparison=plot.comparison,
                                                           return.outcome=return.outcome) 
     
     ### Soil inorganic pool - 60 cm
     soil_inorganic_p_pool_stat <- adjust_p_variables_with_covariate(inDF=soil_inorganic_p_pool, 
                                                                     corDF.adj=corDF.adj, 
-                                                                    var.col=3,
-                                                                    with.depth.profile=F,
+                                                                    var.col=4,
+                                                                    ignore.date=T,
+                                                                    with.depth.profile=T,
                                                                     plot.comparison=plot.comparison,
                                                                     return.outcome=return.outcome) 
     
@@ -290,8 +292,9 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ### soil organic pool - 60 cm
     soil_organic_p_pool_stat <- adjust_p_variables_with_covariate(inDF=soil_organic_p_pool, 
                                                                   corDF.adj=corDF.adj, 
-                                                                  var.col=3,
-                                                                  with.depth.profile=F,
+                                                                  var.col=4,
+                                                                  ignore.date=T,
+                                                                  with.depth.profile=T,
                                                                   plot.comparison=plot.comparison,
                                                                   return.outcome=return.outcome) 
     
@@ -304,28 +307,28 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### So this pool is more readily available to plants. 
     soil_phosphate_pool_stat <- adjust_p_variables_with_covariate(inDF=soil_phosphate_pool, 
                                                                   corDF.adj=corDF.adj, 
-                                                                  var.col=3,
-                                                                  with.depth.profile=F,
+                                                                  var.col=4,
+                                                                  with.depth.profile=T,
                                                                   plot.comparison=plot.comparison,
                                                                   return.outcome=return.outcome) 
     
     
     #### Soil P pool of different bioavailability
     #### Top 10 cm only
-    soil_p_pool_hedley_stat <- adjust_p_variables_with_covariate(inDF=soil_p_pool_hedley, 
-                                                                 corDF.adj=corDF.adj, 
-                                                                 var.col=3,
-                                                                 with.depth.profile=F,
-                                                                 plot.comparison=plot.comparison,
-                                                                 return.outcome=return.outcome) 
+    #soil_p_pool_hedley_stat <- adjust_p_variables_with_covariate(inDF=soil_p_pool_hedley, 
+    #                                                             corDF.adj=corDF.adj, 
+    #                                                             var.col=3,
+    #                                                             with.depth.profile=F,
+    #                                                             plot.comparison=plot.comparison,
+    #                                                             return.outcome=return.outcome) 
     
     
     #### Microbial P pool 
     #### Top 60 cm
     microbial_p_pool_stat <- adjust_p_variables_with_covariate(inDF=microbial_p_pool, 
                                                                corDF.adj=corDF.adj, 
-                                                               var.col=3,
-                                                               with.depth.profile=F,
+                                                               var.col=4,
+                                                               with.depth.profile=T,
                                                                plot.comparison=plot.comparison,
                                                                return.outcome=return.outcome) 
     
@@ -375,12 +378,12 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     
     
     #### Standing dead p pool
-    standing_dead_p_pool_stat <- adjust_p_variables_with_covariate(inDF=standing_dead_p_pool, 
-                                                                   corDF.adj=corDF.adj, 
-                                                                   var.col=3,
-                                                                   with.depth.profile=F,
-                                                                   plot.comparison=plot.comparison,
-                                                                   return.outcome=return.outcome) 
+    #standing_dead_p_pool_stat <- adjust_p_variables_with_covariate(inDF=standing_dead_p_pool, 
+    #                                                               corDF.adj=corDF.adj, 
+    #                                                               var.col=3,
+    #                                                               with.depth.profile=F,
+    #                                                               plot.comparison=plot.comparison,
+    #                                                               return.outcome=return.outcome) 
     
     
     #### Fine root P biomass pool
@@ -430,8 +433,8 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### This is the net mineralization flux (i.e. gross - immobilization)
     soil_p_mineralization_stat <- adjust_p_variables_with_covariate(inDF=soil_p_mineralization, 
                                                                     corDF.adj=corDF.adj, 
-                                                                    var.col=3,
-                                                                    with.depth.profile=F,
+                                                                    var.col=4,
+                                                                    with.depth.profile=T,
                                                                     plot.comparison=plot.comparison,
                                                                     return.outcome=return.outcome) 
     
@@ -440,7 +443,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### and multiply by water flux of 20 mL m-2 d-1 (over-estimate)
     soil_p_leaching_stat <- adjust_p_variables_with_covariate(inDF=soil_p_leaching, 
                                                               corDF.adj=corDF.adj, 
-                                                              var.col=3,
+                                                              var.col=5,
                                                               with.depth.profile=F,
                                                               plot.comparison=plot.comparison,
                                                               return.outcome=return.outcome) 
@@ -449,7 +452,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Canopy production flux
     canopy_p_flux_stat <- adjust_p_variables_with_covariate(inDF=canopy_p_flux, 
                                                             corDF.adj=corDF.adj, 
-                                                            var.col=3,
+                                                            var.col=5,
                                                             with.depth.profile=F,
                                                             plot.comparison=plot.comparison,
                                                             return.outcome=return.outcome) 
@@ -463,7 +466,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### total P budget. 
     frass_p_production_stat <- adjust_p_variables_with_covariate(inDF=frass_p_production, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome) 
@@ -475,7 +478,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### and gap-fill P concentration based on average values
     leaflitter_p_flux_stat <- adjust_p_variables_with_covariate(inDF=leaflitter_p_flux, 
                                                                 corDF.adj=corDF.adj, 
-                                                                var.col=3,
+                                                                var.col=5,
                                                                 with.depth.profile=F,
                                                                 plot.comparison=plot.comparison,
                                                                 return.outcome=return.outcome) 
@@ -484,7 +487,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Fine root P production flux
     fineroot_p_production_stat <- adjust_p_variables_with_covariate(inDF=fineroot_p_production, 
                                                                     corDF.adj=corDF.adj, 
-                                                                    var.col=3,
+                                                                    var.col=5,
                                                                     with.depth.profile=F,
                                                                     plot.comparison=plot.comparison,
                                                                     return.outcome=return.outcome) 
@@ -494,7 +497,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ### and fine root c production flux is fine root c litter flux
     fineroot_litter_p_flux_stat <- adjust_p_variables_with_covariate(inDF=fineroot_litter_p_flux, 
                                                                      corDF.adj=corDF.adj, 
-                                                                     var.col=3,
+                                                                     var.col=5,
                                                                      with.depth.profile=F,
                                                                      plot.comparison=plot.comparison,
                                                                      return.outcome=return.outcome) 
@@ -503,7 +506,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Other litterfall
     twig_litter_p_flux_stat <- adjust_p_variables_with_covariate(inDF=twig_litter_p_flux, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome)   
@@ -512,7 +515,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ## bark P concentration provided by Kristine
     bark_litter_p_flux_stat <- adjust_p_variables_with_covariate(inDF=bark_litter_p_flux, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome)   
@@ -520,7 +523,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ## assume leaf p concentration
     seed_litter_p_flux_stat <- adjust_p_variables_with_covariate(inDF=seed_litter_p_flux, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome)   
@@ -529,7 +532,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Wood p flux
     wood_p_flux_stat <- adjust_p_variables_with_covariate(inDF=wood_p_flux, 
                                                           corDF.adj=corDF.adj, 
-                                                          var.col=3,
+                                                          var.col=5,
                                                           with.depth.profile=F,
                                                           plot.comparison=plot.comparison,
                                                           return.outcome=return.outcome) 
@@ -538,7 +541,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     ### Coarse root P flux
     coarse_root_p_flux_stat <- adjust_p_variables_with_covariate(inDF=coarse_root_p_flux, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome) 
@@ -551,7 +554,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     #### Currently, we are using harvest estimate
     understorey_p_flux_stat <- adjust_p_variables_with_covariate(inDF=understorey_p_flux, 
                                                                  corDF.adj=corDF.adj, 
-                                                                 var.col=3,
+                                                                 var.col=5,
                                                                  with.depth.profile=F,
                                                                  plot.comparison=plot.comparison,
                                                                  return.outcome=return.outcome) 
@@ -559,7 +562,7 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     
     understorey_litter_p_flux_stat <- adjust_p_variables_with_covariate(inDF=understorey_litter_p_flux, 
                                                                         corDF.adj=corDF.adj, 
-                                                                        var.col=3,
+                                                                        var.col=5,
                                                                         with.depth.profile=F,
                                                                         plot.comparison=plot.comparison,
                                                                         return.outcome=return.outcome) 
@@ -570,29 +573,79 @@ synthesize_covariate_adjustment_statistics <- function(corDF.adj,
     
     
     
-    ############################## P retranslocation fluxes ###############################
+    #############################################################
+    ### now synthesize all variables together
     
-    canopy_P_retranslocation_flux <- calculate_canopy_P_retranslocation_flux(tflux=canopy_p_flux,
-                                                                             lflux=leaflitter_p_flux,
-                                                                             retransDF=plant_p_retranslocation_coefficients)
+    ### prepare storageDF
+    name.list <- c("canopy_c_pool",
+                   "wood_c_pool",
+                   "standing_dead_c_pool",
+                   "fineroot_c_pool",
+                   "coarse_root_c_pool",
+                   "understorey_c_pool",
+                   "soil_c_pool",
+                   "microbial_c_pool",
+                   "mycorrhizal_c_pool",
+                   "leaflitter_c_pool",
+                   "leaflitter_c_production_flux",
+                   "twiglitter_c_production_flux",
+                   "barklitter_c_production_flux",
+                   "seedlitter_c_production_flux",
+                   "canopy_c_production_flux",
+                   "wood_c_production",
+                   "fineroot_c_production_flux",
+                   "coarse_root_c_flux",
+                   "understorey_c_flux_clipping",
+                   "understorey_litter_c_flux",
+                   "frass_c_production_flux",
+                   "soil_p_pool",
+                   "soil_inorganic_p_pool",
+                   "soil_organic_p_pool",
+                   "soil_phosphate_pool",
+                   "soil_p_pool_hedley",
+                   "microbial_p_pool",
+                   "canopy_p_pool",
+                   "leaflitter_p_pool",
+                   "wood_p_pool",
+                   "sapwood_p_pool",
+                   "heartwood_p_pool",
+                   "standing_dead_p_pool",
+                   "fineroot_p_pool",
+                   "understorey_p_pool",
+                   "coarse_root_p_pool",
+                   "soil_p_mineralization",
+                   "soil_p_leaching",
+                   "canopy_p_flux",
+                   "frass_p_production",
+                   "leaflitter_p_flux",
+                   "fineroot_p_production",
+                   "fineroot_litter_p_flux",
+                   "twig_litter_p_flux",
+                   "bark_litter_p_flux",
+                   "seed_litter_p_flux",
+                   "wood_p_flux",
+                   "coarse_root_p_flux",
+                   "understorey_p_flux",
+                   "understorey_litter_p_flux")
+    
+    outDF <- data.frame("Variable" = name.list,
+                        "Effect_size" = NA,
+                        "CI_low" = NA,
+                        "CI_high" = NA)
     
     
-    fineroot_P_retranslocation_flux <- calculate_fineroot_P_retranslocation_flux(tflux=fineroot_p_production,
-                                                                                 lflux=fineroot_litter_p_flux,
-                                                                                 retransDF=plant_p_retranslocation_coefficients)
+    ### assign values
+    for (i in name.list) {
+        tryCatch({
+            tmpDF <- get(paste0(i, "_stat"))
+            outDF$Effect_size[outDF$Variable==i]<-tmpDF$eff
+            outDF$CI_low[outDF$Variable==i]<-tmpDF$conf[1]
+            outDF$CI_high[outDF$Variable==i]<-tmpDF$conf[2]
+        }, error=function(e){})
+    }
     
-    
-    understorey_P_retranslocation_flux <- calculate_understorey_P_retranslocation_flux(tflux=understorey_p_flux,
-                                                                                       lflux=understorey_litter_p_flux,
-                                                                                       retransDF=plant_p_retranslocation_coefficients)
-    
-    
-    sapwood_P_retranslocation_flux <- calculate_sapwood_P_retranslocation_flux(tflux=wood_p_flux,
-                                                                               retransDF=plant_p_retranslocation_coefficients)
-    
-    
-    coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux(tflux=coarse_root_p_flux,
-                                                                                     retransDF=plant_p_retranslocation_coefficients)
-    
+    ### save output
+    write.csv(outDF, paste0("plots_tables/covariate/stats_with_", covariate.name, ".csv"), 
+              row.names=F)
     
 }
