@@ -1,5 +1,20 @@
 
-make_pool_summary_table <- function(norm) {
+make_pool_summary_table <- function(norm,
+                                    soil_p_pool,
+                                    soil_inorganic_p_pool,
+                                    soil_organic_p_pool,
+                                    soil_phosphate_pool,
+                                    soil_p_pool_hedley,
+                                    microbial_p_pool,
+                                    canopy_p_pool,
+                                    leaflitter_p_pool,
+                                    wood_p_pool,
+                                    sapwood_p_pool,
+                                    heartwood_p_pool,
+                                    standing_dead_p_pool,
+                                    fineroot_p_pool,
+                                    understorey_p_pool,
+                                    coarse_root_p_pool) {
     
   #### To make EucFACE P summary table by CO2 treatment
   #### Ignore time but produce time coverage information

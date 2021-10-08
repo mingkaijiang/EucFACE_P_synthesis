@@ -3,7 +3,17 @@
 #### Ignore time but produce time coverage information
 #### This is for pools
 
-make_c_pool_summary_table <- function(norm) {
+make_c_pool_summary_table <- function(norm,
+                                      canopy_c_pool,
+                                      wood_c_pool,
+                                      standing_dead_c_pool,
+                                      fineroot_c_pool,
+                                      coarse_root_c_pool,
+                                      understorey_c_pool,
+                                      soil_c_pool,
+                                      microbial_c_pool,
+                                      mycorrhizal_c_pool,
+                                      leaflitter_c_pool) {
     
     ### Define pool variable names
     terms <- c("Canopy C Pool", 

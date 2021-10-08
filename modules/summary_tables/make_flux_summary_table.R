@@ -1,6 +1,20 @@
 
 #### To make EucFACE P summary table by CO2 treatment
-make_flux_summary_table <- function(norm) {
+make_flux_summary_table <- function(norm,
+                                    soil_p_mineralization,
+                                    soil_p_leaching,
+                                    canopy_p_flux,
+                                    frass_p_production,
+                                    leaflitter_p_flux,
+                                    fineroot_p_production,
+                                    fineroot_litter_p_flux,
+                                    twig_litter_p_flux,
+                                    bark_litter_p_flux,
+                                    seed_litter_p_flux,
+                                    wood_p_flux,
+                                    coarse_root_p_flux,
+                                    understorey_p_flux,
+                                    understorey_litter_p_flux) {
 
     #### Ignore time but produce time coverage information
     #### This is for fluxes

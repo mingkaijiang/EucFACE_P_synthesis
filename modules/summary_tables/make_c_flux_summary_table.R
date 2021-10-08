@@ -3,7 +3,18 @@
 #### Ignore time but produce time coverage information
 #### This is for fluxes
 
-make_c_flux_summary_table <- function(norm) {
+make_c_flux_summary_table <- function(norm,
+                                      leaflitter_c_production_flux,
+                                      twiglitter_c_production_flux,
+                                      barklitter_c_production_flux,
+                                      seedlitter_c_production_flux,
+                                      canopy_c_production_flux,
+                                      wood_c_production,
+                                      fineroot_c_production_flux,
+                                      coarse_root_c_flux,
+                                      understorey_c_flux_clipping,
+                                      understorey_litter_c_flux,
+                                      frass_c_production_flux) {
     
     ### convert daily flux in mg C m2 d-1 to g C m-2 yr-1
     conv <- 365 / 1000

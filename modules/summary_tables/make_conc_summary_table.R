@@ -2,7 +2,20 @@
 #### To make EucFACE P summary table by CO2 treatment
 #### Ignore time but produce time coverage information
 
-make_conc_summary_table <- function(norm) {
+make_conc_summary_table <- function(norm,
+                                    canopy_p_concentration,
+                                    sapwood_p_concentration,
+                                    fineroot_p_concentration,
+                                    leaflitter_p_concentration,
+                                    understorey_p_concentration,
+                                    understorey_litter_p_concentration,
+                                    frass_p_concentration,
+                                    microbial_p_concentration,
+                                    soil_p_concentration,
+                                    soil_inorganic_p_concentration,
+                                    soil_organic_p_concentration,
+                                    soil_phosphate_concentration,
+                                    soil_hedley_p_concentration) {
     
     ### Define concentration variable names
     conc.terms <- c("Canopy P Conc", 
