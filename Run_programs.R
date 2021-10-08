@@ -739,14 +739,21 @@ microbial_concentration_global_comparison(norm="unnormalized",
 
 
 
-
-
-
 ########################################################################################## 
 ########################################################################################## 
 #####
 ##### Step 7. Explore pre-treatment data for covariate
-#####
+#### prepare pre-treatment covariate dataframe
+corDF <- prepare_pretreatment_covariate(soil_bulk_density=soil_bulk_density,
+                                        soil_c_pool=soil_c_pool,
+                                        lai_variable=lai_variable,
+                                        soil_p_concentration=soil_p_concentration,
+                                        soil_p_pool=soil_p_pool,
+                                        soil_p_mineralization=soil_p_mineralization)
+
+
+### plot pretreatment covariate data
+plot_pretreatment_covariate(corDF=corDF)
 
 
 
