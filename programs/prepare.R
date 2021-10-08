@@ -11,6 +11,10 @@ if(!dir.exists("plots_tables/checks")) {
     dir.create("plots_tables/checks")
 }
 
+if(!dir.exists("plots_tables/covariate")) {
+  dir.create("plots_tables/covariate")
+}
+
 if(!dir.exists("plots_tables/summary_tables")) {
     dir.create("plots_tables/summary_tables")
 }

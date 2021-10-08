@@ -59,7 +59,7 @@ plot_pretreatment_covariate <- function (corDF) {
                           values=c("amb"="blue3",
                                    "ele"="red2"))
     
-    pdf(paste0("plots_tables/checks/pretreatment_covariate_comparison.pdf"), 
+    pdf(paste0("plots_tables/covariate/pretreatment_covariate_comparison.pdf"), 
         width=8, height=5)
     plot(p1)
     dev.off()

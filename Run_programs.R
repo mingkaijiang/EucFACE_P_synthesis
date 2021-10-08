@@ -756,7 +756,78 @@ corDF <- prepare_pretreatment_covariate(soil_bulk_density=soil_bulk_density,
 plot_pretreatment_covariate(corDF=corDF)
 
 
+### which covariate to look at
+### we will need to adjust this whenever we decide to look at a different covariate
+covariate.name <- "lai_variable"
+corDF.adj <- adjust_covariate_for_statistical_input(corDF=corDF,
+                                                    covariate.name=covariate.name)
 
+
+
+### synthesize all statistics based on covariate and save to a table
+synthesize_covariate_adjustment_statistics(corDF.adj=corDF.adj,
+                                           return.outcome="model",
+                                           plot.comparison=T,
+                                           canopy_c_pool=canopy_c_pool,
+                                           wood_c_pool=wood_c_pool,
+                                           standing_dead_c_pool=standing_dead_c_pool,
+                                           fineroot_c_pool=fineroot_c_pool,
+                                           coarse_root_c_pool=coarse_root_c_pool,
+                                           understorey_c_pool=understorey_c_pool,
+                                           soil_c_pool=soil_c_pool,
+                                           microbial_c_pool=microbial_c_pool,
+                                           mycorrhizal_c_pool=mycorrhizal_c_pool,
+                                           leaflitter_c_pool=leaflitter_c_pool,
+                                           leaflitter_c_production_flux=leaflitter_c_production_flux,
+                                           twiglitter_c_production_flux=twiglitter_c_production_flux,
+                                           barklitter_c_production_flux=barklitter_c_production_flux,
+                                           seedlitter_c_production_flux=seedlitter_c_production_flux,
+                                           canopy_c_production_flux=canopy_c_production_flux,
+                                           wood_c_production=wood_c_production,
+                                           fineroot_c_production_flux=fineroot_c_production_flux,
+                                           coarse_root_c_flux=coarse_root_c_flux,
+                                           understorey_c_flux_clipping=understorey_c_flux_clipping,
+                                           understorey_litter_c_flux=understorey_litter_c_flux,
+                                           frass_c_production_flux=frass_c_production_flux,
+                                           soil_p_pool=soil_p_pool,
+                                           soil_inorganic_p_pool=soil_inorganic_p_pool,
+                                           soil_organic_p_pool=soil_organic_p_pool,
+                                           soil_phosphate_pool=soil_phosphate_pool,
+                                           soil_p_pool_hedley=soil_p_pool_hedley,
+                                           microbial_p_pool=microbial_p_pool,
+                                           canopy_p_pool=canopy_p_pool,
+                                           leaflitter_p_pool=leaflitter_p_pool,
+                                           wood_p_pool=wood_p_pool,
+                                           sapwood_p_pool=sapwood_p_pool,
+                                           heartwood_p_pool=heartwood_p_pool,
+                                           standing_dead_p_pool=standing_dead_p_pool,
+                                           fineroot_p_pool=fineroot_p_pool,
+                                           understorey_p_pool=understorey_p_pool,
+                                           coarse_root_p_pool=coarse_root_p_pool,
+                                           soil_p_mineralization=soil_p_mineralization,
+                                           soil_p_leaching=soil_p_leaching,
+                                           canopy_p_flux=canopy_p_flux,
+                                           frass_p_production=frass_p_production,
+                                           leaflitter_p_flux=leaflitter_p_flux,
+                                           fineroot_p_production=fineroot_p_production,
+                                           fineroot_litter_p_flux=fineroot_litter_p_flux,
+                                           twig_litter_p_flux=twig_litter_p_flux,
+                                           bark_litter_p_flux=bark_litter_p_flux,
+                                           seed_litter_p_flux=seed_litter_p_flux,
+                                           wood_p_flux=wood_p_flux,
+                                           coarse_root_p_flux=coarse_root_p_flux,
+                                           understorey_p_flux=understorey_p_flux,
+                                           understorey_litter_p_flux=understorey_litter_p_flux)
+
+
+#### Now we will need to revise all the pools and flux calculations
+soil_p_pool_norm <- adjust_p_variables_with_covariate(inDF=soil_p_pool, 
+                                                      corDF.adj=corDF.adj, 
+                                                      var.col=4,
+                                                      with.depth.profile=T,
+                                                      plot.comparison=T,
+                                                      return.outcome="predicted") 
+    
 
 ########################################################################################## 
 ########################################################################################## 
