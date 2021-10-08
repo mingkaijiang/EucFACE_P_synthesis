@@ -625,7 +625,6 @@ delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_p
 ############################## summary tables ###############################
 
 #### Summary Tables
-#source("programs/summary_tables/unnormalized/make_conc_summary_table.R")
 summary_table_concentration <- make_conc_summary_table(norm="unnormalized",
                                                        canopy_p_concentration=canopy_p_concentration,
                                                        sapwood_p_concentration=sapwood_p_concentration,
@@ -643,7 +642,6 @@ summary_table_concentration <- make_conc_summary_table(norm="unnormalized",
 
 
 ### P pools by treatment and ring
-#source("programs/summary_tables/unnormalized/make_pool_summary_table.R")
 summary_table_pool <- make_pool_summary_table(norm="unnormalized",
                                               soil_p_pool=soil_p_pool,
                                               soil_inorganic_p_pool=soil_inorganic_p_pool,
@@ -662,7 +660,6 @@ summary_table_pool <- make_pool_summary_table(norm="unnormalized",
                                               coarse_root_p_pool=coarse_root_p_pool)
 
 ### P fluxes by treatment and ring
-#source("programs/summary_tables/unnormalized/make_flux_summary_table.R")
 summary_table_flux <- make_flux_summary_table(norm="unnormalized",
                                               soil_p_mineralization=soil_p_mineralization,
                                               soil_p_leaching=soil_p_leaching,
@@ -680,7 +677,6 @@ summary_table_flux <- make_flux_summary_table(norm="unnormalized",
                                               understorey_litter_p_flux=understorey_litter_p_flux)
 
 ### C pools by treatment and ring
-#source("programs/summary_tables/unnormalized/make_c_pool_summary_table.R")
 summary_table_c_pool <- make_c_pool_summary_table(norm="unnormalized",
                                                   canopy_c_pool=canopy_c_pool,
                                                   wood_c_pool=wood_c_pool,
@@ -694,7 +690,6 @@ summary_table_c_pool <- make_c_pool_summary_table(norm="unnormalized",
                                                   leaflitter_c_pool=leaflitter_c_pool)
 
 ### C fluxes by treatment and ring
-#source("programs/summary_tables/unnormalized/make_c_flux_summary_table.R")
 summary_table_c_flux <- make_c_flux_summary_table(norm="unnormalized",
                                                   leaflitter_c_production_flux=leaflitter_c_production_flux,
                                                   twiglitter_c_production_flux=twiglitter_c_production_flux,
@@ -710,7 +705,6 @@ summary_table_c_flux <- make_c_flux_summary_table(norm="unnormalized",
 
 
 ### CP ratios
-#source("programs/summary_tables/unnormalized/make_cp_ratios.R")
 summary_cp_ratios <- make_cp_ratios(norm="unnormalized",
                                     c_pool=summary_table_c_pool,
                                     p_pool=summary_table_pool,
@@ -763,34 +757,34 @@ norm <- "unnormalized"
 ####        and then plot. 
 ####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
 ####        then open the function, then plot. 
-source("programs/plot_scripts/make_p_budget_summary_plots.R")
+#source("programs/plot_scripts/make_p_budget_summary_plots.R")
 make_p_budget_summary_plots(inDF=total_p_budget,
                             norm="unnormalized")
 
 ### Concentration
-source("programs/plot_scripts/make_p_concentration_summary_plots.R")
+#source("programs/plot_scripts/make_p_concentration_summary_plots.R")
 make_p_concentration_summary_plots(inDF=summary_table_concentration,
                                    norm="unnormalized")
 
 ### P pool
-source("programs/plot_scripts/make_p_pools_summary_plots.R")
+#source("programs/plot_scripts/make_p_pools_summary_plots.R")
 make_p_pools_summary_plots(inDF=summary_table_pool,
                            norm="unnormalized")
 
 ### P flux
-source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
+#source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
 make_p_fluxes_summary_plots(inDF=summary_table_flux,
                             norm="unnormalized")
 
 
 #### Individial rings
-source("programs/plot_scripts/make_p_budget_ring_plots.R")
+#source("programs/plot_scripts/make_p_budget_ring_plots.R")
 make_p_budget_ring_plots(inDF=total_p_budget,
                          norm="unnormalized")
 
 
 ### Soil hedley P pools
-source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
+#source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
 make_soil_p_budget_summary_plots(inDF=summary_table_pool,
                                  norm="unnormalized")
 
@@ -895,91 +889,60 @@ synthesize_covariate_adjustment_statistics(corDF.adj=corDF.adj,
 #####
 ###### Step 8: Normalize all responses to a pretreatment conditions
 
-#### Now we will need to revise all the pools and flux calculations
-soil_p_pool_norm <- adjust_p_variables_with_covariate(inDF=soil_p_pool, 
-                                                      corDF.adj=corDF.adj, 
-                                                      var.col=4,
-                                                      with.depth.profile=T,
-                                                      plot.comparison=T,
-                                                      return.outcome="predicted") 
-
-
-
-
-########################################################################################## 
-########################################################################################## 
-#####
-###### Step 9: Summarize normalized responses
-
-
-############################## summary tables ###############################
-
-#### Summary Tables
-source("programs/summary_tables/unnormalized/make_conc_summary_table.R")
-summary_table_concentration <- make_conc_summary_table(norm="unnormalized")
-
-### P pools by treatment and ring
-source("programs/summary_tables/unnormalized/make_pool_summary_table.R")
-summary_table_pool <- make_pool_summary_table(norm="unnormalized")
-
-### P fluxes by treatment and ring
-source("programs/summary_tables/unnormalized/make_flux_summary_table.R")
-summary_table_flux <- make_flux_summary_table(norm="unnormalized")
-
-### C pools by treatment and ring
-source("programs/summary_tables/unnormalized/make_c_pool_summary_table.R")
-summary_table_c_pool <- make_c_pool_summary_table(norm="unnormalized")
-
-### C fluxes by treatment and ring
-source("programs/summary_tables/unnormalized/make_c_flux_summary_table.R")
-summary_table_c_flux <- make_c_flux_summary_table(norm="unnormalized")
-
-
-### CP ratios
-source("programs/summary_tables/unnormalized/make_cp_ratios.R")
-summary_cp_ratios <- make_cp_ratios(norm="unnormalized",
-                                    c_pool=summary_table_c_pool,
-                                    p_pool=summary_table_pool,
-                                    c_flux=summary_table_c_flux,
-                                    p_flux=summary_table_flux)
-
-
-############################## Budget tables ###############################
-
-### vegetation standing P stocks
-vegetation_standing_p_stock <- make_vegetation_standing_p_stock(norm="unnormalized",
-                                                                leaf=canopy_p_pool,
-                                                                wood=wood_p_pool,
-                                                                fineroot=fineroot_p_pool,
-                                                                coarseroot=coarse_root_p_pool,
-                                                                understorey=understorey_p_pool,
-                                                                dead=standing_dead_p_pool,
-                                                                forestfloor=leaflitter_p_pool)
-
-
-
-### P mean residence time in plant
-plant_p_MRT <- make_plant_P_mean_residence_time(norm="unnormalized",
-                                                p_stand=vegetation_standing_p_stock,
-                                                p_flux=summary_table_flux)
-
-### Plant P use efficiency
-plant_p_use_efficiency <- make_plant_P_use_efficiency(norm="unnormalized",
-                                                      c_flux=summary_table_c_flux,
-                                                      p_flux=summary_table_flux)
-
-
-#### P budget summary
-total_p_budget <- make_total_p_budget(norm="unnormalized",
-                                      summary_table_flux,
-                                      summary_table_pool,
-                                      vegetation_standing_p_stock,
-                                      plant_p_MRT,
-                                      plant_p_use_efficiency)
-
-
-
-
+normDF <- synthesize_normalized_responses(corDF.adj=corDF.adj,
+                                          return.outcome="predicted",
+                                          plot.comparison=F,
+                                          covariate.name=covariate.name,
+                                          canopy_c_pool=canopy_c_pool,
+                                          wood_c_pool=wood_c_pool,
+                                          standing_dead_c_pool=standing_dead_c_pool,
+                                          fineroot_c_pool=fineroot_c_pool,
+                                          coarse_root_c_pool=coarse_root_c_pool,
+                                          understorey_c_pool=understorey_c_pool,
+                                          soil_c_pool=soil_c_pool,
+                                          microbial_c_pool=microbial_c_pool,
+                                          mycorrhizal_c_pool=mycorrhizal_c_pool,
+                                          leaflitter_c_pool=leaflitter_c_pool,
+                                          leaflitter_c_production_flux=leaflitter_c_production_flux,
+                                          twiglitter_c_production_flux=twiglitter_c_production_flux,
+                                          barklitter_c_production_flux=barklitter_c_production_flux,
+                                          seedlitter_c_production_flux=seedlitter_c_production_flux,
+                                          canopy_c_production_flux=canopy_c_production_flux,
+                                          wood_c_production=wood_c_production,
+                                          fineroot_c_production_flux=fineroot_c_production_flux,
+                                          coarse_root_c_flux=coarse_root_c_flux,
+                                          understorey_c_flux_clipping=understorey_c_flux_clipping,
+                                          understorey_litter_c_flux=understorey_litter_c_flux,
+                                          frass_c_production_flux=frass_c_production_flux,
+                                          soil_p_pool=soil_p_pool,
+                                          soil_inorganic_p_pool=soil_inorganic_p_pool,
+                                          soil_organic_p_pool=soil_organic_p_pool,
+                                          soil_phosphate_pool=soil_phosphate_pool,
+                                          soil_p_pool_hedley=soil_p_pool_hedley,
+                                          microbial_p_pool=microbial_p_pool,
+                                          canopy_p_pool=canopy_p_pool,
+                                          leaflitter_p_pool=leaflitter_p_pool,
+                                          wood_p_pool=wood_p_pool,
+                                          sapwood_p_pool=sapwood_p_pool,
+                                          heartwood_p_pool=heartwood_p_pool,
+                                          standing_dead_p_pool=standing_dead_p_pool,
+                                          fineroot_p_pool=fineroot_p_pool,
+                                          understorey_p_pool=understorey_p_pool,
+                                          coarse_root_p_pool=coarse_root_p_pool,
+                                          soil_p_mineralization=soil_p_mineralization,
+                                          soil_p_leaching=soil_p_leaching,
+                                          canopy_p_flux=canopy_p_flux,
+                                          frass_p_production=frass_p_production,
+                                          leaflitter_p_flux=leaflitter_p_flux,
+                                          fineroot_p_production=fineroot_p_production,
+                                          fineroot_litter_p_flux=fineroot_litter_p_flux,
+                                          twig_litter_p_flux=twig_litter_p_flux,
+                                          bark_litter_p_flux=bark_litter_p_flux,
+                                          seed_litter_p_flux=seed_litter_p_flux,
+                                          wood_p_flux=wood_p_flux,
+                                          coarse_root_p_flux=coarse_root_p_flux,
+                                          understorey_p_flux=understorey_p_flux,
+                                          understorey_litter_p_flux=understorey_litter_p_flux)
 
 
 ###### ---------------------------------------------------------------------------------------------------------##### 
@@ -991,37 +954,28 @@ norm <- "normalized"
 ####        and then plot. 
 ####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
 ####        then open the function, then plot. 
-source("programs/plot_scripts/make_p_budget_summary_plots.R")
-make_p_budget_summary_plots(inDF=total_p_budget_norm,
-                            norm=norm)
+#source("programs/plot_scripts/make_p_budget_summary_plots.R")
+make_p_budget_summary_plots(inDF=normDF$total_p_budget,
+                            norm="normalized")
 
 ### Concentration
-source("programs/plot_scripts/make_p_concentration_summary_plots.R")
-make_p_concentration_summary_plots(inDF=summary_table_concentration_norm,
-                                   norm=norm)
+### no need
 
 ### P pool
-source("programs/plot_scripts/make_p_pools_summary_plots.R")
-make_p_pools_summary_plots(inDF=summary_table_pool_norm,
-                           norm=norm)
+#source("programs/plot_scripts/make_p_pools_summary_plots.R")
+make_p_pools_summary_plots(inDF=normDF$summary_table_pool,
+                           norm="normalized")
 
 ### P flux
-source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
-make_p_fluxes_summary_plots(inDF=summary_table_flux_norm,
-                            norm=norm)
+#source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
+make_p_fluxes_summary_plots(inDF=normDF$summary_table_flux,
+                            norm="normalized")
 
 
 #### Individial rings
-source("programs/plot_scripts/make_p_budget_ring_plots.R")
-make_p_budget_ring_plots(inDF=total_p_budget_norm,
-                         norm=norm)
-
-
-### Soil hedley P pools
-source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
-make_soil_p_budget_summary_plots(inDF=summary_table_pool_norm,
-                                 norm=norm)
-
+#source("programs/plot_scripts/make_p_budget_ring_plots.R")
+make_p_budget_ring_plots(inDF=normDF$total_p_budget,
+                         norm="normalized")
 
 
 
