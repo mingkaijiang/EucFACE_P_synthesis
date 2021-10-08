@@ -829,7 +829,7 @@ synthesize_covariate_adjustment_statistics(corDF.adj=corDF.adj,
 ########################################################################################## 
 ########################################################################################## 
 #####
-###### Step 8: Normalize all responses to a pretreatment soil conditions
+###### Step 8: Normalize all responses to a pretreatment conditions
 
 #### Now we will need to revise all the pools and flux calculations
 soil_p_pool_norm <- adjust_p_variables_with_covariate(inDF=soil_p_pool, 
@@ -841,7 +841,12 @@ soil_p_pool_norm <- adjust_p_variables_with_covariate(inDF=soil_p_pool,
 
 
 
-#
+
+########################################################################################## 
+########################################################################################## 
+#####
+###### Step 9: Summarize normalized responses
+
 #### Summary Tables
 source("programs/summary_tables/normalized/make_normalized_concentration_summary_table.R")
 summary_table_concentration_norm <- make_normalized_concentration_summary_table(inDF=summary_table_concentration)
