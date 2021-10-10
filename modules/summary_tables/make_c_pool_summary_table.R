@@ -72,21 +72,24 @@ make_c_pool_summary_table <- function(norm,
     treatDF$timepoint[treatDF$terms == "Wood C Pool"] <- length(unique(wood_c_pool$Date)) 
     treatDF$notes[treatDF$terms == "Wood C Pool"] <- "Estimated based on allometric relationship, considers mortality"
     
-    ### Sapwood C 
-    out <- summaryBy(sap_pool~Ring,data=wood_c_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Sapwood C Pool", 2:7] <- out$sap_pool
-    treatDF$year_start[treatDF$terms == "Sapwood C Pool"] <- min(year(wood_c_pool$Date))    
-    treatDF$year_end[treatDF$terms == "Sapwood C Pool"] <- max(year(wood_c_pool$Date))    
-    treatDF$timepoint[treatDF$terms == "Sapwood C Pool"] <- length(unique(wood_c_pool$Date)) 
-    treatDF$notes[treatDF$terms == "Sapwood C Pool"] <- "Estimated based on allometric relationship, considers mortality"
-    
-    ### Heartwood C 
-    out <- summaryBy(heart_pool~Ring,data=wood_c_pool,FUN=mean,keep.names=T,na.rm=T)
-    treatDF[treatDF$terms == "Heartwood C Pool", 2:7] <- out$heart_pool
-    treatDF$year_start[treatDF$terms == "Heartwood C Pool"] <- min(year(wood_c_pool$Date))    
-    treatDF$year_end[treatDF$terms == "Heartwood C Pool"] <- max(year(wood_c_pool$Date))    
-    treatDF$timepoint[treatDF$terms == "Heartwood C Pool"] <- length(unique(wood_c_pool$Date)) 
-    treatDF$notes[treatDF$terms == "Heartwood C Pool"] <- "Estimated based on allometric relationship, considers mortality"
+    if (norm == "unnormalized") {
+      ### Sapwood C 
+      out <- summaryBy(sap_pool~Ring,data=wood_c_pool,FUN=mean,keep.names=T,na.rm=T)
+      treatDF[treatDF$terms == "Sapwood C Pool", 2:7] <- out$sap_pool
+      treatDF$year_start[treatDF$terms == "Sapwood C Pool"] <- min(year(wood_c_pool$Date))    
+      treatDF$year_end[treatDF$terms == "Sapwood C Pool"] <- max(year(wood_c_pool$Date))    
+      treatDF$timepoint[treatDF$terms == "Sapwood C Pool"] <- length(unique(wood_c_pool$Date)) 
+      treatDF$notes[treatDF$terms == "Sapwood C Pool"] <- "Estimated based on allometric relationship, considers mortality"
+      
+      ### Heartwood C 
+      out <- summaryBy(heart_pool~Ring,data=wood_c_pool,FUN=mean,keep.names=T,na.rm=T)
+      treatDF[treatDF$terms == "Heartwood C Pool", 2:7] <- out$heart_pool
+      treatDF$year_start[treatDF$terms == "Heartwood C Pool"] <- min(year(wood_c_pool$Date))    
+      treatDF$year_end[treatDF$terms == "Heartwood C Pool"] <- max(year(wood_c_pool$Date))    
+      treatDF$timepoint[treatDF$terms == "Heartwood C Pool"] <- length(unique(wood_c_pool$Date)) 
+      treatDF$notes[treatDF$terms == "Heartwood C Pool"] <- "Estimated based on allometric relationship, considers mortality"
+      
+    }
     
     ### Standing Dead Wood C 
     out <- summaryBy(wood_pool~Ring,data=standing_dead_c_pool,FUN=mean,keep.names=T,na.rm=T)

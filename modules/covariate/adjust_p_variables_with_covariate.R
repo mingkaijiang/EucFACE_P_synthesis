@@ -1,6 +1,7 @@
 adjust_p_variables_with_covariate <- function(inDF, 
                                               corDF.adj, 
                                               var.col,
+                                              poolORflux,
                                               ignore.date=F,
                                               with.depth.profile,
                                               plot.comparison,
@@ -16,54 +17,259 @@ adjust_p_variables_with_covariate <- function(inDF,
     #### Update variable name so that this function can be used across different variables
     colnames(inDF)[var.col] <- "Value"
 
-    ### merge
-    inDF <- merge(inDF, corDF.adj, by=c("Ring"))
     
     #### Assign factors
+    inDF$Trt[inDF$Ring%in%c(2,3,6)] <- "amb"
+    inDF$Trt[inDF$Ring%in%c(1,4,5)] <- "ele"
     inDF$Trt <- as.factor(inDF$Trt)
-    inDF$Ring <- as.factor(inDF$Ring)
-    inDF$Datef <- as.factor(inDF$Date)
-    
-    #### dataframe with annual totals in g m-2 yr-1
-    ###------ Treatment interacting with date, or not
-    ###------ Ring random factor
-    ###------ Unit g m-2 yr-1
     
     ### add year information
-    #inDF$Yr <- year(inDF$Date)
+    inDF$Yr <- year(inDF$Date)
+    inDF$Yrf <- as.factor(inDF$Yr)
     
-    ## Get year list and ring list
-    #yr.list <- unique(inDF$Yr)
-    #tDF <- summaryBy(Value+Cov2~Trt+Ring+Yr,data=inDF,FUN=sum, keep.names=T)
-    #tDF$Yrf <- as.factor(tDF$Yr)
-    #
-    #### Loop through data, return annual flux in g m-2 yr-1
-    #for (i in 1:6) {
-    #    for (j in yr.list) {
-    #        ### summed of all available data within a year
-    #        tDF[tDF$Ring == i & tDF$Yr == j, "Value"] <- inDF$Value[inDF$Ring == i & inDF$Yr == j]
-    #    }
-    #}
+    ### get list
+    yr.list <- unique(inDF$Yr)
+
     
-    ### Analyse the variable model
-    ## model 1: no interaction, year as factor, ring random factor, include pre-treatment effect
-    if (ignore.date==T) {
-        if (with.depth.profile==T) {
-            modelt1 <- lmer(Value~Trt + Depth + covariate + (1|Ring),
-                            data=inDF)
-        } else if (with.depth.profile == F) {
-            modelt1 <- lmer(Value~Trt + covariate + (1|Ring),
-                            data=inDF)
-        }
+    if (ignore.date==F) {
+        #### dataframe with annual totals in g m-2 yr-1 or g m-2,
+        ###------ Ring random factor
+        ###------ Year fixed factor
+        
+        ### check what variable this is: pool or flux
+        if (poolORflux == "pool") {
+            
+            ### if depth profile is needed
+            if (with.depth.profile==T) {
+                
+                ## Get year list and ring list
+                tDF <- summaryBy(Value~Trt+Ring+Yrf+Depth,
+                                 data=inDF,FUN=mean, keep.names=T, na.rm=T)
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + Depth + Yrf + covariate + (1|Ring),
+                                data=tDF)
+                
+            } else if (with.depth.profile == F) {
+                
+                ## Get year list and ring list
+                tDF <- summaryBy(Value~Trt+Ring+Yrf,
+                                 data=inDF,FUN=mean, keep.names=T, na.rm=T)
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + Yrf + covariate + (1|Ring),
+                                data=tDF)
+                
+            }  ## end depth profile check
+            
+            
+        } else if (poolORflux == "flux") {
+            
+            
+            ### if depth profile is needed
+            if (with.depth.profile==T) {
+                
+                ### get depth
+                depth.list <- unique(inDF$Depth)
+                
+                ### prepare an empty storage df
+                tDF <- data.frame("Ring" = rep(1:6, length(yr.list)*length(depth.list)),
+                                  "Trt" = rep(c("ele", "amb", "amb", 
+                                                "ele", "ele", "amb"),
+                                              length(yr.list)*length(depth.list)),
+                                  "Yr" = rep(yr.list, each=6),
+                                  "Depth" = rep(depth.list, each=6*length(yr.list)))
+                
+                # convert production flux from mg m-2 d-1 to g m-2 yr-1
+                conv <- 365 / 1000  
+                
+                ### calculate annual total
+                for (i in unique(inDF$Ring)) {
+                    for (j in yr.list) {
+                        for (k in depth.list) {
+                            tDF$Value[tDF$Ring==i&tDF$Yr==j&tDF$Depth==k] <- with(inDF[inDF$Ring ==i&inDF$Yr==j&inDF$Depth==k,],
+                                                                                  sum(Value*Days)/sum(Days)) * conv
+                            
+                        }
+                    }
+                    
+                }
+                
+                ### make year a factor
+                tDF$Yrf <- as.factor(tDF$Yr)
+                
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + Depth + Yrf + covariate + (1|Ring),
+                                data=tDF)
+                
+            } else if (with.depth.profile == F) {
+                
+                ### prepare an empty storage df
+                tDF <- data.frame("Ring" = rep(1:6, length(yr.list)),
+                                  "Trt" = rep(c("ele", "amb", "amb", "ele", "ele", "amb"),
+                                              length(yr.list)),
+                                  "Yr" = rep(yr.list, each=6))
+                
+                # convert production flux from mg m-2 d-1 to g m-2 yr-1
+                conv <- 365 / 1000  
+                
+                ### calculate annual total
+                for (i in unique(inDF$Ring)) {
+                    for (j in yr.list) {
+                        tDF$Value[tDF$Ring==i&tDF$Yr==j] <- with(inDF[inDF$Ring ==i&inDF$Yr==j,],
+                                                                 sum(Value*Days)/sum(Days)) * conv
+                        
+                    }
+                    
+                }
+                
+                ### make year a factor
+                tDF$Yrf <- as.factor(tDF$Yr)
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + Yrf + covariate + (1|Ring),
+                                data=tDF)
+                
+            }  ## end depth profile check
+        } ### end pool flux check
     } else {
-        if (with.depth.profile==T) {
-            modelt1 <- lmer(Value~Trt + Depth + Datef + covariate + (1|Ring),
-                            data=inDF)
-        } else if (with.depth.profile == F) {
-            modelt1 <- lmer(Value~Trt + covariate + (1|Ring),
-                            data=inDF)
-        }
+        #### dataframe with annual totals in g m-2 yr-1 or g m-2,
+        ###------ Ring random factor
+        ###------ Year fixed factor
+        
+        ### check what variable this is: pool or flux
+        if (poolORflux == "pool") {
+            
+            ### if depth profile is needed
+            if (with.depth.profile==T) {
+                
+                ## Get year list and ring list
+                tDF <- summaryBy(Value~Trt+Ring+Depth,
+                                 data=inDF,FUN=mean, keep.names=T, na.rm=T)
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + Depth + covariate + (1|Ring),
+                                data=tDF)
+                
+            } else if (with.depth.profile == F) {
+                
+                ## Get year list and ring list
+                tDF <- summaryBy(Value~Trt+Ring,
+                                 data=inDF,FUN=mean, keep.names=T, na.rm=T)
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + covariate + (1|Ring),
+                                data=tDF)
+                
+            }  ## end depth profile check
+            
+            
+        } else if (poolORflux == "flux") {
+            
+            
+            ### if depth profile is needed
+            if (with.depth.profile==T) {
+                
+                ### get depth
+                depth.list <- unique(inDF$Depth)
+                
+                ### prepare an empty storage df
+                tDF <- data.frame("Ring" = rep(1:6, length(depth.list)),
+                                  "Trt" = rep(c("ele", "amb", "amb", 
+                                                "ele", "ele", "amb"),
+                                              length(depth.list)),
+                                  "Depth" = rep(depth.list, each=6))
+                
+                # convert production flux from mg m-2 d-1 to g m-2 yr-1
+                conv <- 365 / 1000  
+                
+                ### calculate annual total
+                for (i in unique(inDF$Ring)) {
+                    for (k in depth.list) {
+                        tDF$Value[tDF$Ring==i&tDF$Depth==k] <- with(inDF[inDF$Ring ==i&inDF&inDF$Depth==k,],
+                                                                              sum(Value*Days)/sum(Days)) * conv
+                        
+                    }
+                }
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + Depth + covariate + (1|Ring),
+                                data=tDF)
+                
+            } else if (with.depth.profile == F) {
+                
+                ### prepare an empty storage df
+                tDF <- data.frame("Ring" = rep(1:6),
+                                  "Trt" = rep(c("ele", "amb", "amb", "ele", "ele", "amb")))
+                
+                # convert production flux from mg m-2 d-1 to g m-2 yr-1
+                conv <- 365 / 1000  
+                
+                ### calculate annual total
+                for (i in unique(inDF$Ring)) {
+                    
+                        tDF$Value[tDF$Ring==i&tDF$Yr==j] <- with(inDF[inDF$Ring ==i,],
+                                                                 sum(Value*Days)/sum(Days)) * conv
+                        
+                }
+                
+                ### merge with covariate
+                tDF <- merge(tDF, corDF.adj, by=c("Ring", "Trt"))
+                
+                ### make ring a factor
+                tDF$Ring <- as.factor(tDF$Ring)
+                
+                ### linear model 
+                modelt1 <- lmer(Value~Trt + covariate + (1|Ring),
+                                data=tDF)
+                
+            }  ## end depth profile check
+        } ### end pool flux check
     }
+    
     
     
     
@@ -88,7 +294,7 @@ adjust_p_variables_with_covariate <- function(inDF,
     
     
     ### Predict the model with a standard LAI value
-    newDF <- inDF
+    newDF <- tDF
     newDF$covariate <- mean(corDF.adj$covariate)
     newDF$predicted <- predict(out$mod, newdata=newDF)
     
