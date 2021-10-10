@@ -391,10 +391,14 @@ make_pool_summary_table <- function(norm,
     plotDF$terms <- gsub(" P Pool", "", plotDF$terms)
     
     p1 <- ggplot(plotDF, aes(terms, value, group=variable))+
-      geom_point(aes(fill=variable), pch=21) +
       geom_errorbar(aes(ymin=value-value_sd, ymax=value+value_sd),
-                    width=0.2)+
-      coord_flip()
+                    position=position_dodge2(), width=0.3)+
+      geom_point(aes(fill=variable), pch=21, stat = "identity", size=2,
+                 position=position_dodge2(width=0.3)) +
+      coord_flip()+
+      scale_fill_manual(name="",
+                        values=c("aCO2"="blue3",
+                                 "eCO2"="red2"))
     
     pdf(paste0("plots_tables/summary_tables/", norm, "/P_pool_comparison.pdf"))
     plot(p1)

@@ -753,45 +753,47 @@ total_p_budget <- make_total_p_budget(norm="unnormalized",
 #####
 norm <- "unnormalized"
 
-##### Note: for the following plotting script, you will need to go into the function
-####        and then plot. 
+##### Note: for the following plotting script in this step,
+####        we will need to go into the function
+####        to plot!!! 
 ####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
 ####        then open the function, then plot. 
-#source("programs/plot_scripts/make_p_budget_summary_plots.R")
+inDF=total_p_budget
 make_p_budget_summary_plots(inDF=total_p_budget,
                             norm="unnormalized")
 
 ### Concentration
-#source("programs/plot_scripts/make_p_concentration_summary_plots.R")
+inDF=summary_table_concentration
 make_p_concentration_summary_plots(inDF=summary_table_concentration,
                                    norm="unnormalized")
 
 ### P pool
-#source("programs/plot_scripts/make_p_pools_summary_plots.R")
+inDF=summary_table_pool
 make_p_pools_summary_plots(inDF=summary_table_pool,
                            norm="unnormalized")
 
 ### P flux
-#source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
+inDF=summary_table_flux
 make_p_fluxes_summary_plots(inDF=summary_table_flux,
                             norm="unnormalized")
 
 
 #### Individial rings
-#source("programs/plot_scripts/make_p_budget_ring_plots.R")
+inDF=total_p_budget
 make_p_budget_ring_plots(inDF=total_p_budget,
                          norm="unnormalized")
 
 
 ### Soil hedley P pools
-#source("programs/plot_scripts/make_soil_p_budget_summary_plots.R")
+inDF=summary_table_pool
 make_soil_p_budget_summary_plots(inDF=summary_table_pool,
                                  norm="unnormalized")
 
 
 ### compare microbial CNP vs global dataset (Xu et al., 2013)
+microbial_p_concentration <- microbial_p_concentration
 microbial_concentration_global_comparison(norm="unnormalized",
-                                          microbial_p_concentration)
+                                          microbial_p_concentration=microbial_p_concentration)
 
 
 
@@ -815,7 +817,8 @@ plot_pretreatment_covariate(corDF=corDF)
 
 
 ### which covariate to look at
-### we will need to adjust this whenever we decide to look at a different covariate
+### we will need to adjust this 
+### whenever we decide to look at a different covariate
 covariate.name <- "lai_variable"
 corDF.adj <- adjust_covariate_for_statistical_input(corDF=corDF,
                                                     covariate.name=covariate.name)
@@ -889,6 +892,8 @@ synthesize_covariate_adjustment_statistics(corDF.adj=corDF.adj,
 #####
 ###### Step 8: Normalize all responses to a pretreatment conditions
 
+#### This function returns all the summary dataframes, 
+#### and all the normalized summary plots (not figure quality, but useful to check broad patterns)
 normDF <- synthesize_normalized_responses(corDF.adj=corDF.adj,
                                           return.outcome="predicted",
                                           plot.comparison=F,
@@ -950,11 +955,13 @@ normDF <- synthesize_normalized_responses(corDF.adj=corDF.adj,
 norm <- "normalized"
 
 
-##### Note: for the following plotting script, you will need to go into the function
-####        and then plot. 
+##### Note: for the following plotting script in this step,
+####        we will need to go into the function
+####        to plot!!! 
 ####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
 ####        then open the function, then plot. 
-#source("programs/plot_scripts/make_p_budget_summary_plots.R")
+
+inDF=normDF$total_p_budget
 make_p_budget_summary_plots(inDF=normDF$total_p_budget,
                             norm="normalized")
 
@@ -962,18 +969,18 @@ make_p_budget_summary_plots(inDF=normDF$total_p_budget,
 ### no need
 
 ### P pool
-#source("programs/plot_scripts/make_p_pools_summary_plots.R")
+inDF=normDF$summary_table_pool
 make_p_pools_summary_plots(inDF=normDF$summary_table_pool,
                            norm="normalized")
 
 ### P flux
-#source("programs/plot_scripts/make_p_fluxes_summary_plots.R")
+inDF=normDF$summary_table_flux
 make_p_fluxes_summary_plots(inDF=normDF$summary_table_flux,
                             norm="normalized")
 
 
 #### Individial rings
-#source("programs/plot_scripts/make_p_budget_ring_plots.R")
+inDF=normDF$total_p_budget
 make_p_budget_ring_plots(inDF=normDF$total_p_budget,
                          norm="normalized")
 
