@@ -98,7 +98,7 @@ make_p_budget_summary_plots <- function(inDF, norm) {
     plotDF7$neg <- with(plotDF7, mean - sd)
     
     
-    ### plot 8
+    ### plot 8 PUE
     plotDF8 <- data.frame(c(inDF$aCO2[inDF$terms=="Plant PUE"], 
                             inDF$eCO2[inDF$terms=="Plant PUE"]), 
                           NA)
@@ -108,6 +108,21 @@ make_p_budget_summary_plots <- function(inDF, norm) {
     plotDF8$Trt <- c("aCO2", "eCO2")
     plotDF8$pos <- with(plotDF8, mean + sd)
     plotDF8$neg <- with(plotDF8, mean - sd)
+    
+    
+    
+    ### P uptake / P mineralization
+    plotDF9 <- data.frame(c(inDF$aCO2[inDF$terms=="Plant P uptake over P mineralization"], 
+                            inDF$eCO2[inDF$terms=="Plant P uptake over P mineralization"]), 
+                          NA)
+    colnames(plotDF9) <- c("mean", "sd")
+    plotDF9$sd <- c(inDF$aCO2_sd[inDF$terms=="Plant P uptake over P mineralization"], 
+                    inDF$eCO2_sd[inDF$terms=="Plant P uptake over P mineralization"])
+    plotDF9$Trt <- c("aCO2", "eCO2")
+    plotDF9$pos <- with(plotDF9, mean + sd)
+    plotDF9$neg <- with(plotDF9, mean - sd)
+    
+
     
     ### Plotting
     

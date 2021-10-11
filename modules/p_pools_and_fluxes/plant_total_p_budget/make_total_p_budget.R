@@ -18,6 +18,15 @@ make_total_p_budget <- function(norm,
                "Plant P uptake over requirement",
                "Plant P MRT", 
                "Plant PUE",
+               "Plant P uptake over P mineralization",
+               "Leaflitter P over P mineralization",
+               "Fineroot litter P over P mineralization",
+               "Twig litter P over P mineralization",
+               "Bark litter P over P mineralization",
+               "Seed litter P over P mineralization",
+               "Frass litter P over P mineralization",
+               "Understorey litter P over P mineralization",
+               "Leaching P over P mineralization",
                "Overstorey aboveground P stock",
                "Understorey aboveground P stock",
                "Belowground P stock",
@@ -44,6 +53,27 @@ make_total_p_budget <- function(norm,
     out[out$terms == "Plant P MRT", 2:7] <- round(plant_p_MRT$plant_P_MRT,2)
     
     out[out$terms == "Plant PUE", 2:7] <- round(plant_p_use_efficiency$PUE,2)
+    
+    out[out$terms == "Plant P uptake over P mineralization", 2:7] <- round(as.numeric(out[out$terms=="Plant P uptake flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    
+    ### plant P uptake over P mineralization
+    out[out$terms == "Leaflitter P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Leaflitter P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    out[out$terms == "Fineroot litter P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Fineroot Litter P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    out[out$terms == "Twig litter P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Twig litter P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    out[out$terms == "Bark litter P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Bark litter P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    out[out$terms == "Seed litter P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Seed litter P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    out[out$terms == "Frass litter P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Frass P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    out[out$terms == "Understorey litter P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Understorey Litter P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
+    out[out$terms == "Leaching P over P mineralization", 2:7] <- round(as.numeric(summary_table_flux[summary_table_flux$terms=="Leaching P flux", 2:7])/as.numeric(out[out$terms=="Soil P mineralization flux", 2:7]),2)
+    
     
     out[out$terms == "Overstorey aboveground P stock", 2:7] <- round(vegetation_standing_p_stock$oa,2)
     
