@@ -105,6 +105,42 @@ make_fate_of_p_plots <- function(inDF, norm) {
     #SpectralPalette <- brewer.pal(n = 8, name = "Spectral")
     
     ### % of fluxes as part of mineralization flux, aCO2 and eCO2
+    p1 <- ggplot(plotDF1, aes(x=Trt, y=meanvalue))+
+      geom_bar(stat = "identity", aes(fill=Terms), 
+               position="stack")+
+      labs(x="", 
+           y="Allocation fraction")+
+      theme_linedraw() +
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=12),
+            axis.title.y=element_text(size=14),
+            legend.text=element_text(size=12),
+            legend.title=element_text(size=14),
+            panel.grid.major=element_blank(),
+            legend.position="none")+
+      scale_x_discrete(labels=c("aCO2"=expression(aCO[2]),
+                                "eCO2"=expression(eCO[2])))+
+      scale_fill_manual(name="Fluxes", 
+                        values = c("Leaflitter" = cbbPalette[2],
+                                   "Twig litter" = cbbPalette[3],
+                                   "Bark litter" = cbbPalette[3],
+                                   "Seed litter" = cbbPalette[3],
+                                   "Fineroot litter" = cbbPalette[4],
+                                   "Frass litter" = cbbPalette[5],
+                                   "Understorey litter" = cbbPalette[6],
+                                   "Leaching" = cbbPalette[7],
+                                   "Unaccounted" = cbbPalette[8]),
+                        labels=c("Leaflitter" = expression(P[can]),
+                                 "Twig litter" = expression(P[twig]),
+                                 "Bark litter" = expression(P[bark]),
+                                 "Seed litter" = expression(P[seed]),
+                                 "Fineroot litter" = expression(P[froot]),
+                                 "Frass litter" = expression(P[frass]),
+                                 "Understorey litter" = expression(P[ua]),
+                                 "Leaching" = expression(P[leach]),
+                                 "Unaccounted" = expression(P[unacc])))
     
     
     
@@ -114,7 +150,7 @@ make_fate_of_p_plots <- function(inDF, norm) {
       geom_bar(stat = "identity", aes(fill=terms), 
                position="stack")+
       geom_point(data=plotDF3, aes(x=col, y=Effect_size), 
-                 pch=21, size=2, col="black", fill="red")+
+                 pch=21, size=4, col="black", fill="red")+
       geom_errorbar(data=plotDF3,
                     aes(x=col, ymax=Effect_size+Effect_sd, 
                         ymin=Effect_size-Effect_sd), 
@@ -132,7 +168,7 @@ make_fate_of_p_plots <- function(inDF, norm) {
             panel.grid.major=element_blank(),
             legend.position="bottom")+
       scale_x_discrete(labels=c("1"=expression(P[min]),
-                                "2"="Path fluxes"))+
+                                "2"="P fluxes"))+
       scale_fill_manual(name="Fluxes", 
                         values = c("Soil P mineralization flux" = cbbPalette[1], 
                                    "Leaflitter P" = cbbPalette[2],
@@ -153,13 +189,17 @@ make_fate_of_p_plots <- function(inDF, norm) {
                                  "Frass litter P" = expression(P[frass]),
                                  "Understorey litter P" = expression(P[ua]),
                                  "Leaching P" = expression(P[leach]),
-                                 "Unaccounted P" = expression(P[unacc]))); p2
+                                 "Unaccounted P" = expression(P[unacc])))
     
     
     
     pdf(paste0("plots_tables/output/", norm, "/Fate_of_P_", norm, ".pdf"),
-        width=6,height=4)
-    plot(p2)
+        width=6,height=8)
+    plot_grid(p1, p2, labels="", ncol=1, align="v", axis = "l",
+              rel_heights = c(1, 1.2))
+    grid.text(c("(a)", "(b)"), x = c(0.15, 0.15),
+              y = c(0.96, 0.5), 
+              gp=gpar(fontsize=14, col="black", fontface="bold"))
     dev.off()
     
 }

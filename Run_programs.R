@@ -41,6 +41,10 @@ source("programs/prepare.R")
 ###                   30 - 60 (transition)
 soil_bulk_density <- make_soil_bulk_density()
 
+overstorey_gpp_flux <- make_overstorey_gpp_flux()
+
+understorey_gpp_flux <- make_understorey_gpp_flux()
+
 
 ########################################################################################## 
 ########################################################################################## 
@@ -736,6 +740,15 @@ plant_p_use_efficiency <- make_plant_P_use_efficiency(norm="unnormalized",
                                                       c_flux=summary_table_c_flux,
                                                       p_flux=summary_table_flux)
 
+### calculate efficiency of P for GPP
+### i.e. GPP / leaf P pool for both overstorey and understorey
+### saves a plot.
+plant_GPP_efficiency <- make_plant_GPP_efficiency(norm="unnormalized",
+                                                  p_pool=summary_table_pool,
+                                                  p_flux=summary_table_flux,
+                                                  can_gpp=overstorey_gpp_flux,
+                                                  und_gpp=understorey_gpp_flux)
+    
 
 #### P budget summary
 total_p_budget <- make_total_p_budget(norm="unnormalized",
@@ -763,10 +776,13 @@ make_p_budget_summary_plots(inDF=total_p_budget,
                             norm="unnormalized")
 
 
-### 
+### check fate of the additionally mineralized P flux
+### bear in mind the uncertainties associated with all measurements
+### and the additionally mineralized P flux is small (0.05 g P m-2 yr-1)
 inDF = total_p_budget
 make_fate_of_p_plots(inDF=total_p_budget,
                      norm="unnormalized")
+
 
 ### Concentration
 inDF=summary_table_concentration
