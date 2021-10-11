@@ -29,7 +29,7 @@ make_pool_summary_table <- function(norm,
                "Fine Root P Pool",
                "Coarse Root P Pool", 
                "Understorey P Pool", 
-               #"Understorey Litter P Pool",
+               "Understorey Litter P Pool",
                "Standing Dead Wood P Pool",
                "Microbial P Pool 0-10cm", 
                "Microbial P Pool 10-30cm", 
@@ -148,12 +148,15 @@ make_pool_summary_table <- function(norm,
     treatDF$notes[treatDF$terms == "Understorey P Pool"] <- "Used harvest estimate of C pool"
     
     ### Understorey Litter P pool
-    #out <- summaryBy(dead_p_pool~Ring,data=understorey_p_pool,FUN=mean,keep.names=T,na.rm=T)
-    #treatDF[treatDF$terms == "Understorey Litter P Pool", 2:7] <- out$dead_p_pool
-    #treatDF$year_start[treatDF$terms == "Understorey Litter P Pool"] <- min(year(understorey_p_pool$Date))    
-    #treatDF$year_end[treatDF$terms == "Understorey Litter P Pool"] <- max(year(understorey_p_pool$Date))    
-    #treatDF$timepoint[treatDF$terms == "Understorey Litter P Pool"] <- length(unique(understorey_p_pool$Date))  
-    #treatDF$notes[treatDF$terms == "Understorey Litter P Pool"] <- "Used harvest estimate of C pool"
+    if (norm == "unnormalized") {
+      out <- summaryBy(dead_p_pool~Ring,data=understorey_p_pool,FUN=mean,keep.names=T,na.rm=T)
+      treatDF[treatDF$terms == "Understorey Litter P Pool", 2:7] <- out$dead_p_pool
+      treatDF$year_start[treatDF$terms == "Understorey Litter P Pool"] <- min(year(understorey_p_pool$Date))    
+      treatDF$year_end[treatDF$terms == "Understorey Litter P Pool"] <- max(year(understorey_p_pool$Date))    
+      treatDF$timepoint[treatDF$terms == "Understorey Litter P Pool"] <- length(unique(understorey_p_pool$Date))  
+      treatDF$notes[treatDF$terms == "Understorey Litter P Pool"] <- "Used harvest estimate of C pool"
+    }
+    
 
     
     ### Microbial P pool
@@ -374,7 +377,8 @@ make_pool_summary_table <- function(norm,
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
     write.csv(treatDF, paste0("plots_tables/summary_tables/", 
-                              norm, "/summary_table_P_pool_unnormalized.csv"), 
+                              norm, "/summary_table_P_pool_", norm, 
+                              ".csv"), 
               row.names=F)
     
     

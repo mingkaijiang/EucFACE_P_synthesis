@@ -356,7 +356,8 @@ make_conc_summary_table <- function(norm,
     
     ### save
     write.csv(treatDF, paste0("plots_tables/summary_tables/", norm, 
-                              "/summary_table_P_concentration_unnormalized.csv"), row.names=F)
+                              "/summary_table_P_concentration_", norm, 
+                              ".csv"), row.names=F)
     
     
     ### plot

@@ -223,7 +223,7 @@ adjust_p_variables_with_covariate <- function(inDF,
                 ### calculate annual total
                 for (i in unique(inDF$Ring)) {
                     for (k in depth.list) {
-                        tDF$Value[tDF$Ring==i&tDF$Depth==k] <- with(inDF[inDF$Ring ==i&inDF&inDF$Depth==k,],
+                        tDF$Value[tDF$Ring==i&tDF$Depth==k] <- with(inDF[inDF$Ring ==i&inDF$Depth==k,],
                                                                               sum(Value*Days)/sum(Days)) * conv
                         
                     }

@@ -468,6 +468,7 @@ synthesize_normalized_responses <- function(corDF.adj,
                                                                     corDF.adj=corDF.adj, 
                                                                     var.col=4,
                                                                     poolORflux="flux",
+                                                                    ignore.date=T,
                                                                     with.depth.profile=T,
                                                                     plot.comparison=plot.comparison,
                                                                     return.outcome=return.outcome) 

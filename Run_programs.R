@@ -432,8 +432,8 @@ coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=sapwood_p_concentration,
 #### extrapolated based on data from top 10 cm. 
 #### This is the net mineralization flux (i.e. gross - immobilization)
 soil_p_mineralization <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
-                                                         fineroot_c_pool=fineroot_c_pool,
-                                                         which.variable="Pmic")
+                                                                  fineroot_c_pool=fineroot_c_pool,
+                                                                  which.variable="Pmic")
 
 soil_p_mineralization2 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
                                                                   fineroot_c_pool=fineroot_c_pool,

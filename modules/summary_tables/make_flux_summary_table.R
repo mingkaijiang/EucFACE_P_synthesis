@@ -194,6 +194,7 @@ make_flux_summary_table <- function(norm,
       treatDF$timepoint[treatDF$terms == "Seed litter P flux"] <- length(unique(seed_litter_p_flux$Date))  
       treatDF$notes[treatDF$terms == "Seed litter P flux"] <- "Assume wood P concentration"
       
+      
       ###  P mineralization flux
       for (i in c(1:6)) {
         treatDF[treatDF$terms == "Mineralization P flux 0-10cm", i+1] <- with(soil_p_mineralization[soil_p_mineralization$Ring ==i&soil_p_mineralization$Depth =="0_10",],
@@ -487,6 +488,7 @@ make_flux_summary_table <- function(norm,
       treatDF$year_end[treatDF$terms == "Mineralization P flux 30-60cm"] <- max(year(soil_p_mineralization$Date[soil_p_mineralization$Depth =="transition"]))    
       treatDF$timepoint[treatDF$terms == "Mineralization P flux 30-60cm"] <- length(unique(soil_p_mineralization$Date[soil_p_mineralization$Depth =="transition"]))  
       treatDF$notes[treatDF$terms == "Mineralization P flux 30-60cm"] <- " 30-60cm"
+
       
       ###  P leaching flux
       for (i in c(1:6)) {
@@ -613,7 +615,8 @@ make_flux_summary_table <- function(norm,
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
     write.csv(treatDF, paste0("plots_tables/summary_tables/", norm, 
-                              "/summary_table_P_flux_unnormalized.csv"), row.names=F)
+                              "/summary_table_P_flux_", norm, ".csv"), 
+              row.names=F)
     
     
     ### plot
