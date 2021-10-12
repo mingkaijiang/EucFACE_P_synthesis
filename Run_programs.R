@@ -210,13 +210,13 @@ fineroot_c_pool4 <- make_fineroot_c_pool(back.calculate=T,
 
 
 compare_fineroot_c_pool(inDF1=fineroot_c_pool,
-                                  inDF2=fineroot_c_pool2,
-                                  inDF3=fineroot_c_pool3,
-                                  inDF4=fineroot_c_pool4,
-                                  name1="intermediate_root",
-                                  name2="rev_bk",
-                                  name3="small_root",
-                                  name4="large_root")
+                        inDF2=fineroot_c_pool2,
+                        inDF3=fineroot_c_pool3,
+                        inDF4=fineroot_c_pool4,
+                        name1="intermediate_root",
+                        name2="rev_bk",
+                        name3="small_root",
+                        name4="large_root")
 
 
 #### Understorey aboveground biomass 

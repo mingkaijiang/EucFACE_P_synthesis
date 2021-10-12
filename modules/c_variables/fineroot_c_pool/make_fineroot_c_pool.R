@@ -178,7 +178,7 @@ make_fineroot_c_pool <- function(back.calculate,
                       "fineroot_10_30_cm", 
                       "fineroot_30_60_cm")]
     
-    
+ 
     ### add the 2013 data
     depthDF <- depthDF[,c("Number", "Ring", "Depth", "Date", "FRC")]
     

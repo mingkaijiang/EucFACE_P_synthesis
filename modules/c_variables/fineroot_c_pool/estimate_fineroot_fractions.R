@@ -34,10 +34,22 @@ estimate_fineroot_fractions <- function(bkDF) {
     names(outDF1)[names(outDF1)=="root2"] <- "FRB_intermediate"
     names(outDF1)[names(outDF1)=="root3"] <- "FRB_large"
     
+    tmpDF <- outDF1
+    tmpDF$Trt <- "aCO2"
+    tmpDF$Trt[tmpDF$Ring%in%c("1","4","5")] <- "eCO2"
+        
+    ### treatment average
+    avgDF <- summaryBy(FRB_small+FRB_intermediate+FRB_large~Depth,
+                       data=tmpDF, FUN=mean, keep.names=T, na.rm=T)
+    
     
     ### calculate fraction
-    outDF1$frac_intermediate <- outDF1$FRB_intermediate/outDF1$FRB_small
-    outDF1$frac_large <- outDF1$FRB_large/outDF1$FRB_small
+    avgDF$frac_intermediate <- avgDF$FRB_intermediate/avgDF$FRB_small
+    avgDF$frac_large <- avgDF$FRB_large/avgDF$FRB_small
+    avgDF <- avgDF[,c("Depth", "frac_intermediate", "frac_large")]
+    
+    outDF1 <- merge(outDF1, avgDF, by=c("Depth"))
+    
     
     ### return
     return(outDF1)
