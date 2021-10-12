@@ -188,7 +188,7 @@ standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
 ### so we probably will need to back calculate the raw biomass estimates
 ### and then multiply by the most accurate soil bulk density values.
 ### back.calculate flag included
-fineroot_c_pool <- make_fineroot_c_pool(back.calculate=T,
+fineroot_c_pool3 <- make_fineroot_c_pool(back.calculate=T,
                                         soil_bulk_density=soil_bulk_density,
                                         root.size="small")
 
@@ -199,7 +199,7 @@ fineroot_c_pool2 <- make_fineroot_c_pool(back.calculate=F,
 
 
 ### include intermediate root size
-fineroot_c_pool3 <- make_fineroot_c_pool(back.calculate=T,
+fineroot_c_pool <- make_fineroot_c_pool(back.calculate=T,
                                          soil_bulk_density=soil_bulk_density,
                                          root.size="intermediate")
 
@@ -209,13 +209,13 @@ fineroot_c_pool4 <- make_fineroot_c_pool(back.calculate=T,
                                          root.size="large")
 
 
-compare_fineroot_pool_calculation(inDF1=fineroot_c_pool,
+compare_fineroot_c_pool(inDF1=fineroot_c_pool,
                                   inDF2=fineroot_c_pool2,
                                   inDF3=fineroot_c_pool3,
                                   inDF4=fineroot_c_pool4,
-                                  name1="small_root",
+                                  name1="intermediate_root",
                                   name2="rev_bk",
-                                  name3="intermediate_root",
+                                  name3="small_root",
                                   name4="large_root")
 
 
@@ -263,7 +263,7 @@ mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
 
 #### Coarse root C pool 
 coarse_root_c_pool <- make_coarse_root_pool(c_fraction, 
-                                            fr_pool=fineroot_c_pool) 
+                                            fr_pool=fineroot_c_pool3) 
 
 
 #### Leaf litter pool - forest floor leaf litter pool
@@ -305,12 +305,17 @@ wood_c_production <- make_wood_production_flux(wood_c_pool)
 
 
 #### Fineroot production
+#### root size: < 2mm in diameter, not including the intermediate roots
 #### we can only estimate fineroot c production for top 30 cm,
 #### but the 30 - 60 cm fienroot biomass is tiny (3% of total), and therefore 
 #### we assume the production flux is small and negligible
-####
-fineroot_c_production_flux <- make_fineroot_c_production_flux()
+fineroot_c_production_flux <- make_fineroot_c_production_flux(root.size="intermediate",
+                                                              tot.root = fineroot_c_pool,
+                                                              f.root = fineroot_c_pool3)
 
+fineroot_c_production_flux2 <- make_fineroot_c_production_flux(root.size="small",
+                                                               tot.root = fineroot_c_pool,
+                                                               f.root = fineroot_c_pool3)
 
 
 #### Understorey production flux 
