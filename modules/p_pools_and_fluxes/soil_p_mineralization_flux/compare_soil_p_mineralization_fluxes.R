@@ -55,7 +55,7 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.text=element_text(size=10),
               legend.title=element_text(size=12),
               panel.grid.major=element_blank(),
-              legend.position="bottom") ; p1
+              legend.position="bottom") 
     
     pdf("plots_tables/checks/soil_P_mineralization_flux_method_comparison.pdf")
     plot(p1)

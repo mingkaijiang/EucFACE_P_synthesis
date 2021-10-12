@@ -182,8 +182,41 @@ standing_dead_c_pool <- make_standing_dead_c_pool(ring_area=FACE_ring_area,
 
 
 #### Fineroot pool
-# top 60 cm
-fineroot_c_pool <- make_fineroot_c_pool()
+### top 60 cm
+### biomass was firstly estimated based on a soil bulk density value
+### that is "assumed",
+### so we probably will need to back calculate the raw biomass estimates
+### and then multiply by the most accurate soil bulk density values.
+### back.calculate flag included
+fineroot_c_pool <- make_fineroot_c_pool(back.calculate=T,
+                                        soil_bulk_density=soil_bulk_density,
+                                        root.size="small")
+
+### back calculation with revised bulk density increased fineroot c pool slightly
+fineroot_c_pool2 <- make_fineroot_c_pool(back.calculate=F,
+                                        soil_bulk_density=soil_bulk_density,
+                                        root.size="small")
+
+
+### include intermediate root size
+fineroot_c_pool3 <- make_fineroot_c_pool(back.calculate=T,
+                                         soil_bulk_density=soil_bulk_density,
+                                         root.size="intermediate")
+
+### include large root size
+fineroot_c_pool4 <- make_fineroot_c_pool(back.calculate=T,
+                                         soil_bulk_density=soil_bulk_density,
+                                         root.size="large")
+
+
+compare_fineroot_pool_calculation(inDF1=fineroot_c_pool,
+                                  inDF2=fineroot_c_pool2,
+                                  inDF3=fineroot_c_pool3,
+                                  inDF4=fineroot_c_pool4,
+                                  name1="small_root",
+                                  name2="rev_bk",
+                                  name3="intermediate_root",
+                                  name4="large_root")
 
 
 #### Understorey aboveground biomass 
