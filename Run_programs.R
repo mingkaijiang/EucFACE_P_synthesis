@@ -879,10 +879,10 @@ plot_pretreatment_covariate(corDF=corDF)
 ### which covariate to look at
 ### we will need to adjust this 
 ### whenever we decide to look at a different covariate
-#covariate.name <- "lai_variable"
+covariate.name <- "lai_variable"
 #covariate.name <- "soil_carbon_pool_0_10"
 #covariate.name <- "soil_carbon_pool_0_60"
-covariate.name <- "soil_c_concentration_0_10"
+#covariate.name <- "soil_c_concentration_0_10"
 #covariate.name <- "soil_p_g_m2_0_10"
 #covariate.name <- "soil_p_g_m2_0_30"
 #covariate.name <- "soil_p_concentration_0_10"
@@ -1031,6 +1031,11 @@ norm <- "normalized"
 inDF=normDF$total_p_budget
 make_p_budget_summary_plots(inDF=normDF$total_p_budget,
                             norm="normalized")
+
+
+### fate of P
+make_fate_of_p_plots(inDF=normDF$total_p_budget,
+                     norm="normalized")
 
 ### Concentration
 ### no need
