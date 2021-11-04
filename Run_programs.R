@@ -479,7 +479,7 @@ soil_p_mineralization <- make_soil_p_mineralization_flux_bk_first(bk_density=soi
 
 soil_p_mineralization2 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
                                                                   fineroot_c_pool=fineroot_c_pool,
-                                                                  which.variable="Pmic")
+                                                                  which.variable="Cmic")
 
 #soil_p_mineralization2 <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
 #                                                          fineroot_c_pool=fineroot_c_pool,
