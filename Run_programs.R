@@ -857,6 +857,8 @@ microbial_concentration_global_comparison(norm="unnormalized",
 
 
 
+### compare ecosystem P budget to China
+china_p_budget <- make_china_p_budget(return.unit = "g_m2")
 
 
 ########################################################################################## 
