@@ -387,6 +387,8 @@ soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentrat
 soil_p_pool_hedley <- make_soil_p_pool_hedley(p_conc=soil_hedley_p_concentration,
                                               bk_density=soil_bulk_density)
 
+write.csv(soil_p_pool_hedley, "plots_tables/summary_tables/unnormalized/hedley_P_pool_raw.csv",
+          row.names=F)
 
 #### Microbial P pool 
 #### Top 60 cm
