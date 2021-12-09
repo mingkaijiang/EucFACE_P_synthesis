@@ -1068,6 +1068,7 @@ make_p_budget_ring_plots(inDF=normDF$total_p_budget,
 
 ###### ---------------- End -------------------- ######
 #### clear wk space
+print("end of project")
 rm(list=ls(all=TRUE))
 options(war=0)
 
