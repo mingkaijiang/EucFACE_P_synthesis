@@ -385,10 +385,11 @@ soil_phosphate_pool <- make_soil_phosphate_pool(p_conc=soil_phosphate_concentrat
 #### Soil P pool of different bioavailability
 #### Top 10 cm only
 soil_p_pool_hedley <- make_soil_p_pool_hedley(p_conc=soil_hedley_p_concentration,
-                                              bk_density=soil_bulk_density)
+                                              bk_density=soil_bulk_density,
+                                              soil_p=soil_p_pool)
 
-write.csv(soil_p_pool_hedley, "plots_tables/summary_tables/unnormalized/hedley_P_pool_raw.csv",
-          row.names=F)
+#write.csv(soil_p_pool_hedley, "plots_tables/summary_tables/unnormalized/hedley_P_pool_raw.csv",
+#          row.names=F)
 
 #### Microbial P pool 
 #### Top 60 cm
