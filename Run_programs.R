@@ -204,9 +204,9 @@ fineroot_c_pool <- make_fineroot_c_pool(back.calculate=T,
                                          root.size="intermediate")
 
 ### output fineroot depth profile
-fineroot_depth <- summaryBy(fineroot_pool+fineroot_0_10_cm+fineroot_10_30_cm+fineroot_30_60_cm~Ring, 
-                            FUN=c(mean,sd), na.rm=T, keep.names=T, data=fineroot_c_pool)
-write.csv(fineroot_depth, "plots_tables/summary_tables/unnormalized/fineroot_c_depth_profile.csv", row.names=F)
+#fineroot_depth <- summaryBy(fineroot_pool+fineroot_0_10_cm+fineroot_10_30_cm+fineroot_30_60_cm~Ring, 
+#                            FUN=c(mean,sd), na.rm=T, keep.names=T, data=fineroot_c_pool)
+#write.csv(fineroot_depth, "plots_tables/summary_tables/unnormalized/fineroot_c_depth_profile.csv", row.names=F)
 
 
 ### include large root size
