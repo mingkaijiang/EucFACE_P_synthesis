@@ -763,6 +763,16 @@ summary_cp_ratios <- make_cp_ratios(norm="unnormalized",
                                     p_flux=summary_table_flux)
 
 
+### 10% increase in production, what new CP ratio do we see?
+summary_cp_ratios_sensitivity <- make_cp_ratios_sensitivity_test(norm="unnormalized",
+                                                     c_pool=summary_table_c_pool,
+                                                     p_pool=summary_table_pool,
+                                                     c_flux=summary_table_c_flux,
+                                                     p_flux=summary_table_flux)
+
+
+compare_cp_ratio(myDF1=summary_cp_ratios, myDF2=summary_cp_ratios_sensitivity)
+
 ############################## Budget tables ###############################
 
 ### vegetation standing P stocks
