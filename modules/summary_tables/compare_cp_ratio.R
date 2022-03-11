@@ -62,7 +62,7 @@ compare_cp_ratio <- function(myDF1, myDF2) {
                                    "10%+ scenario"))
         
     pdf(paste0("plots_tables/output/unnormalized/CP_ratio_sensitivity_test.pdf"),
-        width=12,height=8)
+        width=6,height=6)
     plot(p1)
     dev.off()
     
