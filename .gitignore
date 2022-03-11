@@ -50,6 +50,7 @@ vignettes/*.pdf
 *.csv
 *.nc
 *.pdf
+*.jpg
 
 # html
 *.html

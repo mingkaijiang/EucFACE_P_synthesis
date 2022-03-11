@@ -872,6 +872,11 @@ china_p_budget <- make_china_p_budget(return.unit = "g_m2")
 
 
 ### plot CO2 effect on the same figure
+plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
+                                   concDF=summary_table_concentration,
+                                   poolDF=summary_table_pool,
+                                   fluxDF=summary_table_flux)
+
 
 
 ########################################################################################## 
