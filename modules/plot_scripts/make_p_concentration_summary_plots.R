@@ -61,6 +61,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
     plotDF4$pos <- with(plotDF4, mean + sd)
     plotDF4$neg <- with(plotDF4, mean - sd)
     
+    
+    plotDF1 <- rbind(plotDF1, plotDF4)
+    
     ### Plot 5
     plotDF5 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Soil P Conc 0-10cm"], 
                             inDF$eCO2[inDF$conc.terms=="Soil P Conc 0-10cm"],
@@ -124,6 +127,13 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
     plotDF8$neg <- with(plotDF8, mean - sd)
     
     
+    tmpDF <- rbind(plotDF5, plotDF7, plotDF8)
+    
+    plotDF9 <- tmpDF[tmpDF$Variable%in%c("Soil 0-10cm", "Soil 10-30cm", "Soil 30-60cm"),]
+    plotDF10 <- tmpDF[tmpDF$Variable%in%c("Microbe 0-10cm", "Microbe 10-30cm", "Microbe 30-60cm"),]
+    plotDF11 <- rbind(plotDF1, plotDF2, plotDF3)
+    
+    
     ### Plotting
     p1 <- ggplot(plotDF1, aes(x=Variable, y=mean))+
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
@@ -136,7 +146,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
               axis.text.y=element_text(size=12),
-              axis.title.y=element_blank(),
+              axis.title.y=element_text(size=14),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
@@ -158,7 +168,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
               axis.text.y=element_text(size=12),
-              axis.title.y=element_text(size=14),
+              axis.title.y=element_blank(),
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
@@ -183,7 +193,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
-              legend.position="bottom")+
+              legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
@@ -246,7 +256,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
-              legend.position="bottom")+
+              legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
@@ -297,21 +307,87 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
                             labels=c(expression(aCO[2]), expression(eCO[2])))
     
     
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)", "(g)", "(h)")
+    p9 <- ggplot(plotDF9, aes(x=Variable, y=mean))+
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
+        geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                      position = position_dodge(0.9), width=0.2, size=0.4) +
+        labs(x="", y="P concentration (%)")+
+        theme_linedraw() +
+        ylim(0,0.01)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=12),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))
+    
+    
+    p10 <- ggplot(plotDF10, aes(x=Variable, y=mean))+
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
+        geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                      position = position_dodge(0.9), width=0.2, size=0.4) +
+        labs(x="", y="P concentration (%)")+
+        theme_linedraw() +
+        ylim(0,0.004)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=12),
+              axis.title.y=element_text(size=14),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))
+    
+    
+    p11 <- ggplot(plotDF11, aes(x=Variable, y=mean))+
+        geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
+        geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                      position = position_dodge(0.9), width=0.2, size=0.4) +
+        labs(x="", y="P concentration (%)")+
+        theme_linedraw() +
+        ylim(0,0.15)+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=10), 
+              axis.text.x = element_text(size=10),
+              axis.text.y=element_text(size=12),
+              axis.title.y=element_text(size=14),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+        scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                            labels=c(expression(aCO[2]), expression(eCO[2])))
+    
+    
+    #grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
     
     require(grid)
     require(cowplot)
     
     ## plot 
     pdf(paste0("plots_tables/output/", norm, "/P_Concentration_Summary_Plots_", norm, ".pdf"),
-        width=8,height=12)
-    plot_grid(p1, p4, p2, p5, p7, p8, p3, p6, labels="", ncol=2, align="v", axis = "l",
-              rel_heights = c(1, 1, 1, 1.2))
-    grid.text(grid.labs, x = c(0.15, 0.65, 0.15, 0.65, 0.15, 0.65, 0.15, 0.65),
-              y = c(0.96, 0.96, 0.75, 0.75, 0.5, 0.5, 0.24, 0.24), 
-              gp=gpar(fontsize=14, col="black", fontface="bold"))
+        width=12,height=8)
+    bot_row <- plot_grid(p10, p9, p6, ncol=3, rel_widths = c(1., 1., 0.5))
+    plot_grid(p11, bot_row,  ncol = 1,
+              rel_heights=c(1, 1))
+    grid.text(grid.labs,x = c(0.1, 0.1, 0.48, 0.88), y = c(0.95, 0.45, 0.45, 0.45),
+              gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
-}
+ }
 
 

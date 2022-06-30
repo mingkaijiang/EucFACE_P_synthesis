@@ -47,6 +47,7 @@ microbial_concentration_global_comparison <- function(norm,
         geom_point(aes(fill=Biome), pch=21, size=3)+
         geom_errorbar(aes(ymin=Pmic.mean-Pmic.sd, ymax=Pmic.mean+Pmic.sd),
                       width=0.5)+
+        geom_vline(xintercept=2.5, lty = 2)+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=14), 
@@ -91,6 +92,8 @@ microbial_concentration_global_comparison <- function(norm,
         coord_flip()+
         xlab("")+
         ylab("Microbial P concentration (%)")
+    
+    plot(p1)
     
     pdf(paste0("plots_tables/output/", norm, "/microbial_P_global_comparison.pdf"), 
         width=8, height=5)

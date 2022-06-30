@@ -23,14 +23,24 @@ make_soil_p_budget_summary_plots <- function(inDF, norm) {
     plotDF3 <- plotDF2[plotDF2$Pool%in%c("1_Exchangeable_Pi", "2_Exchangeable_Po", "3_Moderately_labile_Po",
                                           "4_Secondary_Pi", "5_Primary_Pi", "6_Occluded_P"),]
     
-    plotDF4 <- plotDF2[plotDF2$Pool%in%c("Total_P"),]
-
+    
+    ### calculate totals
+    plotDF4 <- summaryBy(mean~Trt, FUN=sum, data=plotDF2, na.rm=T, keep.names=T)
+    
+    plotDF2$sd2 <- plotDF2$sd^2
+    
+    plotDF4$sd[plotDF4$Trt=="amb"] <- sqrt(sum(plotDF2$sd2[plotDF2$Trt=="amb"])/6)
+    plotDF4$sd[plotDF4$Trt=="ele"] <- sqrt(sum(plotDF2$sd2[plotDF2$Trt=="ele"])/6)
+    
+    
+    
+    ### plot
     p1 <- ggplot(plotDF3,
                  aes(Trt, mean)) + 
         geom_bar(stat = "identity", aes(fill=Pool), position="stack")+
-        #geom_point(data=plotDF4, aes(Trt, mean))+
-        #geom_errorbar(data=plotDF4, aes(x=Trt, ymin=mean-sd, ymax=mean+sd),
-        #              width=0.25)+
+        geom_errorbar(data=plotDF4, aes(x=Trt, ymin=mean-sd, ymax=mean+sd),
+                      width=0.25)+
+        geom_point(data=plotDF4, aes(Trt, mean), pch=21, fill="white", color="black", size=2)+
         xlab(expression(paste(CO[2]," Treatment")))+ 
         ylab(expression(paste("Top 10cm Soil P stock (g P ", m^-2, ")")))+
         theme_linedraw() +
@@ -45,12 +55,18 @@ make_soil_p_budget_summary_plots <- function(inDF, norm) {
               panel.grid.major=element_blank(),
               legend.position="right")+
         scale_fill_manual(name="Hedley P pools", 
-                          values = c("1_Exchangeable_Pi" = cbPalette[1], "2_Exchangeable_Po" = cbPalette[2],
-                                     "3_Moderately_labile_Po" = cbPalette[3], "4_Secondary_Pi" = cbPalette[4],
-                                     "5_Primary_Pi" = cbPalette[5], "6_Occluded_P" = cbPalette[6]),
-                          labels=c("Exchangeable Pi", "Exchangeable Po", 
-                                   "Moderately labile Po", "Secondary Pi (Fe-bound)",
-                                   "Primary Pi (Ca-bound)", "Occluded P"))+
+                          values = c("1_Exchangeable_Pi" = cbPalette[7], 
+                                     "2_Exchangeable_Po" = cbPalette[2],
+                                     "3_Moderately_labile_Po" = cbPalette[3],
+                                     "4_Secondary_Pi" = cbPalette[4],
+                                     "5_Primary_Pi" = cbPalette[5], 
+                                     "6_Occluded_P" = cbPalette[6]),
+                          labels=c(expression("Exchangeable " * P[i]), 
+                                   expression("Exchangeable " * P[o]), 
+                                   expression("Moderately labile " * P[o]), 
+                                   expression("Secondary " * P[i] * " (" * F[e] * "-bound)"),
+                                   expression("Primary " * P[i] * " (" * C[a] *"-bound)"),
+                                   "Occluded P"))+
         scale_x_discrete(limits=c("amb","ele"),
                          labels=c(expression(aCO[2]),
                          expression(eCO[2])))
