@@ -887,6 +887,9 @@ plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
                                    poolDF=summary_table_pool,
                                    fluxDF=summary_table_flux)
 
+### plot CP ratios
+plot_CP_ratios(inDF=summary_cp_ratios)
+
 
 
 ########################################################################################## 
