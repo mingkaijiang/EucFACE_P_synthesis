@@ -640,11 +640,14 @@ coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux
 
 
 #### need to revisit the following two, as depth has not been considered properly
-#delta_soil_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=soil_p_pool, 
-#                                                                var.col=4)
-#
-#delta_microbial_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=microbial_p_pool, 
-#                                                                     var.col=4)
+delta_soil_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=soil_p_pool, 
+                                                                var.col=4)
+
+delta_soil_phosphate_pool <- make_yearly_delta_pool_with_depth_function(inDF=soil_phosphate_pool, 
+                                                                var.col=4)
+
+delta_microbial_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=microbial_p_pool, 
+                                                                     var.col=4)
 
 
 
@@ -653,6 +656,12 @@ delta_canopy_p_pool <- make_yearly_delta_pool_function(inDF=canopy_p_pool,
 
 delta_wood_p_pool <- make_yearly_delta_pool_function(inDF=wood_p_pool, 
                                                      var.col=3)
+
+delta_sapwood_p_pool <- make_yearly_delta_pool_function(inDF=sapwood_p_pool, 
+                                                     var.col=3)
+
+delta_heartwood_p_pool <- make_yearly_delta_pool_function(inDF=heartwood_p_pool, 
+                                                        var.col=3)
 
 delta_fineroot_p_pool <- make_yearly_delta_pool_function(inDF=fineroot_p_pool, 
                                                          var.col=3)
@@ -663,9 +672,11 @@ delta_coarse_root_p_pool <- make_yearly_delta_pool_function(inDF=coarse_root_p_p
 delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_pool, 
                                                             var.col=3)
 
+delta_leaflitter_p_pool <- make_yearly_delta_pool_function(inDF=leaflitter_p_pool, 
+                                                            var.col=3)
 
-
-
+delta_standing_dead_p_pool <- make_yearly_delta_pool_function(inDF=standing_dead_p_pool, 
+                                                           var.col=3)
 
 ########################################################################################## 
 ########################################################################################## 
@@ -709,6 +720,20 @@ summary_table_pool <- make_pool_summary_table(norm="unnormalized",
                                               fineroot_p_pool=fineroot_p_pool,
                                               understorey_p_pool=understorey_p_pool,
                                               coarse_root_p_pool=coarse_root_p_pool)
+
+
+summary_table_delta_pool <- make_delta_pool_summary_table(norm="unnormalized",
+                                                          soil_p_pool=delta_soil_p_pool,
+                                                          soil_phosphate_pool=delta_soil_phosphate_pool,
+                                                          microbial_p_pool=delta_microbial_p_pool,
+                                                          canopy_p_pool=delta_canopy_p_pool,
+                                                          leaflitter_p_pool=delta_leaflitter_p_pool,
+                                                          wood_p_pool=delta_wood_p_pool,
+                                                          sapwood_p_pool=delta_sapwood_p_pool,
+                                                          heartwood_p_pool=delta_heartwood_p_pool,
+                                                          fineroot_p_pool=delta_fineroot_p_pool,
+                                                          understorey_p_pool=delta_understorey_p_pool,
+                                                          coarse_root_p_pool=delta_coarse_root_p_pool)
 
 ### P fluxes by treatment and ring
 summary_table_flux <- make_flux_summary_table(norm="unnormalized",
