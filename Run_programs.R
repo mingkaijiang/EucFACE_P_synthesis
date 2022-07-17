@@ -640,10 +640,10 @@ coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux
 
 
 #### need to revisit the following two, as depth has not been considered properly
-delta_soil_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=soil_p_pool, 
+delta_soil_p_pool <- make_yearly_delta_pool_without_depth_function(inDF=soil_p_pool, 
                                                                 var.col=4)
 
-delta_soil_phosphate_pool <- make_yearly_delta_pool_with_depth_function(inDF=soil_phosphate_pool, 
+delta_soil_phosphate_pool <- make_yearly_delta_pool_without_depth_function(inDF=soil_phosphate_pool, 
                                                                 var.col=4)
 
 delta_microbial_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=microbial_p_pool, 
@@ -905,6 +905,11 @@ china_p_budget <- make_china_p_budget(return.unit = "g_m2")
 
 
 ### plot CO2 effect on the same figure
+budgetDF=total_p_budget
+concDF=summary_table_concentration
+poolDF=summary_table_pool
+fluxDF=summary_table_flux
+deltaDF=summary_table_delta_pool
 plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
                                    concDF=summary_table_concentration,
                                    poolDF=summary_table_pool,

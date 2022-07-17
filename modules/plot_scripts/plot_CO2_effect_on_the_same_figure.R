@@ -159,7 +159,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Forestfloor Leaf Litter P Pool",
                                            "Understorey P Pool"))
     
-    plotDF52 <- subset(plotDF5, terms%in%c("Microbial P Pool 0-10cm", "Soil P Pool 0-10cm",
+    plotDF52 <- subset(plotDF5, terms%in%c("Microbial P Pool 0-10cm", 
+                                           "Microbial P Pool 10-30cm", 
+                                           "Microbial P Pool 30-60cm", 
+                                           "Soil P Pool 0-10cm",
                                            "Soil Phosphate P Pool 0-10cm"))
     
     plotDF51$collab <- ifelse(plotDF51$diff_mean > 0.0, "pos", 
@@ -271,7 +274,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -322,7 +325,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -385,7 +388,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -455,7 +458,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -510,7 +513,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -574,7 +577,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -645,7 +648,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -690,7 +693,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -738,7 +741,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -782,7 +785,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -808,7 +811,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Mineralization P flux 0-10cm" = "Mineralization P 0-10cm",
                                   "Total vegetation uptake P flux" = "Plant P Uptake",
                                   "Total vegetation retranslocation P flux" = "Plant P Retranslocation",
-                                  "Total vegetation production P flux" = "Plant P production"))+
+                                  "Total vegetation production P flux" = "Plant P demand"))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -832,7 +835,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -883,7 +886,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
                    stat='identity', size=4, shape=21)+
-        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -899,8 +902,12 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.text.align=0)+
         scale_y_discrete(limits=c("Soil P Pool 0-10cm",
                                   "Soil Phosphate P Pool 0-10cm",
+                                  "Microbial P Pool 30-60cm",
+                                  "Microbial P Pool 10-30cm",
                                   "Microbial P Pool 0-10cm"),
                          labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P (0-10cm)"),
+                                  "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P (10-30cm)"),
+                                  "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
                                   "Soil P Pool 0-10cm" = expression(Delta * " Soil P (0-10cm)"),
                                   "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil " * PO[4]-P * " (0-10cm)")))+
         scale_fill_manual(name="",
@@ -929,12 +936,11 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               rel_heights=c(1., 1.0, 1.5))
     dev.off()
     
-    pdf("plots_tables/output/unnormalized/CO2_effect_on_all_p_variables.pdf", 
-         width=6, height=24)
-         #width=150, height=500, unit="mm", res = 300)
-    plot_grid(p4, p5, p6, labels="", ncol=1, align="h", axis="l",
-              rel_heights=c(1.0, 1.0, 1.0))
-    dev.off()
+    #pdf("plots_tables/output/unnormalized/CO2_effect_on_all_p_variables.pdf", 
+    #     width=6, height=24)
+    #plot_grid(p4, p5, p6, labels="", ncol=1, align="h", axis="l",
+    #          rel_heights=c(1.0, 1.0, 1.0))
+    #dev.off()
     
     
     

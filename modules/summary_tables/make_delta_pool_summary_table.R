@@ -31,6 +31,7 @@ make_delta_pool_summary_table <- function(norm,
                "Understorey P Pool", 
                "Microbial P Pool 0-10cm", 
                "Microbial P Pool 10-30cm", 
+               "Microbial P Pool 30-60cm", 
                "Soil Phosphate P Pool 0-10cm",
                "Soil Phosphate P Pool 10-30cm",
                "Soil P Pool 0-10cm",
@@ -128,6 +129,7 @@ make_delta_pool_summary_table <- function(norm,
     treatDF$timepoint[treatDF$terms == "Microbial P Pool 0-10cm"] <- length(unique(microbial_p_pool$Date[microbial_p_pool$Depth=="0_10"]))  
     treatDF$notes[treatDF$terms == "Microbial P Pool 0-10cm"] <- "Top 10 cm"
     
+    
     ### Microbial P pool
     out <- summaryBy(delta~Ring,data=microbial_p_pool[microbial_p_pool$Depth=="10_30",],FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Microbial P Pool 10-30cm", 2:7] <- out$delta
@@ -135,6 +137,15 @@ make_delta_pool_summary_table <- function(norm,
     treatDF$year_end[treatDF$terms == "Microbial P Pool 10-30cm"] <- max(microbial_p_pool$Date[microbial_p_pool$Depth=="10_30"])    
     treatDF$timepoint[treatDF$terms == "Microbial P Pool 10-30cm"] <- length(unique(microbial_p_pool$Date[microbial_p_pool$Depth=="10_30"]))  
     treatDF$notes[treatDF$terms == "Microbial P Pool 10-30cm"] <- "Top 10-30 cm"
+    
+    
+    ### Microbial P pool
+    out <- summaryBy(delta~Ring,data=microbial_p_pool[microbial_p_pool$Depth=="transition",],FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Microbial P Pool 30-60cm", 2:7] <- out$delta
+    treatDF$year_start[treatDF$terms == "Microbial P Pool 30-60cm"] <- min(microbial_p_pool$Date[microbial_p_pool$Depth=="transition"])    
+    treatDF$year_end[treatDF$terms == "Microbial P Pool 30-60cm"] <- max(microbial_p_pool$Date[microbial_p_pool$Depth=="transition"])    
+    treatDF$timepoint[treatDF$terms == "Microbial P Pool 30-60cm"] <- length(unique(microbial_p_pool$Date[microbial_p_pool$Depth=="transition"]))  
+    treatDF$notes[treatDF$terms == "Microbial P Pool 30-60cm"] <- "Top 30-60 cm"
     
     
     ### Soil Phosphate P pool

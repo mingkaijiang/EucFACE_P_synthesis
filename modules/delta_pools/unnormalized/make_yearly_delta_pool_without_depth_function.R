@@ -1,4 +1,4 @@
-make_yearly_delta_pool_with_depth_function <- function(inDF,var.col) {
+make_yearly_delta_pool_without_depth_function <- function(inDF,var.col) {
     
     ### extract start and end date
     s.date <- min(inDF$Date)
@@ -53,19 +53,20 @@ make_yearly_delta_pool_with_depth_function <- function(inDF,var.col) {
                                                 as.numeric(subDF2$Year-delta2$Start_year[i])==0]
     }
     
-    for (i in 1:length(delta3$Year)) {
-        delta3$Start_year[i] <- d.list[which(d.list3 == delta3$Year[i]) - 1]
-        delta3$prev_biom[i] <- subDF3$Value[subDF3$Ring == delta3$Ring[i] &
-                                                as.numeric(subDF3$Year-delta3$Start_year[i])==0]
-    }
+    #for (i in 1:length(delta3$Year)) {
+    #    delta3$Start_year[i] <- d.list[which(d.list3 == delta3$Year[i]) - 1]
+    #    delta3$prev_biom[i] <- subDF3$Value[subDF3$Ring == delta3$Ring[i] &
+    #                                            as.numeric(subDF3$Year-delta3$Start_year[i])==0]
+    #}
     
     
     # add depth
     delta1$Depth <- "0_10"
     delta2$Depth <- "10_30"
-    delta3$Depth <- "transition"
     
-    delta <- rbind(delta1, rbind(delta2, delta3))
+    #delta <- rbind(delta1, rbind(delta2, delta3))
+    delta <- rbind(delta1, delta2)
+    
     
     ### Length of period
     delta$length <- as.numeric(delta$Year - delta$Start_year)
