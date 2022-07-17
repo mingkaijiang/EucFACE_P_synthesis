@@ -546,23 +546,6 @@ compare_soil_p_mineralization_fluxes(flux1=soil_p_mineralization,
 
 
 
-summary_table_flux <- make_flux_summary_table(norm="unnormalized",
-                                              soil_p_mineralization=soil_p_mineralization,
-                                              soil_p_leaching=soil_p_leaching,
-                                              canopy_p_flux=canopy_p_flux,
-                                              frass_p_production=frass_p_production,
-                                              leaflitter_p_flux=leaflitter_p_flux,
-                                              fineroot_p_production=fineroot_p_production,
-                                              fineroot_litter_p_flux=fineroot_litter_p_flux,
-                                              twig_litter_p_flux=twig_litter_p_flux,
-                                              bark_litter_p_flux=bark_litter_p_flux,
-                                              seed_litter_p_flux=seed_litter_p_flux,
-                                              wood_p_flux=wood_p_flux,
-                                              coarse_root_p_flux=coarse_root_p_flux,
-                                              understorey_p_flux=understorey_p_flux,
-                                              understorey_litter_p_flux=understorey_litter_p_flux)
-
-summary_table_flux
 
 #### Soil P leaching rate
 #### estimated based on deep depth (35 - 75 cm) lysimeter data

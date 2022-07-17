@@ -172,7 +172,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]), 
-                                  "eCO2"=expression(eCO[2])))
+                                  "eCO2"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     p2 <- ggplot(plotDF2[plotDF2$Method=="Cmic",], 
@@ -194,7 +201,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]), 
-                                  "eCO2"=expression(eCO[2])))
+                                  "eCO2"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     p3 <- ggplot(plotDF2[plotDF2$Method=="Pmic",], 
@@ -216,7 +230,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]), 
-                                  "eCO2"=expression(eCO[2])))
+                                  "eCO2"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     p4 <- ggplot(plotDF2[plotDF2$Method=="FinerootC",], 
                  aes(Trt, Flux.mean, group=Depth)) + 
@@ -237,7 +258,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]), 
-                                  "eCO2"=expression(eCO[2])))
+                                  "eCO2"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     ### bulk density
@@ -258,7 +286,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.text=element_text(size=10),
               legend.title=element_text(size=12),
               panel.grid.major=element_blank(),
-              legend.position="none")
+              legend.position="none")+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     p6 <- ggplot(poolDF[poolDF$variable=="SoilC",], 
@@ -282,7 +317,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("Ambient", "Elevated"),
                          labels=c("Ambient"=expression(aCO[2]), 
-                                  "Elevated"=expression(eCO[2])))
+                                  "Elevated"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     p7 <- ggplot(poolDF[poolDF$variable=="Cmic",], 
@@ -305,7 +347,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("Ambient", "Elevated"),
                          labels=c("Ambient"=expression(aCO[2]), 
-                                  "Elevated"=expression(eCO[2])))
+                                  "Elevated"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     p8 <- ggplot(poolDF[poolDF$variable=="Pmic",], 
@@ -328,7 +377,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("Ambient", "Elevated"),
                          labels=c("Ambient"=expression(aCO[2]), 
-                                  "Elevated"=expression(eCO[2])))
+                                  "Elevated"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     p9 <- ggplot(poolDF[poolDF$variable=="FRC",], 
@@ -350,7 +406,14 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
               legend.position="none")+
         scale_x_discrete(limits=c("Ambient", "Elevated"),
                          labels=c("Ambient"=expression(aCO[2]), 
-                                  "Elevated"=expression(eCO[2])))
+                                  "Elevated"=expression(eCO[2])))+
+        scale_fill_manual(name="Depth", 
+                          values=c("0_10"=set3Palette[1],
+                                   "10_30"=set3Palette[3],
+                                   "transition"=set3Palette[5]),
+                          labels=c("0_10"="0-10cm", 
+                                   "10-30"="10-30cm",
+                                   "transition"="30-60cm"))
     
     
     p10 <- ggplot(poolDF[poolDF$variable=="DOC",], 
