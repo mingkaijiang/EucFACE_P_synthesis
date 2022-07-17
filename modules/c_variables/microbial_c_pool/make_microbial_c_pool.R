@@ -79,7 +79,7 @@ make_microbial_c_pool <- function(bk_density) {
     # unit conversion: mg/kg to g/m2 for the top 0-10 cm only
     calcDF$Cmic_g_m2 <- ifelse(calcDF$Depth=="0_10", calcDF$bulk_density_kg_m3 * calcDF$Cmic * 0.1 / g_to_mg, 
                                ifelse(calcDF$Depth=="10_30", calcDF$bulk_density_kg_m3 * calcDF$Cmic * 0.2 / g_to_mg,
-                                      ifelse(calcDF$Depth=="30_60", calcDF$bulk_density_kg_m3 * calcDF$Cmic * 0.3 / g_to_mg, NA)))
+                                      ifelse(calcDF$Depth=="transition", calcDF$bulk_density_kg_m3 * calcDF$Cmic * 0.3 / g_to_mg, NA)))
     
     
     # update variables to output Pmic in unit g m-2

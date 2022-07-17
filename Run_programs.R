@@ -482,36 +482,87 @@ coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=sapwood_p_concentration,
 #### It is assumed that the mineralization data is for 60 cm depth.
 #### extrapolated based on data from top 10 cm. 
 #### This is the net mineralization flux (i.e. gross - immobilization)
-soil_p_mineralization <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
-                                                                  fineroot_c_pool=fineroot_c_pool,
-                                                                  which.variable="Pmic")
+#soil_p_mineralization <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+#                                                                  fineroot_c_pool=fineroot_c_pool,
+#                                                                  which.variable="Pmic")
+#
+#soil_p_mineralization2 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+#                                                                  fineroot_c_pool=fineroot_c_pool,
+#                                                                  which.variable="Cmic")
+#
+#soil_p_mineralization3 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+#                                                                   fineroot_c_pool=fineroot_c_pool,
+#                                                                   which.variable="SoilC")
 
-soil_p_mineralization2 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
-                                                                  fineroot_c_pool=fineroot_c_pool,
-                                                                  which.variable="Cmic")
 
-#soil_p_mineralization2 <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
-#                                                          fineroot_c_pool=fineroot_c_pool,
-#                                                          which.variable="Cmic")
-
-soil_p_mineralization3 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+soil_p_mineralization <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
                                                           fineroot_c_pool=fineroot_c_pool,
                                                           which.variable="SoilC")
 
-soil_p_mineralization4 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+soil_p_mineralization2 <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
                                                           fineroot_c_pool=fineroot_c_pool,
-                                                          which.variable="FinerootC")
+                                                          which.variable="Cmic")
+
+soil_p_mineralization3 <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
+                                                          fineroot_c_pool=fineroot_c_pool,
+                                                          which.variable="Pmic")
+
+#soil_p_mineralization4 <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
+#                                                          fineroot_c_pool=fineroot_c_pool,
+#                                                          which.variable="FinerootC")
+
+### to calculate soil P min from fineroot, you must consider soil bulk density first
+soil_p_mineralization4 <- make_soil_p_mineralization_flux_bk_first(bk_density=soil_bulk_density,
+                                                                   fineroot_c_pool=fineroot_c_pool,
+                                                                   which.variable="FinerootC")
 
 ### combine the estimated soil p mineralization flux
+flux1=soil_p_mineralization
+flux2=soil_p_mineralization2
+flux3=soil_p_mineralization3
+flux4=soil_p_mineralization4
+bkDF=soil_bulk_density
+ref1=soil_c_pool
+ref2=microbial_c_pool
+ref3=microbial_p_pool
+ref4=fineroot_c_pool
+name1="SoilC"
+name2="Cmic"
+name3="Pmic"
+name4="FinerootC"
 compare_soil_p_mineralization_fluxes(flux1=soil_p_mineralization, 
                                      flux2=soil_p_mineralization2, 
                                      flux3=soil_p_mineralization3,
                                      flux4=soil_p_mineralization4,
-                                     name1="Pmic",
+                                     bkDF=soil_bulk_density,
+                                     ref1=soil_c_pool,
+                                     ref2=microbial_c_pool,
+                                     ref3=microbial_p_pool,
+                                     ref4=fineroot_c_pool,
+                                     name1="SoilC",
                                      name2="Cmic",
-                                     name3="SoilC",
+                                     name3="Pmic",
                                      name4="FinerootC")
 
+
+
+summary_table_flux <- make_flux_summary_table(norm="unnormalized",
+                                              soil_p_mineralization=soil_p_mineralization,
+                                              soil_p_leaching=soil_p_leaching,
+                                              canopy_p_flux=canopy_p_flux,
+                                              frass_p_production=frass_p_production,
+                                              leaflitter_p_flux=leaflitter_p_flux,
+                                              fineroot_p_production=fineroot_p_production,
+                                              fineroot_litter_p_flux=fineroot_litter_p_flux,
+                                              twig_litter_p_flux=twig_litter_p_flux,
+                                              bark_litter_p_flux=bark_litter_p_flux,
+                                              seed_litter_p_flux=seed_litter_p_flux,
+                                              wood_p_flux=wood_p_flux,
+                                              coarse_root_p_flux=coarse_root_p_flux,
+                                              understorey_p_flux=understorey_p_flux,
+                                              understorey_litter_p_flux=understorey_litter_p_flux)
+
+summary_table_flux
 
 #### Soil P leaching rate
 #### estimated based on deep depth (35 - 75 cm) lysimeter data

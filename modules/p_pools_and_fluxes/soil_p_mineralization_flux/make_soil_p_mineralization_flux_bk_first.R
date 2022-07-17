@@ -1,7 +1,7 @@
 
 make_soil_p_mineralization_flux_bk_first <- function(bk_density,
-                                            fineroot_c_pool,
-                                            which.variable) {
+                                                     fineroot_c_pool,
+                                                     which.variable) {
     
     # download the data
     download_soil_p_mineralization_data()
@@ -76,7 +76,7 @@ make_soil_p_mineralization_flux_bk_first <- function(bk_density,
     } 
     
     tmpDF <- tmpDF[,c("Date", "Ring", "Depth", "Ref_var")]
-
+    
     ### assign ring-specific reduction relationship
     for (i in 1:6) {
         tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="10_30"] <- tmpDF$Ref_var[tmpDF$Ring==i&tmpDF$Depth=="10_30"]/tmpDF$Ref_var[tmpDF$Ring==i&tmpDF$Depth=="0_10"]
@@ -88,7 +88,7 @@ make_soil_p_mineralization_flux_bk_first <- function(bk_density,
         myDF$Pmin_10_30[myDF$Ring==i] <- myDF$p_min_mg_m2_d[myDF$Ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="10_30"]
         myDF$Pmin_transition[myDF$Ring==i] <- myDF$p_min_mg_m2_d[myDF$Ring==i] * tmpDF$Red[tmpDF$Ring==i&tmpDF$Depth=="transition"]
     }
-
+    
     myDF1 <- myDF[,c("date", "Ring", "Depth", "p_min_mg_m2_d")]
     myDF2 <- myDF[,c("date", "Ring", "Depth", "Pmin_10_30")]
     myDF3 <- myDF[,c("date", "Ring", "Depth", "Pmin_transition")]
@@ -103,7 +103,7 @@ make_soil_p_mineralization_flux_bk_first <- function(bk_density,
     
     # output table
     myDF.out <- myDF[,c("Date", "Ring", "Depth", "p_mineralization_mg_m2_d")]
-
+    
     ### year 2016 only has one value, which is in Jan, decided to group it with 2015
     #myDF.out$Date <- gsub("2016-01-21", "2015-01-21", myDF.out$Date)
     
@@ -113,7 +113,7 @@ make_soil_p_mineralization_flux_bk_first <- function(bk_density,
     
     myDF.out <- myDF.out[complete.cases(myDF.out$p_mineralization_mg_m2_d),]
     
-
+    
     # plotting time series
     pdf("plots_tables/checks/soil_p_mineralization_over_time.pdf")
     
@@ -129,7 +129,7 @@ make_soil_p_mineralization_flux_bk_first <- function(bk_density,
     # check CO2 treatment averages
     test1 <- summaryBy(p_mineralization_mg_m2_d~CO2, 
                        data=myDF.out, FUN=mean, keep.names=T, na.rm=T)
-
+    
     # plotting
     p <- ggplot(myDF.out, aes(Date, p_mineralization_mg_m2_d, color=factor(CO2))) +   
         geom_point(size = 5) +
@@ -148,3 +148,4 @@ make_soil_p_mineralization_flux_bk_first <- function(bk_density,
     
     return(myDF.out)
 }
+
