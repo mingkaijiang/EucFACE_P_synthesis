@@ -53,6 +53,7 @@ pacman::p_load(dplyr,
                lubridate,
                gdata,
                ggplot2,
+               RColorBrewer,
                knitr,
                imputeTS,
                lme4,
@@ -75,4 +76,14 @@ for(z in sourcefiles)source(z)
 cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
+set3Palette <- brewer.pal(n = 10, name = "Set3")
+
+YlOrRdPalette <- rev(brewer.pal(n = 9, name = "YlOrRd"))
+
+GreensPalette <- rev(brewer.pal(n = 9, name = "Greens"))
+
+SpectralPalette <- brewer.pal(n = 9, name = "Spectral")
+
+Diverge_hsv_Palette <- colorspace::diverge_hcl(8)

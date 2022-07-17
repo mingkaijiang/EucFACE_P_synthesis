@@ -871,8 +871,11 @@ make_p_concentration_summary_plots(inDF=summary_table_concentration,
 
 ### P pool
 inDF=summary_table_pool
+norm="unnormalized"
 make_p_pools_summary_plots(inDF=summary_table_pool,
                            norm="unnormalized")
+
+
 
 ### P flux
 inDF=summary_table_flux
