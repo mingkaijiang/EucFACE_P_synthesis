@@ -60,6 +60,10 @@ make_yearly_delta_pool_with_depth_function <- function(inDF,var.col) {
     #}
     
     
+    # add depth
+    delta1$Depth <- "0_10"
+    delta2$Depth <- "10_30"
+    
     #delta <- rbind(delta1, rbind(delta2, delta3))
     delta <- rbind(delta1, delta2)
     
@@ -71,9 +75,9 @@ make_yearly_delta_pool_with_depth_function <- function(inDF,var.col) {
     delta$diff_g_yr <- (delta$Value - delta$prev_biom)
     
     #- format dataframe to return
-    out <- delta[,c("Start_year", "Year", "Year", "Ring", "diff_g_yr")]
+    out <- delta[,c("Start_year", "Year", "Year", "Ring", "diff_g_yr", "Depth")]
     
-    names(out) <- c("Start_date", "End_date", "Date", "Ring", "delta")
+    names(out) <- c("Start_date", "End_date", "Date", "Ring", "delta", "Depth")
     
     return(out)
     

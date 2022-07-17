@@ -1,13 +1,15 @@
 plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                                concDF,
                                                poolDF,
-                                               fluxDF) {
+                                               fluxDF,
+                                               deltaDF) {
     
     ### data cleaning
     budgetDF <- budgetDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
     concDF <- concDF[,c("conc.terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
     poolDF <- poolDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
     fluxDF <- fluxDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
+    deltaDF <- deltaDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
     
     colnames(concDF) <- c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")
     
@@ -16,10 +18,11 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     concDF$Group <- "2_concentration"
     poolDF$Group <- "3_pool"
     fluxDF$Group <- "4_flux"
+    deltaDF$Group <- "5_delta"
     
     
     ### merge all
-    myDF <- rbind(budgetDF, rbind(concDF, rbind(poolDF, fluxDF)))
+    myDF <- rbind(budgetDF, rbind(concDF, rbind(poolDF, rbind(fluxDF, deltaDF))))
     
     
     ### calculate absolute difference and sd
@@ -34,6 +37,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     plotDF2 <- subset(myDF, Group=="2_concentration")
     plotDF3 <- subset(myDF, Group=="3_pool")
     plotDF4 <- subset(myDF, Group=="4_flux")
+    plotDF5 <- subset(myDF, Group=="5_delta")
     
     plotDF21 <- subset(plotDF2, terms%in%c("Canopy P Conc", "Sapwood P Conc",
                                            "Heartwood P Conc", "Fine Root P Conc",
@@ -146,6 +150,23 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     plotDF44$collab <- ifelse(plotDF44$diff_mean > 0.0, "pos", 
                               ifelse(plotDF44$diff_mean < 0.0, "neg", "neut"))
+    
+    
+    plotDF51 <- subset(plotDF5, terms%in%c("Canopy P Pool", "Sapwood P Pool",
+                                           "Heartwood P Pool", "Total Wood P Pool",
+                                           "Fine Root P Pool",
+                                           "Coarse Root P Pool", 
+                                           "Forestfloor Leaf Litter P Pool",
+                                           "Understorey P Pool"))
+    
+    plotDF52 <- subset(plotDF5, terms%in%c("Microbial P Pool 0-10cm", "Soil P Pool 0-10cm",
+                                           "Soil Phosphate P Pool 0-10cm"))
+    
+    plotDF51$collab <- ifelse(plotDF51$diff_mean > 0.0, "pos", 
+                              ifelse(plotDF51$diff_mean < 0.0, "neg", "neut"))
+    
+    plotDF52$collab <- ifelse(plotDF52$diff_mean > 0.0, "pos", 
+                              ifelse(plotDF52$diff_mean < 0.0, "neg", "neut"))
     
     
     ### plotDF1 split into multiple sub DFs
@@ -801,6 +822,102 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                     "neg"=alpha("brown", 0.2), 
                                     "neut"=alpha("black", 0.2)))
     
+    
+    
+    
+    p71 <- ggplot(plotDF51) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
+                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position=c("none"),
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Understorey P Pool",
+                                  "Forestfloor Leaf Litter P Pool",
+                                  "Coarse Root P Pool",
+                                  "Fine Root P Pool",
+                                  "Total Wood P Pool",
+                                  "Heartwood P Pool",
+                                  "Sapwood P Pool",
+                                  "Canopy P Pool"),
+                         labels=c("Canopy P Pool" = expression(Delta * " Canopy P"),
+                                  "Sapwood P Pool" = expression(Delta * " Sapwood P"),
+                                  "Heartwood P Pool" = expression(Delta * " Heartwood P"),
+                                  "Total Wood P Pool" = expression(Delta * " Total Wood P"),
+                                  "Fine Root P Pool" = expression(Delta * " Fineroot P"), 
+                                  "Coarse Root P Pool" = expression(Delta * " Coarseroot P"),
+                                  "Forestfloor Leaf Litter P Pool" = expression(Delta * " Forestfloor Leaf P"),
+                                  "Understorey P Pool" = expression(Delta * " Understorey P")))+
+        scale_fill_manual(name="Legend",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="Legend",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"=alpha("darkgreen",0.2), 
+                                    "neg"=alpha("brown", 0.2), 
+                                    "neut"=alpha("black", 0.2)))
+    
+    
+    p72 <- ggplot(plotDF52) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
+                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (%)"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position=c(0.78, 0.78),
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Soil P Pool 0-10cm",
+                                  "Soil Phosphate P Pool 0-10cm",
+                                  "Microbial P Pool 0-10cm"),
+                         labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P (0-10cm)"),
+                                  "Soil P Pool 0-10cm" = expression(Delta * " Soil P (0-10cm)"),
+                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil " * PO[4]-P * " (0-10cm)")))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"=alpha("darkgreen",0.2), 
+                                    "neg"=alpha("brown", 0.2), 
+                                    "neut"=alpha("black", 0.2)))
+    
+    
+    
     require(grid)
     require(cowplot)
     
@@ -854,5 +971,15 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
 
+    
+    grid.labs <- c("(a)", "(b)")
+    
+    pdf("plots_tables/output/unnormalized/CO2_effect_on_delta_P_pool.pdf", 
+        width=10, height=4)
+    plot_grid(p71, p72, ncol = 2, rel_widths = c(1, 1),
+              rel_heights=c(0.6, 1))
+    grid.text(grid.labs,x = c(0.47, 0.96), y = c(0.95, 0.95),
+              gp=gpar(fontsize=16, col="black", fontface="bold"))
+    dev.off()
     
 }

@@ -675,8 +675,6 @@ delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_p
 delta_leaflitter_p_pool <- make_yearly_delta_pool_function(inDF=leaflitter_p_pool, 
                                                             var.col=3)
 
-delta_standing_dead_p_pool <- make_yearly_delta_pool_function(inDF=standing_dead_p_pool, 
-                                                           var.col=3)
 
 ########################################################################################## 
 ########################################################################################## 
@@ -910,7 +908,8 @@ china_p_budget <- make_china_p_budget(return.unit = "g_m2")
 plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
                                    concDF=summary_table_concentration,
                                    poolDF=summary_table_pool,
-                                   fluxDF=summary_table_flux)
+                                   fluxDF=summary_table_flux,
+                                   deltaDF=summary_table_delta_pool)
 
 ### plot CP ratios
 plot_CP_ratios(inDF=summary_cp_ratios)
