@@ -774,7 +774,7 @@ make_p_budget_summary_plots <- function(inDF,
                     position = position_dodge(0.9), width=0.2, size=0.4) +
       xlab("") + ylab("MRT (yr)")+
       theme_linedraw() +
-      ylim(0,10)+
+      ylim(0,6)+
       theme(panel.grid.minor=element_blank(),
             axis.title.x = element_text(size=10), 
             axis.text.x = element_text(size=10),
@@ -800,7 +800,7 @@ make_p_budget_summary_plots <- function(inDF,
                     position = position_dodge(0.9), width=0.2, size=0.4) +
       xlab("") + ylab(expression(paste("Plant PUE ( gC" * " " *gP^-1 * " )")))+
       theme_linedraw() +
-      ylim(0,3000)+
+      ylim(0,2500)+
       theme(panel.grid.minor=element_blank(),
             axis.title.x = element_text(size=10), 
             axis.text.x = element_text(size=10),
@@ -852,20 +852,67 @@ make_p_budget_summary_plots <- function(inDF,
                        labels=c("Overstorey",
                                 "Understorey"))
     
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)")
+    
+    ### prepare Puptake over requirement, Puptake over mineralization
+    tmpDF1 <- inDF[inDF$terms%in%c("Plant P uptake over requirement",
+                                  "Plant P uptake over P mineralization"),
+                  c("terms", "aCO2", "eCO2")]
+    
+    tmpDF2 <- inDF[inDF$terms%in%c("Plant P uptake over requirement",
+                                   "Plant P uptake over P mineralization"),
+                   c("terms", "aCO2_sd", "eCO2_sd")]
+    
+    plotDF11 <- reshape2::melt(tmpDF1, id.vars=c("terms"))
+    plotDF12 <- reshape2::melt(tmpDF2, id.vars=c("terms"))
+    plotDF11$sd.value <- plotDF12$value*100
+    plotDF11$value <- plotDF11$value * 100
+    
+    
+    p6 <- ggplot(plotDF11,
+                 aes(x=terms, y=value, group=variable)) + 
+      geom_bar(stat = "identity", aes(fill=variable), 
+               position="dodge") +
+      geom_errorbar(aes(ymax=value+sd.value, 
+                        ymin=value-sd.value), 
+                    position = position_dodge(0.9), 
+                    width=0.2, size=0.4) +
+      labs(x="", 
+           y="Efficiency (%)")+
+      theme_linedraw() +
+      ylim(0,100)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position=c(0.7, 0.85))+
+      scale_fill_manual(name="Treatment", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
+                        labels=c(expression(aCO[2]), expression(eCO[2])))+
+      #scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+      #                    labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_x_discrete(limits=c("Plant P uptake over requirement",
+                                "Plant P uptake over P mineralization"),
+                       labels=c("Plant P uptake over requirement"="Uptake/Demand",
+                                "Plant P uptake over P mineralization"="Uptake/Mineralization")); p6
+    
+    
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
     
     
     ## plot 
     pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_3.pdf"), 
         width=10,height=8)
-    top_row <- plot_grid(p1, p2, NA, ncol=3)
+    top_row <- plot_grid(p1, p2, p6, ncol=3)
     bot_row <- plot_grid(p5, p4, p3, ncol=3)
     
     plot_grid(top_row, 
               bot_row, 
               ncol = 1, 
               rel_heights=c(1, 1, 1, 1))
-    grid.text(grid.labs,x = c(0.09, 0.42, 0.1, 0.42, 0.75), y = c(0.97, 0.97, 0.45, 0.45, 0.45),
+    grid.text(grid.labs,x = c(0.09, 0.42, 0.75, 0.1, 0.42, 0.75), y = c(0.97, 0.97, 0.97, 0.45, 0.45, 0.45),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     

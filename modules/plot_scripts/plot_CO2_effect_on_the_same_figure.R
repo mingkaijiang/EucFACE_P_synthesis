@@ -898,7 +898,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.title=element_text(size=12, family="Helvetica"),
               panel.grid.major=element_blank(),
               legend.box.background = element_rect(alpha("grey",0.5)),
-              legend.position=c(0.78, 0.78),
+              legend.position="none",
               legend.text.align=0)+
         scale_y_discrete(limits=c("Soil P Pool 0-10cm",
                                   "Soil Phosphate P Pool 0-10cm",
@@ -956,13 +956,21 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     dev.off()
     
     
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_pool.pdf", 
-        width=10, height=6)
+        width=10, height=10)
     left_col <- plot_grid(p51, p53, ncol=1, rel_heights=c(1,0.8))
-    plot_grid(left_col, p52,  ncol = 2, rel_widths = c(1, 1),
-              rel_heights=c(1, 1))
-    grid.text(grid.labs,x = c(0.47, 0.47, 0.95), y = c(0.95, 0.4, 0.95),
+    top_row <- plot_grid(left_col, p52,  ncol = 2, rel_widths = c(1, 1),
+                         rel_heights=c(1, 1))
+    bot_row <- plot_grid(p71, p72, ncol = 2, rel_widths = c(1, 1),
+                         rel_heights=c(0.6, 1))
+    
+    plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
+              rel_heights=c(2, 1))
+    
+    grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.47, 0.96), 
+              y = c(0.96, 0.96, 0.6, 0.3, 0.3),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
