@@ -1,4 +1,7 @@
-make_p_budget_summary_plots <- function(inDF, norm) {
+make_p_budget_summary_plots <- function(inDF, 
+                                        inDF2,
+                                        inDF3,
+                                        norm) {
     
     ################### Plot all P summary budget plots
     ### Plot 1df
@@ -155,7 +158,8 @@ make_p_budget_summary_plots <- function(inDF, norm) {
         geom_bar(width = 1, stat = "identity") +
         coord_polar(theta="y") +
         facet_grid(facets=. ~ Trt) +
-        theme_minimal()+
+        #geom_text(aes(label=round(prop, 0), y=prop-10))+
+        theme_minimal(10)+
         theme(axis.title.x = element_blank(),
             axis.title.y = element_blank(),
             panel.border = element_blank(),
@@ -339,6 +343,530 @@ make_p_budget_summary_plots <- function(inDF, norm) {
     grid.text(grid.labs, x = c(0.1, 0.6, 0.1, 0.6, 0.1, 0.6, 0.1, 0.6),
               y = c(0.97, 0.97, 0.73, 0.73, 0.5, 0.5, 0.21, 0.21), 
               gp=gpar(fontsize=14, col="black", fontface="bold"))
+    dev.off()
+    
+    
+    
+    
+    ### calculate proportions of demand flux
+    demDF <- inDF2[inDF2$terms%in%c("Canopy P flux", "Wood P flux", "Fine Root P flux", 
+                                    "Coarse Root P flux", "Twig litter P flux", "Bark litter P flux",
+                                    "Seed litter P flux", "Frass P flux", "Understorey P flux"),]
+    
+    demDF$aCO2_p <- round(demDF$aCO2 / inDF2$aCO2[inDF2$terms=="Total vegetation production P flux"],3) * 100
+    demDF$eCO2_p <- round(demDF$eCO2 / inDF2$eCO2[inDF2$terms=="Total vegetation production P flux"],3) * 100
+    
+    demDF <- demDF[,c("terms", "aCO2_p", "eCO2_p")]
+    
+    
+    ### calculate proportions of retranslocation flux
+    retDF <- inDF2[inDF2$terms%in%c("Canopy retrans P flux", "Sapwood retrans P flux", "Fineroot retrans P flux", 
+                                    "Coarseroot retrans P flux", "Understorey retrans P flux"),]
+    
+    retDF$aCO2_p <- round(retDF$aCO2 / inDF2$aCO2[inDF2$terms=="Total vegetation retranslocation P flux"],3) * 100
+    retDF$eCO2_p <- round(retDF$eCO2 / inDF2$eCO2[inDF2$terms=="Total vegetation retranslocation P flux"],3) * 100
+    
+    retDF <- retDF[,c("terms", "aCO2_p", "eCO2_p")]
+    
+    
+    ### calculate proportions of litter flux (i.e. uptake) - litter to scale
+    litDF <- inDF2[inDF2$terms%in%c("Leaflitter P flux", "Fineroot Litter P flux", 
+                                    "Twig litter P flux", "Bark litter P flux",
+                                    "Seed litter P flux", "Frass P flux", "Understorey Litter P flux"),]
+    
+    litDF$aCO2_p <- round(litDF$aCO2 / sum(litDF$aCO2),3) * 100
+    litDF$eCO2_p <- round(litDF$eCO2 / sum(litDF$eCO2),3) * 100
+    
+    litDF <- litDF[,c("terms", "aCO2_p", "eCO2_p")]
+    
+    
+    ### calculate proportions of net P min flux (i.e. uptake) 
+    minDF <- inDF2[inDF2$terms%in%c("Mineralization P flux 0-10cm", "Mineralization P flux 10-30cm", 
+                                    "Mineralization P flux 30-60cm"),]
+    
+    minDF$aCO2_p <- round(minDF$aCO2 / sum(minDF$aCO2),3) * 100
+    minDF$eCO2_p <- round(minDF$eCO2 / sum(minDF$eCO2),3) * 100
+    
+    minDF <- minDF[,c("terms", "aCO2", "eCO2", "aCO2_p", "eCO2_p")]
+    
+    minDF2 <- reshape2::melt(minDF[,1:3], id.var=c("terms"))
+    minDF2$terms <- gsub("Mineralization P flux ", "", minDF2$terms)
+    colnames(minDF2) <- c("Depth", "Trt", "mean")
+    
+    
+    ### add information
+    plotDF4$Variable <- "retrans"
+    plotDF5$Variable <- "uptake"
+    
+    plotDF9 <- rbind(plotDF4, plotDF5)
+    
+    
+    ### prepare demDF for plotting
+    demDF.plot <- reshape2::melt(demDF, id.vars=c("terms"))
+    
+    
+    
+    demDF$ymax1 <- cumsum(demDF$aCO2_p)
+    demDF$ymax2 <- cumsum(demDF$eCO2_p)
+    demDF$ymin1 <- c(0, head(demDF$ymax1, n=-1))
+    demDF$ymin2 <- c(0, head(demDF$ymax2, n=-1))
+    
+    demDF$labelPosition1 <- (demDF$ymax1 + demDF$ymin1) / 2
+    demDF$labelPosition2 <- (demDF$ymax2 + demDF$ymin2) / 2
+    
+    demDF$label1 <- gsub(" P flux", "", demDF$terms)
+    demDF$label2 <- gsub(" P flux", "", demDF$terms)
+    demDF$label1 <- gsub(" litter", "", demDF$label1)
+    demDF$label2 <- gsub(" litter", "", demDF$label2)
+    
+    
+    
+    retDF$ymax1 <- cumsum(retDF$aCO2_p)
+    retDF$ymax2 <- cumsum(retDF$eCO2_p)
+    retDF$ymin1 <- c(0, head(retDF$ymax1, n=-1))
+    retDF$ymin2 <- c(0, head(retDF$ymax2, n=-1))
+    
+    retDF$labelPosition1 <- (retDF$ymax1 + retDF$ymin1) / 2
+    retDF$labelPosition2 <- (demDF$ymax2 + retDF$ymin2) / 2
+    
+    retDF$label1 <- gsub(" retrans P flux", "", retDF$terms)
+    retDF$label2 <- gsub(" retrans P flux", "", retDF$terms)
+    
+    
+    
+    litDF$ymax1 <- cumsum(litDF$aCO2_p)
+    litDF$ymax2 <- cumsum(litDF$eCO2_p)
+    litDF$ymin1 <- c(0, head(litDF$ymax1, n=-1))
+    litDF$ymin2 <- c(0, head(litDF$ymax2, n=-1))
+    
+    litDF$labelPosition1 <- (litDF$ymax1 + litDF$ymin1) / 2
+    litDF$labelPosition2 <- (litDF$ymax2 + litDF$ymin2) / 2
+    
+    litDF$label1 <- gsub(" P flux", "", litDF$terms)
+    litDF$label2 <- gsub(" P flux", "", litDF$terms)
+    
+    litDF$label1 <- gsub(" litter", "", litDF$label1)
+    litDF$label2 <- gsub(" litter", "", litDF$label2)
+    
+    litDF$label1 <- gsub("litter", "", litDF$label1)
+    litDF$label2 <- gsub("litter", "", litDF$label2)
+    
+    litDF$label1 <- gsub(" Litter", "", litDF$label1)
+    litDF$label2 <- gsub(" Litter", "", litDF$label2)
+    
+    
+    
+    ### plotting
+    p1 <- ggplot(plotDF9,
+                 aes(Trt, mean)) + 
+      geom_bar(stat = "identity", aes(fill=Variable), position="stack") +
+      geom_errorbar(data=plotDF3, aes(ymax=pos, ymin=neg), 
+                    position = position_dodge(0.9), width=0.2, size=0.4,
+                    color="black") +
+      geom_point(data=plotDF3, aes(x=Trt, y=mean), size=2, pch=19, color="black")+
+      xlab("") + ylab(expression(paste("P demand (g P ", m^-2, " ", yr^-1, ")")))+
+      theme_linedraw() +
+      ylim(0, 1.0)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=14),
+            legend.title=element_text(size=16),
+            panel.grid.major=element_blank(),
+            legend.position="right")+
+      scale_fill_manual(name="Flux", 
+                        values = c("retrans" = Diverge_hsv_Palette[6],
+                                   "uptake" = Diverge_hsv_Palette[8]),
+                        labels=c("retrans"="Resorption",
+                                 "uptake"="Uptake"))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
+    
+    p2 <- ggplot(minDF2, aes(x=Trt, y=mean)) + 
+      geom_bar(aes(fill=Depth), stat = "identity", position="stack") +
+      geom_errorbar(data=plotDF6,
+                    aes(x=Trt, ymax=mean+sd, ymin=mean-sd), 
+                    position = position_dodge(0.9), width=0.2, 
+                    size=0.4) +
+      geom_point(data=plotDF6, aes(x=Trt, y=mean), size=2, color="black")+
+      xlab("") + ylab(expression(paste("Soil P mineralization (g P ", m^-2, " ", yr^-1, ")")))+
+      theme_linedraw() +
+      ylim(0, 1.0)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=14),
+            legend.title=element_text(size=16),
+            panel.grid.major=element_blank(),
+            legend.position="right")+
+      scale_fill_manual(name="Depth", 
+                        values = c("0-10cm" = Diverge_hsv_Palette[7],
+                                   "10-30cm" = Diverge_hsv_Palette[4],
+                                   "30-60cm" = Diverge_hsv_Palette[3]),
+                        labels=c("0-10cm"="0-10cm",
+                                 "10-30cm"="10-30cm",
+                                 "30-60cm"="30-60cm"))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
+    
+    
+    
+    
+    p3 <- ggplot(demDF, aes(ymax=ymax1, ymin=ymin1, xmax=4, xmin=3, fill=label1)) +
+      geom_rect() +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      #geom_label(x=3.5, aes(y=labelPosition1, label=aCO2_p), size=6)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=12),
+            legend.title=element_text(size=14),
+            plot.title=element_text(size=14, face="bold"),
+            legend.position="none")+
+      #scale_fill_manual(name="P demand flux",
+      #                  values = c("Canopy" = Diverge_hsv_Palette[1],
+      #                             "Wood" = Diverge_hsv_Palette[2],
+      #                             "Fine Root" = Diverge_hsv_Palette[3],
+      #                             "Coarse Root" = Diverge_hsv_Palette[4],
+      #                             "Twig" = Diverge_hsv_Palette[5],
+      #                             "Bark" = Diverge_hsv_Palette[6],
+      #                             "Seed" = Diverge_hsv_Palette[7],
+      #                             "Frass" = Diverge_hsv_Palette[8],
+      #                             "Understorey" = Diverge_hsv_Palette[9]),
+      #                  labels=c("Canopy" = "Canopy",
+      #                           "Wood" = "Wood",
+      #                           "Fine Root" = "Fineroot",
+      #                           "Coarse Root" = "Coarseroot",
+      #                           "Twig" = "Twig",
+      #                           "Bark" = "Bark",
+      #                           "Seed" = "Seed",
+      #                           "Frass" = "Frass",
+      #                           "Understorey" = "Understorey"))+
+      scale_fill_brewer(palette=3, name="P demand flux")+
+      guides(fill=guide_legend(ncol=2))+
+      annotate(geom="text", label=expression(aCO[2]), x=2., y=100, size=8);p3
+
+    
+    
+    p4 <- ggplot(demDF, aes(ymax=ymax2, ymin=ymin2, xmax=4, xmin=3, fill=label2)) +
+      geom_rect() +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      #geom_label( x=3.5, aes(y=labelPosition1, label=label1), size=6)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=12),
+            legend.title=element_text(size=14),
+            plot.title=element_text(size=14, face="bold"),
+            legend.position="none")+
+      scale_fill_brewer(palette=3, name="P demand flux")+
+      annotate(geom="text", label=expression(eCO[2]), x=2., y=100, size=8)
+    
+    
+    
+    
+    p5 <- ggplot(retDF, aes(ymax=ymax1, ymin=ymin1, xmax=4, xmin=3, fill=label1)) +
+      geom_rect() +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      #geom_label( x=3.5, aes(y=labelPosition1, label=label1), size=6)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=12),
+            legend.title=element_text(size=14),
+            plot.title=element_text(size=14, face="bold"),
+            legend.position="none")+
+      scale_fill_brewer(palette=3, name="P retranslocation flux")+
+      annotate(geom="text", label=expression(aCO[2]), x=2., y=100, size=8)
+    
+    
+    
+    p6 <- ggplot(retDF, aes(ymax=ymax2, ymin=ymin2, xmax=4, xmin=3, fill=label2)) +
+      geom_rect() +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      #geom_label( x=3.5, aes(y=labelPosition1, label=label1), size=6)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=12),
+            legend.title=element_text(size=14),
+            plot.title=element_text(size=14, face="bold"),
+            legend.position="none")+
+      scale_fill_brewer(palette=3, name="P retranslocation flux")+
+      annotate(geom="text", label=expression(eCO[2]), x=2., y=100, size=8)
+    
+    
+    
+    p7 <- ggplot(litDF, aes(ymax=ymax1, ymin=ymin1, xmax=4, xmin=3, fill=label1)) +
+      geom_rect() +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      #geom_label( x=3.5, aes(y=labelPosition1, label=label1), size=6)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=12),
+            legend.title=element_text(size=14),
+            plot.title=element_text(size=14, face="bold"),
+            legend.position="none")+
+      scale_fill_brewer(palette=3, name="P litter flux")+
+      annotate(geom="text", label=expression(aCO[2]), x=2., y=100, size=8)+
+      guides(fill=guide_legend(ncol=2))
+    
+    
+    p8 <- ggplot(litDF, aes(ymax=ymax2, ymin=ymin2, xmax=4, xmin=3, fill=label2)) +
+      geom_rect() +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      #geom_label( x=3.5, aes(y=labelPosition1, label=label1), size=6)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=12),
+            legend.title=element_text(size=14),
+            plot.title=element_text(size=14, face="bold"),
+            legend.position="none")+
+      scale_fill_brewer(palette=3, name="P litter flux")+
+      annotate(geom="text", label=expression(eCO[2]), x=2., y=100, size=8)
+    
+    
+    
+    
+    dem.legend <- get_legend(p3 + theme(legend.position="right",
+                                        legend.box = 'horizontal',
+                                        legend.box.just = 'left'))
+    
+    ret.legend <- get_legend(p5 + theme(legend.position="right",
+                                        legend.box = 'horizontal',
+                                        legend.box.just = 'left'))
+    
+    lit.legend <- get_legend(p7 + theme(legend.position="right",
+                                        legend.box = 'horizontal',
+                                        legend.box.just = 'left'))
+    
+    
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)")
+    
+    
+    ## plot 
+    pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_2.pdf"), 
+        width=10,height=14)
+    top_row <- plot_grid(p1, p2, ncol=2)
+    dem_row <- plot_grid(p3, p4, dem.legend, NA, ncol=4)
+    ret_row <- plot_grid(p5, p6, ret.legend, NA, ncol=4)
+    lit_row <- plot_grid(p7, p8, lit.legend, NA, ncol=4)
+    plot_grid(top_row, 
+              dem_row, 
+              ret_row,
+              lit_row, 
+              ncol = 1, 
+              rel_heights=c(1, 1, 1, 1))
+    grid.text(grid.labs,x = c(0.1, 0.6, 0.05, 0.05, 0.05), y = c(0.98, 0.98, 0.7, 0.46, 0.2),
+              gp=gpar(fontsize=16, col="black", fontface="bold"))
+    dev.off()
+    
+    
+    
+    
+    
+    
+    
+    p1 <- ggplot(plotDF9,
+                 aes(Trt, mean)) + 
+      geom_bar(stat = "identity", aes(fill=Variable), position="stack") +
+      geom_errorbar(data=plotDF3, aes(ymax=pos, ymin=neg), 
+                    position = position_dodge(0.9), width=0.2, size=0.4,
+                    color="black") +
+      geom_point(data=plotDF3, aes(x=Trt, y=mean), size=2, pch=19, color="black")+
+      xlab("") + ylab(expression(paste("P demand (g P ", m^-2, " ", yr^-1, ")")))+
+      theme_linedraw() +
+      ylim(0, 1.5)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position=c(0.7, 0.85))+
+      scale_fill_manual(name="Flux", 
+                        values = c("retrans" = Diverge_hsv_Palette[6],
+                                   "uptake" = Diverge_hsv_Palette[8]),
+                        labels=c("retrans"="Resorption",
+                                 "uptake"="Uptake"))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
+    
+    p2 <- ggplot(minDF2, aes(x=Trt, y=mean)) + 
+      geom_bar(aes(fill=Depth), stat = "identity", position="stack") +
+      geom_errorbar(data=plotDF6,
+                    aes(x=Trt, ymax=mean+sd, ymin=mean-sd), 
+                    position = position_dodge(0.9), width=0.2, 
+                    size=0.4) +
+      geom_point(data=plotDF6, aes(x=Trt, y=mean), size=2, color="black")+
+      xlab("") + ylab(expression(paste("Soil P mineralization (g P ", m^-2, " ", yr^-1, ")")))+
+      theme_linedraw() +
+      ylim(0, 1.5)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position=c(0.7, 0.8))+
+      scale_fill_manual(name="Depth", 
+                        values = c("0-10cm" = Diverge_hsv_Palette[7],
+                                   "10-30cm" = Diverge_hsv_Palette[4],
+                                   "30-60cm" = Diverge_hsv_Palette[3]),
+                        labels=c("0-10cm"="0-10cm",
+                                 "10-30cm"="10-30cm",
+                                 "30-60cm"="30-60cm"))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
+    
+    p3 <- ggplot(plotDF7,
+                 aes(Trt, mean)) + 
+      geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+      geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                    position = position_dodge(0.9), width=0.2, size=0.4) +
+      xlab("") + ylab("MRT (yr)")+
+      theme_linedraw() +
+      ylim(0,10)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position="none")+
+      scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
+                        labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
+    
+    p4 <- ggplot(plotDF8,
+                 aes(Trt, mean)) + 
+      geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
+      geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
+                    position = position_dodge(0.9), width=0.2, size=0.4) +
+      xlab("") + ylab(expression(paste("Plant PUE ( gC" * " " *gP^-1 * " )")))+
+      theme_linedraw() +
+      ylim(0,3000)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position="none")+
+      scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
+                        labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+                          labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_x_discrete(limits=c("aCO2","eCO2"),
+                       labels=c(expression(aCO[2]),
+                                expression(eCO[2])))
+    
+    
+    plotDF10 <- summaryBy(GPP_efficiency_gC_gP~Trt+variable, FUN=c(mean,sd),
+                          data=inDF3, na.rm=T, keep.names=T)
+    
+    
+    p5 <- ggplot(plotDF10,
+                 aes(x=variable, y=GPP_efficiency_gC_gP.mean, group=Trt)) + 
+      geom_bar(stat = "identity", aes(fill=Trt), 
+               position="dodge") +
+      geom_errorbar(aes(ymax=GPP_efficiency_gC_gP.mean+GPP_efficiency_gC_gP.sd, 
+                        ymin=GPP_efficiency_gC_gP.mean-GPP_efficiency_gC_gP.sd), 
+                    position = position_dodge(0.9), 
+                    width=0.2, size=0.4) +
+      labs(x="", 
+           y=expression("GPP / " * P[leaf] * " flux (g C " * g^-1 * " P)"))+
+      theme_linedraw() +
+      ylim(0,7500)+
+      theme(panel.grid.minor=element_blank(),
+            axis.title.x = element_text(size=10), 
+            axis.text.x = element_text(size=10),
+            axis.text.y=element_text(size=10),
+            axis.title.y=element_text(size=10),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            panel.grid.major=element_blank(),
+            legend.position=c(0.7, 0.8))+
+      scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
+                        labels=c(expression(aCO[2]), expression(eCO[2])))+
+      #scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
+      #                    labels=c(expression(aCO[2]), expression(eCO[2])))+
+      scale_x_discrete(limits=c("overstorey","understorey"),
+                       labels=c("Overstorey",
+                                "Understorey"))
+    
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)")
+    
+    
+    ## plot 
+    pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_3.pdf"), 
+        width=10,height=8)
+    top_row <- plot_grid(p1, p2, NA, ncol=3)
+    bot_row <- plot_grid(p5, p4, p3, ncol=3)
+    
+    plot_grid(top_row, 
+              bot_row, 
+              ncol = 1, 
+              rel_heights=c(1, 1, 1, 1))
+    grid.text(grid.labs,x = c(0.09, 0.42, 0.1, 0.42, 0.75), y = c(0.97, 0.97, 0.45, 0.45, 0.45),
+              gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
     

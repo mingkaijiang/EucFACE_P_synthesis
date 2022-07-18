@@ -297,26 +297,26 @@ make_flux_summary_table <- function(norm,
                                                                                      treatDF[treatDF$terms == "Wood P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Fine Root P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Coarse Root P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Twig P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Bark P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Seed P flux", i+1],
+                                                                                     treatDF[treatDF$terms == "Twig litter P flux", i+1],
+                                                                                     treatDF[treatDF$terms == "Bark litter P flux", i+1],
+                                                                                     treatDF[treatDF$terms == "Seed litter P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Frass P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
       }
       
       
       ###  Total vegetation production P flux
-      for (i in c(1:6)) {
-        treatDF[treatDF$terms == "Total vegetation production P flux", i+1] <- sum(c(treatDF[treatDF$terms == "Canopy P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Wood P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Fine Root P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Coarse Root P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Twig P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Bark P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Seed P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Frass P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
-      }
+      #for (i in c(1:6)) {
+      #  treatDF[treatDF$terms == "Total vegetation production P flux", i+1] <- sum(c(treatDF[treatDF$terms == "Canopy P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Wood P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Fine Root P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Coarse Root P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Twig P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Bark P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Seed P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Frass P flux", i+1],
+      #                                                                               treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
+      #}
       
       ###  Total vegetation retranslocation P flux
       for (i in c(1:6)) {
@@ -562,9 +562,9 @@ make_flux_summary_table <- function(norm,
                                                                                      treatDF[treatDF$terms == "Wood P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Fine Root P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Coarse Root P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Twig P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Bark P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Seed P flux", i+1],
+                                                                                     treatDF[treatDF$terms == "Twig litter P flux", i+1],
+                                                                                     treatDF[treatDF$terms == "Bark litter P flux", i+1],
+                                                                                     treatDF[treatDF$terms == "Seed litter P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Frass P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
       }

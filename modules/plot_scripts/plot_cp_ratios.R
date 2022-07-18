@@ -51,7 +51,7 @@ plot_cp_ratios <- function(inDF) {
                                   "understorey", "understorey_litter", "frass"),
                          labels=c("canopy", "canopy leaf litter", "fineroot",
                                   "understorey", "understorey litter", "frass"))+
-        scale_fill_manual(name="", values = c("amb" = "blue2", "ele" = "red3"),
+        scale_fill_manual(name="", values = c("amb" = SpectralPalette[7], "ele" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("amb" = "black", "ele" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))
@@ -76,7 +76,7 @@ plot_cp_ratios <- function(inDF) {
               legend.position="none")+
         scale_x_discrete(limits=c("wood", "sapwood", "heartwood"),
                          labels=c("wood", "sapwood", "heartwood"))+
-        scale_fill_manual(name="", values = c("amb" = "blue2", "ele" = "red3"),
+        scale_fill_manual(name="", values = c("amb" = SpectralPalette[7], "ele" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("amb" = "black", "ele" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))
@@ -101,7 +101,7 @@ plot_cp_ratios <- function(inDF) {
               legend.position="none")+
         scale_x_discrete(limits=c("microbe", "soil"),
                          labels=c("microbe", "soil"))+
-        scale_fill_manual(name="", values = c("amb" = "blue2", "ele" = "red3"),
+        scale_fill_manual(name="", values = c("amb" = SpectralPalette[7], "ele" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("amb" = "black", "ele" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))

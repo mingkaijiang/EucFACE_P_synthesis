@@ -255,12 +255,6 @@ soil_c_pool <- make_soil_c_pool(bk_density=soil_bulk_density)
 microbial_c_pool <- make_microbial_c_pool(soil_bulk_density)
 
 
-#### Yolima's data
-### data no longer exists, ignore this
-#microbial_c_pool2 <- make_microbial_pool2(soil_bulk_density)
-
-
-
 #### Soil mycorrhizal pool
 #### But we don't have a P concentration for it and 
 #### therefore it's not included in the P budget
@@ -882,11 +876,15 @@ norm <- "unnormalized"
 
 ##### Note: for the following plotting script in this step,
 ####        we will need to go into the function
-####        to plot!!! 
+####        to plot.
 ####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
 ####        then open the function, then plot. 
 inDF=total_p_budget
+inDF2=summary_table_flux
+inDF3=plant_GPP_efficiency
 make_p_budget_summary_plots(inDF=total_p_budget,
+                            inDF2=summary_table_flux,
+                            inDF3=plant_GPP_efficiency,
                             norm="unnormalized")
 
 
@@ -954,7 +952,8 @@ plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
                                    deltaDF=summary_table_delta_pool)
 
 ### plot CP ratios
-plot_CP_ratios(inDF=summary_cp_ratios)
+inDF=summary_cp_ratios
+plot_cp_ratios(inDF=summary_cp_ratios)
 
 
 

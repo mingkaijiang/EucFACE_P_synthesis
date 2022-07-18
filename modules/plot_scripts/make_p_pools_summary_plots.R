@@ -128,7 +128,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
               legend.position="top")+
-        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+        scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))
@@ -149,7 +149,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
               legend.position="none")+
-        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+        scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))
@@ -169,7 +169,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
               legend.position="none")+
-        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+        scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))+
@@ -192,7 +192,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
               legend.position="none")+
-        scale_fill_manual(name="", values = c("aCO2" = "blue2", "eCO2" = "red3"),
+        scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))
