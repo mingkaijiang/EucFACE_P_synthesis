@@ -935,7 +935,7 @@ microbial_concentration_global_comparison(norm="unnormalized",
 
 
 ### compare ecosystem P budget to China
-china_p_budget <- make_china_p_budget(return.unit = "g_m2")
+make_china_p_budget(soil_p_concentration)
 
 
 
@@ -955,6 +955,9 @@ plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
 inDF=summary_cp_ratios
 plot_cp_ratios(inDF=summary_cp_ratios)
 
+
+### compare Hedley P data
+compare_hedley_p_data(soil_hedley_p_concentration)
 
 
 ########################################################################################## 
