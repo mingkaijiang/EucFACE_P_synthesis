@@ -40,20 +40,38 @@ make_soil_bulk_density <- function(){
                      data=df.m, na.rm=T, keep.names=T)
     
     
-    ### only ring 5 and 6 have transition bulk density, so fill the other rings by taking the average
-    trans.bk <- mean(out$bulk_density_kg_m3[out$Depth=="transition"])
+    ### only ring 5 and 6 have transition bulk density, 
+    ### so fill the other rings by either taking the average
+    ### or using Gimeno's relationship
+    ### note ring 6 measured value is so different from the other, so
+    ### revise it as well, based on Yolima's calculation sheet
     
-    tmpDF1 <- out[out$Ring==6&out$Depth=="transition",]
-    tmpDF1$bulk_density_kg_m3 <- trans.bk
+    #trans.bk <- mean(out$bulk_density_kg_m3[out$Depth=="transition"])
+    #tmpDF1 <- out[out$Ring==6&out$Depth=="transition",]
+    #tmpDF1$bulk_density_kg_m3 <- trans.bk
     
-    tmpDF1$Ring <- 1
-    tmpDF2 <- tmpDF3 <- tmpDF4 <- tmpDF1
+    #tmpDF1$Ring <- 1
+    #tmpDF2 <- tmpDF3 <- tmpDF4 <- tmpDF1
     
-    tmpDF2$Ring <- 2
-    tmpDF3$Ring <- 3
-    tmpDF4$Ring <- 4
+    #tmpDF2$Ring <- 2
+    #tmpDF3$Ring <- 3
+    #tmpDF4$Ring <- 4
     
-    outDF <- rbind(out, rbind(tmpDF1, rbind(tmpDF2, rbind(tmpDF3, tmpDF4))))
+    #outDF <- rbind(out, rbind(tmpDF1, rbind(tmpDF2, rbind(tmpDF3, tmpDF4))))
+    
+    out$bulk_density_kg_m3[out$Ring==6&out$Depth=="transition"] <- 1778
+    
+    tmpDF1 <- data.frame("Ring"=c(1,2,3,4), 
+                         "Depth"=c("transition",
+                                    "transition",
+                                    "transition",
+                                    "transition"),
+                         "bulk_density_kg_m3"=c(1824,
+                                                1861,
+                                                1756,
+                                                1779))
+    
+    outDF <- rbind(out, tmpDF1)
     
     ### order
     outDF <- outDF[order(outDF$Ring, outDF$Depth),]
