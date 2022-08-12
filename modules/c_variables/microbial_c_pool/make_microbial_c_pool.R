@@ -24,14 +24,22 @@ make_microbial_c_pool <- function(bk_density) {
     tmpDF$Trt[tmpDF$Ring%in%c(1,4,5)] <- "eCO2"
     tmpDF$Trt[tmpDF$Ring%in%c(2,3,6)] <- "aCO2"
     
-    tmpDF2 <- summaryBy(Cmic~Depth+Trt, FUN=mean, data=tmpDF, keep.names=T, na.rm=T)
+    #tmpDF2 <- summaryBy(Cmic~Depth+Trt, FUN=mean, data=tmpDF, keep.names=T, na.rm=T)
+    #
+    #tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
+    #tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
+    #
+    #tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]/tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
+    #tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]/tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
     
-    tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
-    tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
     
-    tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]/tmpDF2$Cmic[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
-    tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]/tmpDF2$Cmic[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
+    tmpDF2 <- summaryBy(Cmic~Depth+Ring, FUN=mean, data=tmpDF, keep.names=T)
     
+    for (i in 1:6) {
+        tmpDF2$Red[tmpDF2$Ring==i&tmpDF2$Depth=="10_30"] <- tmpDF2$Cmic[tmpDF2$Ring==i&tmpDF2$Depth=="10_30"]/tmpDF2$Cmic[tmpDF2$Ring==i&tmpDF2$Depth=="0_10"]
+        tmpDF2$Red[tmpDF2$Ring==i&tmpDF2$Depth=="transition"] <- tmpDF2$Cmic[tmpDF2$Ring==i&tmpDF2$Depth=="transition"]/tmpDF2$Cmic[tmpDF2$Ring==i&tmpDF2$Depth=="0_10"]
+        
+    }
     
     # update earlier datasets
     myDF$Trt[myDF$Ring%in%c(1,4,5)] <- "eCO2"
@@ -48,11 +56,18 @@ make_microbial_c_pool <- function(bk_density) {
     myDF2$Depth <- "10_30"
     myDF3$Depth <- "transition"
     
-    myDF2$Rev[myDF2$Trt=="aCO2"] <- myDF2$Cmic[myDF2$Trt=="aCO2"] * tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]
-    myDF2$Rev[myDF2$Trt=="eCO2"] <- myDF2$Cmic[myDF2$Trt=="eCO2"] * tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]
+    #myDF2$Rev[myDF2$Trt=="aCO2"] <- myDF2$Cmic[myDF2$Trt=="aCO2"] * tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]
+    #myDF2$Rev[myDF2$Trt=="eCO2"] <- myDF2$Cmic[myDF2$Trt=="eCO2"] * tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]
+    #
+    #myDF3$Rev[myDF3$Trt=="aCO2"] <- myDF3$Cmic[myDF3$Trt=="aCO2"] * tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]
+    #myDF3$Rev[myDF3$Trt=="eCO2"] <- myDF3$Cmic[myDF3$Trt=="eCO2"] * tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]
     
-    myDF3$Rev[myDF3$Trt=="aCO2"] <- myDF3$Cmic[myDF3$Trt=="aCO2"] * tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]
-    myDF3$Rev[myDF3$Trt=="eCO2"] <- myDF3$Cmic[myDF3$Trt=="eCO2"] * tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]
+    
+    for (i in 1:6) {
+        myDF2$Rev[myDF2$Ring==i] <- myDF2$Cmic[myDF2$Ring==i] * tmpDF2$Red[tmpDF2$Ring==i&tmpDF2$Depth=="10_30"]
+        myDF3$Rev[myDF3$Ring==i] <- myDF3$Cmic[myDF3$Ring==i] * tmpDF2$Red[tmpDF2$Ring==i&tmpDF2$Depth=="transition"]
+        
+    }
     
     myDF2 <- myDF2[,c("Date", "Ring", "Depth", "Rev")]
     myDF3 <- myDF3[,c("Date", "Ring", "Depth", "Rev")]

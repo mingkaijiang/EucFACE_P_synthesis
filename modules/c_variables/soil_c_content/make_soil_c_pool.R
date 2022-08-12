@@ -83,30 +83,60 @@ make_soil_c_pool <- function(bk_density){
     
     
     ###calculate trt-averaged depth reduction
-    tmpDF2 <- summaryBy(totC~Depth+Trt, FUN=mean, data=tmpDF, keep.names=T)
+    #mpDF2 <- summaryBy(totC~Depth+Trt, FUN=mean, data=tmpDF, keep.names=T)
     
-    tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
-    tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
+    #mpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
+    #mpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"] <- tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="10_30"]/tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
     
-    tmpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]/tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
-    tmpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]/tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
+    #mpDF2$Red[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="transition"]/tmpDF2$totC[tmpDF2$Trt=="aCO2"&tmpDF2$Depth=="0_10"]
+    #mpDF2$Red[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"] <- tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="transition"]/tmpDF2$totC[tmpDF2$Trt=="eCO2"&tmpDF2$Depth=="0_10"]
+    
+    
+    tmpDF2 <- summaryBy(totC~Depth+Ring, FUN=mean, data=tmpDF, keep.names=T)
+    
+    for (i in 1:6) {
+        tmpDF2$Red[tmpDF2$Ring==i&tmpDF2$Depth=="10_30"] <- tmpDF2$totC[tmpDF2$Ring==i&tmpDF2$Depth=="10_30"]/tmpDF2$totC[tmpDF2$Ring==i&tmpDF2$Depth=="0_10"]
+        tmpDF2$Red[tmpDF2$Ring==i&tmpDF2$Depth=="transition"] <- tmpDF2$totC[tmpDF2$Ring==i&tmpDF2$Depth=="transition"]/tmpDF2$totC[tmpDF2$Ring==i&tmpDF2$Depth=="0_10"]
+        
+    }
     
     outDF <- c()
     
+    #for (i in unique(exDF$Date)) {
+    #    for (j in c("aCO2", "eCO2")) {
+    #        
+    #        subDF1 <- subset(exDF, Date==i & Trt==j)
+    #        
+    #        subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Trt==j] <- ifelse(is.na(subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Trt==j]),
+    #                                                                                  subDF1$totC[subDF1$Depth=="0_10"&subDF1$Date==i&subDF1$Trt==j]*tmpDF2$Red[tmpDF2$Trt==j&tmpDF2$Depth=="10_30"],
+    #                                                                                  subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Trt==j])
+    #        
+    #        
+    #        subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Trt==j] <- ifelse(is.na(subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Trt==j]),
+    #                                                                                  subDF1$totC[subDF1$Depth=="0_10"&subDF1$Date==i&subDF1$Trt==j]*tmpDF2$Red[tmpDF2$Trt==j&tmpDF2$Depth=="transition"],
+    #                                                                                  subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Trt==j])
+    #    
+    #        
+    #        outDF <- rbind(outDF, subDF1)
+    #        
+    #    }
+    #}
+    
+    
     for (i in unique(exDF$Date)) {
-        for (j in c("aCO2", "eCO2")) {
+        for (j in c(1:6)) {
             
-            subDF1 <- subset(exDF, Date==i & Trt==j)
+            subDF1 <- subset(exDF, Date==i & Ring==j)
             
-            subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Trt==j] <- ifelse(is.na(subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Trt==j]),
-                                                                                      subDF1$totC[subDF1$Depth=="0_10"&subDF1$Date==i&subDF1$Trt==j]*tmpDF2$Red[tmpDF2$Trt==j&tmpDF2$Depth=="10_30"],
-                                                                                      subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Trt==j])
+            subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Ring==j] <- ifelse(is.na(subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Ring==j]),
+                                                                                      subDF1$totC[subDF1$Depth=="0_10"&subDF1$Date==i&subDF1$Ring==j]*tmpDF2$Red[tmpDF2$Ring==j&tmpDF2$Depth=="10_30"],
+                                                                                      subDF1$totC[subDF1$Depth=="10_30"&subDF1$Date==i&subDF1$Ring==j])
             
             
-            subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Trt==j] <- ifelse(is.na(subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Trt==j]),
-                                                                                      subDF1$totC[subDF1$Depth=="0_10"&subDF1$Date==i&subDF1$Trt==j]*tmpDF2$Red[tmpDF2$Trt==j&tmpDF2$Depth=="transition"],
-                                                                                      subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Trt==j])
-        
+            subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Ring==j] <- ifelse(is.na(subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Ring==j]),
+                                                                                           subDF1$totC[subDF1$Depth=="0_10"&subDF1$Date==i&subDF1$Ring==j]*tmpDF2$Red[tmpDF2$Ring==j&tmpDF2$Depth=="transition"],
+                                                                                           subDF1$totC[subDF1$Depth=="transition"&subDF1$Date==i&subDF1$Ring==j])
+            
             
             outDF <- rbind(outDF, subDF1)
             
