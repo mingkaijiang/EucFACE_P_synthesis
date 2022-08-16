@@ -25,10 +25,10 @@ make_canopy_leaf_p_retranslocation_coefficient <- function(df1, df2){
     }
     
     
-    retransDF$old[retransDF$Ring == "5" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "5" & df1.yr$year == "2016"]
-    retransDF$old[retransDF$Ring == "3" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "3" & df1.yr$year == "2016"]
-    retransDF$old[retransDF$Ring == "2" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "2" & df1.yr$year == "2016"]
-    retransDF$old[retransDF$Ring == "1" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "1" & df1.yr$year == "2016"]
+    #retransDF$old[retransDF$Ring == "5" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "5" & df1.yr$year == "2016"]
+    #retransDF$old[retransDF$Ring == "3" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "3" & df1.yr$year == "2016"]
+    #retransDF$old[retransDF$Ring == "2" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "2" & df1.yr$year == "2016"]
+    #retransDF$old[retransDF$Ring == "1" & retransDF$Year == "2016"] <- df1.yr$PercP[df1.yr$Ring == "1" & df1.yr$year == "2016"]
     
     
     ### calculate retranslocation coefficient for each ring
@@ -42,7 +42,7 @@ make_canopy_leaf_p_retranslocation_coefficient <- function(df1, df2){
         retransDF$old[retransDF$Ring == j & retransDF$Year == "2017"] <- retransDF$senesced[retransDF$Ring == j & retransDF$Year == "2017"] / (1 - reDF$retrans[reDF$Ring==j])
     }
     
-    for (j in c(4,6)) {
+    for (j in c(1:6)) {
         retransDF$old[retransDF$Ring == j & retransDF$Year == "2016"] <- retransDF$senesced[retransDF$Ring == j & retransDF$Year == "2016"] / (1 - reDF$retrans[reDF$Ring==j])
         
     }
@@ -54,7 +54,9 @@ make_canopy_leaf_p_retranslocation_coefficient <- function(df1, df2){
     
     
     outDF <- retransDF[,c("Ring", "retrans_coef", "CO2", "Year")]
-    
+    outDF$Trt <- "aCO2"
+    outDF$Trt[outDF$Ring%in%c(1,4,5)] <- "eCO2"
+    outDF3 <- summaryBy(retrans_coef~Trt, FUN=c(mean,sd), data=outDF, keep.names=T)
     
     outDF2 <- summaryBy(retrans_coef~Ring, FUN=mean, data=outDF, keep.names=T)
     

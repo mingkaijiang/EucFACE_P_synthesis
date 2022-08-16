@@ -53,16 +53,33 @@ calculate_plant_p_retranslocation_coefficients <- function (canopy_p_concentrati
                              data=plotDF,
                              na.rm=T, keep.names=T)
         
-        p1 <- ggplot(plotDF, aes(x=component, y=value, group=Ring))+
-            geom_bar(aes(fill=Ring), position="dodge", stat="identity") 
+        plotDF2 <- plotDF2[plotDF2$component%in%c("canopy", "understorey", "sapwood"),]
+        
+        #p1 <- ggplot(plotDF, aes(x=component, y=value, group=Ring))+
+        #    geom_bar(aes(fill=Ring), position="dodge", stat="identity") 
         
         p2 <- ggplot(plotDF2, aes(x=component, y=value.mean, group=Trt))+
             geom_bar(aes(fill=Trt), position="dodge", stat="identity")+
             geom_errorbar(aes(ymin=value.mean-value.sd, ymax=value.mean+value.sd),
-                          position="dodge", stat="identity")
+                          position = position_dodge(0.9), width=0.4, size=0.4)+
+            theme_linedraw() +
+            theme(panel.grid.minor=element_blank(),
+                  axis.title.x = element_text(size=10), 
+                  axis.text.x = element_text(size=10),
+                  axis.text.y=element_text(size=12),
+                  axis.title.y=element_text(size=14),
+                  legend.text=element_text(size=12),
+                  legend.title=element_text(size=14),
+                  panel.grid.major=element_blank(),
+                  legend.position="right")+
+            labs(x="", y="Resorption coefficient")+
+            scale_fill_manual(name="", values = c("amb" = SpectralPalette[7], "ele" = SpectralPalette[3]),
+                              labels=c(expression(aCO[2]), expression(eCO[2])))
         
-        pdf("plots_tables/checks/retranslocation_coefficients.pdf")
-        plot(p1)
+        
+        
+        
+        pdf("plots_tables/output/unnormalized/retranslocation_coefficients.pdf")
         plot(p2)
         dev.off()
         

@@ -15,18 +15,29 @@ calculate_canopy_P_retranslocation_flux <- function (tflux,
     
     ### process retransDF
     subDF2 <- retransDF[,c("Ring", "canopy")]
+    
+    myDF2 <- merge(myDF, subDF2, by=c("Ring"))
+    myDF2$canopy_p_retrans_flux2 <- with(myDF2, leaflitter_p_flux_mg_m2_d/canopy)
+    
+    
     colnames(subDF2) <- c("Ring", "canopy_p_retrans_coef")
     subDF2$Method <- "conc"
     
     
     ### make plot
     plotDF <- rbind(subDF, subDF2)
-    p1 <- ggplot(plotDF, aes(x=Ring, y=canopy_p_retrans_coef, group=Method)) +
+    plotDF$Trt <- "aCO2"
+    plotDF$Trt[plotDF$Ring%in%c(1,4,5)] <- "eCO2"
+    plotDF2 <- summaryBy(canopy_p_retrans_coef~Method+Trt, data=plotDF, na.rm=T, FUN=c(mean,sd),
+                         keep.names=T)
+    
+    p1 <- ggplot(plotDF2, aes(x=Trt, y=canopy_p_retrans_coef.mean, group=Method)) +
         geom_bar(aes(fill=Method), position="dodge", stat="identity")
     
     pdf("plots_tables/checks/canopy_P_retranslocation_comparison.pdf")
     plot(p1)
     dev.off()
+
     
     
     ### prepare retranslocation flux
