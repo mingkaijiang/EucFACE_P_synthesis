@@ -22,6 +22,7 @@ make_flux_summary_table <- function(norm,
   
   ### Define production variable names
   terms <- c("Canopy P flux",              # include retranslocated and new uptake flux
+             "Herbivory P flux",
              "Wood P flux",                # include retranslocated and new uptake flux
              "Fine Root P flux",           # include retranslocated and new uptake flux
              "Coarse Root P flux",         # include retranslocated and new uptake flux
@@ -81,6 +82,16 @@ make_flux_summary_table <- function(norm,
       treatDF$timepoint[treatDF$terms == "Canopy P flux"] <- length(unique(canopy_p_flux$Date))  
       treatDF$notes[treatDF$terms == "Canopy P flux"] <- "need to consider leaf turnover"
       
+      
+      ### Herbivory P flux
+      for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Herbivory P flux", i+1] <- with(canopy_p_flux[canopy_p_flux$Ring ==i,],
+                                                               sum(herbivory_p_flux*Days)/sum(Days)) * conv
+      }
+      treatDF$year_start[treatDF$terms == "Herbivory P flux"] <- min(year(canopy_p_flux$Date))    
+      treatDF$year_end[treatDF$terms == "Herbivory P flux"] <- max(year(canopy_p_flux$Date))    
+      treatDF$timepoint[treatDF$terms == "Herbivory P flux"] <- length(unique(canopy_p_flux$Date))  
+      treatDF$notes[treatDF$terms == "Herbivory P flux"] <- "need to consider leaf turnover"
       
       ### Wood P 
       for (i in c(1:6)) {
@@ -300,7 +311,7 @@ make_flux_summary_table <- function(norm,
                                                                                      treatDF[treatDF$terms == "Twig litter P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Bark litter P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Seed litter P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Frass P flux", i+1],
+                                                                                     #treatDF[treatDF$terms == "Frass P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
       }
       
@@ -345,6 +356,16 @@ make_flux_summary_table <- function(norm,
       treatDF$year_end[treatDF$terms == "Canopy P flux"] <- max(year(canopy_p_flux$Date))    
       treatDF$timepoint[treatDF$terms == "Canopy P flux"] <- length(unique(canopy_p_flux$Date))  
       treatDF$notes[treatDF$terms == "Canopy P flux"] <- "need to consider leaf turnover"
+      
+      ### Herbivory P flux
+      for (i in c(1:6)) {
+        treatDF[treatDF$terms == "Herbivory P flux", i+1] <- with(canopy_p_flux[canopy_p_flux$Ring ==i,],
+                                                                  sum(herbivory_p_flux*Days)/sum(Days)) * conv
+      }
+      treatDF$year_start[treatDF$terms == "Herbivory P flux"] <- min(year(canopy_p_flux$Date))    
+      treatDF$year_end[treatDF$terms == "Herbivory P flux"] <- max(year(canopy_p_flux$Date))    
+      treatDF$timepoint[treatDF$terms == "Herbivory P flux"] <- length(unique(canopy_p_flux$Date))  
+      treatDF$notes[treatDF$terms == "Herbivory P flux"] <- "need to consider leaf turnover"
       
       
       ### Wood P 
@@ -579,7 +600,7 @@ make_flux_summary_table <- function(norm,
                                                                                      treatDF[treatDF$terms == "Twig P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Bark P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Seed P flux", i+1],
-                                                                                     treatDF[treatDF$terms == "Frass P flux", i+1],
+                                                                                     #treatDF[treatDF$terms == "Frass P flux", i+1],
                                                                                      treatDF[treatDF$terms == "Understorey P flux", i+1]), na.rm=T)
       }
       

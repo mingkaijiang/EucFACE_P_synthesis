@@ -17,9 +17,14 @@ make_canopy_p_production <- function(p_conc,
     outDF <- out
     
     # calculate p flux
-    outDF$canopy_p_flux <- outDF$leaf_flux / c_frac * outDF$PercP / 100
+    outDF$canopy_p_flux <- outDF$total_flux / c_frac * outDF$PercP / 100
+    outDF$leaf_p_flux <- outDF$leaf_flux / c_frac * outDF$PercP / 100
+    outDF$herbivory_p_flux <- outDF$herbivory_leaf_consumption_flux / c_frac * outDF$PercP / 100
     
-    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "canopy_p_flux", "Days")]
+    
+    outDF <- outDF[,c("Date", "Start_date", "End_date", "Ring", "canopy_p_flux",
+                      "leaf_p_flux", "herbivory_p_flux",
+                      "Days")]
     
     return(outDF)
 }

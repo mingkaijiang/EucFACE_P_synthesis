@@ -281,9 +281,23 @@ twiglitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "twi
 barklitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "bark_flux", "Start_date", "End_date", "Days")]
 seedlitter_c_production_flux <- litter_c_production_flux[,c("Date", "Ring", "seed_flux", "Start_date", "End_date", "Days")]
 
+#### Frass production
+frass_c_production_flux <- make_frass_c_production_flux()
+
+
+
 #### 2.3 Canopy C production
-## assume it's the same as litterfall C production
-canopy_c_production_flux <- leaflitter_c_production_flux
+## need to add insect consumption flux back!
+
+### herbivore leaf c consumption flux
+### extrapolated based on frass weight, leaf area consumed and sla data
+herbivory_leaf_consumption_flux <- make_herbivory_leaf_consumption_flux(sla=sla_variable, 
+                                                                        frass_flux=frass_c_production_flux)
+
+
+canopy_c_production_flux <- merge_litter_c_and_herbivory_loss(litter=leaflitter_c_production_flux,
+                                                              herbivory=herbivory_leaf_consumption_flux)
+
 
 ## based on change in leaf area and litterfall
 ## calculate change in leaf pool as well as litterfall
@@ -337,10 +351,6 @@ understorey_c_flux_clipping <- make_understorey_aboveground_production_flux_clip
 #### understorey litter flux
 ### basically understorey dead 
 understorey_litter_c_flux <- make_understorey_litter_flux(c_fraction_ud)
-
-
-#### Frass production
-frass_c_production_flux <- make_frass_c_production_flux()
 
 
 #### Coarse root C production
@@ -565,8 +575,6 @@ make_canopy_P_flux_comparison(inDF1=canopy_p_flux,
 #### Frass P production
 #### Used C fraction for frass to convert c production back to frass biomass
 #### We have more p conc than c flux so no need to gap fill. 
-#### This needs to be added to new canopy p production requirement and the
-#### total P budget. 
 frass_c_fraction <- make_frass_c_fraction()
 frass_p_production <- make_frass_p_production_flux(p_conc=frass_p_concentration,
                                                    c_flux=frass_c_production_flux,

@@ -3,7 +3,7 @@ make_plant_GPP_efficiency <- function(norm, p_pool, p_flux,
     
     
     ### calculate total production P flux for canopy
-    can.p.flux <- p_flux[p_flux$terms%in%c("Canopy P flux", "Frass P flux"),]
+    can.p.flux <- p_flux[p_flux$terms%in%c("Canopy P flux"),]
     tot1 <- as.numeric(colSums(can.p.flux[,2:7]))
     
     ### calculate total production P flux for understorey 

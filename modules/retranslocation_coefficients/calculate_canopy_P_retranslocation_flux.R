@@ -5,8 +5,8 @@ calculate_canopy_P_retranslocation_flux <- function (tflux,
     ### merge the two
     myDF <- merge(tflux, lflux, by=c("Date", "Ring"))
     
-    myDF$canopy_p_retrans_flux <- with(myDF, canopy_p_flux - leaflitter_p_flux_mg_m2_d)
-    myDF$canopy_p_retrans_coef <- with(myDF, canopy_p_retrans_flux/canopy_p_flux)
+    myDF$canopy_p_retrans_flux <- with(myDF, leaf_p_flux - leaflitter_p_flux_mg_m2_d)
+    myDF$canopy_p_retrans_coef <- with(myDF, canopy_p_retrans_flux/leaf_p_flux)
     
     subDF <- summaryBy(canopy_p_retrans_coef~Ring, FUN=mean,
                        data=myDF, na.rm=T, keep.names=T)
