@@ -363,6 +363,14 @@ make_pool_summary_table <- function(norm,
     #treatDF$timepoint[treatDF$terms == "Mycorrhizal P pool 30-60cm"] <- length(unique(mycorrhizal_p_pool$Date[mycorrhizal_p_pool$Depth=="transition"]))  
     #treatDF$notes[treatDF$terms == "Mycorrhizal P pool 30-60cm"] <- "Top 10 cm"
     
+    
+    
+    ### given that the sum of inorganic P and organic P pool does not add up to total, 
+    ### the easiest solution is the revise the total by summing the two.
+    treatDF[treatDF$terms=="Soil P Pool 0-10cm",2:7] <- treatDF[treatDF$terms=="Soil Inorg P Pool 0-10cm",2:7]+ treatDF[treatDF$terms=="Soil Org P Pool 0-10cm",2:7] 
+    treatDF[treatDF$terms=="Soil P Pool 10-30cm",2:7] <- treatDF[treatDF$terms=="Soil Inorg P Pool 10-30cm",2:7]+ treatDF[treatDF$terms=="Soil Org P Pool 10-30cm",2:7] 
+    treatDF[treatDF$terms=="Soil P Pool 30-60cm",2:7] <- treatDF[treatDF$terms=="Soil Inorg P Pool 30-60cm",2:7]+ treatDF[treatDF$terms=="Soil Org P Pool 30-60cm",2:7] 
+    
     ### calculate treatment averages
     treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
     treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)

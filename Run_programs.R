@@ -965,7 +965,7 @@ plot_cp_ratios(inDF=summary_cp_ratios)
 
 
 ### compare Hedley P data
-compare_hedley_p_data(soil_hedley_p_concentration)
+#compare_hedley_p_data(soil_hedley_p_concentration)
 
 
 ########################################################################################## 

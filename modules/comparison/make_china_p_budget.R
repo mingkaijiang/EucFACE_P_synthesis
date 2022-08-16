@@ -37,10 +37,10 @@ make_china_p_budget <- function(soil_p_concentration) {
                         na.rm=T, keep.names=T)
     
     ### prepare density plot
-    d1 <- density(inDF$totalP_g_m2)
-    d2 <- density(inDF$plantP_g_m2)
-    d3 <- density(inDF$litterP_g_m2)
-    d4 <- density(inDF$soilP_g_m2)
+    d1 <- density(inDF$totalP_g_m2,na.rm=T)
+    d2 <- density(inDF$plantP_g_m2,na.rm=T)
+    d3 <- density(inDF$litterP_g_m2,na.rm=T)
+    d4 <- density(inDF$soilP_g_m2,na.rm=T)
     
     ### create data frame
     xd1 <- data.frame(d1[c("x", "y")])
@@ -50,10 +50,10 @@ make_china_p_budget <- function(soil_p_concentration) {
     
     ### find probability distribution marks
     probs <- c(0.05, 0.25, 0.5, 0.75, 0.95)
-    quantiles1 <- quantile(inDF$totalP_g_m2, prob=probs)
-    quantiles2 <- quantile(inDF$plantP_g_m2, prob=probs)
-    quantiles3 <- quantile(inDF$litterP_g_m2, prob=probs)
-    quantiles4 <- quantile(inDF$soilP_g_m2, prob=probs)
+    quantiles1 <- quantile(inDF$totalP_g_m2, prob=probs,na.rm=T)
+    quantiles2 <- quantile(inDF$plantP_g_m2, prob=probs,na.rm=T)
+    quantiles3 <- quantile(inDF$litterP_g_m2, prob=probs,na.rm=T)
+    quantiles4 <- quantile(inDF$soilP_g_m2, prob=probs,na.rm=T)
     
     
     xd1$quant <- factor(findInterval(xd1$x,quantiles1))
