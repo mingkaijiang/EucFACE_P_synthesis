@@ -673,17 +673,14 @@ coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux
 
 
 ############################## delta P Pools ###############################
-
-
-#### need to revisit the following two, as depth has not been considered properly
 delta_soil_p_pool <- make_yearly_delta_pool_without_depth_function(inDF=soil_p_pool, 
                                                                 var.col=4)
 
 delta_soil_phosphate_pool <- make_yearly_delta_pool_without_depth_function(inDF=soil_phosphate_pool, 
                                                                 var.col=4)
 
-delta_microbial_p_pool <- make_yearly_delta_pool_with_depth_function(inDF=microbial_p_pool, 
-                                                                     var.col=4)
+delta_microbial_p_pool <- make_yearly_delta_pool_with_depth_function_microbe(inDF=microbial_p_pool, 
+                                                                             var.col=4)
 
 
 
