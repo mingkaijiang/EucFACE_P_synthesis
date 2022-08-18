@@ -42,7 +42,7 @@ make_soil_p_budget_summary_plots <- function(inDF, norm) {
                       width=0.25)+
         geom_point(data=plotDF4, aes(Trt, mean), pch=21, fill="white", color="black", size=2)+
         xlab(expression(paste(CO[2]," Treatment")))+ 
-        ylab(expression(paste("Top 10cm Soil P stock (g P ", m^-2, ")")))+
+        ylab(expression(paste("Soil P pool (g P ", m^-2, ")")))+
         theme_linedraw() +
         ylim(0, 12)+
         theme(panel.grid.minor=element_blank(),
@@ -77,7 +77,7 @@ make_soil_p_budget_summary_plots <- function(inDF, norm) {
 
 
     ## plot 
-    pdf(paste0("plots_tables/output/", norm, "/Soil_P_Budget_Plots_", norm, ".pdf"), 
+    pdf(paste0("plots_tables/output/", norm, "/Soil_P_hedley_plots_", norm, ".pdf"), 
         width=8,height=8)
     plot(p1)
     dev.off()

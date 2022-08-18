@@ -127,7 +127,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
               legend.text=element_text(size=12),
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
-              legend.position="top")+
+              legend.position="none")+
         scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
@@ -173,9 +173,9 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))+
-        scale_x_discrete(labels=c("Soil Phosphate  0-10cm"=expression("Soil " * PO[4]-P * " (0-10cm)"),
-                                "Soil Phosphate  10-30cm"=expression("Soil " * PO[4]-P * " (10-30cm)"),
-                                "Soil Phosphate  30-60cm"=expression("Soil " * PO[4]-P * " (30-60cm)")))
+        scale_x_discrete(labels=c("Soil Phosphate  0-10cm"=expression("Soil Phosphate (0-10cm)"),
+                                "Soil Phosphate  10-30cm"=expression("Soil Phosphate (10-30cm)"),
+                                "Soil Phosphate  30-60cm"=expression("Soil Phosphate (30-60cm)")))
     
     p4 <- ggplot(plotDF4, aes(x=Variable, y=mean))+
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
@@ -224,10 +224,19 @@ make_p_pools_summary_plots <- function(inDF,norm) {
     
     vegDF <- inDF[inDF$terms%in%c("Canopy P Pool", "Total Wood P Pool", "Forestfloor Leaf Litter P Pool",
                                   "Fine Root P Pool", "Coarse Root P Pool", "Understorey P Pool",
-                                  "Understorey Litter P Pool", "Standing Dead Wood P Pool"),]
+                                  #"Understorey Litter P Pool", 
+                                  "Standing Dead Wood P Pool"),]
     
     soilDF1 <- inDF[inDF$terms%in%c("Soil P Pool 0-10cm", "Soil P Pool 10-30cm", 
                                    "Soil P Pool 30-60cm"),]
+    
+    #soilDF2 <- inDF[inDF$terms%in%c("Soil Inorg P Pool 0-10cm", "Soil Inorg P Pool 10-30cm", 
+    #                                "Soil Inorg P Pool 30-60cm"),]
+    
+    #soilDF3 <- inDF[inDF$terms%in%c("Soil Inorg P Pool 0-10cm", "Soil Inorg P Pool 10-30cm", 
+    #                                "Soil Inorg P Pool 30-60cm"),]
+    
+    
     
     
     totDF <- inDF[inDF$terms%in%c("Canopy P Pool", 
@@ -441,19 +450,36 @@ make_p_pools_summary_plots <- function(inDF,norm) {
     plotDF$neg <- with(plotDF, mean - sd)
     plotDF$sd2 <- plotDF$sd^2
     
-    plotDF$Cat1 <- c(rep("Veg", 4), rep("NA", 4), 
-                     rep("Lit", 2), rep("Veg", 6),
-                     rep("Lit", 4), rep("Soil_0_10", 2),
-                     rep("Soil_10_30", 2), rep("Soil_30_60", 2),
-                     rep("NA", 24))
+    #plotDF$Cat1 <- c(rep("Veg", 4), rep("NA", 4), 
+    #                 rep("Lit", 2), rep("Veg", 6),
+    #                 rep("NA", 2), 
+    #                 rep("Lit", 2), rep("Soil_0_10", 2),
+    #                 rep("Soil_10_30", 2), rep("Soil_30_60", 2),
+    #                 rep("NA", 24))
     
+    plotDF$Cat1 <- c(rep("Veg", 4), rep("NA", 4), 
+                     rep("Veg", 2), rep("Veg", 6),
+                     rep("NA", 2), 
+                     rep("Veg", 2), rep("NA", 6),
+                     rep("Soil_Inorg", 6), rep("Soil_Org", 6),
+                     rep("NA", 12))
+    
+    
+    #plotDF$Cat2 <- c(rep("Veg", 2), rep("NA", 2), 
+    #                 rep("Veg", 4), 
+    #                 rep("Lit", 2), rep("Veg", 6),
+    #                 rep("NA", 2), 
+    #                 rep("Lit", 2), rep("Soil_0_10", 2),
+    #                 rep("Soil_10_30", 2), rep("Soil_30_60", 2),
+    #                 rep("NA", 24))
     
     plotDF$Cat2 <- c(rep("Veg", 2), rep("NA", 2), 
                      rep("Veg", 4), 
-                     rep("Lit", 2), rep("Veg", 6),
-                     rep("Lit", 4), rep("Soil_0_10", 2),
-                     rep("Soil_10_30", 2), rep("Soil_30_60", 2),
-                     rep("NA", 24))
+                     rep("Veg", 2), rep("Veg", 6),
+                     rep("NA", 2), 
+                     rep("Veg", 2), rep("NA", 6),
+                     rep("Soil_Inorg", 6), rep("Soil_Org", 6),
+                     rep("NA", 12))
     
     
     ### total ecosystem P pool
@@ -587,17 +613,26 @@ make_p_pools_summary_plots <- function(inDF,norm) {
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
               legend.position="right")+
+        #scale_fill_manual(name="", 
+        #                  values = c("Veg" = cbPalette[2],
+        #                             "Lit" = cbPalette[7],
+        #                             "Soil_0_10" = cbPalette[4],
+        #                             "Soil_10_30" = cbPalette[5],
+        #                             "Soil_30_60" = cbPalette[6]),
+        #                  labels=c("Veg"="Vegetation",
+        #                           "Lit"="Litter",
+        #                           "Soil_0_10"=expression(Soil['0-10cm']),
+        #                           "Soil_10_30"=expression(Soil['10-30cm']),
+        #                           "Soil_30_60"=expression(Soil['30-60cm'])))+
         scale_fill_manual(name="", 
-                          values = c("Veg" = cbPalette[2],
+                          values = c("Veg" = cbPalette[4],
                                      "Lit" = cbPalette[7],
-                                     "Soil_0_10" = cbPalette[4],
-                                     "Soil_10_30" = cbPalette[5],
-                                     "Soil_30_60" = cbPalette[6]),
+                                     "Soil_Inorg" = cbPalette[2],
+                                     "Soil_Org" = cbPalette[5]),
                           labels=c("Veg"="Vegetation",
                                    "Lit"="Litter",
-                                   "Soil_0_10"=expression(Soil['0-10cm']),
-                                   "Soil_10_30"=expression(Soil['10-30cm']),
-                                   "Soil_30_60"=expression(Soil['30-60cm'])))+
+                                   "Soil_Inorg"="Inorganic soil",
+                                   "Soil_Org"="Organic soil"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]),
                                   "eCO2"=expression(eCO[2])))
@@ -610,7 +645,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
         geom_errorbar(data=totDF2, aes(x=Trt, ymax=mean+sd, ymin=mean-sd), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         geom_point(data=totDF2, aes(x=Trt, y=mean), pch=19, col="black", size=2)+
-        labs(x="", y=expression(paste("Plant + Litter P pool (g P ", m^-2, ")")))+
+        labs(x="", y=expression(paste("Plant P pool (g P ", m^-2, ")")))+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
@@ -669,10 +704,10 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "Soil Phosphate P Pool 0-10cm" = Diverge_hsv_Palette[7],
                                      "Microbial P Pool 0-10cm" = Diverge_hsv_Palette[1],
                                      "Soil Org Residual P Pool 0-10cm" = Diverge_hsv_Palette[5]),
-                          labels=c("Soil Inorg P Pool 0-10cm"=expression(P[inorg]),
-                                   "Soil Phosphate P Pool 0-10cm"=expression(PO[4]-P),
-                                   "Microbial P Pool 0-10cm"="Microbial P",
-                                   "Soil Org Residual P Pool 0-10cm"=expression(P[org] * " residual")))+
+                          labels=c("Soil Inorg P Pool 0-10cm"="Inorganic Residual",
+                                   "Soil Phosphate P Pool 0-10cm"="Phosphate",
+                                   "Microbial P Pool 0-10cm"="Microbe",
+                                   "Soil Org Residual P Pool 0-10cm"="Organic Residual"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]),
                                   "eCO2"=expression(eCO[2])))
@@ -703,10 +738,10 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "Soil Phosphate P Pool 10-30cm" = Diverge_hsv_Palette[7],
                                      "Microbial P Pool 10-30cm" = Diverge_hsv_Palette[1],
                                      "Soil Org Residual P Pool 10-30cm" = Diverge_hsv_Palette[5]),
-                          labels=c("Soil Inorg P Pool 10-30cm"=expression(P[inorg]),
-                                   "Soil Phosphate P Pool 10-30cm"=expression(PO[4]-P),
-                                   "Microbial P Pool 10-30cm"="Microbial P",
-                                   "Soil Org Residual P Pool 10-30cm"=expression(P[org] * " residual")))+
+                          labels=c("Soil Inorg P Pool 10-30cm"="Inorganic Residual",
+                                   "Soil Phosphate P Pool 10-30cm"="Phosphate",
+                                   "Microbial P Pool 10-30cm"="Microbe",
+                                   "Soil Org Residual P Pool 10-30cm"="Organic Residual"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]),
                                   "eCO2"=expression(eCO[2])))
@@ -736,10 +771,10 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "Soil Phosphate P Pool 30-60cm" = Diverge_hsv_Palette[7],
                                      "Microbial P Pool 30-60cm" = Diverge_hsv_Palette[1],
                                      "Soil Org Residual P Pool 30-60cm" = Diverge_hsv_Palette[5]),
-                          labels=c("Soil Inorg P Pool 30-60cm"=expression(P[inorg]),
-                                   "Soil Phosphate P Pool 30-60cm"=expression(PO[4]-P),
-                                   "Microbial P Pool 30-60cm"="Microbial P",
-                                   "Soil Org Residual P Pool 30-60cm"=expression(P[org] * " residual")))+
+                          labels=c("Soil Inorg P Pool 30-60cm"="Inorganic Residual",
+                                   "Soil Phosphate P Pool 30-60cm"="Phosphate",
+                                   "Microbial P Pool 30-60cm"="Microbe",
+                                   "Soil Org Residual P Pool 30-60cm"="Organic Residual"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]),
                                   "eCO2"=expression(eCO[2])))

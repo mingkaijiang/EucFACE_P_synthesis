@@ -538,9 +538,9 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
     
     ## plot 
     pdf("plots_tables/output/unnormalized/soil_P_mineralization_flux_method_comparison.pdf", width=10, height=10)
-    top_row <- plot_grid(p1, p2, p3, p4, ncol=4)
+    bot_row <- plot_grid(p1, p2, p3, p4, ncol=4)
     mid_row <- plot_grid(p5, NA, NA, NA, ncol=4)
-    bot_row <- plot_grid(p6, p7, p8, p9, ncol=4)
+    top_row <- plot_grid(p6, p7, p8, p9, ncol=4)
     #end_row <- plot_grid(p10, p11, p12, p13, ncol=4)
     
     plot_grid(top_row, 

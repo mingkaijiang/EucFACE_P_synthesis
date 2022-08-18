@@ -79,7 +79,7 @@ calculate_plant_p_retranslocation_coefficients <- function (canopy_p_concentrati
         
         
         
-        pdf("plots_tables/output/unnormalized/retranslocation_coefficients.pdf")
+        pdf("plots_tables/output/unnormalized/retranslocation_coefficients.pdf", height=4,width=6)
         plot(p2)
         dev.off()
         

@@ -716,7 +716,7 @@ make_p_budget_summary_plots <- function(inDF,
       geom_point(data=plotDF3, aes(x=Trt, y=mean), size=2, pch=19, color="black")+
       xlab("") + ylab(expression(paste("P demand (g P ", m^-2, " ", yr^-1, ")")))+
       theme_linedraw() +
-      ylim(0, 1.5)+
+      ylim(0, 1.0)+
       theme(panel.grid.minor=element_blank(),
             axis.title.x = element_text(size=10), 
             axis.text.x = element_text(size=10),
@@ -725,7 +725,7 @@ make_p_budget_summary_plots <- function(inDF,
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
-            legend.position=c(0.7, 0.85))+
+            legend.position="bottom")+
       scale_fill_manual(name="Flux", 
                         values = c("retrans" = Diverge_hsv_Palette[6],
                                    "uptake" = Diverge_hsv_Palette[8]),
@@ -745,7 +745,7 @@ make_p_budget_summary_plots <- function(inDF,
       geom_point(data=plotDF6, aes(x=Trt, y=mean), size=2, color="black")+
       xlab("") + ylab(expression(paste("Soil P mineralization (g P ", m^-2, " ", yr^-1, ")")))+
       theme_linedraw() +
-      ylim(0, 1.5)+
+      ylim(0, 1.0)+
       theme(panel.grid.minor=element_blank(),
             axis.title.x = element_text(size=10), 
             axis.text.x = element_text(size=10),
@@ -754,7 +754,7 @@ make_p_budget_summary_plots <- function(inDF,
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
-            legend.position=c(0.7, 0.8))+
+            legend.position="bottom")+
       scale_fill_manual(name="Depth", 
                         values = c("0-10cm" = Diverge_hsv_Palette[7],
                                    "10-30cm" = Diverge_hsv_Palette[4],
@@ -832,7 +832,7 @@ make_p_budget_summary_plots <- function(inDF,
                     position = position_dodge(0.9), 
                     width=0.2, size=0.4) +
       labs(x="", 
-           y=expression("GPP / " * P[leaf] * " flux (g C " * g^-1 * " P)"))+
+           y=expression("GPP / Leaf P demand (g C " * g^-1 * " P)"))+
       theme_linedraw() +
       ylim(0,7500)+
       theme(panel.grid.minor=element_blank(),
@@ -843,7 +843,7 @@ make_p_budget_summary_plots <- function(inDF,
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
-            legend.position=c(0.7, 0.8))+
+            legend.position="none")+
       scale_fill_manual(name="", values = c("aCO2" = SpectralPalette[7], "eCO2" = SpectralPalette[3]),
                         labels=c(expression(aCO[2]), expression(eCO[2])))+
       #scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
@@ -896,23 +896,23 @@ make_p_budget_summary_plots <- function(inDF,
       scale_x_discrete(limits=c("Plant P uptake over requirement",
                                 "Plant P uptake over P mineralization"),
                        labels=c("Plant P uptake over requirement"="Uptake/Demand",
-                                "Plant P uptake over P mineralization"="Uptake/Mineralization")); p6
+                                "Plant P uptake over P mineralization"="Uptake/Mineralization"))
     
     
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    grid.labs <- c("(a)", "(b)", "", "(c)", "(d)", "(e)")#, "(f)")
     
     
     ## plot 
     pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_3.pdf"), 
         width=10,height=8)
-    top_row <- plot_grid(p1, p2, p6, ncol=3)
-    bot_row <- plot_grid(p5, p4, p3, ncol=3)
+    top_row <- plot_grid(p1, p2, NA, ncol=3)
+    bot_row <- plot_grid(p3, p5, p4, ncol=3)
     
     plot_grid(top_row, 
               bot_row, 
               ncol = 1, 
               rel_heights=c(1, 1, 1, 1))
-    grid.text(grid.labs,x = c(0.09, 0.42, 0.75, 0.1, 0.42, 0.75), y = c(0.97, 0.97, 0.97, 0.45, 0.45, 0.45),
+    grid.text(grid.labs,x = c(0.09, 0.42, 0.75, 0.06, 0.42, 0.75), y = c(0.97, 0.97, 0.97, 0.45, 0.45, 0.45),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
