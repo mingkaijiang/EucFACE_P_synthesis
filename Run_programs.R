@@ -938,6 +938,9 @@ microbial_concentration_global_comparison(norm="unnormalized",
                                           microbial_p_concentration=microbial_p_concentration)
 
 
+ppool=summary_table_pool
+microbial_c_and_p_pool_comparison(ppool=summary_table_pool)
+
 
 ### compare ecosystem P budget to China
 make_china_p_budget(soil_p_concentration)

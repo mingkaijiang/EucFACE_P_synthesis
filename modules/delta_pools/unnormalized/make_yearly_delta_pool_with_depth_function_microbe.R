@@ -136,9 +136,9 @@ make_yearly_delta_pool_with_depth_function_microbe <- function(inDF,var.col) {
     names(out) <- c("Start_date", "End_date", "Date", "Ring", "delta", "Depth")
     
     
-    out$Trt <- "aCO2"
-    out$Trt[out$Ring%in%c(1,4,5)] <- "eCO2"
-    test <- summaryBy(delta~Trt+Depth, FUN=c(mean,sd), data=out, na.rm=T, keep.names=T)
+    #out$Trt <- "aCO2"
+    #out$Trt[out$Ring%in%c(1,4,5)] <- "eCO2"
+    #test <- summaryBy(delta~Trt+Depth, FUN=c(mean,sd), data=out, na.rm=T, keep.names=T)
     
     return(out)
     
