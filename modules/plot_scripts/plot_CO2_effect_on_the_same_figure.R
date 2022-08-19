@@ -134,8 +134,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Total vegetation uptake P flux", 
                                            "Mineralization P flux 0-10cm",
                                            "Mineralization P flux 10-30cm", 
-                                           "Mineralization P flux 30-60cm",
-                                           "Leaching P flux"))
+                                           "Mineralization P flux 30-60cm"))
     
     
     
@@ -163,7 +162,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Microbial P Pool 10-30cm", 
                                            "Microbial P Pool 30-60cm", 
                                            "Soil P Pool 0-10cm",
-                                           "Soil Phosphate P Pool 0-10cm"))
+                                           "Soil P Pool 10-30cm",
+                                           "Soil Phosphate P Pool 0-10cm",
+                                           "Soil Phosphate P Pool 10-30cm"))
     
     plotDF51$collab <- ifelse(plotDF51$diff_mean > 0.0, "pos", 
                               ifelse(plotDF51$diff_mean < 0.0, "neg", "neut"))
@@ -719,7 +720,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Bark litter P flux" = "Bark Litter P",
                                   "Seed litter P flux" = "Seed Litter P",
                                   "Fineroot Litter P flux" = "Fineroot Litter P", 
-                                  "Understorey Litter P flux" = "Understorey Litter P"))+
+                                  "Understorey Litter P flux" = "Understorey Litter P",
+                                  "Frass P flux" = "Frass P"))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -798,19 +800,17 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               panel.grid.major=element_blank(),
               legend.position="none",
               legend.text.align=0)+
-        scale_y_discrete(limits=c("Leaching P flux",
-                                  "Mineralization P flux 30-60cm",
+        scale_y_discrete(limits=c("Mineralization P flux 30-60cm",
                                   "Mineralization P flux 10-30cm",
                                   "Mineralization P flux 0-10cm",
                                   "Total vegetation uptake P flux",
                                   "Total vegetation retranslocation P flux",
                                   "Total vegetation production P flux"),
-                         labels=c("Leaching P flux" = "Leaching P",
-                                  "Mineralization P flux 30-60cm" = "Mineralization P 30-60cm",
-                                  "Mineralization P flux 10-30cm" = "Mineralization P 10-30cm",
-                                  "Mineralization P flux 0-10cm" = "Mineralization P 0-10cm",
+                         labels=c("Mineralization P flux 30-60cm" = "Mineralization 30-60cm",
+                                  "Mineralization P flux 10-30cm" = "Mineralization 10-30cm",
+                                  "Mineralization P flux 0-10cm" = "Mineralization 0-10cm",
                                   "Total vegetation uptake P flux" = "Plant P Uptake",
-                                  "Total vegetation retranslocation P flux" = "Plant P Retranslocation",
+                                  "Total vegetation retranslocation P flux" = "Plant P Resorption",
                                   "Total vegetation production P flux" = "Plant P demand"))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
@@ -826,6 +826,75 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                     "neut"=alpha("black", 0.2)))
     
     
+    plotDF45 <- rbind(plotDF41, rbind(plotDF42, plotDF43))
+    
+    p65 <- ggplot(plotDF45) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
+                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position=c("none"),
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Frass P flux",
+                                  "Understorey Litter P flux",
+                                  "Fineroot Litter P flux",
+                                  "Seed litter P flux",
+                                  "Bark litter P flux",
+                                  "Twig litter P flux",
+                                  "Leaflitter P flux",
+                                  "Understorey retrans P flux",
+                                  "Coarseroot retrans P flux",
+                                  "Fineroot retrans P flux",
+                                  "Sapwood retrans P flux",
+                                  "Canopy retrans P flux",
+                                  "Understorey P flux",
+                                  "Coarse Root P flux",
+                                  "Fine Root P flux",
+                                  "Wood P flux",
+                                  "Canopy P flux"),
+                         labels=c("Canopy P flux" = "Canopy P",
+                                  "Wood P flux" = "Wood P",
+                                  "Fine Root P flux" = "Fineroot P", 
+                                  "Coarse Root P flux" = "Coarseroot P",
+                                  "Understorey P flux" = "Understorey P",
+                                  "Leaflitter P flux" = "Leaf Litter P",
+                                  "Twig litter P flux" = "Twig Litter P",
+                                  "Bark litter P flux" = "Bark Litter P",
+                                  "Seed litter P flux" = "Seed Litter P",
+                                  "Fineroot Litter P flux" = "Fineroot Litter P", 
+                                  "Understorey Litter P flux" = "Understorey Litter P",
+                                  "Frass P flux" = "Frass P",
+                                  "Canopy retrans P flux" = "Canopy retrans P",
+                                  "Sapwood retrans P flux" = "Sapwood retrans P",
+                                  "Fineroot retrans P flux" = "Fineroot retrans P", 
+                                  "Coarseroot retrans P flux" = "Coarseroot retrans P",
+                                  "Understorey retrans P flux" = "Understorey retrans P"))+
+        scale_fill_manual(name="Legend",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="Legend",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"=alpha("darkgreen",0.2), 
+                                    "neg"=alpha("brown", 0.2), 
+                                    "neut"=alpha("black", 0.2)))
     
     
     p71 <- ggplot(plotDF51) +  
@@ -900,7 +969,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.box.background = element_rect(alpha("grey",0.5)),
               legend.position="none",
               legend.text.align=0)+
-        scale_y_discrete(limits=c("Soil P Pool 0-10cm",
+        scale_y_discrete(limits=c("Soil P Pool 10-30cm",
+                                  "Soil P Pool 0-10cm",
+                                  "Soil Phosphate P Pool 10-30cm",
                                   "Soil Phosphate P Pool 0-10cm",
                                   "Microbial P Pool 30-60cm",
                                   "Microbial P Pool 10-30cm",
@@ -909,7 +980,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P (10-30cm)"),
                                   "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
                                   "Soil P Pool 0-10cm" = expression(Delta * " Soil P (0-10cm)"),
-                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil " * PO[4]-P * " (0-10cm)")))+
+                                  "Soil P Pool 10-30cm" = expression(Delta * " Soil P (10-30cm)"),
+                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil Phosphate P (0-10cm)"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil Phosphate P (10-30cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -923,6 +996,101 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                     "neg"=alpha("brown", 0.2), 
                                     "neut"=alpha("black", 0.2)))
     
+    
+    plotDF53 <- plotDF52[plotDF52$terms%in%c("Microbial P Pool 0-10cm",
+                                             "Microbial P Pool 10-30cm",
+                                             "Microbial P Pool 30-60cm",
+                                             "Soil Phosphate P Pool 0-10cm",
+                                             "Soil Phosphate P Pool 10-30cm"),]
+    
+    
+    plotDF54 <- plotDF52[plotDF52$terms%in%c("Soil P Pool 0-10cm",
+                                             "Soil P Pool 10-30cm"),]
+    
+    
+    p73 <- ggplot(plotDF53) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
+                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position="none",
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Soil Phosphate P Pool 10-30cm",
+                                  "Soil Phosphate P Pool 0-10cm",
+                                  "Microbial P Pool 30-60cm",
+                                  "Microbial P Pool 10-30cm",
+                                  "Microbial P Pool 0-10cm"),
+                         labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P (0-10cm)"),
+                                  "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P (10-30cm)"),
+                                  "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
+                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil Phosphate P (0-10cm)"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil Phosphate P (10-30cm)")))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"=alpha("darkgreen",0.2), 
+                                    "neg"=alpha("brown", 0.2), 
+                                    "neut"=alpha("black", 0.2)))
+    
+    
+    
+    p74 <- ggplot(plotDF54) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
+                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position="none",
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Soil P Pool 10-30cm",
+                                  "Soil P Pool 0-10cm"),
+                         labels=c("Soil P Pool 0-10cm" = expression(Delta * " Soil P (0-10cm)"),
+                                  "Soil P Pool 10-30cm" = expression(Delta * " Soil P (10-30cm)")))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"=alpha("darkgreen",0.2), 
+                                    "neg"=alpha("brown", 0.2), 
+                                    "neut"=alpha("black", 0.2)))
     
     
     require(grid)
@@ -975,17 +1143,33 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     dev.off()
     
     
+    ### fluxes 1
     grid.labs <- c("(a)", "(b)", "(c)", "(d)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux.pdf", 
         width=12, height=6)
-    plot_grid(p61, p63, p62, p64, ncol = 2, rel_widths = c(1, 1, 1, 1),
+    left_col <- plot_grid(p64, p73, p74, ncol=1, rel_heights=c(1.0,0.8,0.4))
+    
+    plot_grid(left_col, p65, ncol = 2, rel_widths = c(1, 1),
+              rel_heights=c(1, 1))
+    grid.text(grid.labs,x = c(0.45, 0.45, 0.95), y = c(0.95, 0.4, 0.95),
+              gp=gpar(fontsize=16, col="black", fontface="bold"))
+    dev.off()
+    
+    ### fluxes 2
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)")
+    
+    pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux2.pdf", 
+        width=12, height=6)
+    plot_grid(p64, p61, p63, p62, ncol = 2, rel_widths = c(1, 1, 1, 1),
               rel_heights=c(0.6, 0.6, 1, 1))
     grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.96), y = c(0.95, 0.95, 0.45, 0.45),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
-
     
+    
+    
+    ### delta pools
     grid.labs <- c("(a)", "(b)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_delta_P_pool.pdf", 
