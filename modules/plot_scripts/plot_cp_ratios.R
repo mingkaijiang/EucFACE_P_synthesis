@@ -1,4 +1,5 @@
-plot_cp_ratios <- function(inDF) {
+plot_cp_ratios <- function(inDF,
+                           ppool) {
     
     
     ### calculate original CP ratio under aCO2
@@ -26,7 +27,30 @@ plot_cp_ratios <- function(inDF) {
     plotDF2 <- myDF2[myDF2$Variable%in%c("wood", "sapwood",
                                          "heartwood")]
     
-    plotDF3 <- myDF2[myDF2$Variable%in%c("soil", "microbe")]
+    
+    # read in tmpDF
+    # read in the Oct 2018 Johanna data at deeper depths
+    tmpDF <- read.csv("temp_files/belowground_P_working_sheet.csv")
+    tmpDF$Date <- as.Date(tmpDF$Date, format="%d/%m/%y")
+    
+    ### there are two NANs in the Cmic dataset, fill the gap
+    ## multiple possible ways to fill the gap
+    ## 1. taking the mean
+    v <- mean(tmpDF$Cmic[tmpDF$Depth=="transition"], na.rm=T)
+    #tmpDF$Cmic[tmpDF$Depth=="transition"&tmpDF$Ring%in%c(6,2)] <- v
+    
+    ## 2. calculating reduction coefficient
+    v2 <- sum(tmpDF$Cmic[tmpDF$Ring%in%c(1,3,4,5)&tmpDF$Depth=="transition"])/sum(tmpDF$Cmic[tmpDF$Ring%in%c(1,3,4,5)&tmpDF$Depth=="10_30"])
+    
+    tmpDF$Cmic[tmpDF$Depth=="transition"&tmpDF$Ring%in%c(6,2)] <- v2 * tmpDF$Cmic[tmpDF$Depth=="10_30"&tmpDF$Ring%in%c(6,2)]
+    
+    
+    ### calculate microbial CP ratio
+    tmpDF$CPratio <- with(tmpDF, Cmic/Pmic)
+    
+    ### summary
+    plotDF3 <- summaryBy(CPratio+Pmic+Cmic~Trt+Depth, data=tmpDF, FUN=c(mean,sd),
+                      na.rm=T, keep.names=T)
     
     
     ###plot the three, check statistical significance
@@ -82,9 +106,9 @@ plot_cp_ratios <- function(inDF) {
                             labels=c(expression(aCO[2]), expression(eCO[2])))
     
     
-    p3 <- ggplot(plotDF3, aes(x=Variable, y=value.mean))+
+    p3 <- ggplot(plotDF3, aes(x=Depth, y=CPratio.mean))+
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
-        geom_errorbar(aes(ymax=value.mean+value.sd, ymin=value.mean-value.sd, 
+        geom_errorbar(aes(ymax=CPratio.mean+CPratio.sd, ymin=CPratio.mean-CPratio.sd, 
                           color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
         labs(x="", y="CP ratio")+
@@ -99,11 +123,12 @@ plot_cp_ratios <- function(inDF) {
               legend.title=element_text(size=14),
               panel.grid.major=element_blank(),
               legend.position="none")+
-        scale_x_discrete(limits=c("microbe", "soil"),
-                         labels=c("microbe", "soil"))+
-        scale_fill_manual(name="", values = c("amb" = SpectralPalette[7], "ele" = SpectralPalette[3]),
+        scale_x_discrete(limits=c("0_10", "10_30", "transition"),
+                         labels=c("microbe 0-10cm", "microbe 10-30cm",
+                                  "microbe 30-60cm"))+
+        scale_fill_manual(name="", values = c("Ambient" = SpectralPalette[7], "Elevated" = SpectralPalette[3]),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
-        scale_colour_manual(name="", values = c("amb" = "black", "ele" = "black"),
+        scale_colour_manual(name="", values = c("Ambient" = "black", "Elevated" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))
     
     

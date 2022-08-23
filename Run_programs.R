@@ -961,7 +961,9 @@ plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
 
 ### plot CP ratios
 inDF=summary_cp_ratios
-plot_cp_ratios(inDF=summary_cp_ratios)
+ppool=summary_table_pool
+plot_cp_ratios(inDF=summary_cp_ratios,
+               ppool=summary_table_pool)
 
 
 ### compare Hedley P data

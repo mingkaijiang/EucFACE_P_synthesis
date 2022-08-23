@@ -21,7 +21,7 @@ microbial_c_and_p_pool_comparison <- function (ppool) {
     p1 <- ggplot(tmpDF, aes(Cmic, Pmic)) +
         geom_point(aes(fill=Depth, col=Depth,pch=Trt), size=2)
     
-    plot(p1)
+    #plot(p1)
     
     
     ### calculate microbial CP ratio
