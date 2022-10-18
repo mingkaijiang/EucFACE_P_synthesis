@@ -821,10 +821,10 @@ summary_cp_ratios <- make_cp_ratios(norm="unnormalized",
 
 ### 10% increase in production, what new CP ratio do we see?
 summary_cp_ratios_sensitivity <- make_cp_ratios_sensitivity_test(norm="unnormalized",
-                                                     c_pool=summary_table_c_pool,
-                                                     p_pool=summary_table_pool,
-                                                     c_flux=summary_table_c_flux,
-                                                     p_flux=summary_table_flux)
+                                                                 c_pool=summary_table_c_pool,
+                                                                 p_pool=summary_table_pool,
+                                                                 c_flux=summary_table_c_flux,
+                                                                 p_flux=summary_table_flux)
 
 
 compare_cp_ratio(myDF1=summary_cp_ratios, myDF2=summary_cp_ratios_sensitivity)
@@ -1130,46 +1130,46 @@ normDF <- synthesize_normalized_responses(corDF.adj=corDF.adj,
 
 ###### ---------------------------------------------------------------------------------------------------------##### 
 ###### Step 9. Plotting P budget figures, based on normalized responses
-norm <- "normalized"
-
-
-##### Note: for the following plotting script in this step,
-####        we will need to go into the function
-####        to plot!!! 
-####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
-####        then open the function, then plot. 
-
-inDF=normDF$total_p_budget
-make_p_budget_summary_plots(inDF=normDF$total_p_budget,
-                            norm="normalized")
-
-
-### fate of P
-make_fate_of_p_plots(inDF=normDF$total_p_budget,
-                     norm="normalized")
-
-### Concentration
-### no need
-
-### P pool
-inDF=normDF$summary_table_pool
-make_p_pools_summary_plots(inDF=normDF$summary_table_pool,
-                           norm="normalized")
-
-### P flux
-inDF=normDF$summary_table_flux
-make_p_fluxes_summary_plots(inDF=normDF$summary_table_flux,
-                            norm="normalized")
-
-
-#### Individial rings
-inDF=normDF$total_p_budget
-make_p_budget_ring_plots(inDF=normDF$total_p_budget,
-                         norm="normalized")
-
-
-
-
+#norm <- "normalized"
+#
+#
+###### Note: for the following plotting script in this step,
+#####        we will need to go into the function
+#####        to plot!!! 
+#####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
+#####        then open the function, then plot. 
+#
+#inDF=normDF$total_p_budget
+#make_p_budget_summary_plots(inDF=normDF$total_p_budget,
+#                            norm="normalized")
+#
+#
+#### fate of P
+#make_fate_of_p_plots(inDF=normDF$total_p_budget,
+#                     norm="normalized")
+#
+#### Concentration
+#### no need
+#
+#### P pool
+#inDF=normDF$summary_table_pool
+#make_p_pools_summary_plots(inDF=normDF$summary_table_pool,
+#                           norm="normalized")
+#
+#### P flux
+#inDF=normDF$summary_table_flux
+#make_p_fluxes_summary_plots(inDF=normDF$summary_table_flux,
+#                            norm="normalized")
+#
+#
+##### Individial rings
+#inDF=normDF$total_p_budget
+#make_p_budget_ring_plots(inDF=normDF$total_p_budget,
+#                         norm="normalized")
+#
+#
+#
+#
 
 
 ###### ---------------- End -------------------- ######

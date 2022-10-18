@@ -351,6 +351,13 @@ make_conc_summary_table <- function(norm,
     ###### Diff (eCO2 - aCO2)
     treatDF$diff <- round(treatDF$eCO2 - treatDF$aCO2, 4)
     
+    ### sd of the diff
+    treatDF$diff_sd <- sqrt((treatDF$aCO2_sd^2+treatDF$eCO2_sd^2)/2)
+    
+    ### confidence interval of the diff
+    treatDF$diff_cf <- 2.353 * treatDF$diff_sd * 3 ^(-0.5)
+    
+    
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)
     
