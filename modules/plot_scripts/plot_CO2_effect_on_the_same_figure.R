@@ -5,13 +5,13 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                                deltaDF) {
     
     ### data cleaning
-    budgetDF <- budgetDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
-    concDF <- concDF[,c("conc.terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
-    poolDF <- poolDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
-    fluxDF <- fluxDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
-    deltaDF <- deltaDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")]
+    budgetDF <- budgetDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
+    concDF <- concDF[,c("conc.terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
+    poolDF <- poolDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
+    fluxDF <- fluxDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
+    deltaDF <- deltaDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
     
-    colnames(concDF) <- c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd")
+    colnames(concDF) <- c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")
     
     ### add group column
     budgetDF$Group <- "1_budget"
@@ -26,10 +26,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     ### calculate absolute difference and sd
-    myDF$diff_mean <- myDF$eCO2 - myDF$aCO2
-    myDF$diff_sd <- sqrt((myDF$aCO2_sd^2 + myDF$eCO2_sd^2)/2)
+    #myDF$diff <- myDF$eCO2 - myDF$aCO2
+    #myDF$diff_sd <- sqrt((myDF$aCO2_sd^2 + myDF$eCO2_sd^2)/2)
     
-    myDF <- myDF[complete.cases(myDF$diff_mean),]
+    myDF <- myDF[complete.cases(myDF$diff),]
     
  
     #### plotting preparation
@@ -62,14 +62,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Occluded P Conc 0-10cm"))
     
     
-    plotDF21$collab <- ifelse(plotDF21$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF21$diff_mean < 0.0, "neg", "neut"))
+    plotDF21$collab <- ifelse(plotDF21$diff > 0.0, "pos", 
+                              ifelse(plotDF21$diff < 0.0, "neg", "neut"))
     
-    plotDF22$collab <- ifelse(plotDF22$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF22$diff_mean < 0.0, "neg", "neut"))
+    plotDF22$collab <- ifelse(plotDF22$diff > 0.0, "pos", 
+                              ifelse(plotDF22$diff < 0.0, "neg", "neut"))
     
-    plotDF23$collab <- ifelse(plotDF23$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF23$diff_mean < 0.0, "neg", "neut"))
+    plotDF23$collab <- ifelse(plotDF23$diff > 0.0, "pos", 
+                              ifelse(plotDF23$diff < 0.0, "neg", "neut"))
     
     
     
@@ -99,14 +99,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Occluded P Pool"))
     
     
-    plotDF31$collab <- ifelse(plotDF31$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF31$diff_mean < 0.0, "neg", "neut"))
+    plotDF31$collab <- ifelse(plotDF31$diff > 0.0, "pos", 
+                              ifelse(plotDF31$diff < 0.0, "neg", "neut"))
     
-    plotDF32$collab <- ifelse(plotDF32$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF32$diff_mean < 0.0, "neg", "neut"))
+    plotDF32$collab <- ifelse(plotDF32$diff > 0.0, "pos", 
+                              ifelse(plotDF32$diff < 0.0, "neg", "neut"))
     
-    plotDF33$collab <- ifelse(plotDF33$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF33$diff_mean < 0.0, "neg", "neut"))
+    plotDF33$collab <- ifelse(plotDF33$diff > 0.0, "pos", 
+                              ifelse(plotDF33$diff < 0.0, "neg", "neut"))
     
     
     plotDF41 <- subset(plotDF4, terms%in%c("Canopy P flux", 
@@ -138,17 +138,17 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     
-    plotDF41$collab <- ifelse(plotDF41$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF41$diff_mean < 0.0, "neg", "neut"))
+    plotDF41$collab <- ifelse(plotDF41$diff > 0.0, "pos", 
+                              ifelse(plotDF41$diff < 0.0, "neg", "neut"))
     
-    plotDF42$collab <- ifelse(plotDF42$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF42$diff_mean < 0.0, "neg", "neut"))
+    plotDF42$collab <- ifelse(plotDF42$diff > 0.0, "pos", 
+                              ifelse(plotDF42$diff < 0.0, "neg", "neut"))
     
-    plotDF43$collab <- ifelse(plotDF43$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF43$diff_mean < 0.0, "neg", "neut"))
+    plotDF43$collab <- ifelse(plotDF43$diff > 0.0, "pos", 
+                              ifelse(plotDF43$diff < 0.0, "neg", "neut"))
     
-    plotDF44$collab <- ifelse(plotDF44$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF44$diff_mean < 0.0, "neg", "neut"))
+    plotDF44$collab <- ifelse(plotDF44$diff > 0.0, "pos", 
+                              ifelse(plotDF44$diff < 0.0, "neg", "neut"))
     
     
     plotDF51 <- subset(plotDF5, terms%in%c("Canopy P Pool", "Sapwood P Pool",
@@ -166,11 +166,11 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Soil Phosphate P Pool 0-10cm",
                                            "Soil Phosphate P Pool 10-30cm"))
     
-    plotDF51$collab <- ifelse(plotDF51$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF51$diff_mean < 0.0, "neg", "neut"))
+    plotDF51$collab <- ifelse(plotDF51$diff > 0.0, "pos", 
+                              ifelse(plotDF51$diff < 0.0, "neg", "neut"))
     
-    plotDF52$collab <- ifelse(plotDF52$diff_mean > 0.0, "pos", 
-                              ifelse(plotDF52$diff_mean < 0.0, "neg", "neut"))
+    plotDF52$collab <- ifelse(plotDF52$diff > 0.0, "pos", 
+                              ifelse(plotDF52$diff < 0.0, "neg", "neut"))
     
     
     ### plotDF1 split into multiple sub DFs
@@ -200,10 +200,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     ### make plots
     p1 <- ggplot(subDF1) +  
-        geom_segment(aes(y=reorder(terms, diff_mean), x=diff_mean-diff_sd, 
-                         yend=reorder(terms, diff_mean), xend=diff_mean+diff_sd), 
+        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+                         yend=reorder(terms, diff), xend=diff+diff_cf), 
                      size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff_mean), x=diff_mean), 
+        geom_point(aes(y=reorder(terms, diff), x=diff), 
                    stat='identity', size=4, shape=19)+
         geom_vline(xintercept=0)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
@@ -222,10 +222,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     p2 <- ggplot(subDF2) +  
-        geom_segment(aes(y=reorder(terms, diff_mean), x=diff_mean-diff_sd, 
-                         yend=reorder(terms, diff_mean), xend=diff_mean+diff_sd), 
+        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+                         yend=reorder(terms, diff), xend=diff+diff_cf), 
                      size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff_mean), x=diff_mean), 
+        geom_point(aes(y=reorder(terms, diff), x=diff), 
                    stat='identity', size=4, shape=19)+
         geom_vline(xintercept=0)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1,")"))) + 
@@ -244,10 +244,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     p3 <- ggplot(subDF3) +  
-        geom_segment(aes(y=reorder(terms, diff_mean), x=diff_mean-diff_sd, 
-                         yend=reorder(terms, diff_mean), xend=diff_mean+diff_sd), 
+        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+                         yend=reorder(terms, diff), xend=diff+diff_cf), 
                      size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff_mean), x=diff_mean), 
+        geom_point(aes(y=reorder(terms, diff), x=diff), 
                    stat='identity', size=4, shape=19)+
         geom_vline(xintercept=0)+
         xlab(expression(paste(CO[2], " effect (unitless)"))) + 
@@ -270,10 +270,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p41 <- ggplot(plotDF21) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
         ylab("") +
@@ -321,10 +321,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p42 <- ggplot(plotDF22) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
         ylab("") +
@@ -384,10 +384,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p43 <- ggplot(plotDF23) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
         ylab("") +
@@ -429,10 +429,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     p5 <- ggplot(plotDF3) +  
-        geom_segment(aes(y=reorder(terms, diff_mean), x=diff_mean-diff_sd, 
-                         yend=reorder(terms, diff_mean), xend=diff_mean+diff_sd), 
+        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+                         yend=reorder(terms, diff), xend=diff+diff_cf), 
                      size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff_mean), x=diff_mean), 
+        geom_point(aes(y=reorder(terms, diff), x=diff), 
                    stat='identity', size=4, shape=19)+
         geom_vline(xintercept=0)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
@@ -454,10 +454,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p51 <- ggplot(plotDF31) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
         ylab("") +
@@ -509,10 +509,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p52 <- ggplot(plotDF32) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
         ylab("") +
@@ -573,10 +573,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p53 <- ggplot(plotDF33) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
         ylab("") +
@@ -619,10 +619,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     p6 <- ggplot(plotDF4) +  
-        geom_segment(aes(y=reorder(terms, diff_mean), x=diff_mean-diff_sd, 
-                         yend=reorder(terms, diff_mean), xend=diff_mean+diff_sd), 
+        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+                         yend=reorder(terms, diff), xend=diff+diff_cf), 
                      size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff_mean), x=diff_mean), 
+        geom_point(aes(y=reorder(terms, diff), x=diff), 
                    stat='identity', size=4, shape=19)+
         geom_vline(xintercept=0)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -644,10 +644,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p61 <- ggplot(plotDF41) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -689,10 +689,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p62 <- ggplot(plotDF42) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -738,10 +738,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p63 <- ggplot(plotDF43) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -782,10 +782,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p64 <- ggplot(plotDF44) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -830,10 +830,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p65 <- ggplot(plotDF45) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -899,10 +899,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p71 <- ggplot(plotDF51) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -950,10 +950,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p72 <- ggplot(plotDF52) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -1010,10 +1010,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p73 <- ggplot(plotDF53) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +
@@ -1056,10 +1056,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     p74 <- ggplot(plotDF54) +  
         geom_vline(xintercept=0)+
-        geom_segment(aes(y=terms, x=diff_mean-diff_sd, 
-                         yend=terms, xend=diff_mean+diff_sd, color=collab), 
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), 
                      size=6)+
-        geom_point(aes(y=terms, fill=collab, x=diff_mean), color="black",
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
         ylab("") +

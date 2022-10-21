@@ -3,7 +3,8 @@ make_total_p_budget <- function(norm,
                                 summary_table_pool,
                                 vegetation_standing_p_stock,
                                 plant_p_MRT,
-                                plant_p_use_efficiency) {
+                                plant_p_use_efficiency,
+                                plant_GPP_efficiency) {
     
     
     #### This function calculates all P budgeting variables
@@ -18,6 +19,8 @@ make_total_p_budget <- function(norm,
                "Plant P uptake over requirement",
                "Plant P MRT", 
                "Plant PUE",
+               "Overstorey GPP efficiency",
+               "Understorey GPP efficiency",
                "Plant P uptake over P mineralization",
                "Leaflitter P over P mineralization",
                "Fineroot litter P over P mineralization",
@@ -88,6 +91,10 @@ make_total_p_budget <- function(norm,
     out[out$terms == "Labile Pi stock", 2:7] <- round(summary_table_pool[summary_table_pool$terms=="Exchangeable Pi Pool", 2:7],2)
     
     
+    out[out$terms == "Overstorey GPP efficiency", 2:7] <- round(plant_GPP_efficiency$GPP_efficiency_gC_gP[plant_GPP_efficiency$variable=="overstorey"],2)
+    out[out$terms == "Understorey GPP efficiency", 2:7] <- round(plant_GPP_efficiency$GPP_efficiency_gC_gP[plant_GPP_efficiency$variable=="understorey"],2)
+    
+    
     
     ### aCO2 and eCO2 averages
     out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)
@@ -97,6 +104,21 @@ make_total_p_budget <- function(norm,
     ### sd
     out$aCO2_sd <- rowSds(as.matrix(subset(out, select=c(R2, R3, R6))), na.rm=T)
     out$eCO2_sd <- rowSds(as.matrix(subset(out, select=c(R1, R4, R5))), na.rm=T)
+    
+    
+    ###### Diff (eCO2 - aCO2)
+    out$diff <- round(out$eCO2 - out$aCO2, 4)
+    
+    ### sd of the diff
+    out$diff_sd <- sqrt((out$aCO2_sd^2+out$eCO2_sd^2)/2)
+    
+    ### confidence interval of the diff
+    out$diff_cf <- 2.353 * out$diff_sd * 3 ^(-0.5)
+    
+    
+    ###### percent differences (eCO2 - aCO2) / aCO2 * 100
+    out$percent_diff <- round((out$eCO2 - out$aCO2) / (out$aCO2) * 100, 2)
+    
     
     ### save
     write.csv(out, paste0("plots_tables/summary_tables/", norm, 

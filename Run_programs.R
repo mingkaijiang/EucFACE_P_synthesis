@@ -263,7 +263,7 @@ mycorrhizal_c_pool <- make_mycorrhizal_c_pool(microbial_c_pool)
 
 #### Coarse root C pool 
 coarse_root_c_pool <- make_coarse_root_pool(c_fraction, 
-                                            fr_pool=fineroot_c_pool3) 
+                                            fr_pool=fineroot_c_pool) 
 
 
 #### Leaf litter pool - forest floor leaf litter pool
@@ -869,7 +869,8 @@ total_p_budget <- make_total_p_budget(norm="unnormalized",
                                       summary_table_pool,
                                       vegetation_standing_p_stock,
                                       plant_p_MRT,
-                                      plant_p_use_efficiency)
+                                      plant_p_use_efficiency,
+                                      plant_GPP_efficiency)
 
 
 ########################################################################################## 
