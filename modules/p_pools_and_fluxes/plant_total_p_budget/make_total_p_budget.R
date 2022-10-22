@@ -114,7 +114,7 @@ make_total_p_budget <- function(norm,
     
     ### confidence interval of the diff
     #out$diff_cf <- 2.353 * out$diff_sd * 3 ^(-0.5)
-    treatDF$diff_cf <- qt(0.95, 4) * treatDF$diff_sd * (sqrt(2/3))
+    out$diff_cf <- qt(0.95, 4) * out$diff_sd * (sqrt(2/3))
     
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     out$percent_diff <- round((out$eCO2 - out$aCO2) / (out$aCO2) * 100, 2)
