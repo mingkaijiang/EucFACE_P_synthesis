@@ -383,10 +383,11 @@ make_pool_summary_table <- function(norm,
     
     
     ### sd of the diff
-    treatDF$diff_sd <- sqrt((treatDF$aCO2_sd^2+treatDF$eCO2_sd^2)/2)
-    
+   treatDF$diff_sd <- sqrt((treatDF$aCO2_sd^2+treatDF$eCO2_sd^2)/2)
+
     ### confidence interval of the diff
-    treatDF$diff_cf <- 2.353 * treatDF$diff_sd * 3 ^(-0.5)
+    #treatDF$diff_cf <- 2.353 * treatDF$diff_sd * 3 ^(-0.5)
+    treatDF$diff_cf <- qt(0.95, 4) * treatDF$diff_sd * (sqrt(2/3))
     
     
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
