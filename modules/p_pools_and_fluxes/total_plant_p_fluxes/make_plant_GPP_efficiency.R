@@ -46,6 +46,12 @@ make_plant_GPP_efficiency <- function(norm, p_pool, p_flux,
     myDF$und_P_effi_pool <- with(myDF, undGPP/undPpool)
     
     
+    myDF$Trt <- "aCO2"
+    myDF$Trt[myDF$Ring%in%c("1","4","5")] <- "eCO2"
+    
+    #summaryBy(undGPP+undPflux+und_P_effi_flux+und_P_effi_pool~Trt, data=myDF, FUN=c(mean,sd))
+    
+    
     ### outDF
     tmpDF <- myDF[,c("Ring", "over_P_effi_flux", "und_P_effi_flux")]
     tmpDF$Trt <- "aCO2"
