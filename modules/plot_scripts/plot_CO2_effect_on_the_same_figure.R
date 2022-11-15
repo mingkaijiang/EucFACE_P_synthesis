@@ -300,8 +300,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                          labels=c("Canopy P Conc" = "Canopy P",
                                   "Sapwood P Conc" = "Sapwood P",
                                   "Heartwood P Conc" = "Heartwood P",
-                                  "Fine Root P Conc" = "Fineroot P", 
-                                  "Coarse Root P Conc" = "Coarseroot P",
+                                  "Fine Root P Conc" = "Fine root P", 
+                                  "Coarse Root P Conc" = "Coarse root P",
                                   "Leaflitter P Conc" = "Leaflitter P",
                                   "Understorey P Conc" = "Understorey P",
                                   "Frass P Conc" = "Frass P"))+
@@ -410,7 +410,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Exchangeable Pi Conc 0-10cm"),
                          labels=c("Exchangeable Pi Conc 0-10cm" = expression("Exchangeable " * P[i]),
                                   "Exchangeable Po Conc 0-10cm" = expression("Exchangeable " * P[o]),
-                                  "Moderately labile Po Conc 0-10cm" = expression("Moderately Labile " * P[o]),
+                                  "Moderately labile Po Conc 0-10cm" = expression("Moderately labile " * P[o]),
                                   "Secondary Fe bound Pi Conc 0-10cm" = expression("Secondary " * F[e]-bound * " " * P[i]),
                                   "Primary Ca bound Pi Conc 0-10cm" = expression("Primary " * C[a]-bound * " " * P[i]),
                                   "Occluded P Conc 0-10cm" = expression("Occluded P")))+
@@ -487,12 +487,12 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Sapwood P Pool" = "Sapwood P",
                                   "Heartwood P Pool" = "Heartwood P",
                                   "Total Wood P Pool" = "Total Wood P",
-                                  "Fine Root P Pool" = "Fineroot P", 
-                                  "Coarse Root P Pool" = "Coarseroot P",
-                                  "Forestfloor Leaf Litter P Pool" = "Forestfloor Leaf P",
+                                  "Fine Root P Pool" = "Fine root P", 
+                                  "Coarse Root P Pool" = "Coarse root P",
+                                  "Forestfloor Leaf Litter P Pool" = "Forestfloor leaf P",
                                   "Understorey P Pool" = "Understorey P",
-                                  "Understorey Litter P Pool" = "Understorey Litter P",
-                                  "Standing Dead Wood P Pool" = "Standing Dead Wood P"))+
+                                  "Understorey Litter P Pool" = "Understorey litter P",
+                                  "Standing Dead Wood P Pool" = "Standing dead wood P"))+
         scale_fill_manual(name="Legend",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -670,8 +670,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Canopy P flux"),
                          labels=c("Canopy P flux" = "Canopy P",
                                   "Wood P flux" = "Wood P",
-                                  "Fine Root P flux" = "Fineroot P", 
-                                  "Coarse Root P flux" = "Coarseroot P",
+                                  "Fine Root P flux" = "Fine root P", 
+                                  "Coarse Root P flux" = "Coarse root P",
                                   "Understorey P flux" = "Understorey P"))+
         scale_fill_manual(name="Legend",
                           labels=c("pos"="Positive",
@@ -715,12 +715,12 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Bark litter P flux",
                                   "Twig litter P flux",
                                   "Leaflitter P flux"),
-                         labels=c("Leaflitter P flux" = "Leaf Litter P",
-                                  "Twig litter P flux" = "Twig Litter P",
-                                  "Bark litter P flux" = "Bark Litter P",
-                                  "Seed litter P flux" = "Seed Litter P",
-                                  "Fineroot Litter P flux" = "Fineroot Litter P", 
-                                  "Understorey Litter P flux" = "Understorey Litter P",
+                         labels=c("Leaflitter P flux" = "Leaf litter P",
+                                  "Twig litter P flux" = "Twig litter P",
+                                  "Bark litter P flux" = "Bark litter P",
+                                  "Seed litter P flux" = "Seed litter P",
+                                  "Fineroot Litter P flux" = "Fine root litter P", 
+                                  "Understorey Litter P flux" = "Understorey litter P",
                                   "Frass P flux" = "Frass P"))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
@@ -809,8 +809,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                          labels=c("Mineralization P flux 30-60cm" = "Mineralization 30-60cm",
                                   "Mineralization P flux 10-30cm" = "Mineralization 10-30cm",
                                   "Mineralization P flux 0-10cm" = "Mineralization 0-10cm",
-                                  "Total vegetation uptake P flux" = "Plant P Uptake",
-                                  "Total vegetation retranslocation P flux" = "Plant P Resorption",
+                                  "Total vegetation uptake P flux" = "Plant P uptake",
+                                  "Total vegetation retranslocation P flux" = "Plant P resorption",
                                   "Total vegetation production P flux" = "Plant P demand"))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
@@ -871,12 +871,12 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Fine Root P flux" = "Fineroot P", 
                                   "Coarse Root P flux" = "Coarseroot P",
                                   "Understorey P flux" = "Understorey P",
-                                  "Leaflitter P flux" = "Leaf Litter P",
-                                  "Twig litter P flux" = "Twig Litter P",
-                                  "Bark litter P flux" = "Bark Litter P",
-                                  "Seed litter P flux" = "Seed Litter P",
-                                  "Fineroot Litter P flux" = "Fineroot Litter P", 
-                                  "Understorey Litter P flux" = "Understorey Litter P",
+                                  "Leaflitter P flux" = "Leaf litter P",
+                                  "Twig litter P flux" = "Twig litter P",
+                                  "Bark litter P flux" = "Bark litter P",
+                                  "Seed litter P flux" = "Seed litter P",
+                                  "Fineroot Litter P flux" = "Fineroot litter P", 
+                                  "Understorey Litter P flux" = "Understorey litter P",
                                   "Frass P flux" = "Frass P",
                                   "Canopy retrans P flux" = "Canopy retrans P",
                                   "Sapwood retrans P flux" = "Sapwood retrans P",
@@ -929,10 +929,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                          labels=c("Canopy P Pool" = expression(Delta * " Canopy P"),
                                   "Sapwood P Pool" = expression(Delta * " Sapwood P"),
                                   "Heartwood P Pool" = expression(Delta * " Heartwood P"),
-                                  "Total Wood P Pool" = expression(Delta * " Total Wood P"),
-                                  "Fine Root P Pool" = expression(Delta * " Fineroot P"), 
-                                  "Coarse Root P Pool" = expression(Delta * " Coarseroot P"),
-                                  "Forestfloor Leaf Litter P Pool" = expression(Delta * " Forestfloor Leaf P"),
+                                  "Total Wood P Pool" = expression(Delta * " Total wood P"),
+                                  "Fine Root P Pool" = expression(Delta * " Fine root P"), 
+                                  "Coarse Root P Pool" = expression(Delta * " Coarse root P"),
+                                  "Forestfloor Leaf Litter P Pool" = expression(Delta * " Forestfloor leaf P"),
                                   "Understorey P Pool" = expression(Delta * " Understorey P")))+
         scale_fill_manual(name="Legend",
                           labels=c("pos"="Positive",
@@ -981,8 +981,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
                                   "Soil P Pool 0-10cm" = expression(Delta * " Soil P (0-10cm)"),
                                   "Soil P Pool 10-30cm" = expression(Delta * " Soil P (10-30cm)"),
-                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil Phosphate P (0-10cm)"),
-                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil Phosphate P (10-30cm)")))+
+                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil phosphate P (0-10cm)"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil phosphate P (10-30cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1037,8 +1037,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                          labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P (0-10cm)"),
                                   "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P (10-30cm)"),
                                   "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
-                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil Phosphate P (0-10cm)"),
-                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil Phosphate P (10-30cm)")))+
+                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil phosphate P (0-10cm)"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil phosphate P (10-30cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1128,27 +1128,40 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_pool.pdf", 
         width=10, height=10)
-    left_col <- plot_grid(p51, p53, ncol=1, rel_heights=c(1,0.8))
-    top_row <- plot_grid(left_col, p52,  ncol = 2, rel_widths = c(1, 1),
-                         rel_heights=c(1, 1))
-    bot_row <- plot_grid(p71, p72, ncol = 2, rel_widths = c(1, 1),
-                         rel_heights=c(0.6, 1))
+    #left_col <- plot_grid(p51, p53, ncol=1, rel_heights=c(1,0.8))
+    #top_row <- plot_grid(left_col, p52,  ncol = 2, rel_widths = c(1, 1),
+    #                     rel_heights=c(1, 1))
+    #bot_row <- plot_grid(p71, p72, ncol = 2, rel_widths = c(1, 1),
+    #                     rel_heights=c(0.6, 1))
+    #
+    #plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
+    #          rel_heights=c(2, 1))
+    #
+    #grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.47, 0.96), 
+    #          y = c(0.96, 0.96, 0.6, 0.3, 0.3),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
     
-    plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
-              rel_heights=c(2, 1))
+    
+    left_col <- plot_grid(p51, p53, p71, ncol=1, rel_heights=c(1.1,0.9,1))
+    right_col <- plot_grid(p52, p74, ncol = 1, rel_widths = c(1, 1),
+                         rel_heights=c(1.1,0.25))
+    
+    plot_grid(left_col, right_col, ncol = 2, rel_widths = c(1, 1),
+              rel_heights=c(1, 1))
     
     grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.47, 0.96), 
-              y = c(0.96, 0.96, 0.6, 0.3, 0.3),
+              y = c(0.96, 0.96, 0.61, 0.3, 0.16),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
+    
     dev.off()
     
     
     ### fluxes 1
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)")
+    grid.labs <- c("(a)", "(c)", "(b)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux.pdf", 
         width=12, height=6)
-    left_col <- plot_grid(p64, p73, p74, ncol=1, rel_heights=c(1.0,0.8,0.4))
+    left_col <- plot_grid(p64, p73, ncol=1, rel_heights=c(1.0,0.8))
     
     plot_grid(left_col, p65, ncol = 2, rel_widths = c(1, 1),
               rel_heights=c(1, 1))
