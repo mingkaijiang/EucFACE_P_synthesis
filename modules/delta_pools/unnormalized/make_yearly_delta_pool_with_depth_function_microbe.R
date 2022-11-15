@@ -12,7 +12,8 @@ make_yearly_delta_pool_with_depth_function_microbe <- function(inDF,var.col) {
     
     
     ### subset two datasets
-    inDF1 <- inDF[inDF$Date%in%c(as.Date("2014-09-09"), as.Date("2017-09-01"), as.Date("2015-09-09")),]
+    inDF1 <- inDF[inDF$Date%in%c(as.Date("2014-09-09"), #as.Date("2015-09-09"), 
+                                 as.Date("2017-09-01")),]
     inDF2 <- inDF[inDF$Date%in%c(as.Date("2014-11-17"), as.Date("2015-11-30")),]
     
     myDF1 <- summaryBy(Value~Year+Ring+Depth, FUN=mean, data=inDF1, keep.names=T)
@@ -42,6 +43,15 @@ make_yearly_delta_pool_with_depth_function_microbe <- function(inDF,var.col) {
     d.list2.1 <- unique(subDF2.1$Year)
     d.list2.2 <- unique(subDF2.2$Year)
     d.list2.3 <- unique(subDF2.3$Year)
+    
+    d.list1.1 <- d.list1.1[order(d.list1.1)]
+    d.list1.2 <- d.list1.2[order(d.list1.2)]
+    d.list1.3 <- d.list1.3[order(d.list1.3)]
+    
+    
+    d.list2.1 <- d.list2.1[order(d.list2.1)]
+    d.list2.2 <- d.list2.2[order(d.list2.2)]
+    d.list2.3 <- d.list2.3[order(d.list2.3)]
     
     
     ### create delta df

@@ -674,13 +674,13 @@ coarseroot_P_retranslocation_flux <- calculate_coarseroot_P_retranslocation_flux
 
 ############################## delta P Pools ###############################
 delta_soil_p_pool <- make_yearly_delta_pool_without_depth_function(inDF=soil_p_pool, 
-                                                                var.col=4)
+                                                                   var.col=4)
 
 delta_soil_phosphate_pool <- make_yearly_delta_pool_without_depth_function(inDF=soil_phosphate_pool, 
-                                                                var.col=4)
+                                                                           var.col=4)
 
 delta_microbial_p_pool <- make_yearly_delta_pool_with_depth_function_microbe(inDF=microbial_p_pool, 
-                                                                             var.col=4)
+                                                                              var.col=4)
 
 
 
@@ -691,10 +691,10 @@ delta_wood_p_pool <- make_yearly_delta_pool_function(inDF=wood_p_pool,
                                                      var.col=3)
 
 delta_sapwood_p_pool <- make_yearly_delta_pool_function(inDF=sapwood_p_pool, 
-                                                     var.col=3)
+                                                        var.col=3)
 
 delta_heartwood_p_pool <- make_yearly_delta_pool_function(inDF=heartwood_p_pool, 
-                                                        var.col=3)
+                                                          var.col=3)
 
 delta_fineroot_p_pool <- make_yearly_delta_pool_function(inDF=fineroot_p_pool, 
                                                          var.col=3)
@@ -706,7 +706,7 @@ delta_understorey_p_pool <- make_yearly_delta_pool_function(inDF=understorey_p_p
                                                             var.col=3)
 
 delta_leaflitter_p_pool <- make_yearly_delta_pool_function(inDF=leaflitter_p_pool, 
-                                                            var.col=3)
+                                                           var.col=3)
 
 
 ########################################################################################## 
