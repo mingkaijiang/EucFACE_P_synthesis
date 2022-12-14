@@ -29,6 +29,12 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     #myDF$diff <- myDF$eCO2 - myDF$aCO2
     #myDF$diff_sd <- sqrt((myDF$aCO2_sd^2 + myDF$eCO2_sd^2)/2)
     
+    
+    ### calculate 80% confidence interval, etc. 
+    myDF$diff_cf_80 <- with(myDF, diff_cf / qt(0.95, 4) * qt(0.75, 4))
+    
+    
+    ### remove null
     myDF <- myDF[complete.cases(myDF$diff),]
     
  
@@ -109,6 +115,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                               ifelse(plotDF33$diff < 0.0, "neg", "neut"))
     
     
+    
+    
     plotDF41 <- subset(plotDF4, terms%in%c("Canopy P flux", 
                                            "Wood P flux",
                                            "Fine Root P flux",
@@ -149,6 +157,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     plotDF44$collab <- ifelse(plotDF44$diff > 0.0, "pos", 
                               ifelse(plotDF44$diff < 0.0, "neg", "neut"))
+    
+    
     
     
     plotDF51 <- subset(plotDF5, terms%in%c("Canopy P Pool", "Sapwood P Pool",
@@ -199,70 +209,70 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                          "Leaching P over P mineralization"),]
     
     ### make plots
-    p1 <- ggplot(subDF1) +  
-        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
-                         yend=reorder(terms, diff), xend=diff+diff_cf), 
-                     size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff), x=diff), 
-                   stat='identity', size=4, shape=19)+
-        geom_vline(xintercept=0)+
-        xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
-        ylab("") +
-        theme_linedraw() +
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=12, family="Helvetica"), 
-              axis.text.x = element_text(size=12, family="Helvetica"),
-              axis.text.y=element_text(size=12, family="Helvetica"),
-              axis.title.y=element_text(size=12, family="Helvetica"),
-              legend.text=element_text(size=12, family="Helvetica"),
-              legend.title=element_text(size=12, family="Helvetica"),
-              panel.grid.major=element_blank(),
-              legend.position="bottom",
-              legend.text.align=0)
-    
-    
-    p2 <- ggplot(subDF2) +  
-        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
-                         yend=reorder(terms, diff), xend=diff+diff_cf), 
-                     size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff), x=diff), 
-                   stat='identity', size=4, shape=19)+
-        geom_vline(xintercept=0)+
-        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1,")"))) + 
-        ylab("") +
-        theme_linedraw() +
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=12, family="Helvetica"), 
-              axis.text.x = element_text(size=12, family="Helvetica"),
-              axis.text.y=element_text(size=12, family="Helvetica"),
-              axis.title.y=element_text(size=12, family="Helvetica"),
-              legend.text=element_text(size=12, family="Helvetica"),
-              legend.title=element_text(size=12, family="Helvetica"),
-              panel.grid.major=element_blank(),
-              legend.position="bottom",
-              legend.text.align=0)
-    
-    
-    p3 <- ggplot(subDF3) +  
-        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
-                         yend=reorder(terms, diff), xend=diff+diff_cf), 
-                     size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff), x=diff), 
-                   stat='identity', size=4, shape=19)+
-        geom_vline(xintercept=0)+
-        xlab(expression(paste(CO[2], " effect (unitless)"))) + 
-        ylab("") +
-        theme_linedraw() +
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=12, family="Helvetica"), 
-              axis.text.x = element_text(size=12, family="Helvetica"),
-              axis.text.y=element_text(size=12, family="Helvetica"),
-              axis.title.y=element_text(size=12, family="Helvetica"),
-              legend.text=element_text(size=12, family="Helvetica"),
-              legend.title=element_text(size=12, family="Helvetica"),
-              panel.grid.major=element_blank(),
-              legend.position="bottom",
-              legend.text.align=0)
+    #p1 <- ggplot(subDF1) +  
+    #    geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+    #                     yend=reorder(terms, diff), xend=diff+diff_cf), 
+    #                 size=6, color="grey")+
+    #    geom_point(aes(y=reorder(terms, diff), x=diff), 
+    #               stat='identity', size=4, shape=19)+
+    #    geom_vline(xintercept=0)+
+    #    xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
+    #    ylab("") +
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=12, family="Helvetica"), 
+    #          axis.text.x = element_text(size=12, family="Helvetica"),
+    #          axis.text.y=element_text(size=12, family="Helvetica"),
+    #          axis.title.y=element_text(size=12, family="Helvetica"),
+    #          legend.text=element_text(size=12, family="Helvetica"),
+    #          legend.title=element_text(size=12, family="Helvetica"),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom",
+    #          legend.text.align=0)
+    #
+    #
+    #p2 <- ggplot(subDF2) +  
+    #    geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+    #                     yend=reorder(terms, diff), xend=diff+diff_cf), 
+    #                 size=6, color="grey")+
+    #    geom_point(aes(y=reorder(terms, diff), x=diff), 
+    #               stat='identity', size=4, shape=19)+
+    #    geom_vline(xintercept=0)+
+    #    xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1,")"))) + 
+    #    ylab("") +
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=12, family="Helvetica"), 
+    #          axis.text.x = element_text(size=12, family="Helvetica"),
+    #          axis.text.y=element_text(size=12, family="Helvetica"),
+    #          axis.title.y=element_text(size=12, family="Helvetica"),
+    #          legend.text=element_text(size=12, family="Helvetica"),
+    #          legend.title=element_text(size=12, family="Helvetica"),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom",
+    #          legend.text.align=0)
+    #
+    #
+    #p3 <- ggplot(subDF3) +  
+    #    geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+    #                     yend=reorder(terms, diff), xend=diff+diff_cf), 
+    #                 size=6, color="grey")+
+    #    geom_point(aes(y=reorder(terms, diff), x=diff), 
+    #               stat='identity', size=4, shape=19)+
+    #    geom_vline(xintercept=0)+
+    #    xlab(expression(paste(CO[2], " effect (unitless)"))) + 
+    #    ylab("") +
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=12, family="Helvetica"), 
+    #          axis.text.x = element_text(size=12, family="Helvetica"),
+    #          axis.text.y=element_text(size=12, family="Helvetica"),
+    #          axis.title.y=element_text(size=12, family="Helvetica"),
+    #          legend.text=element_text(size=12, family="Helvetica"),
+    #          legend.title=element_text(size=12, family="Helvetica"),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom",
+    #          legend.text.align=0)
     
     
     
@@ -271,7 +281,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     p41 <- ggplot(plotDF21) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -311,18 +324,28 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                     "neut"="Zero"),
                            values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
         scale_color_manual(name="Legend",
-                          labels=c("pos"="Positive",
-                                   "neg"="Negative",
-                                   "neut"="Zero"),
-                          values=c("pos"=alpha("darkgreen",0.2), 
-                                   "neg"=alpha("brown", 0.2), 
-                                   "neut"=alpha("black", 0.2)))
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
+        #scale_color_manual(name="Legend",
+        #                  labels=c("pos"="Positive",
+        #                           "neg"="Negative",
+        #                           "neut"="Zero"),
+        #                  values=c("pos"=alpha("darkgreen",0.2), 
+        #                           "neg"=alpha("brown", 0.2), 
+        #                           "neut"=alpha("black", 0.2))); plot(p41)
     
     
     p42 <- ggplot(plotDF22) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -378,14 +401,17 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     p43 <- ggplot(plotDF23) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -423,31 +449,31 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
-    p5 <- ggplot(plotDF3) +  
-        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
-                         yend=reorder(terms, diff), xend=diff+diff_cf), 
-                     size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff), x=diff), 
-                   stat='identity', size=4, shape=19)+
-        geom_vline(xintercept=0)+
-        xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
-        ylab("") +
-        theme_linedraw() +
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=12, family="Helvetica"), 
-              axis.text.x = element_text(size=12, family="Helvetica"),
-              axis.text.y=element_text(size=12, family="Helvetica"),
-              axis.title.y=element_text(size=12, family="Helvetica"),
-              legend.text=element_text(size=12, family="Helvetica"),
-              legend.title=element_text(size=12, family="Helvetica"),
-              panel.grid.major=element_blank(),
-              legend.position="bottom",
-              legend.text.align=0)
+    #p5 <- ggplot(plotDF3) +  
+    #    geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+    #                     yend=reorder(terms, diff), xend=diff+diff_cf), 
+    #                 size=6, color="grey")+
+    #    geom_point(aes(y=reorder(terms, diff), x=diff), 
+    #               stat='identity', size=4, shape=19)+
+    #    geom_vline(xintercept=0)+
+    #    xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
+    #    ylab("") +
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=12, family="Helvetica"), 
+    #          axis.text.x = element_text(size=12, family="Helvetica"),
+    #          axis.text.y=element_text(size=12, family="Helvetica"),
+    #          axis.title.y=element_text(size=12, family="Helvetica"),
+    #          legend.text=element_text(size=12, family="Helvetica"),
+    #          legend.title=element_text(size=12, family="Helvetica"),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom",
+    #          legend.text.align=0)
     
     
     
@@ -455,7 +481,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     p51 <- ggplot(plotDF31) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -502,15 +531,18 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     p52 <- ggplot(plotDF32) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -567,14 +599,17 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     p53 <- ggplot(plotDF33) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -612,32 +647,32 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
 
     
     
-    p6 <- ggplot(plotDF4) +  
-        geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
-                         yend=reorder(terms, diff), xend=diff+diff_cf), 
-                     size=6, color="grey")+
-        geom_point(aes(y=reorder(terms, diff), x=diff), 
-                   stat='identity', size=4, shape=19)+
-        geom_vline(xintercept=0)+
-        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
-        ylab("") +
-        theme_linedraw() +
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=12, family="Helvetica"), 
-              axis.text.x = element_text(size=12, family="Helvetica"),
-              axis.text.y=element_text(size=12, family="Helvetica"),
-              axis.title.y=element_text(size=12, family="Helvetica"),
-              legend.text=element_text(size=12, family="Helvetica"),
-              legend.title=element_text(size=12, family="Helvetica"),
-              panel.grid.major=element_blank(),
-              legend.position="bottom",
-              legend.text.align=0)
+    #p6 <- ggplot(plotDF4) +  
+    #    geom_segment(aes(y=reorder(terms, diff), x=diff-diff_cf, 
+    #                     yend=reorder(terms, diff), xend=diff+diff_cf), 
+    #                 size=6, color="grey")+
+    #    geom_point(aes(y=reorder(terms, diff), x=diff), 
+    #               stat='identity', size=4, shape=19)+
+    #    geom_vline(xintercept=0)+
+    #    xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
+    #    ylab("") +
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=12, family="Helvetica"), 
+    #          axis.text.x = element_text(size=12, family="Helvetica"),
+    #          axis.text.y=element_text(size=12, family="Helvetica"),
+    #          axis.title.y=element_text(size=12, family="Helvetica"),
+    #          legend.text=element_text(size=12, family="Helvetica"),
+    #          legend.title=element_text(size=12, family="Helvetica"),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="bottom",
+    #          legend.text.align=0)
     
     
     
@@ -645,7 +680,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     p61 <- ggplot(plotDF41) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -682,15 +720,18 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     p62 <- ggplot(plotDF42) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -731,15 +772,18 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     p63 <- ggplot(plotDF43) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -776,14 +820,17 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     p64 <- ggplot(plotDF44) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -821,9 +868,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     plotDF45 <- rbind(plotDF41, rbind(plotDF42, plotDF43))
@@ -831,7 +878,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     p65 <- ggplot(plotDF45) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -892,15 +942,18 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     p71 <- ggplot(plotDF51) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -943,15 +996,18 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     p72 <- ggplot(plotDF52) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -992,9 +1048,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     plotDF53 <- plotDF52[plotDF52$terms%in%c("Microbial P Pool 0-10cm",
@@ -1004,14 +1060,71 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                              "Soil Phosphate P Pool 10-30cm"),]
     
     
+    plotDF531 <- plotDF52[plotDF52$terms%in%c("Microbial P Pool 0-10cm",
+                                             "Microbial P Pool 10-30cm",
+                                             "Microbial P Pool 30-60cm"),]
+    
+    
+    plotDF532 <- plotDF52[plotDF52$terms%in%c("Soil Phosphate P Pool 0-10cm",
+                                             "Soil Phosphate P Pool 10-30cm"),]
+    
+    
     plotDF54 <- plotDF52[plotDF52$terms%in%c("Soil P Pool 0-10cm",
                                              "Soil P Pool 10-30cm"),]
     
     
-    p73 <- ggplot(plotDF53) +  
+    p73 <- ggplot(plotDF531) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position="none",
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Microbial P Pool 30-60cm",
+                                  "Microbial P Pool 10-30cm",
+                                  "Microbial P Pool 0-10cm"),
+                         labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P (0-10cm)"),
+                                  "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P (10-30cm)"),
+                                  "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)")))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
+    
+    
+    
+    p74 <- ggplot(plotDF532) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -1030,14 +1143,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.position="none",
               legend.text.align=0)+
         scale_y_discrete(limits=c("Soil Phosphate P Pool 10-30cm",
-                                  "Soil Phosphate P Pool 0-10cm",
-                                  "Microbial P Pool 30-60cm",
-                                  "Microbial P Pool 10-30cm",
-                                  "Microbial P Pool 0-10cm"),
-                         labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P (0-10cm)"),
-                                  "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P (10-30cm)"),
-                                  "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
-                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil phosphate P (0-10cm)"),
+                                  "Soil Phosphate P Pool 0-10cm"),
+                         labels=c("Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil phosphate P (0-10cm)"),
                                   "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil phosphate P (10-30cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
@@ -1048,16 +1155,19 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     
-    p74 <- ggplot(plotDF54) +  
+    p75 <- ggplot(plotDF54) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
-                         yend=terms, xend=diff+diff_cf, color=collab), 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
                      size=6)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
@@ -1088,21 +1198,21 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            labels=c("pos"="Positive",
                                     "neg"="Negative",
                                     "neut"="Zero"),
-                           values=c("pos"=alpha("darkgreen",0.2), 
-                                    "neg"=alpha("brown", 0.2), 
-                                    "neut"=alpha("black", 0.2)))
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
     
     
     require(grid)
     require(cowplot)
     
     ### Plotting
-    pdf("plots_tables/output/unnormalized/CO2_effect_on_total_p_budget.pdf", 
-        width=6, height=12)
-         #width=150, height=300, unit="mm", res = 300)
-    plot_grid(p1, p2, p3, labels="", ncol=1, align="h", axis="l",
-              rel_heights=c(1., 1.0, 1.5))
-    dev.off()
+    #pdf("plots_tables/output/unnormalized/CO2_effect_on_total_p_budget.pdf", 
+    #    width=6, height=12)
+    #     #width=150, height=300, unit="mm", res = 300)
+    #plot_grid(p1, p2, p3, labels="", ncol=1, align="h", axis="l",
+    #          rel_heights=c(1., 1.0, 1.5))
+    #dev.off()
     
     #pdf("plots_tables/output/unnormalized/CO2_effect_on_all_p_variables.pdf", 
     #     width=6, height=24)
@@ -1143,7 +1253,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     left_col <- plot_grid(p51, p53, p71, ncol=1, rel_heights=c(1.1,0.9,1))
-    right_col <- plot_grid(p52, p74, ncol = 1, rel_widths = c(1, 1),
+    right_col <- plot_grid(p52, p75, ncol = 1, rel_widths = c(1, 1),
                          rel_heights=c(1.1,0.25))
     
     plot_grid(left_col, right_col, ncol = 2, rel_widths = c(1, 1),
@@ -1157,15 +1267,15 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     ### fluxes 1
-    grid.labs <- c("(a)", "(c)", "(b)")
+    grid.labs <- c("(a)", "(c)", "(d)", "(b)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux.pdf", 
         width=12, height=6)
-    left_col <- plot_grid(p64, p73, ncol=1, rel_heights=c(1.0,0.8))
+    left_col <- plot_grid(p64, p73, p74, ncol=1, rel_heights=c(1.0, 0.6, 0.5))
     
     plot_grid(left_col, p65, ncol = 2, rel_widths = c(1, 1),
               rel_heights=c(1, 1))
-    grid.text(grid.labs,x = c(0.45, 0.45, 0.95), y = c(0.95, 0.4, 0.95),
+    grid.text(grid.labs,x = c(0.45, 0.45, 0.45, 0.95), y = c(0.95, 0.48, 0.2, 0.95),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     

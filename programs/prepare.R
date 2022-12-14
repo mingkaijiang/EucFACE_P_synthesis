@@ -59,6 +59,7 @@ pacman::p_load(dplyr,
                lme4,
                car,
                matrixStats,
+               treemapify,
                multcomp,
                grid,       # plot
                cowplot,    # plot
