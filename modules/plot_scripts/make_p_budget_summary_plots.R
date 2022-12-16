@@ -359,6 +359,16 @@ make_p_budget_summary_plots <- function(inDF,
     demDF <- demDF[,c("terms", "aCO2_p", "eCO2_p")]
     
     
+    
+    demDF2 <- demDF
+    demDF2$terms2 <- demDF2$terms
+    demDF2$terms2[demDF2$terms%in%c("Wood P flux", 
+                                    "Coarse Root P flux", "Twig litter P flux",
+                                    "Bark litter P flux", "Seed litter P flux",
+                                    "Frass P flux")] <- "Other"
+    demDF2 <- summaryBy(aCO2_p+eCO2_p~terms2, FUN=sum, data=demDF2, na.rm=T, keep.names=T)
+    
+    
     ### calculate proportions of retranslocation flux
     retDF <- inDF2[inDF2$terms%in%c("Canopy retrans P flux", "Sapwood retrans P flux", "Fineroot retrans P flux", 
                                     "Coarseroot retrans P flux", "Understorey retrans P flux"),]
@@ -418,6 +428,20 @@ make_p_budget_summary_plots <- function(inDF,
     demDF$label2 <- gsub(" P flux", "", demDF$terms)
     demDF$label1 <- gsub(" litter", "", demDF$label1)
     demDF$label2 <- gsub(" litter", "", demDF$label2)
+    
+    
+    demDF2$ymax1 <- cumsum(demDF2$aCO2_p)
+    demDF2$ymax2 <- cumsum(demDF2$eCO2_p)
+    demDF2$ymin1 <- c(0, head(demDF2$ymax1, n=-1))
+    demDF2$ymin2 <- c(0, head(demDF2$ymax2, n=-1))
+    
+    demDF2$labelPosition1 <- (demDF2$ymax1 + demDF2$ymin1) / 2
+    demDF2$labelPosition2 <- (demDF2$ymax2 + demDF2$ymin2) / 2
+    
+    demDF2$label1 <- gsub(" P flux", "", demDF2$terms2)
+    demDF2$label2 <- gsub(" P flux", "", demDF2$terms2)
+    demDF2$label1 <- gsub(" litter", "", demDF2$label1)
+    demDF2$label2 <- gsub(" litter", "", demDF2$label2)
     
     
     
@@ -557,7 +581,7 @@ make_p_budget_summary_plots <- function(inDF,
       #                           "Understorey" = "Understorey"))+
       scale_fill_brewer(palette=3, name="P demand flux")+
       guides(fill=guide_legend(ncol=2))+
-      annotate(geom="text", label=expression(aCO[2]), x=2., y=100, size=8);p3
+      annotate(geom="text", label=expression(aCO[2]), x=2., y=100, size=8)
 
     
     
@@ -709,7 +733,7 @@ make_p_budget_summary_plots <- function(inDF,
     
     p1 <- ggplot(plotDF9,
                  aes(Trt, mean)) + 
-      geom_bar(stat = "identity", aes(fill=Variable), position="stack") +
+      geom_bar(stat = "identity", aes(fill=Variable), position="stack", col="black") +
       geom_errorbar(data=plotDF3, aes(ymax=pos, ymin=neg), 
                     position = position_dodge(0.9), width=0.2, size=0.4,
                     color="black") +
@@ -718,17 +742,20 @@ make_p_budget_summary_plots <- function(inDF,
       theme_linedraw() +
       ylim(0, 1.0)+
       theme(panel.grid.minor=element_blank(),
-            axis.title.x = element_text(size=10), 
+            axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
             axis.text.y=element_text(size=10),
-            axis.title.y=element_text(size=10),
+            axis.title.y=element_text(size=12),
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
-            legend.position="bottom")+
+            legend.position = c(0.8, 0.2),
+            legend.background = element_rect(fill="grey",
+                                             size=0.5, linetype="solid", 
+                                             colour ="black"))+
       scale_fill_manual(name="Flux", 
-                        values = c("retrans" = Diverge_hsv_Palette[6],
-                                   "uptake" = Diverge_hsv_Palette[8]),
+                        values = c("retrans" = cbbPalette[5],
+                                   "uptake" = cbbPalette[3]),
                         labels=c("retrans"="Resorption",
                                  "uptake"="Uptake"))+
       scale_x_discrete(limits=c("aCO2","eCO2"),
@@ -736,8 +763,78 @@ make_p_budget_summary_plots <- function(inDF,
                                 expression(eCO[2])))
     
     
+    
+    
+    p11 <- ggplot(demDF2, aes(ymax=ymax1, ymin=ymin1, xmax=4, xmin=3, fill=label1)) +
+      geom_rect(col="black") +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      geom_label(x=3.5, aes(y=labelPosition1, label=aCO2_p), fill="white", size=4)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=12),
+            plot.title=element_text(size=12, face="bold"),
+            legend.position="none")+
+      scale_fill_manual(name="P demand",
+                        values = c("Canopy" = Pastel1Palette[2],
+                                   "Fine Root" = Pastel1Palette[4],
+                                   "Understorey" = Pastel1Palette[5],
+                                   "Other" = Pastel1Palette[6]),
+                        labels=c("Canopy" = "Canopy",
+                                 "Other" = "Other",
+                                 "Fine Root" = "Fineroot",
+                                 "Understorey" = "Understorey"))+
+      #scale_fill_brewer(palette=3, name="P demand flux")+
+      guides(fill=guide_legend(ncol=2))+
+      annotate(geom="text", label=expression(aCO[2]), x=2., y=100, size=4)
+    
+    
+    p12 <- ggplot(demDF2, aes(ymax=ymax2, ymin=ymin2, xmax=4, xmin=3, fill=label2)) +
+      geom_rect(col="black") +
+      coord_polar(theta="y")+
+      xlim(c(2, 4)) +
+      theme_void() +
+      #theme_minimal(10)+
+      geom_label(x=3.5, aes(y=labelPosition2, label=eCO2_p), fill="white", size=4)+
+      theme(axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.border = element_blank(),
+            panel.grid=element_blank(),
+            axis.ticks = element_blank(),
+            legend.text=element_text(size=10),
+            legend.title=element_text(size=10),
+            plot.title=element_text(size=10, face="bold"),
+            legend.position="none")+
+      scale_fill_manual(name="P demand",
+                        values = c("Canopy" = Pastel1Palette[2],
+                                   "Fine Root" = Pastel1Palette[4],
+                                   "Understorey" = Pastel1Palette[5],
+                                   "Other" = Pastel1Palette[6]),
+                        labels=c("Canopy" = "Canopy",
+                                 "Other" = "Other",
+                                 "Fine Root" = "Fineroot",
+                                 "Understorey" = "Understorey"))+
+      #scale_fill_brewer(palette=3, name="P demand flux")+
+      guides(fill=guide_legend(ncol=2))+
+      annotate(geom="text", label=expression(eCO[2]), x=2., y=100, size=4)
+    
+    
+    plot(p12)
+    
+    
+    minDF2$Depth <- gsub("0-10cm", "3_0-10cm", minDF2$Depth)
+    minDF2$Depth <- gsub("10-30cm", "2_10-30cm", minDF2$Depth)
+    minDF2$Depth <- gsub("30-60cm", "1_30-60cm", minDF2$Depth)
+    
+    
     p2 <- ggplot(minDF2, aes(x=Trt, y=mean)) + 
-      geom_bar(aes(fill=Depth), stat = "identity", position="stack") +
+      geom_bar(aes(fill=Depth), stat = "identity", position="stack", col="black") +
       geom_errorbar(data=plotDF6,
                     aes(x=Trt, ymax=mean+sd, ymin=mean-sd), 
                     position = position_dodge(0.9), width=0.2, 
@@ -747,24 +844,29 @@ make_p_budget_summary_plots <- function(inDF,
       theme_linedraw() +
       ylim(0, 1.0)+
       theme(panel.grid.minor=element_blank(),
-            axis.title.x = element_text(size=10), 
+            axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
             axis.text.y=element_text(size=10),
-            axis.title.y=element_text(size=10),
+            axis.title.y=element_text(size=12),
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
-            legend.position="bottom")+
+            legend.position = c(0.8, 0.2),
+            legend.background = element_rect(fill="grey",
+                                             size=0.5, linetype="solid", 
+                                             colour ="black"))+
       scale_fill_manual(name="Depth", 
-                        values = c("0-10cm" = Diverge_hsv_Palette[7],
-                                   "10-30cm" = Diverge_hsv_Palette[4],
-                                   "30-60cm" = Diverge_hsv_Palette[3]),
-                        labels=c("0-10cm"="0-10cm",
-                                 "10-30cm"="10-30cm",
-                                 "30-60cm"="30-60cm"))+
+                        values = c("3_0-10cm" = YlOrRdPalette[1],
+                                   "2_10-30cm" = YlOrRdPalette[3],
+                                   "1_30-60cm" = YlOrRdPalette[7]),
+                        labels=c("3_0-10cm"="0-10cm",
+                                 "2_10-30cm"="10-30cm",
+                                 "1_30-60cm"="30-60cm"))+
       scale_x_discrete(limits=c("aCO2","eCO2"),
                        labels=c(expression(aCO[2]),
                                 expression(eCO[2])))
+    
+    #plot(p2)
     
     
     p3 <- ggplot(plotDF7,
@@ -774,12 +876,12 @@ make_p_budget_summary_plots <- function(inDF,
                     position = position_dodge(0.9), width=0.2, size=0.4) +
       xlab("") + ylab("MRT (yr)")+
       theme_linedraw() +
-      ylim(0,6)+
+      ylim(0,5)+
       theme(panel.grid.minor=element_blank(),
-            axis.title.x = element_text(size=10), 
+            axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
             axis.text.y=element_text(size=10),
-            axis.title.y=element_text(size=10),
+            axis.title.y=element_text(size=12),
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
@@ -802,10 +904,10 @@ make_p_budget_summary_plots <- function(inDF,
       theme_linedraw() +
       ylim(0,2500)+
       theme(panel.grid.minor=element_blank(),
-            axis.title.x = element_text(size=10), 
+            axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
             axis.text.y=element_text(size=10),
-            axis.title.y=element_text(size=10),
+            axis.title.y=element_text(size=12),
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
@@ -836,10 +938,10 @@ make_p_budget_summary_plots <- function(inDF,
       theme_linedraw() +
       ylim(0,7500)+
       theme(panel.grid.minor=element_blank(),
-            axis.title.x = element_text(size=10), 
+            axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
             axis.text.y=element_text(size=10),
-            axis.title.y=element_text(size=10),
+            axis.title.y=element_text(size=12),
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
@@ -881,10 +983,10 @@ make_p_budget_summary_plots <- function(inDF,
       theme_linedraw() +
       ylim(0,100)+
       theme(panel.grid.minor=element_blank(),
-            axis.title.x = element_text(size=10), 
+            axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
             axis.text.y=element_text(size=10),
-            axis.title.y=element_text(size=10),
+            axis.title.y=element_text(size=12),
             legend.text=element_text(size=10),
             legend.title=element_text(size=12),
             panel.grid.major=element_blank(),
@@ -899,20 +1001,31 @@ make_p_budget_summary_plots <- function(inDF,
                                 "Plant P uptake over P mineralization"="Uptake/Mineralization"))
     
     
-    grid.labs <- c("(a)", "(b)", "", "(c)", "(d)", "(e)")#, "(f)")
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    
+    
+    
+    bar_charts1_legend<- get_legend(p11 + theme(legend.position="bottom",
+                                                legend.box = 'horizontal',
+                                                legend.box.just = 'left'))
+    
+    
+    bar_charts1 <- plot_grid(p11, p12, ncol=1)
+    dem_plot <- plot_grid(bar_charts1, bar_charts1_legend, ncol=1, rel_heights=c(1, 0.2))
+    
     
     
     ## plot 
     pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_3.pdf"), 
         width=10,height=8)
-    top_row <- plot_grid(p1, p2, NA, ncol=3)
+    top_row <- plot_grid(p1, dem_plot, p2, ncol=3, rel_widths=c(1,1,1))
     bot_row <- plot_grid(p3, p5, p4, ncol=3)
     
     plot_grid(top_row, 
               bot_row, 
               ncol = 1, 
               rel_heights=c(1, 1, 1, 1))
-    grid.text(grid.labs,x = c(0.09, 0.42, 0.75, 0.06, 0.42, 0.75), y = c(0.97, 0.97, 0.97, 0.45, 0.45, 0.45),
+    grid.text(grid.labs,x = c(0.09, 0.42, 0.76, 0.06, 0.44, 0.76), y = c(0.97, 0.97, 0.97, 0.47, 0.47, 0.47),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     

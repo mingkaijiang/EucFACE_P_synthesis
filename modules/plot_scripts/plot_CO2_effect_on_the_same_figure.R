@@ -45,6 +45,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     plotDF4 <- subset(myDF, Group=="4_flux")
     plotDF5 <- subset(myDF, Group=="5_delta")
     
+    
     plotDF21 <- subset(plotDF2, terms%in%c("Canopy P Conc", "Sapwood P Conc",
                                            "Heartwood P Conc", "Fine Root P Conc",
                                            "Coarse Root P Conc", "Leaflitter P Conc",
@@ -853,9 +854,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Total vegetation uptake P flux",
                                   "Total vegetation retranslocation P flux",
                                   "Total vegetation production P flux"),
-                         labels=c("Mineralization P flux 30-60cm" = "Mineralization 30-60cm",
-                                  "Mineralization P flux 10-30cm" = "Mineralization 10-30cm",
-                                  "Mineralization P flux 0-10cm" = "Mineralization 0-10cm",
+                         labels=c("Mineralization P flux 30-60cm" = expression("Net " * P[min] * " 30-60cm"),
+                                  "Mineralization P flux 10-30cm" = expression("Net " * P[min] * " 10-30cm"),
+                                  "Mineralization P flux 0-10cm" = expression("Net " * P[min] * " 0-10cm"),
                                   "Total vegetation uptake P flux" = "Plant P uptake",
                                   "Total vegetation retranslocation P flux" = "Plant P resorption",
                                   "Total vegetation production P flux" = "Plant P demand"))+
@@ -1037,8 +1038,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
                                   "Soil P Pool 0-10cm" = expression(Delta * " Soil P (0-10cm)"),
                                   "Soil P Pool 10-30cm" = expression(Delta * " Soil P (10-30cm)"),
-                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil phosphate P (0-10cm)"),
-                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil phosphate P (10-30cm)")))+
+                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Phosphate P (0-10cm)"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Phosphate P (10-30cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1100,9 +1101,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         scale_y_discrete(limits=c("Microbial P Pool 30-60cm",
                                   "Microbial P Pool 10-30cm",
                                   "Microbial P Pool 0-10cm"),
-                         labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P (0-10cm)"),
-                                  "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P (10-30cm)"),
-                                  "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)")))+
+                         labels=c("Microbial P Pool 0-10cm" = expression(Delta * " Microbial P 0-10cm"),
+                                  "Microbial P Pool 10-30cm" = expression(Delta * " Microbial P 10-30cm"),
+                                  "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P 30-60cm")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1144,8 +1145,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.text.align=0)+
         scale_y_discrete(limits=c("Soil Phosphate P Pool 10-30cm",
                                   "Soil Phosphate P Pool 0-10cm"),
-                         labels=c("Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil phosphate P (0-10cm)"),
-                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil phosphate P (10-30cm)")))+
+                         labels=c("Soil Phosphate P Pool 0-10cm" = expression(Delta * " Phosphate-P 0-10cm"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Phosphate-P 10-30cm")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1201,6 +1202,145 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                            values=c("pos"="darkgreen", 
                                     "neg"="brown", 
                                     "neut"="black"))
+    
+    
+    
+    plotDF1$collab <- ifelse(plotDF1$diff > 0.0, "pos", 
+                              ifelse(plotDF1$diff < 0.0, "neg", "neut"))
+    
+    
+    plotDF81 <- plotDF1[plotDF1$terms%in%c("Plant P MRT"),]
+    
+    plotDF82 <- plotDF1[plotDF1$terms%in%c("Plant PUE"),]
+    
+    plotDF83 <- plotDF1[plotDF1$terms%in%c("Overstorey GPP efficiency",
+                                           "Understorey GPP efficiency"),]
+    
+    
+    
+    p81 <- ggplot(plotDF81) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (yr)"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position="none",
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Plant P MRT"),
+                         labels=c("Plant P MRT" = expression("Plant P MRT")))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
+    
+    
+    
+    
+    p82 <- ggplot(plotDF83) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (g C g ", P^-1, ")"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position="none",
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Understorey GPP efficiency",
+                                  "Overstorey GPP efficiency"),
+                         labels=c("Understorey GPP efficiency" = expression("   " * GPP[o] * " PUE"),
+                                  "Overstorey GPP efficiency" = expression("   " * GPP[u] * " PUE")))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
+    
+    p83 <- ggplot(plotDF82) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+                     size=6)+
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (g C g ", P^-1, ")"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position="none",
+              legend.text.align=0)+
+        scale_y_discrete(limits=c("Plant PUE"),
+                         labels=c("Plant PUE" = "Growth PUE"))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
+    
+    
     
     
     require(grid)
@@ -1280,19 +1420,59 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     dev.off()
     
     ### fluxes 2
+    #grid.labs <- c("(a)", "(b)", "(c)", "(d)")
+    #
+    #pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux2.pdf", 
+    #    width=12, height=6)
+    #plot_grid(p64, p61, p63, p62, ncol = 2, rel_widths = c(1, 1, 1, 1),
+    #          rel_heights=c(0.6, 0.6, 1, 1))
+    #grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.96), y = c(0.95, 0.95, 0.45, 0.45),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
+    #dev.off()
+    
+    
+    
     grid.labs <- c("(a)", "(b)", "(c)", "(d)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux2.pdf", 
         width=12, height=6)
-    plot_grid(p64, p61, p63, p62, ncol = 2, rel_widths = c(1, 1, 1, 1),
-              rel_heights=c(0.6, 0.6, 1, 1))
+    
+    topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1, 1.2, 1))
+    top_row <- plot_grid(p64, topright_row, ncol=2, rel_widths=c(1, 1))
+    bot_row <- plot_grid(p61, p63, ncol=2, rel_widths=c(1, 1))
+    
+    
+    plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
+              rel_heights=c(1, 1))
     grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.96), y = c(0.95, 0.95, 0.45, 0.45),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
     
     
-    ### delta pools
+    
+    ### revise 
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    
+    pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux3.pdf", 
+        width=12, height=5)
+    
+    topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1, 1.4, 1))
+    top_row <- plot_grid(p64, NULL, topright_row, ncol=3, rel_widths=c(1, 0.05, 1))
+    bot_row <- plot_grid(p74, NULL, p73, ncol=3, rel_widths=c(1, 0.05, 1))
+
+    plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1), scale=0.95,
+              rel_heights=c(1, 0.5))
+    grid.text(grid.labs,
+              x = c(0.03, 0.52, 0.52, 0.52, 
+                    0.03, 0.52), 
+              y = c(0.95, 0.95, 0.77, 0.55, 
+                    0.30, 0.30),
+              gp=gpar(fontsize=16, col="black", fontface="bold"))
+    dev.off()
+    
+    
+     ### delta pools
     grid.labs <- c("(a)", "(b)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_delta_P_pool.pdf", 

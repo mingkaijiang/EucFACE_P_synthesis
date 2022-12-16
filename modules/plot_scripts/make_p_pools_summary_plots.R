@@ -994,10 +994,10 @@ make_p_pools_summary_plots <- function(inDF,norm) {
     ## plot 
     pdf(paste0("plots_tables/output/", norm, "/P_Pools_Summary_Plots_", norm, "_2.pdf"),
         width=10,height=8)
-    top_row <- plot_grid(p1, p2, ncol=2)
+    top_row <- plot_grid(p1, NULL, p2, ncol=3, rel_widths=c(1, 0.1, 1))
     bot_row_left <- plot_grid(p3, p4, p5, legend_bot_row, ncol=1, rel_heights=c(0.7, 0.7, 1, 0.4))
-    bot_row <- plot_grid(bot_row_left, p6, ncol=2, rel_widths=c(1, 1))
-    plot_grid(top_row, bot_row, 
+    bot_row <- plot_grid(bot_row_left, NULL, p6, ncol=3, rel_widths=c(1, 0.1, 1))
+    plot_grid(top_row, bot_row, #scale = 0.9,
               ncol = 1, rel_widths = c(1, 1),
               rel_heights=c(1, 1))
     #grid.text(grid.labs,x = c(0.08, 0.48, 0.1, 0.42, 0.75), y = c(0.97, 0.97, 0.5, 0.5, 0.5),

@@ -88,3 +88,5 @@ GreensPalette <- rev(brewer.pal(n = 9, name = "Greens"))
 SpectralPalette <- brewer.pal(n = 9, name = "Spectral")
 
 Diverge_hsv_Palette <- colorspace::diverge_hcl(8)
+
+Pastel1Palette <- brewer.pal(n=9, name = "Pastel1")
