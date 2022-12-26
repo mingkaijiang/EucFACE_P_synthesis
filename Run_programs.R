@@ -971,7 +971,21 @@ plot_cp_ratios(inDF=summary_cp_ratios,
 #compare_hedley_p_data(soil_hedley_p_concentration)
 
 
-########################################################################################## 
+### bootstrapping analysis
+budgetDF=total_p_budget
+concDF=summary_table_concentration
+poolDF=summary_table_pool
+fluxDF=summary_table_flux
+deltaDF=summary_table_delta_pool
+bootstrapping_analysis(budgetDF=total_p_budget,
+                       concDF=summary_table_concentration,
+                       poolDF=summary_table_pool,
+                       fluxDF=summary_table_flux,
+                       deltaDF=summary_table_delta_pool)
+
+
+
+
 ########################################################################################## 
 #####
 ##### Step 7. Explore pre-treatment data for covariate

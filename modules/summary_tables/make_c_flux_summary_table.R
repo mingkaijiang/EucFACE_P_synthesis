@@ -317,12 +317,11 @@ make_c_flux_summary_table <- function(norm,
     ###### Diff (eCO2 - aCO2)
     treatDF$diff <- round(treatDF$eCO2 - treatDF$aCO2, 4)
     
-    ### sd of the diff
-    treatDF$diff_sd <- sqrt((treatDF$aCO2_sd^2+treatDF$eCO2_sd^2)/2)
+    ### se of the diff
+    treatDF$diff_se <- sqrt((treatDF$aCO2_sd^2+treatDF$eCO2_sd^2)/2) * (sqrt(2/3))
     
     ### confidence interval of the diff
-    #treatDF$diff_cf <- 2.353 * treatDF$diff_sd * 3 ^(-0.5)
-    treatDF$diff_cf <- qt(0.95, 4) * treatDF$diff_sd * (sqrt(2/3))
+    treatDF$diff_cf <- qt(0.975, 4) * treatDF$diff_se
     
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)

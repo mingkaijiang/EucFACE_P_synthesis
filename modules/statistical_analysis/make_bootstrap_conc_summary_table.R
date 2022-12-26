@@ -2,20 +2,20 @@
 #### To make EucFACE P summary table by CO2 treatment
 #### Ignore time but produce time coverage information
 
-make_conc_summary_table <- function(norm,
-                                    canopy_p_concentration,
-                                    sapwood_p_concentration,
-                                    fineroot_p_concentration,
-                                    leaflitter_p_concentration,
-                                    understorey_p_concentration,
-                                    understorey_litter_p_concentration,
-                                    frass_p_concentration,
-                                    microbial_p_concentration,
-                                    soil_p_concentration,
-                                    soil_inorganic_p_concentration,
-                                    soil_organic_p_concentration,
-                                    soil_phosphate_concentration,
-                                    soil_hedley_p_concentration) {
+make_bootstrap_conc_summary_table <- function(norm,
+                                              canopy_p_concentration,
+                                              sapwood_p_concentration,
+                                              fineroot_p_concentration,
+                                              leaflitter_p_concentration,
+                                              understorey_p_concentration,
+                                              understorey_litter_p_concentration,
+                                              frass_p_concentration,
+                                              microbial_p_concentration,
+                                              soil_p_concentration,
+                                              soil_inorganic_p_concentration,
+                                              soil_organic_p_concentration,
+                                              soil_phosphate_concentration,
+                                              soil_hedley_p_concentration) {
     
     ### Define concentration variable names
     conc.terms <- c("Canopy P Conc", 
@@ -62,12 +62,7 @@ make_conc_summary_table <- function(norm,
     treatDF$diff <- rep(NA, length(treatDF$conc.terms))
     treatDF$percent_diff <- rep(NA, length(treatDF$conc.terms))
     
-    treatDF$year_start <- rep(NA, length(treatDF$conc.terms))
-    treatDF$year_end <- rep(NA, length(treatDF$conc.terms))
-    treatDF$timepoint <- rep(NA, length(treatDF$conc.terms))
-    treatDF$notes <- rep(NA, length(treatDF$conc.terms))
     
-    ### Canopy P concentration
     out <- summaryBy(PercP~Ring,data=canopy_p_concentration,FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$conc.terms == "Canopy P Conc", 2:7] <- out$PercP
     treatDF$year_start[treatDF$conc.terms == "Canopy P Conc"] <- min(year(canopy_p_concentration$Date))    
@@ -351,11 +346,11 @@ make_conc_summary_table <- function(norm,
     ###### Diff (eCO2 - aCO2)
     treatDF$diff <- round(treatDF$eCO2 - treatDF$aCO2, 4)
     
-    ### se of the diff
-    treatDF$diff_se <- sqrt((treatDF$aCO2_sd^2+treatDF$eCO2_sd^2)/2) * (sqrt(2/3))
-      
+    ### sd of the diff
+    treatDF$diff_sd <- sqrt((treatDF$aCO2_sd^2+treatDF$eCO2_sd^2)/2)
+    
     ### confidence interval of the diff
-    treatDF$diff_cf <- qt(0.975, 4) * treatDF$diff_se
+    treatDF$diff_cf <- qt(0.95, 4) * treatDF$diff_sd * (sqrt(2/3))
     
     ###### percent differences (eCO2 - aCO2) / aCO2 * 100
     treatDF$percent_diff <- round((treatDF$eCO2 - treatDF$aCO2) / (treatDF$aCO2) * 100, 2)

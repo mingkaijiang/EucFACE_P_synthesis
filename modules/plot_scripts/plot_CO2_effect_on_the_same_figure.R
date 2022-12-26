@@ -5,13 +5,13 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                                deltaDF) {
     
     ### data cleaning
-    budgetDF <- budgetDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
-    concDF <- concDF[,c("conc.terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
-    poolDF <- poolDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
-    fluxDF <- fluxDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
-    deltaDF <- deltaDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")]
+    budgetDF <- budgetDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")]
+    concDF <- concDF[,c("conc.terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")]
+    poolDF <- poolDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")]
+    fluxDF <- fluxDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")]
+    deltaDF <- deltaDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")]
     
-    colnames(concDF) <- c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_sd", "diff_cf", "percent_diff")
+    colnames(concDF) <- c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")
     
     ### add group column
     budgetDF$Group <- "1_budget"
@@ -27,11 +27,15 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     ### calculate absolute difference and sd
     #myDF$diff <- myDF$eCO2 - myDF$aCO2
-    #myDF$diff_sd <- sqrt((myDF$aCO2_sd^2 + myDF$eCO2_sd^2)/2)
+    #myDF$diff_se <- sqrt((myDF$aCO2_sd^2 + myDF$eCO2_sd^2)/2)
     
     
     ### calculate 80% confidence interval, etc. 
-    myDF$diff_cf_80 <- with(myDF, diff_cf / qt(0.95, 4) * qt(0.75, 4))
+    myDF$diff_cf_90 <- with(myDF, diff_cf / qt(0.975, 4) * qt(0.95, 4))
+    myDF$diff_cf_85 <- with(myDF, diff_cf / qt(0.975, 4) * qt(0.925, 4))
+    myDF$diff_cf_80 <- with(myDF, diff_cf / qt(0.975, 4) * qt(0.90, 4))
+    myDF$diff_cf_75 <- with(myDF, diff_cf / qt(0.975, 4) * qt(0.875, 4))
+    myDF$diff_cf_68 <- with(myDF, diff_cf / qt(0.975, 4) * qt(0.84, 4))
     
     
     ### remove null
@@ -284,9 +288,17 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        #geom_segment(aes(y=terms, x=diff-diff_cf_80, 
+        #                 yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.2,
+        #             size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                          xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
@@ -339,15 +351,22 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         #                           "neg"=alpha("brown", 0.2), 
         #                           "neut"=alpha("black", 0.2))); plot(p41)
     
+    #plot(p41)
+    
     
     p42 <- ggplot(plotDF22) +  
         geom_vline(xintercept=0)+
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
@@ -411,9 +430,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (ele - amb, %)"))) + 
@@ -484,9 +508,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
@@ -542,9 +571,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
@@ -609,9 +643,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, ")"))) + 
@@ -683,9 +722,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -731,9 +775,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -783,9 +832,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -830,9 +884,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -881,9 +940,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -953,9 +1017,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -1007,9 +1076,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -1079,9 +1153,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -1124,9 +1203,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -1167,9 +1251,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g P ", m^-2, " ", yr^-1, ")"))) + 
@@ -1223,9 +1312,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (yr)"))) + 
@@ -1265,9 +1359,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g C g ", P^-1, ")"))) + 
@@ -1306,9 +1405,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
         geom_segment(aes(y=terms, x=diff-diff_cf, 
                          yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
                      size=6)+
-        geom_segment(aes(y=terms, x=diff-diff_cf_80, 
-                         yend=terms, xend=diff+diff_cf_80, color=collab), alpha=0.6,
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
                      size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
         geom_point(aes(y=terms, fill=collab, x=diff), color="black",
                    stat='identity', size=4, shape=21)+
         xlab(expression(paste(CO[2], " effect (g C g ", P^-1, ")"))) + 
