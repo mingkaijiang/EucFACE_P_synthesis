@@ -968,20 +968,9 @@ plot_cp_ratios(inDF=summary_cp_ratios,
 
 
 ### compare Hedley P data
-#compare_hedley_p_data(soil_hedley_p_concentration)
+### comparison to Hou 2017
+compare_hedley_p_data(soil_hedley_p_concentration)
 
-
-### bootstrapping analysis
-budgetDF=total_p_budget
-concDF=summary_table_concentration
-poolDF=summary_table_pool
-fluxDF=summary_table_flux
-deltaDF=summary_table_delta_pool
-bootstrapping_analysis(budgetDF=total_p_budget,
-                       concDF=summary_table_concentration,
-                       poolDF=summary_table_pool,
-                       fluxDF=summary_table_flux,
-                       deltaDF=summary_table_delta_pool)
 
 
 
@@ -1143,48 +1132,6 @@ normDF <- synthesize_normalized_responses(corDF.adj=corDF.adj,
                                           understorey_litter_p_flux=understorey_litter_p_flux)
 
 
-###### ---------------------------------------------------------------------------------------------------------##### 
-###### Step 9. Plotting P budget figures, based on normalized responses
-#norm <- "normalized"
-#
-#
-###### Note: for the following plotting script in this step,
-#####        we will need to go into the function
-#####        to plot!!! 
-#####        So, firstly, copy and paste inDF = total_p_budget_norm in your console,
-#####        then open the function, then plot. 
-#
-#inDF=normDF$total_p_budget
-#make_p_budget_summary_plots(inDF=normDF$total_p_budget,
-#                            norm="normalized")
-#
-#
-#### fate of P
-#make_fate_of_p_plots(inDF=normDF$total_p_budget,
-#                     norm="normalized")
-#
-#### Concentration
-#### no need
-#
-#### P pool
-#inDF=normDF$summary_table_pool
-#make_p_pools_summary_plots(inDF=normDF$summary_table_pool,
-#                           norm="normalized")
-#
-#### P flux
-#inDF=normDF$summary_table_flux
-#make_p_fluxes_summary_plots(inDF=normDF$summary_table_flux,
-#                            norm="normalized")
-#
-#
-##### Individial rings
-#inDF=normDF$total_p_budget
-#make_p_budget_ring_plots(inDF=normDF$total_p_budget,
-#                         norm="normalized")
-#
-#
-#
-#
 
 
 ###### ---------------- End -------------------- ######

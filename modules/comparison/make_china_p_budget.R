@@ -192,8 +192,9 @@ make_china_p_budget <- function(soil_p_concentration) {
     
     ### plot boxplot, log scale
     p1 <- ggplot(inDF) +
-        geom_jitter(aes(x=Biome, y=log(soilP_g_m2), fill=Leaf_Form), pch=21, alpha=0.4)+
-        geom_boxplot(aes(x=Biome, y=log(soilP_g_m2), fill=Leaf_Form), outlier.alpha = 0)+
+        #geom_violin(aes(x=Biome, y=log(soilP_g_m2), fill=Leaf_Form), alpha=0.4)+
+        geom_jitter(aes(x=Biome, y=log(soilP_g_m2), fill=Leaf_Form), pch=21)+
+        geom_boxplot(aes(x=Biome, y=log(soilP_g_m2), fill=Leaf_Form), alpha=0.4,outlier.alpha = 0)+
         geom_hline(yintercept=log(37.7), col="red", size = 2)+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -224,6 +225,8 @@ make_china_p_budget <- function(soil_p_concentration) {
         #annotate("text", x=2, y = 8, label = paste0("n = ", nDF[2]))+
         #annotate("text", x=3, y = 8, label = paste0("n = ", nDF[3]))+
         #annotate("text", x=4, y = 8, label = paste0("n = ", nDF[4]))
+    
+    plot(p1)
     
     
     
