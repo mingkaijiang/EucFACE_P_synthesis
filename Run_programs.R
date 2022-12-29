@@ -500,8 +500,8 @@ coarse_root_p_pool <- make_coarse_root_p_pool(p_conc=sapwood_p_concentration,
 
 
 soil_p_mineralization <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
-                                                          fineroot_c_pool=fineroot_c_pool,
-                                                          which.variable="SoilC")
+                                                         fineroot_c_pool=fineroot_c_pool,
+                                                         which.variable="SoilC")
 
 soil_p_mineralization2 <- make_soil_p_mineralization_flux(bk_density=soil_bulk_density,
                                                           fineroot_c_pool=fineroot_c_pool,

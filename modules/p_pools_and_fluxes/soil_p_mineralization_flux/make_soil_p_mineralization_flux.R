@@ -3,6 +3,24 @@ make_soil_p_mineralization_flux <- function(bk_density,
                                             fineroot_c_pool,
                                             which.variable) {
     
+    
+    # soil moisture
+    #swc <- read_swc()            # Topsoil moisture (30cm) daily by ring
+    #np <- read_npswc()           # All neutron probe data
+    ## summarise np to give total soil moisture to a given depth
+    #np_shallow <- summarise_np(np, depth = 50)
+    #np_deep <- summarise_np(np, depth = 300)
+    #
+    ## write.csv(nptot,"data/nptotals.csv")
+    #
+    ## meteorology
+    #airt <- read_airt()          # Air temperature, RH and VPD - mean, min & max per day
+    #rain <- read_rain()          # Use manual rain gauges if you want reliable totals
+    
+    
+    
+    
+    
     # download the data
     download_soil_p_mineralization_data()
     
@@ -28,6 +46,15 @@ make_soil_p_mineralization_flux <- function(bk_density,
     
     # assign depth
     myDF.m$Depth <- "0_10"
+    
+    
+    ## merge with swc and rain data
+    #test <- merge(myDF.m, swc, by.x=c("date", "ring"), by.y=c("Date", "Ring"))
+    #test$X <- NULL
+    #with(test[test$ring==6,], plot(P_mineralisation~VWC))
+    #with(test, lm(P_mineralisation~VWC))
+    
+    
     
     # merge with soil bulk density to calculate mineralization flux in unit of mg/m3/d
     
