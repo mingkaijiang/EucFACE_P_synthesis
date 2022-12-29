@@ -814,7 +814,6 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "5_Heartwood P Pool" = SpectralPalette[5],
                                      "6_Sapwood P Pool" = SpectralPalette[6],
                                      "7_Standing Dead Wood P Pool" = SpectralPalette[8],
-                                     
                                      "2_Understorey P Pool" = SpectralPalette[2]),
                           labels=c("1_Canopy P Pool"="Canopy",
                                    "4_Coarse Root P Pool"="Coarseroot",
@@ -823,11 +822,83 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                    "5_Heartwood P Pool"="Heartwood",
                                    "6_Sapwood P Pool"="Sapwood",
                                    "7_Standing Dead Wood P Pool"="Standing dead wood",
-                                   
                                    "2_Understorey P Pool"="Understorey aboveground"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
                          labels=c("aCO2"=expression(aCO[2]),
                                   "eCO2"=expression(eCO[2])))
+    
+    
+    ### add new component
+    plotDF2$Group[plotDF2$Variable%in%c("1_Canopy P Pool", 
+                                        "2_Understorey P Pool", 
+                                        "3_Fine Root P Pool")] <- "Fast turnover"
+    
+    plotDF2$Group[plotDF2$Variable%in%c("4_Coarse Root P Pool", 
+                                        "5_Heartwood P Pool", 
+                                        "6_Sapwood P Pool",
+                                        "7_Standing Dead Wood P Pool")] <- "Slow turnover"
+    
+    plotDF2$Group[plotDF2$Variable%in%c("8_Forestfloor Leaf Litter P Pool")] <- "Litter"
+    
+    sumDF <- summaryBy(mean~Group+Trt, FUN=sum, data=plotDF2, na.rm=T, keep.names=T)
+    
+    aDF <- sumDF[sumDF$Trt=="aCO2",]
+    eDF <- sumDF[sumDF$Trt=="eCO2",]
+    
+    aDF$frac <- with(aDF, round(mean/sum(mean)*100, 0))
+    eDF$frac <- with(eDF, round(mean/sum(mean)*100, 0))
+    
+    aDF$pos <- rev(cumsum(rev(aDF$frac)))
+    aDF$pos <- aDF$frac/2 + lead(aDF$pos, 1)
+    aDF$pos <- ifelse(is.na(aDF$pos), aDF$frac/2, aDF$pos)    
+        
+    ## plot
+    p21 <- ggplot(aDF, aes(x = "", y=frac, fill = Group)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                   color="black", show.legend=F)+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("Fast turnover" = Pastel1Palette[1],
+                                     "Slow turnover" = Pastel1Palette[7],
+                                     "Litter" = Pastel1Palette[9]),
+                          labels=c("Fast turnover"="Fast turnover",
+                                   "Slow turnover"="Slow turnover",
+                                   "Litter"="Litter"))
+    
+    
+    p22 <- ggplot(eDF, aes(x = "", y=frac, fill = Group)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                   color="black", show.legend=F)+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("Fast turnover" = Pastel1Palette[1],
+                                     "Slow turnover" = Pastel1Palette[7],
+                                     "Litter" = Pastel1Palette[9]),
+                          labels=c("Fast turnover"="Fast turnover",
+                                   "Slow turnover"="Slow turnover",
+                                   "Litter"="Litter"))
     
     
     
@@ -978,7 +1049,201 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                          labels=c(expression(aCO[2]),
                                   expression(eCO[2])))
     
-    #plot(p6)
+    
+    
+    ### bar plot
+    aDF <- subDF3[subDF3$Trt=="aCO2",]
+    eDF <- subDF3[subDF3$Trt=="eCO2",]
+    
+    aDF$frac <- with(aDF, round(mean/sum(mean)*100), 1)
+    eDF$frac <- with(eDF, round(mean/sum(mean)*100),1)
+    
+    p71 <- ggplot(aDF, aes(x = "", y=frac, fill = Variable)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                  color="black", show.legend=F)+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("4_Soil Inorg P Pool 0-10cm" = Diverge_hsv_Palette[5],
+                                     "3_Soil Phosphate P Pool 0-10cm" = Diverge_hsv_Palette[7],
+                                     "1_Microbial P Pool 0-10cm" = Diverge_hsv_Palette[1],
+                                     "2_Soil Org Residual P Pool 0-10cm" = Diverge_hsv_Palette[3]),
+                          labels=c("4_Soil Inorg P Pool 0-10cm"="Inorganic residual",
+                                   "3_Soil Phosphate P Pool 0-10cm"="Phosphate",
+                                   "1_Microbial P Pool 0-10cm"="Microbe",
+                                   "2_Soil Org Residual P Pool 0-10cm"="Organic residual"))
+    
+    
+    
+    p72 <- ggplot(eDF, aes(x = "", y=frac, fill = Variable)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                   color="black", show.legend=F)+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("4_Soil Inorg P Pool 0-10cm" = Diverge_hsv_Palette[5],
+                                     "3_Soil Phosphate P Pool 0-10cm" = Diverge_hsv_Palette[7],
+                                     "1_Microbial P Pool 0-10cm" = Diverge_hsv_Palette[1],
+                                     "2_Soil Org Residual P Pool 0-10cm" = Diverge_hsv_Palette[3]),
+                          labels=c("4_Soil Inorg P Pool 0-10cm"="Inorganic residual",
+                                   "3_Soil Phosphate P Pool 0-10cm"="Phosphate",
+                                   "1_Microbial P Pool 0-10cm"="Microbe",
+                                   "2_Soil Org Residual P Pool 0-10cm"="Organic residual"))
+    
+    
+    
+    ### bar plot
+    aDF <- subDF4[subDF4$Trt=="aCO2",]
+    eDF <- subDF4[subDF4$Trt=="eCO2",]
+    
+    aDF$frac <- with(aDF, round(mean/sum(mean)*100), 1)
+    eDF$frac <- with(eDF, round(mean/sum(mean)*100),1)
+    
+    p81 <- ggplot(aDF, aes(x = "", y=frac, fill = Variable)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                   color="black", show.legend=F)+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("4_Soil Inorg P Pool 10-30cm" = Diverge_hsv_Palette[5],
+                                     "3_Soil Phosphate P Pool 10-30cm" = Diverge_hsv_Palette[7],
+                                     "1_Microbial P Pool 10-30cm" = Diverge_hsv_Palette[1],
+                                     "2_Soil Org Residual P Pool 10-30cm" = Diverge_hsv_Palette[3]),
+                          labels=c("4_Soil Inorg P Pool 10-30cm"="Inorganic residual",
+                                   "3_Soil Phosphate P Pool 10-30cm"="Phosphate",
+                                   "1_Microbial P Pool 10-30cm"="Microbe",
+                                   "2_Soil Org Residual P Pool 10-30cm"="Organic residual"))
+    
+    
+    
+    p82 <- ggplot(eDF, aes(x = "", y=frac, fill = Variable)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                   color="black", show.legend=F)+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("4_Soil Inorg P Pool 10-30cm" = Diverge_hsv_Palette[5],
+                                     "3_Soil Phosphate P Pool 10-30cm" = Diverge_hsv_Palette[7],
+                                     "1_Microbial P Pool 10-30cm" = Diverge_hsv_Palette[1],
+                                     "2_Soil Org Residual P Pool 10-30cm" = Diverge_hsv_Palette[3]),
+                          labels=c("4_Soil Inorg P Pool 10-30cm"="Inorganic residual",
+                                   "3_Soil Phosphate P Pool 10-30cm"="Phosphate",
+                                   "1_Microbial P Pool 10-30cm"="Microbe",
+                                   "2_Soil Org Residual P Pool 10-30cm"="Organic residual"))
+    
+    
+    
+    ### bar plot
+    aDF <- subDF5[subDF5$Trt=="aCO2",]
+    eDF <- subDF5[subDF5$Trt=="eCO2",]
+    
+    aDF$frac <- with(aDF, round(mean/sum(mean)*100), 1)
+    eDF$frac <- with(eDF, round(mean/sum(mean)*100),1)
+    
+    p91 <- ggplot(aDF, aes(x = "", y=frac, fill = Variable)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                   color="black", show.legend=F)+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("4_Soil Inorg P Pool 30-60cm" = Diverge_hsv_Palette[5],
+                                     "3_Soil Phosphate P Pool 30-60cm" = Diverge_hsv_Palette[7],
+                                     "1_Microbial P Pool 30-60cm" = Diverge_hsv_Palette[1],
+                                     "2_Soil Org Residual P Pool 30-60cm" = Diverge_hsv_Palette[3]),
+                          labels=c("4_Soil Inorg P Pool 30-60cm"="Inorganic residual",
+                                   "3_Soil Phosphate P Pool 30-60cm"="Phosphate",
+                                   "1_Microbial P Pool 30-60cm"="Microbe",
+                                   "2_Soil Org Residual P Pool 30-60cm"="Organic residual"))
+    
+    
+    
+    p92 <- ggplot(eDF, aes(x = "", y=frac, fill = Variable)) +
+        coord_polar(theta = "y")+
+        geom_col(color="black")+
+        geom_label(aes(label=frac), position=position_stack(vjust=0.5),
+                   color="black", show.legend=F)+
+        #annotate(geom="text", x=1, y=0.1, text=expression(eCO[2]))+
+        theme_void()+
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_blank(), 
+              axis.text.x = element_blank(),
+              axis.text.y=element_blank(),
+              axis.title.y=element_blank(),
+              legend.text=element_text(size=12),
+              legend.title=element_text(size=14),
+              panel.grid.major=element_blank(),
+              legend.position="none")+
+        scale_fill_manual(name="", 
+                          values = c("4_Soil Inorg P Pool 30-60cm" = Diverge_hsv_Palette[5],
+                                     "3_Soil Phosphate P Pool 30-60cm" = Diverge_hsv_Palette[7],
+                                     "1_Microbial P Pool 30-60cm" = Diverge_hsv_Palette[1],
+                                     "2_Soil Org Residual P Pool 30-60cm" = Diverge_hsv_Palette[3]),
+                          labels=c("4_Soil Inorg P Pool 30-60cm"="Inorganic residual",
+                                   "3_Soil Phosphate P Pool 30-60cm"="Phosphate",
+                                   "1_Microbial P Pool 30-60cm"="Microbe",
+                                   "2_Soil Org Residual P Pool 30-60cm"="Organic residual"))
+    
+    
+    
+    legend_turnover <- get_legend(p21 + theme(legend.position="bottom",
+                                            legend.box = 'horizotal',
+                                            legend.box.just = 'left')
+                                 +guides(fill=guide_legend(nrow=2,byrow=TRUE)))
+    
+    turnover_plots <- plot_grid(p21, p22, legend_turnover, ncol=1, rel_heights=c(1,1,0.2))
+    
+    pie_charts <- plot_grid(p71, p72, p81, p82, p91, p92,
+                            ncol=2, rel_widths=c(1,1))
     
     
     legend_bot_row <- get_legend(p3 + theme(legend.position="bottom",
@@ -986,9 +1251,14 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                             legend.box.just = 'left')
                                  +guides(fill=guide_legend(nrow=2,byrow=TRUE)))
     
+    pdf(paste0("plots_tables/output/", norm, "/P_Pools_Summary_Plots_pie_chart", norm, ".pdf"),
+        width=6,height=8)
+    plot_grid(pie_charts, legend_bot_row, ncol=1,rel_heights=c(1,0.2))
+    dev.off()
     
     
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)")#, "(e)")
+    
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)")
     
     
     ## plot 
@@ -1007,6 +1277,32 @@ make_p_pools_summary_plots <- function(inDF,norm) {
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
+    
+    
+    
+    #grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    #
+    #
+    ### plot 
+    #pdf(paste0("plots_tables/output/", norm, "/P_Pools_Summary_Plots_", norm, "_3.pdf"),
+    #    width=10,height=8)
+    #top_row <- plot_grid(p1, NULL, p2, NULL, turnover_plots, ncol=5, rel_widths=c(1, 0.1, 1, 0.1, 1))
+    #
+    #
+    #bot_row_left <- plot_grid(p3, p4, p5, ncol=1, rel_heights=c(0.7, 0.7, 1))
+    #bot_row_left2 <- plot_grid(bot_row_left, NULL, pie_charts, ncol=3, rel_widths=c(1, 0.1, 1))
+    #bot_row_left3 <- plot_grid(bot_row_left2, legend_bot_row, ncol=1, rel_heights=c(1,0.4))    
+    #    
+    #bot_row <- plot_grid(bot_row_left3, NULL, p6, ncol=3, rel_widths=c(1, 0.1, 1))
+    #plot_grid(top_row, bot_row, #scale = 0.9,
+    #          ncol = 1, rel_widths = c(1, 1),
+    #          rel_heights=c(1, 1))
+    ##grid.text(grid.labs,x = c(0.08, 0.48, 0.1, 0.42, 0.75), y = c(0.97, 0.97, 0.5, 0.5, 0.5),
+    ##          gp=gpar(fontsize=16, col="black", fontface="bold"))
+    #grid.text(grid.labs,x = c(0.08, 0.54, 0.08, 0.54), 
+    #          y = c(0.97, 0.97, 0.52, 0.52),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
+    #dev.off()
     
     
     

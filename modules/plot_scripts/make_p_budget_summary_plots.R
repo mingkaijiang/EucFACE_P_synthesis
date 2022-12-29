@@ -125,6 +125,22 @@ make_p_budget_summary_plots <- function(inDF,
     plotDF9$pos <- with(plotDF9, mean + sd)
     plotDF9$neg <- with(plotDF9, mean - sd)
     
+    
+    plotDF10 <- data.frame(c(inDF$aCO2[inDF$terms=="Plant P MRT"], 
+                             inDF$eCO2[inDF$terms=="Plant P MRT"],
+                             inDF$aCO2[inDF$terms=="Microbe P MRT"], 
+                             inDF$eCO2[inDF$terms=="Microbe P MRT"]), 
+                           NA, NA)
+    colnames(plotDF10) <- c("mean", "sd", "Component")
+    plotDF10$Component <- c("Plant", "Plant", "Microbe", "Microbe")
+    plotDF10$sd <- c(inDF$aCO2_sd[inDF$terms=="Plant P MRT"], 
+                     inDF$eCO2_sd[inDF$terms=="Plant P MRT"],
+                     inDF$aCO2_sd[inDF$terms=="Microbe P MRT"], 
+                    inDF$eCO2_sd[inDF$terms=="Microbe P MRT"])
+    plotDF10$Trt <- c("aCO2", "eCO2")
+    plotDF10$pos <- with(plotDF10, mean + sd)
+    plotDF10$neg <- with(plotDF10, mean - sd)
+    
 
     
     ### Plotting
@@ -869,14 +885,14 @@ make_p_budget_summary_plots <- function(inDF,
     #plot(p2)
     
     
-    p3 <- ggplot(plotDF7,
-                 aes(Trt, mean)) + 
+    p3 <- ggplot(plotDF10,
+                 aes(Component, mean,group=Trt)) + 
       geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
       geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                     position = position_dodge(0.9), width=0.2, size=0.4) +
-      xlab("") + ylab("MRT (yr)")+
+      xlab("") + ylab("P MRT (yr)")+
       theme_linedraw() +
-      ylim(0,5)+
+      ylim(0,14)+
       theme(panel.grid.minor=element_blank(),
             axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
@@ -890,9 +906,9 @@ make_p_budget_summary_plots <- function(inDF,
                         labels=c(expression(aCO[2]), expression(eCO[2])))+
       scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
-      scale_x_discrete(limits=c("aCO2","eCO2"),
-                       labels=c(expression(aCO[2]),
-                                expression(eCO[2])))
+      scale_x_discrete(limits=c("Plant","Microbe"),
+                       labels=c("Plant",
+                                "Microbe"))
     
     
     p4 <- ggplot(plotDF8,
@@ -900,7 +916,7 @@ make_p_budget_summary_plots <- function(inDF,
       geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
       geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                     position = position_dodge(0.9), width=0.2, size=0.4) +
-      xlab("") + ylab(expression(paste("Plant PUE ( gC" * " " *gP^-1 * " )")))+
+      xlab("") + ylab(expression(paste("Growth PUE ( gC" * " " *gP^-1 * " )")))+
       theme_linedraw() +
       ylim(0,2500)+
       theme(panel.grid.minor=element_blank(),

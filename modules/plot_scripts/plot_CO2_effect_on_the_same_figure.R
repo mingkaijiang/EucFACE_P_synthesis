@@ -1298,7 +1298,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                               ifelse(plotDF1$diff < 0.0, "neg", "neut"))
     
     
-    plotDF81 <- plotDF1[plotDF1$terms%in%c("Plant P MRT"),]
+    plotDF81 <- plotDF1[plotDF1$terms%in%c("Plant P MRT", "Microbe P MRT"),]
     
     plotDF82 <- plotDF1[plotDF1$terms%in%c("Plant PUE"),]
     
@@ -1336,8 +1336,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.box.background = element_rect(alpha("grey",0.5)),
               legend.position="none",
               legend.text.align=0)+
-        scale_y_discrete(limits=c("Plant P MRT"),
-                         labels=c("Plant P MRT" = expression("Plant P MRT")))+
+        scale_y_discrete(limits=c("Plant P MRT", "Microbe P MRT"),
+                         labels=c("Plant P MRT" = expression("Plant P MRT"),
+                                  "Microbe P MRT" = expression("Microbial P MRT")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1561,7 +1562,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux3.pdf", 
         width=12, height=5)
     
-    topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1, 1.4, 1))
+    topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1.4, 1.4, 1))
     top_row <- plot_grid(p64, NULL, topright_row, ncol=3, rel_widths=c(1, 0.05, 1))
     bot_row <- plot_grid(p74, NULL, p73, ncol=3, rel_widths=c(1, 0.05, 1))
 

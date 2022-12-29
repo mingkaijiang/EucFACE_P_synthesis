@@ -19,6 +19,10 @@ make_total_p_budget <- function(norm,
                "Plant P uptake over requirement",
                "Plant P MRT", 
                "Plant PUE",
+               "Microbe P MRT",
+               "Microbe P MRT 0-10cm",
+               "Microbe P MRT 10-30cm",
+               "Microbe P MRT 30-60cm",
                "Overstorey GPP efficiency",
                "Understorey GPP efficiency",
                "Plant P uptake over P mineralization",
@@ -94,6 +98,20 @@ make_total_p_budget <- function(norm,
     out[out$terms == "Overstorey GPP efficiency", 2:7] <- round(plant_GPP_efficiency$GPP_efficiency_gC_gP[plant_GPP_efficiency$variable=="overstorey"],2)
     out[out$terms == "Understorey GPP efficiency", 2:7] <- round(plant_GPP_efficiency$GPP_efficiency_gC_gP[plant_GPP_efficiency$variable=="understorey"],2)
     
+    out[out$terms == "Microbe P MRT", 2:7] <- round(colSums(summary_table_pool[summary_table_pool$terms%in%c("Microbial P Pool 0-10cm",
+                                                                                                             "Microbial P Pool 10-30cm",
+                                                                                                             "Microbial P Pool 30-60cm"), 2:7])/
+                                                        out[out$terms == "Soil P mineralization flux", 2:7],2)
+    
+    
+    out[out$terms == "Microbe P MRT 0-10cm", 2:7] <- round(summary_table_pool[summary_table_pool$terms=="Microbial P Pool 0-10cm", 2:7]/
+                                                               summary_table_flux[summary_table_flux$terms=="Mineralization P flux 0-10cm",2:7],2)
+    
+    out[out$terms == "Microbe P MRT 10-30cm", 2:7] <- round(summary_table_pool[summary_table_pool$terms=="Microbial P Pool 10-30cm", 2:7]/
+                                                               summary_table_flux[summary_table_flux$terms=="Mineralization P flux 10-30cm",2:7],2)
+    
+    out[out$terms == "Microbe P MRT 30-60cm", 2:7] <- round(summary_table_pool[summary_table_pool$terms=="Microbial P Pool 30-60cm", 2:7]/
+                                                               summary_table_flux[summary_table_flux$terms=="Mineralization P flux 30-60cm",2:7],2)
     
     
     ### aCO2 and eCO2 averages
