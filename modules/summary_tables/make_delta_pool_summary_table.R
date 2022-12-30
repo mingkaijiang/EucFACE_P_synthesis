@@ -29,9 +29,11 @@ make_delta_pool_summary_table <- function(norm,
                "Fine Root P Pool",
                "Coarse Root P Pool", 
                "Understorey P Pool", 
+               "Microbial P Pool",
                "Microbial P Pool 0-10cm", 
                "Microbial P Pool 10-30cm", 
                "Microbial P Pool 30-60cm", 
+               "Soil Phosphate P Pool",
                "Soil Phosphate P Pool 0-10cm",
                "Soil Phosphate P Pool 10-30cm",
                "Soil P Pool 0-10cm",
@@ -122,6 +124,15 @@ make_delta_pool_summary_table <- function(norm,
     
     
     ### Microbial P pool
+    out <- summaryBy(delta~Ring+Date,data=microbial_p_pool,FUN=sum,keep.names=T,na.rm=T)
+    out2 <- summaryBy(delta~Ring,data=out,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Microbial P Pool", 2:7] <- out2$delta
+    treatDF$year_start[treatDF$terms == "Microbial P Pool"] <- NA   
+    treatDF$year_end[treatDF$terms == "Microbial P Pool"] <- NA
+    treatDF$timepoint[treatDF$terms == "Microbial P Pool"] <- NA 
+    treatDF$notes[treatDF$terms == "Microbial P Pool"] <- "0-60cm"
+    
+    
     out <- summaryBy(delta~Ring,data=microbial_p_pool[microbial_p_pool$Depth=="0_10",],FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Microbial P Pool 0-10cm", 2:7] <- out$delta
     treatDF$year_start[treatDF$terms == "Microbial P Pool 0-10cm"] <- min(microbial_p_pool$Date[microbial_p_pool$Depth=="0_10"])    
@@ -149,6 +160,14 @@ make_delta_pool_summary_table <- function(norm,
     
     
     ### Soil Phosphate P pool
+    out <- summaryBy(delta~Ring+Date,data=soil_phosphate_pool,FUN=sum,keep.names=T,na.rm=T)
+    out2 <- summaryBy(delta~Ring,data=out,FUN=mean,keep.names=T,na.rm=T)
+    treatDF[treatDF$terms == "Soil Phosphate P Pool", 2:7] <- out2$delta
+    treatDF$year_start[treatDF$terms == "Soil Phosphate P Pool"] <- NA   
+    treatDF$year_end[treatDF$terms == "Soil Phosphate P Pool"] <- NA
+    treatDF$timepoint[treatDF$terms == "Soil Phosphate P Pool"] <- NA
+    
+    
     out <- summaryBy(delta~Ring,data=soil_phosphate_pool[soil_phosphate_pool$Depth=="0_10",],FUN=mean,keep.names=T,na.rm=T)
     treatDF[treatDF$terms == "Soil Phosphate P Pool 0-10cm", 2:7] <- out$delta
     treatDF$year_start[treatDF$terms == "Soil Phosphate P Pool 0-10cm"] <- min(soil_phosphate_pool$Date[soil_phosphate_pool$Depth=="0_10"])    
