@@ -835,6 +835,7 @@ compare_cp_ratio(myDF1=summary_cp_ratios, myDF2=summary_cp_ratios_sensitivity)
 vegetation_standing_p_stock <- make_vegetation_standing_p_stock(norm="unnormalized",
                                                                 leaf=canopy_p_pool,
                                                                 wood=wood_p_pool,
+                                                                sapwood=sapwood_p_pool,
                                                                 fineroot=fineroot_p_pool,
                                                                 coarseroot=coarse_root_p_pool,
                                                                 understorey=understorey_p_pool,

@@ -213,7 +213,7 @@ make_china_p_budget <- function(soil_p_concentration) {
                            breaks=c(log(1), log(10), log(100), log(1000)), 
                            labels=c(1, 10, 100, 1000), 
                            limits=c(log(10), 8))+
-        scale_fill_manual(name="Leaf form",
+        scale_fill_manual(name="",
                           labels=c("needleleaf"="Needleleaf", 
                                    "broadleaf"="Broadleaf"),
                           values=c("green", "brown"))#+
@@ -226,7 +226,7 @@ make_china_p_budget <- function(soil_p_concentration) {
         #annotate("text", x=3, y = 8, label = paste0("n = ", nDF[3]))+
         #annotate("text", x=4, y = 8, label = paste0("n = ", nDF[4]))
     
-    plot(p1)
+    #plot(p1)
     
     
     
@@ -251,7 +251,7 @@ make_china_p_budget <- function(soil_p_concentration) {
                            breaks=c(log(0.1), log(1), log(10), log(100)), 
                            labels=c(0.1, 1, 10, 100), 
                            limits=c(-5, 8))+
-        scale_fill_manual(name="Leaf form",
+        scale_fill_manual(name="",
                           labels=c("needleleaf"="Needleleaf", 
                                    "broadleaf"="Broadleaf"),
                           values=c("green", "brown"))
@@ -279,7 +279,7 @@ make_china_p_budget <- function(soil_p_concentration) {
                            breaks=c(log(0.01), log(0.1), log(1), log(10)), 
                            labels=c(0.01, 0.1, 1, 10), 
                            limits=c(-5, 3))+
-        scale_fill_manual(name="Leaf form",
+        scale_fill_manual(name="",
                           labels=c("needleleaf"="Needleleaf", 
                                    "broadleaf"="Broadleaf"),
                           values=c("green", "brown"))
@@ -306,7 +306,7 @@ make_china_p_budget <- function(soil_p_concentration) {
                            breaks=c(log(0.01), log(0.05), log(0.1), log(0.5), log(1)), 
                            labels=c(0.01, 0.05, 0.1, 0.5, 1), 
                            limits=c(-5, 1))+
-        scale_fill_manual(name="Leaf form",
+        scale_fill_manual(name="",
                           labels=c("needleleaf"="Needleleaf", 
                                    "broadleaf"="Broadleaf"),
                           values=c("green", "brown"))

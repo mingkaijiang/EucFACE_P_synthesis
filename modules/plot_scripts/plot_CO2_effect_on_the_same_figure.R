@@ -1386,8 +1386,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.text.align=0)+
         scale_y_discrete(limits=c("Understorey GPP efficiency",
                                   "Overstorey GPP efficiency"),
-                         labels=c("Understorey GPP efficiency" = expression("   " * GPP[o] * " PUE"),
-                                  "Overstorey GPP efficiency" = expression("   " * GPP[u] * " PUE")))+
+                         labels=c("Understorey GPP efficiency" = expression("   " * GPP[u] * " PUE"),
+                                  "Overstorey GPP efficiency" = expression("   " * GPP[o] * " PUE")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",

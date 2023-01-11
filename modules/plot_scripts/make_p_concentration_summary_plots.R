@@ -1,5 +1,14 @@
 make_p_concentration_summary_plots <- function(inDF,norm) {
     
+    
+    ### convert unit
+    inDF$aCO2 <- inDF$aCO2 * 10
+    inDF$eCO2 <- inDF$eCO2 * 10
+    inDF$aCO2_sd <- inDF$aCO2_sd * 10
+    inDF$eCO2_sd <- inDF$eCO2_sd * 10
+    
+    
+    
     ### Plot 1
     plotDF1 <- data.frame(c(inDF$aCO2[inDF$conc.terms=="Canopy P Conc"], 
                             inDF$eCO2[inDF$conc.terms=="Canopy P Conc"],
@@ -139,9 +148,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.15)+
+        ylim(0,1.5)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -161,9 +170,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.10)+
+        ylim(0,1.0)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -182,9 +191,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.05)+
+        ylim(0,0.5)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -203,9 +212,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.15)+
+        ylim(0,1.5)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -224,9 +233,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.01)+
+        ylim(0,0.1)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -245,9 +254,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.0003)+
+        ylim(0,0.003)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -267,9 +276,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.01)+
+        ylim(0,0.1)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -289,9 +298,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.01)+
+        ylim(0,0.1)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -311,9 +320,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.01)+
+        ylim(0,0.1)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -333,9 +342,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.004)+
+        ylim(0,0.04)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),
@@ -355,9 +364,9 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
         geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                       position = position_dodge(0.9), width=0.2, size=0.4) +
-        labs(x="", y="P concentration (%)")+
+        labs(x="", y=expression("P concentration (mg " * g^-1 * ")"))+
         theme_linedraw() +
-        ylim(0,0.15)+
+        ylim(0,1.5)+
         theme(panel.grid.minor=element_blank(),
               axis.title.x = element_text(size=10), 
               axis.text.x = element_text(size=10),

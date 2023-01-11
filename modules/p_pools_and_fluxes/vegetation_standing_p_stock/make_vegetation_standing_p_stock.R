@@ -1,6 +1,7 @@
 make_vegetation_standing_p_stock <- function(norm, 
                                              leaf, 
                                              wood, 
+                                             sapwood,
                                              understorey, 
                                              fineroot, 
                                              coarseroot,
@@ -17,15 +18,19 @@ make_vegetation_standing_p_stock <- function(norm,
     ua.y <- summaryBy(understorey_p_pool~Ring, data=understorey, FUN=mean, na.rm=T, keep.names=T)
     dead.y <- summaryBy(wood_p_pool~Ring, data=dead, FUN=mean, na.rm=T, keep.names=T)
     forestfloor.y <- summaryBy(leaflitter_p_pool~Ring, data=forestfloor, FUN=mean, na.rm=T, keep.names=T)
+    sapwood.y <- summaryBy(wood_p_pool~Ring, data=sapwood, FUN=mean, na.rm=T, keep.names=T)
+    
     
     ### compute annual averages for each pool and ring
-    out <- cbind(leaf.y, wood.y$wood_p_pool, 
+    out <- cbind(leaf.y, 
+                 wood.y$wood_p_pool,
+                 sapwood.y$wood_p_pool,
                  froot.y$fineroot_p_pool,
                  croot.y$coarse_root_p_pool,
                  ua.y$understorey_p_pool,
                  dead.y$wood_p_pool,
                  forestfloor.y$leaflitter_p_pool)
-    colnames(out) <- c("Ring", "leaf", "wood", 
+    colnames(out) <- c("Ring", "leaf", "wood", "sapwood",
                        "fineroot", "coarseroot", "understorey",
                        "dead", "forestfloor")
     
