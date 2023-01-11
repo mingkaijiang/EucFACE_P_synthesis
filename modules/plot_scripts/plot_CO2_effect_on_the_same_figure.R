@@ -73,13 +73,13 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Occluded P Conc 0-10cm"))
     
     
-    plotDF21$collab <- ifelse(plotDF21$diff > 0.0, "pos", 
+    plotDF21$collab <- ifelse(plotDF21$diff >= 0.0, "pos", 
                               ifelse(plotDF21$diff < 0.0, "neg", "neut"))
     
-    plotDF22$collab <- ifelse(plotDF22$diff > 0.0, "pos", 
+    plotDF22$collab <- ifelse(plotDF22$diff >= 0.0, "pos", 
                               ifelse(plotDF22$diff < 0.0, "neg", "neut"))
     
-    plotDF23$collab <- ifelse(plotDF23$diff > 0.0, "pos", 
+    plotDF23$collab <- ifelse(plotDF23$diff >= 0.0, "pos", 
                               ifelse(plotDF23$diff < 0.0, "neg", "neut"))
     
     

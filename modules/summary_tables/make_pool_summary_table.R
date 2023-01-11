@@ -372,14 +372,14 @@ make_pool_summary_table <- function(norm,
     treatDF[treatDF$terms=="Soil P Pool 30-60cm",2:7] <- treatDF[treatDF$terms=="Soil Inorg P Pool 30-60cm",2:7]+ treatDF[treatDF$terms=="Soil Org P Pool 30-60cm",2:7] 
     
     ### calculate treatment averages
-    treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 5)
-    treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 5)
+    treatDF$aCO2 <- round(rowMeans(subset(treatDF, select=c(R2, R3, R6)), na.rm=T), 6)
+    treatDF$eCO2 <- round(rowMeans(subset(treatDF, select=c(R1, R4, R5)), na.rm=T), 6)
     
     treatDF$aCO2_sd <- rowSds(as.matrix(subset(treatDF, select=c(R2, R3, R6))), na.rm=T)
     treatDF$eCO2_sd <- rowSds(as.matrix(subset(treatDF, select=c(R1, R4, R5))), na.rm=T)
     
     ###### Diff (eCO2 - aCO2)
-    treatDF$diff <- round(treatDF$eCO2 - treatDF$aCO2, 4)
+    treatDF$diff <- round(treatDF$eCO2 - treatDF$aCO2, 6)
     
     
     ### se of the diff

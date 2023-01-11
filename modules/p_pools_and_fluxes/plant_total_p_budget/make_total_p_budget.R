@@ -115,8 +115,8 @@ make_total_p_budget <- function(norm,
     
     
     ### aCO2 and eCO2 averages
-    out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 4)
-    out$eCO2 <- round(rowMeans(data.frame(out$R1, out$R4, out$R5)) , 4)
+    out$aCO2 <- round(rowMeans(data.frame(out$R2, out$R3, out$R6)), 6)
+    out$eCO2 <- round(rowMeans(data.frame(out$R1, out$R4, out$R5)) , 6)
     
     
     ### sd
@@ -125,7 +125,7 @@ make_total_p_budget <- function(norm,
     
     
     ###### Diff (eCO2 - aCO2)
-    out$diff <- round(out$eCO2 - out$aCO2, 4)
+    out$diff <- round(out$eCO2 - out$aCO2, 6)
     
     ### se of the diff
     out$diff_se <- sqrt((out$aCO2_sd^2+out$eCO2_sd^2)/2) * (sqrt(2/3))
