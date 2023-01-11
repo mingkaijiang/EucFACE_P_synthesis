@@ -51,7 +51,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     plotDF21 <- subset(plotDF2, terms%in%c("Canopy P Conc", "Sapwood P Conc",
-                                           "Heartwood P Conc", "Fine Root P Conc",
+                                           #"Heartwood P Conc", 
+                                           "Fine Root P Conc",
                                            "Coarse Root P Conc", "Leaflitter P Conc",
                                            "Leaflitter P Conc", "Understorey P Conc",
                                            "Frass P Conc"))
@@ -73,12 +74,14 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                            "Occluded P Conc 0-10cm"))
     
     
-    plotDF21$collab <- ifelse(plotDF21$diff >= 0.0, "pos", 
+    plotDF21$collab <- ifelse(plotDF21$diff > 0.0, "pos", 
                               ifelse(plotDF21$diff < 0.0, "neg", "neut"))
     
-    plotDF22$collab <- ifelse(plotDF22$diff >= 0.0, "pos", 
+    plotDF22$collab <- ifelse(plotDF22$diff > 0.0, "pos", 
                               ifelse(plotDF22$diff < 0.0, "neg", "neut"))
     
+    
+    ## special case for primary Ca Pi pool, 6 digits after decimal places, so round it up to positive
     plotDF23$collab <- ifelse(plotDF23$diff >= 0.0, "pos", 
                               ifelse(plotDF23$diff < 0.0, "neg", "neut"))
     
@@ -320,12 +323,12 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Leaflitter P Conc",
                                   "Coarse Root P Conc",
                                   "Fine Root P Conc",
-                                  "Heartwood P Conc",
+                                  #"Heartwood P Conc",
                                   "Sapwood P Conc",
                                   "Canopy P Conc"),
                          labels=c("Canopy P Conc" = "Canopy P",
                                   "Sapwood P Conc" = "Sapwood P",
-                                  "Heartwood P Conc" = "Heartwood P",
+                                  #"Heartwood P Conc" = "Heartwood P",
                                   "Fine Root P Conc" = "Fine root P", 
                                   "Coarse Root P Conc" = "Coarse root P",
                                   "Leaflitter P Conc" = "Leaflitter P",
