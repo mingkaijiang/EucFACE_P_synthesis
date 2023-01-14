@@ -2,7 +2,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                                concDF,
                                                poolDF,
                                                fluxDF,
-                                               deltaDF) {
+                                               deltaDF,
+                                               cpDF) {
     
     ### data cleaning
     budgetDF <- budgetDF[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")]
@@ -21,8 +22,50 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     deltaDF$Group <- "5_delta"
     
     
+    ### add CP ratio DF
+    cpDF2 <- reshape2::melt(cpDF, id.vars=c("Ring"))
+    cpDF2$Trt <- "aCO2"
+    cpDF2$Trt[cpDF2$Ring%in%c(1,4,5)] <- "eCO2"
+    
+    cpDF3 <- summaryBy(value~Trt+variable, data=cpDF2, FUN=c(mean,sd), na.rm=T, keep.names=T)
+    
+    cpDF4 <- cpDF3[cpDF3$Trt=="aCO2",]
+    cpDF5 <- cpDF3[cpDF3$Trt=="eCO2",]
+    
+    cpDF4$Trt <- NULL
+    cpDF5$Trt <- NULL
+    
+    colnames(cpDF4) <- c("terms", "aCO2", "aCO2_sd")
+    colnames(cpDF5) <- c("terms", "eCO2", "eCO2_sd")
+    
+    cpDF6 <- merge(cpDF4, cpDF5, by="terms")
+    
+    cpDF6$diff <- with(cpDF6, eCO2 - aCO2)
+    cpDF6$percent_diff <- with(cpDF6, (eCO2-aCO2)/aCO2 * 100)
+    cpDF6$diff_se <- with(cpDF6, sqrt((aCO2_sd^2+eCO2_sd^2)/2)*sqrt(2/3))
+    cpDF6$diff_cf <- with(cpDF6, qt(0.975, 4) * diff_se)
+    
+    cpDF6 <- cpDF6[cpDF6$terms%in%c("canopy", "fineroot", "frass", 
+                                    "leaflitter", "microbe", "sapwood",
+                                    "soil", "understorey", "understorey_litter"),]
+    
+    cpDF6$terms <- as.character(cpDF6$terms)
+    
+    cpDF6$terms[cpDF6$terms=="canopy"] <- "canopy CP"
+    cpDF6$terms[cpDF6$terms=="fineroot"] <- "fineroot CP"
+    cpDF6$terms[cpDF6$terms=="frass"] <- "frass CP"
+    cpDF6$terms[cpDF6$terms=="leaflitter"] <- "leaflitter CP"
+    cpDF6$terms[cpDF6$terms=="microbe"] <- "microbe CP"
+    cpDF6$terms[cpDF6$terms=="sapwood"] <- "sapwood CP"
+    cpDF6$terms[cpDF6$terms=="understorey"] <- "understorey CP"
+    cpDF6$terms[cpDF6$terms=="understorey_litter"] <- "understorey litter CP"
+    cpDF6$terms[cpDF6$terms=="soil"] <- "soil CP"
+    
+    cpDF <- cpDF6[,c("terms", "aCO2", "eCO2", "aCO2_sd", "eCO2_sd", "diff", "diff_se", "diff_cf", "percent_diff")]
+    cpDF$Group <- "6_cp"
+
     ### merge all
-    myDF <- rbind(budgetDF, rbind(concDF, rbind(poolDF, rbind(fluxDF, deltaDF))))
+    myDF <- rbind(budgetDF, rbind(concDF, rbind(poolDF, rbind(fluxDF, rbind(deltaDF, cpDF)))))
     
     
     ### calculate absolute difference and sd
@@ -48,6 +91,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     plotDF3 <- subset(myDF, Group=="3_pool")
     plotDF4 <- subset(myDF, Group=="4_flux")
     plotDF5 <- subset(myDF, Group=="5_delta")
+    plotDF6 <- subset(myDF, Group=="6_cp")
     
     
     plotDF21 <- subset(plotDF2, terms%in%c("Canopy P Conc", "Sapwood P Conc",
@@ -141,8 +185,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     plotDF43 <- subset(plotDF4, terms%in%c("Canopy retrans P flux", 
                                            "Sapwood retrans P flux",
-                                           "Fineroot retrans P flux",
-                                           "Coarseroot retrans P flux", 
+                                           #"Fineroot retrans P flux",
+                                           #"Coarseroot retrans P flux", 
                                            "Understorey retrans P flux"))
     
     plotDF44 <- subset(plotDF4, terms%in%c("Total vegetation production P flux", 
@@ -189,6 +233,10 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     plotDF52$collab <- ifelse(plotDF52$diff > 0.0, "pos", 
                               ifelse(plotDF52$diff < 0.0, "neg", "neut"))
+    
+    plotDF6$collab <- ifelse(plotDF6$diff > 0.0, "pos", 
+                              ifelse(plotDF6$diff < 0.0, "neg", "neut"))
+    
     
     
     ### plotDF1 split into multiple sub DFs
@@ -975,8 +1023,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Twig litter P flux",
                                   "Leaflitter P flux",
                                   "Understorey retrans P flux",
-                                  "Coarseroot retrans P flux",
-                                  "Fineroot retrans P flux",
+                                  #"Coarseroot retrans P flux",
+                                  #"Fineroot retrans P flux",
                                   "Sapwood retrans P flux",
                                   "Canopy retrans P flux",
                                   "Understorey P flux",
@@ -998,8 +1046,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Frass P flux" = "Frass P",
                                   "Canopy retrans P flux" = "Canopy retrans P",
                                   "Sapwood retrans P flux" = "Sapwood retrans P",
-                                  "Fineroot retrans P flux" = "Fineroot retrans P", 
-                                  "Coarseroot retrans P flux" = "Coarseroot retrans P",
+                                  #"Fineroot retrans P flux" = "Fineroot retrans P", 
+                                  #"Coarseroot retrans P flux" = "Coarseroot retrans P",
                                   "Understorey retrans P flux" = "Understorey retrans P"))+
         scale_fill_manual(name="Legend",
                           labels=c("pos"="Positive",
@@ -1469,6 +1517,54 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     #dev.off()
     
     
+    
+    
+    p91 <- ggplot(plotDF6) +  
+        geom_vline(xintercept=0)+
+        geom_segment(aes(y=terms, x=diff-diff_cf, 
+                         yend=terms, xend=diff+diff_cf, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_85, 
+                         yend=terms, xend=diff+diff_cf_85, color=collab), alpha=0.2,
+                     size=6)+
+        geom_segment(aes(y=terms, x=diff-diff_cf_75, 
+                         yend=terms, xend=diff+diff_cf_75, color=collab), alpha=0.6,
+                     size=6)+
+        geom_errorbarh(aes(y=terms, xmin=diff-diff_se, 
+                           xmax=diff+diff_se), col="black", height=0.1)+
+        geom_point(aes(y=terms, fill=collab, x=diff), color="black",
+                   stat='identity', size=4, shape=21)+
+        xlab(expression(paste(CO[2], " effect (yr)"))) + 
+        ylab("") +
+        theme_linedraw() +
+        theme(panel.grid.minor=element_blank(),
+              axis.title.x = element_text(size=12, family="Helvetica"), 
+              axis.text.x = element_text(size=12, family="Helvetica"),
+              axis.text.y=element_text(size=12, family="Helvetica"),
+              axis.title.y=element_text(size=12, family="Helvetica"),
+              legend.text=element_text(size=12, family="Helvetica"),
+              legend.title=element_text(size=12, family="Helvetica"),
+              panel.grid.major=element_blank(),
+              legend.box.background = element_rect(alpha("grey",0.5)),
+              legend.position="none",
+              legend.text.align=0)+
+        #scale_y_discrete(limits=c("Plant P MRT", "Microbe P MRT"),
+        #                 labels=c("Plant P MRT" = expression("Plant P MRT"),
+        #                          "Microbe P MRT" = expression("Microbial P MRT")))+
+        scale_fill_manual(name="",
+                          labels=c("pos"="Positive",
+                                   "neg"="Negative",
+                                   "neut"="Zero"),
+                          values=c("pos"="darkgreen", "neg"="brown", "neut"="black"))+
+        scale_color_manual(name="",
+                           labels=c("pos"="Positive",
+                                    "neg"="Negative",
+                                    "neut"="Zero"),
+                           values=c("pos"="darkgreen", 
+                                    "neg"="brown", 
+                                    "neut"="black"))
+    
+    #plot(p91)
     
     grid.labs <- c("(a)", "(b)", "(c)")
     

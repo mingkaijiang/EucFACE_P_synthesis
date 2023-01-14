@@ -955,11 +955,13 @@ concDF=summary_table_concentration
 poolDF=summary_table_pool
 fluxDF=summary_table_flux
 deltaDF=summary_table_delta_pool
+cpDF=summary_cp_ratios
 plot_CO2_effect_on_the_same_figure(budgetDF=total_p_budget,
                                    concDF=summary_table_concentration,
                                    poolDF=summary_table_pool,
                                    fluxDF=summary_table_flux,
-                                   deltaDF=summary_table_delta_pool)
+                                   deltaDF=summary_table_delta_pool,
+                                   cpDF=summary_cp_ratios)
 
 ### plot CP ratios
 inDF=summary_cp_ratios
