@@ -22,6 +22,22 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     deltaDF$Group <- "5_delta"
     
     
+    ### add GPP PUE into budgetDF
+    tmpDF <- budgetDF[budgetDF$terms=="Overstorey GPP efficiency",]
+    tmpDF$terms[tmpDF$terms=="Overstorey GPP efficiency"] <- "Plant GPP efficiency"
+    tmpDF$aCO2 <- budgetDF$aCO2[budgetDF$terms=="Overstorey GPP efficiency"] + budgetDF$aCO2[budgetDF$terms=="Understorey GPP efficiency"] 
+    tmpDF$eCO2 <- budgetDF$eCO2[budgetDF$terms=="Overstorey GPP efficiency"] + budgetDF$eCO2[budgetDF$terms=="Understorey GPP efficiency"] 
+    tmpDF$aCO2_sd <- sqrt((budgetDF$aCO2_sd[budgetDF$terms=="Overstorey GPP efficiency"]^2
+                           + budgetDF$aCO2_sd[budgetDF$terms=="Understorey GPP efficiency"]^2)/2)
+    tmpDF$eCO2_sd <- sqrt((budgetDF$eCO2_sd[budgetDF$terms=="Overstorey GPP efficiency"]^2
+                           + budgetDF$eCO2_sd[budgetDF$terms=="Understorey GPP efficiency"]^2)/2)
+    tmpDF$diff <- tmpDF$eCO2 - tmpDF$aCO2
+    tmpDF$diff_se <- sqrt((tmpDF$aCO2_sd^2+tmpDF$eCO2_sd^2)/2) * (sqrt(2/3))
+    tmpDF$diff_cf <- qt(0.975, 4) * tmpDF$diff_se
+    tmpDF$percent_diff <- (tmpDF$eCO2 - tmpDF$aCO2)/tmpDF$aCO2 * 100.0
+    
+    budgetDF <- rbind(budgetDF, tmpDF)
+    
     ### add CP ratio DF
     cpDF2 <- reshape2::melt(cpDF, id.vars=c("Ring"))
     cpDF2$Trt <- "aCO2"
@@ -1351,10 +1367,13 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     plotDF81 <- plotDF1[plotDF1$terms%in%c("Plant P MRT", "Microbe P MRT"),]
     
-    plotDF82 <- plotDF1[plotDF1$terms%in%c("Plant PUE"),]
+    plotDF82 <- plotDF1[plotDF1$terms%in%c("Plant PUE", "Plant GPP efficiency"),]
     
     plotDF83 <- plotDF1[plotDF1$terms%in%c("Overstorey GPP efficiency",
                                            "Understorey GPP efficiency"),]
+    
+    
+    ### add both GPP PUE together
     
     
     
@@ -1481,8 +1500,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.box.background = element_rect(alpha("grey",0.5)),
               legend.position="none",
               legend.text.align=0)+
-        scale_y_discrete(limits=c("Plant PUE"),
-                         labels=c("Plant PUE" = "Growth PUE"))+
+        scale_y_discrete(limits=c("Plant PUE", "Plant GPP efficiency"),
+                         labels=c("Plant PUE" = "Growth PUE",
+                                  "Plant GPP efficiency" = "GPP PUE"))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1582,46 +1602,46 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_pool.pdf", 
         width=10, height=10)
-    #left_col <- plot_grid(p51, p53, ncol=1, rel_heights=c(1,0.8))
-    #top_row <- plot_grid(left_col, p52,  ncol = 2, rel_widths = c(1, 1),
-    #                     rel_heights=c(1, 1))
-    #bot_row <- plot_grid(p71, p72, ncol = 2, rel_widths = c(1, 1),
-    #                     rel_heights=c(0.6, 1))
-    #
-    #plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
-    #          rel_heights=c(2, 1))
-    #
-    #grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.47, 0.96), 
-    #          y = c(0.96, 0.96, 0.6, 0.3, 0.3),
-    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
+    left_col <- plot_grid(p51, p53, ncol=1, rel_heights=c(1,0.8))
+    top_row <- plot_grid(left_col, p52,  ncol = 2, rel_widths = c(1, 1),
+                         rel_heights=c(1, 1))
+    bot_row <- plot_grid(p71, p72, ncol = 2, rel_widths = c(1, 1),
+                         rel_heights=c(0.6, 1))
     
-    
-    left_col <- plot_grid(p51, p53, p71, ncol=1, rel_heights=c(1.1,0.9,1))
-    right_col <- plot_grid(p52, p75, ncol = 1, rel_widths = c(1, 1),
-                         rel_heights=c(1.1,0.25))
-    
-    plot_grid(left_col, right_col, ncol = 2, rel_widths = c(1, 1),
-              rel_heights=c(1, 1))
+    plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
+              rel_heights=c(2, 1))
     
     grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.47, 0.96), 
-              y = c(0.96, 0.96, 0.61, 0.3, 0.16),
+              y = c(0.96, 0.96, 0.6, 0.3, 0.3),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
+    
+    
+    #left_col <- plot_grid(p51, p53, p71, ncol=1, rel_heights=c(1.1,0.9,1))
+    #right_col <- plot_grid(p52, p75, ncol = 1, rel_widths = c(1, 1),
+    #                     rel_heights=c(1.1,0.25))
+    #
+    #plot_grid(left_col, right_col, ncol = 2, rel_widths = c(1, 1),
+    #          rel_heights=c(1, 1))
+    #
+    #grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.47, 0.96), 
+    #          y = c(0.96, 0.96, 0.61, 0.3, 0.16),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
     
     dev.off()
     
     
     ### fluxes 1
-    grid.labs <- c("(a)", "(c)", "(d)", "(b)")
-    
-    pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux.pdf", 
-        width=12, height=6)
-    left_col <- plot_grid(p64, p73, p74, ncol=1, rel_heights=c(1.0, 0.6, 0.5))
-    
-    plot_grid(left_col, p65, ncol = 2, rel_widths = c(1, 1),
-              rel_heights=c(1, 1))
-    grid.text(grid.labs,x = c(0.45, 0.45, 0.45, 0.95), y = c(0.95, 0.48, 0.2, 0.95),
-              gp=gpar(fontsize=16, col="black", fontface="bold"))
-    dev.off()
+    #grid.labs <- c("(a)", "(c)", "(d)", "(b)")
+    #
+    #pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux.pdf", 
+    #    width=12, height=6)
+    #left_col <- plot_grid(p64, p73, p74, ncol=1, rel_heights=c(1.0, 0.6, 0.5))
+    #
+    #plot_grid(left_col, p65, ncol = 2, rel_widths = c(1, 1),
+    #          rel_heights=c(1, 1))
+    #grid.text(grid.labs,x = c(0.45, 0.45, 0.45, 0.95), y = c(0.95, 0.48, 0.2, 0.95),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
+    #dev.off()
     
     ### fluxes 2
     #grid.labs <- c("(a)", "(b)", "(c)", "(d)")
@@ -1636,43 +1656,52 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
     
     
     
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)")
-    
-    pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux2.pdf", 
-        width=12, height=6)
-    
-    topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1, 1.2, 1))
-    top_row <- plot_grid(p64, topright_row, ncol=2, rel_widths=c(1, 1))
-    bot_row <- plot_grid(p61, p63, ncol=2, rel_widths=c(1, 1))
-    
-    
-    plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
-              rel_heights=c(1, 1))
-    grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.96), y = c(0.95, 0.95, 0.45, 0.45),
-              gp=gpar(fontsize=16, col="black", fontface="bold"))
-    dev.off()
+    #grid.labs <- c("(a)", "(b)", "(c)", "(d)")
+    #
+    #pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux2.pdf", 
+    #    width=12, height=6)
+    #
+    #topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1, 1.2, 1))
+    #top_row <- plot_grid(p64, topright_row, ncol=2, rel_widths=c(1, 1))
+    #bot_row <- plot_grid(p61, p63, ncol=2, rel_widths=c(1, 1))
+    #
+    #
+    #plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1),
+    #          rel_heights=c(1, 1))
+    #grid.text(grid.labs,x = c(0.47, 0.96, 0.47, 0.96), y = c(0.95, 0.95, 0.45, 0.45),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
+    #dev.off()
     
     
     
     
     ### revise 
-    grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)")#, "(e)", "(f)")
     
     pdf("plots_tables/output/unnormalized/CO2_effect_on_P_flux3.pdf", 
-        width=12, height=5)
+        width=12, height=4)
     
-    topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1.4, 1.4, 1))
-    top_row <- plot_grid(p64, NULL, topright_row, ncol=3, rel_widths=c(1, 0.05, 1))
-    bot_row <- plot_grid(p74, NULL, p73, ncol=3, rel_widths=c(1, 0.05, 1))
+    #topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1.4, 1.4, 1))
+    topright_row <- plot_grid(p81, p82, p83, ncol=1, rel_heights=c(1, 1, 1))
+    
+    #top_row <- plot_grid(p64, NULL, topright_row, ncol=3, rel_widths=c(1, 0.05, 1))
+    plot_grid(p64, NULL, topright_row, ncol=3, rel_widths=c(1, 0.05, 1))
+    
+    #bot_row <- plot_grid(p74, NULL, p73, ncol=3, rel_widths=c(1, 0.05, 1))
 
-    plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1), scale=0.95,
-              rel_heights=c(1, 0.5))
+    #plot_grid(top_row, bot_row, ncol = 1, rel_widths = c(1, 1), scale=0.95,
+    #          rel_heights=c(1, 0.5))
+    #grid.text(grid.labs,
+    #          x = c(0.03, 0.52, 0.52, 0.52, 
+    #                0.03, 0.52), 
+    #          y = c(0.95, 0.95, 0.77, 0.55, 
+    #                0.30, 0.30),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
     grid.text(grid.labs,
-              x = c(0.03, 0.52, 0.52, 0.52, 
-                    0.03, 0.52), 
-              y = c(0.95, 0.95, 0.77, 0.55, 
-                    0.30, 0.30),
+              x = c(0.03, 0.52, 0.52, 0.522), 
+              y = c(0.96, 0.96, 0.64, 0.35),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
+    
     dev.off()
     
     
