@@ -476,9 +476,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Soil Org P Conc 0-10cm" = expression("Soil " * P[o] * " (0-10cm)"),
                                   "Soil Org P Conc 10-30cm" = expression("Soil " * P[o] * " (10-30cm)"),
                                   "Soil Org P Conc 30-60cm" = expression("Soil " * P[o] * " (30-60cm)"),
-                                  "Soil Phosphate P Conc 0-10cm" = expression("Soil " * PO[4]-P * " (0-10cm)"),
-                                  "Soil Phosphate P Conc 10-30cm" = expression("Soil " * PO[4]-P * " (10-30cm)"),
-                                  "Soil Phosphate P Conc 30-60cm" = expression("Soil " * PO[4]-P * " (30-60cm)")))+
+                                  "Soil Phosphate P Conc 0-10cm" = expression("Soil Labile P (0-10cm)"),
+                                  "Soil Phosphate P Conc 10-30cm" = expression("Soil Labile P (10-30cm)"),
+                                  "Soil Phosphate P Conc 30-60cm" = expression("Soil Labile P (30-60cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -689,9 +689,9 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Soil Org P Pool 0-10cm" = expression("Soil " * P[o] * " (0-10cm)"),
                                   "Soil Org P Pool 10-30cm" = expression("Soil " * P[o] * " (10-30cm)"),
                                   "Soil Org P Pool 30-60cm" = expression("Soil " * P[o] * " (30-60cm)"),
-                                  "Soil Phosphate P Pool 0-10cm" = expression("Soil " * PO[4]-P * " (0-10cm)"),
-                                  "Soil Phosphate P Pool 10-30cm" = expression("Soil " * PO[4]-P * " (10-30cm)"),
-                                  "Soil Phosphate P Pool 30-60cm" = expression("Soil " * PO[4]-P * " (30-60cm)")))+
+                                  "Soil Phosphate P Pool 0-10cm" = expression("Soil Labile P (0-10cm)"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression("Soil Labile P (10-30cm)"),
+                                  "Soil Phosphate P Pool 30-60cm" = expression("Soil Labile P (30-60cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1179,8 +1179,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                                   "Microbial P Pool 30-60cm" = expression(Delta * " Microbial P (30-60cm)"),
                                   "Soil P Pool 0-10cm" = expression(Delta * " Soil P (0-10cm)"),
                                   "Soil P Pool 10-30cm" = expression(Delta * " Soil P (10-30cm)"),
-                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Phosphate P (0-10cm)"),
-                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Phosphate P (10-30cm)")))+
+                                  "Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil Labile P (0-10cm)"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil Labile P (10-30cm)")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1296,8 +1296,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.text.align=0)+
         scale_y_discrete(limits=c("Soil Phosphate P Pool 10-30cm",
                                   "Soil Phosphate P Pool 0-10cm"),
-                         labels=c("Soil Phosphate P Pool 0-10cm" = expression(Delta * " Phosphate-P 0-10cm"),
-                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Phosphate-P 10-30cm")))+
+                         labels=c("Soil Phosphate P Pool 0-10cm" = expression(Delta * " Soil Labile P 0-10cm"),
+                                  "Soil Phosphate P Pool 10-30cm" = expression(Delta * " Soil Labile P 10-30cm")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",
@@ -1365,7 +1365,7 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
                               ifelse(plotDF1$diff < 0.0, "neg", "neut"))
     
     
-    plotDF81 <- plotDF1[plotDF1$terms%in%c("Plant P MRT", "Microbe P MRT"),]
+    plotDF81 <- plotDF1[plotDF1$terms%in%c("Plant P MRT"),]
     
     plotDF82 <- plotDF1[plotDF1$terms%in%c("Plant PUE", "Plant GPP efficiency"),]
     
@@ -1406,9 +1406,8 @@ plot_CO2_effect_on_the_same_figure <- function(budgetDF,
               legend.box.background = element_rect(alpha("grey",0.5)),
               legend.position="none",
               legend.text.align=0)+
-        scale_y_discrete(limits=c("Plant P MRT", "Microbe P MRT"),
-                         labels=c("Plant P MRT" = expression("Plant P MRT"),
-                                  "Microbe P MRT" = expression("Microbial P MRT")))+
+        scale_y_discrete(limits=c("Plant P MRT"),
+                         labels=c("Plant P MRT" = expression("Plant P MRT")))+
         scale_fill_manual(name="",
                           labels=c("pos"="Positive",
                                    "neg"="Negative",

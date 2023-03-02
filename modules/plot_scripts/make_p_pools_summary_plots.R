@@ -113,7 +113,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                     inDF$eCO2_sd[inDF$terms=="Soil Phosphate P Pool 10-30cm"],
                     inDF$aCO2_sd[inDF$terms=="Soil Phosphate P Pool 30-60cm"], 
                     inDF$eCO2_sd[inDF$terms=="Soil Phosphate P Pool 30-60cm"])
-    plotDF3$Variable <- rep(c("Soil Phosphate  0-10cm","Soil Phosphate  10-30cm","Soil Phosphate  30-60cm"), each=2)
+    plotDF3$Variable <- rep(c("Soil Labile P 0-10cm","Soil Labile P 10-30cm","Soil Labile P 30-60cm"), each=2)
     plotDF3$Trt <- rep(c("aCO2", "eCO2"), 3)
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
@@ -203,9 +203,9 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
         scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                             labels=c(expression(aCO[2]), expression(eCO[2])))+
-        scale_x_discrete(labels=c("Soil Phosphate  0-10cm"=expression("Soil Phosphate (0-10cm)"),
-                                "Soil Phosphate  10-30cm"=expression("Soil Phosphate (10-30cm)"),
-                                "Soil Phosphate  30-60cm"=expression("Soil Phosphate (30-60cm)")))
+        scale_x_discrete(labels=c("Soil Phosphate  0-10cm"=expression("Soil Labile P (0-10cm)"),
+                                "Soil Phosphate  10-30cm"=expression("Soil Labile P (10-30cm)"),
+                                "Soil Phosphate  30-60cm"=expression("Soil Labile P (30-60cm)")))
     
     p4 <- ggplot(plotDF4, aes(x=Variable, y=mean))+
         geom_bar(stat = "identity", aes(fill=Trt), position="dodge")+
@@ -931,7 +931,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 0-10cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 0-10cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 0-10cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 0-10cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 0-10cm"="Labile P",
                                    "1_Microbial P Pool 0-10cm"="Microbe",
                                    "2_Soil Org Residual P Pool 0-10cm"="Organic residual"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
@@ -970,7 +970,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 10-30cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 10-30cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 10-30cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 10-30cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 10-30cm"="Labile P",
                                    "1_Microbial P Pool 10-30cm"="Microbe",
                                    "2_Soil Org Residual P Pool 10-30cm"="Organic residual"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
@@ -1008,7 +1008,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 30-60cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 30-60cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 30-60cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 30-60cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 30-60cm"="Labile P",
                                    "1_Microbial P Pool 30-60cm"="Microbe",
                                    "2_Soil Org Residual P Pool 30-60cm"="Organic residual"))+
         scale_x_discrete(limits=c("aCO2", "eCO2"),
@@ -1079,7 +1079,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 0-10cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 0-10cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 0-10cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 0-10cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 0-10cm"="Labile P",
                                    "1_Microbial P Pool 0-10cm"="Microbe",
                                    "2_Soil Org Residual P Pool 0-10cm"="Organic residual"))
     
@@ -1106,7 +1106,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 0-10cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 0-10cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 0-10cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 0-10cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 0-10cm"="Labile P",
                                    "1_Microbial P Pool 0-10cm"="Microbe",
                                    "2_Soil Org Residual P Pool 0-10cm"="Organic residual"))
     
@@ -1140,7 +1140,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 10-30cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 10-30cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 10-30cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 10-30cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 10-30cm"="Labile P",
                                    "1_Microbial P Pool 10-30cm"="Microbe",
                                    "2_Soil Org Residual P Pool 10-30cm"="Organic residual"))
     
@@ -1167,7 +1167,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 10-30cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 10-30cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 10-30cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 10-30cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 10-30cm"="Labile P",
                                    "1_Microbial P Pool 10-30cm"="Microbe",
                                    "2_Soil Org Residual P Pool 10-30cm"="Organic residual"))
     
@@ -1201,7 +1201,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 30-60cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 30-60cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 30-60cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 30-60cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 30-60cm"="Labile P",
                                    "1_Microbial P Pool 30-60cm"="Microbe",
                                    "2_Soil Org Residual P Pool 30-60cm"="Organic residual"))
     
@@ -1229,7 +1229,7 @@ make_p_pools_summary_plots <- function(inDF,norm) {
                                      "1_Microbial P Pool 30-60cm" = Diverge_hsv_Palette[1],
                                      "2_Soil Org Residual P Pool 30-60cm" = Diverge_hsv_Palette[3]),
                           labels=c("4_Soil Inorg P Pool 30-60cm"="Inorganic residual",
-                                   "3_Soil Phosphate P Pool 30-60cm"="Phosphate",
+                                   "3_Soil Phosphate P Pool 30-60cm"="Labile P",
                                    "1_Microbial P Pool 30-60cm"="Microbe",
                                    "2_Soil Org Residual P Pool 30-60cm"="Organic residual"))
     

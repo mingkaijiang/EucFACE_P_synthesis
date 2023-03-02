@@ -53,7 +53,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
                     inDF$eCO2_sd[inDF$conc.terms=="Fine Root P Conc"],
                     inDF$aCO2_sd[inDF$conc.terms=="Sapwood P Conc"], 
                     inDF$eCO2_sd[inDF$conc.terms=="Sapwood P Conc"])
-    plotDF3$Variable <- rep(c("Fine Root", "Sapwood"), each=2)
+    plotDF3$Variable <- rep(c("Fine root", "Sapwood"), each=2)
     plotDF3$Trt <- rep(c("aCO2", "eCO2"), 2)
     plotDF3$pos <- with(plotDF3, mean + sd)
     plotDF3$neg <- with(plotDF3, mean - sd)
@@ -96,7 +96,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
     colnames(plotDF6) <- c("mean", "sd", "Variable")
     plotDF6$sd <- c(inDF$aCO2_sd[inDF$conc.terms=="Soil Phosphate P Conc 0-10cm"], 
                     inDF$eCO2_sd[inDF$conc.terms=="Soil Phosphate P Conc 0-10cm"])
-    plotDF6$Variable <- rep(c("Soil Phosphate 0-10cm"), each=2)
+    plotDF6$Variable <- rep(c("Soil labile P 0-10cm"), each=2)
     plotDF6$Trt <- rep(c("aCO2", "eCO2"), 1)
     plotDF6$pos <- with(plotDF6, mean + sd)
     plotDF6$neg <- with(plotDF6, mean - sd)
@@ -382,7 +382,7 @@ make_p_concentration_summary_plots <- function(inDF,norm) {
                             labels=c(expression(aCO[2]), expression(eCO[2])))
     
     
-    #grid.labs <- c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)")
+    grid.labs <- c("(a)", "(b)", "(c)", "(d)")
     
     require(grid)
     require(cowplot)

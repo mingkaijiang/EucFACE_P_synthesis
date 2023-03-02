@@ -57,7 +57,8 @@ compare_soil_p_mineralization_fluxes <- function (flux1,
     plotDF2 <- summaryBy(Flux~Trt+Method+Depth, FUN=c(mean,sd), data=plotDF,
                          na.rm=T, keep.names=T)
     
-    
+    write.csv(plotDF2, "plots_tables/output/unnormalized/soil_P_min_flux_comparison.csv",
+              row.names=F)
     
     ### prepare bulk density plot
     bkDF$Trt[bkDF$Ring%in%c(1,4,5)] <- "eCO2"

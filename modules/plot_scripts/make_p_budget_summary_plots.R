@@ -841,7 +841,7 @@ make_p_budget_summary_plots <- function(inDF,
       annotate(geom="text", label=expression(eCO[2]), x=2., y=100, size=4)
     
     
-    plot(p12)
+    #plot(p12)
     
     
     minDF2$Depth <- gsub("0-10cm", "3_0-10cm", minDF2$Depth)
@@ -884,7 +884,7 @@ make_p_budget_summary_plots <- function(inDF,
     
     #plot(p2)
     
-    
+    plotDF10 <- plotDF10[plotDF10$Component=="Plant",]
     p3 <- ggplot(plotDF10,
                  aes(Component, mean,group=Trt)) + 
       geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
@@ -892,7 +892,7 @@ make_p_budget_summary_plots <- function(inDF,
                     position = position_dodge(0.9), width=0.2, size=0.4) +
       xlab("") + ylab("P MRT (yr)")+
       theme_linedraw() +
-      ylim(0,14)+
+      ylim(0,4)+
       theme(panel.grid.minor=element_blank(),
             axis.title.x = element_text(size=12), 
             axis.text.x = element_text(size=10),
@@ -906,9 +906,9 @@ make_p_budget_summary_plots <- function(inDF,
                         labels=c(expression(aCO[2]), expression(eCO[2])))+
       scale_colour_manual(name="", values = c("aCO2" = "black", "eCO2" = "black"),
                           labels=c(expression(aCO[2]), expression(eCO[2])))+
-      scale_x_discrete(limits=c("Plant","Microbe"),
-                       labels=c("Plant",
-                                "Microbe"))
+      scale_x_discrete(limits=c("Plant"),#,"Microbe"),
+                       labels=c("Plant"))#,
+                                #"Microbe"))
     
     
     p4 <- ggplot(plotDF8,
@@ -916,7 +916,7 @@ make_p_budget_summary_plots <- function(inDF,
       geom_bar(stat = "identity", aes(fill=Trt), position="dodge") +
       geom_errorbar(aes(ymax=pos, ymin=neg, color=factor(Trt)), 
                     position = position_dodge(0.9), width=0.2, size=0.4) +
-      xlab("") + ylab(expression(paste("Growth PUE ( gC" * " " *gP^-1 * " )")))+
+      xlab("") + ylab(expression(paste("Growth PUE ( gC" * " " *g^-1 * " P)")))+
       theme_linedraw() +
       ylim(0,2500)+
       theme(panel.grid.minor=element_blank(),
@@ -1032,19 +1032,37 @@ make_p_budget_summary_plots <- function(inDF,
     
     
     ## plot 
-    pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_3.pdf"), 
-        width=10,height=8)
-    top_row <- plot_grid(p1, dem_plot, p2, ncol=3, rel_widths=c(1,1,1))
-    bot_row <- plot_grid(p3, p5, p4, ncol=3)
+    #pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_3.pdf"), 
+    #    width=10,height=8)
+    #top_row <- plot_grid(p1, dem_plot, p2, ncol=3, rel_widths=c(1,1,1))
+    #bot_row <- plot_grid(p3, p5, p4, ncol=3)
+    #
+    #plot_grid(top_row, 
+    #          bot_row, 
+    #          ncol = 1, 
+    #          rel_heights=c(1, 1, 1, 1))
+    #grid.text(grid.labs,x = c(0.09, 0.42, 0.76, 0.06, 0.44, 0.76), y = c(0.97, 0.97, 0.97, 0.47, 0.47, 0.47),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
+    #dev.off()
     
-    plot_grid(top_row, 
-              bot_row, 
-              ncol = 1, 
-              rel_heights=c(1, 1, 1, 1))
-    grid.text(grid.labs,x = c(0.09, 0.42, 0.76, 0.06, 0.44, 0.76), y = c(0.97, 0.97, 0.97, 0.47, 0.47, 0.47),
+    
+    
+    pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_3.pdf"), 
+        width=10,height=4)
+    plot_grid(p1, dem_plot, p2, ncol=3, rel_widths=c(1,1,1))
+  
+    grid.text(grid.labs,x = c(0.09, 0.42, 0.76), y = c(0.95, 0.95, 0.95),
               gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
+    
+    pdf(paste0("plots_tables/output/", norm, "/P_Budget_Summary_Plots_", norm, "_4.pdf"), 
+        width=10,height=4)
+    plot_grid(p3, p5, p4, ncol=3)
+    
+    grid.text(grid.labs,x = c(0.07, 0.43, 0.76), y = c(0.95, 0.95, 0.95),
+              gp=gpar(fontsize=16, col="black", fontface="bold"))
+    dev.off()
     
 }
 

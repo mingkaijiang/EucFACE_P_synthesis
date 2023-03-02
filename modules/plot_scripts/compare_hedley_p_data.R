@@ -131,12 +131,44 @@ compare_hedley_p_data <- function() {
     
     xuDF$MicrobeP_Frac <- with(xuDF,Soil_microbial_biomass_phosphorus/Total_organic_phosphorus*100)
     
+    xuDF1 <- subset(xuDF, Depth%in%c("0~10"))#, #"0~20","0~23",
+    #                                   "0~3", "0~2.8", "0~2.7",
+    #                                   "0~2.3", "0~5", "4~12",
+    #                                   #"6~14", "6~16", 
+    #                                   "3~10",
+    #                                   "6~12", "3~11", #"0~15",
+    #                                   "2~6", #"1.5~16", 
+    #                                   "2~13",
+    #                                   "1.5~5", #"5~16", 
+    #                                   "0~2.5",
+    #                                   "2.5~5", "5~10", "2.5~7.5",
+    #                                   "0~2", "2~10", #"0~30",
+    #                                   #"5~15", 
+    #                                   "0~7.5", #"0~18",
+    #                                   #"0~25", "0~24", 
+    #                                   "0~13",
+    #                                   #"3~15", 
+    #                                   "Surface (0~10)",
+    #                                   "1~3", #"0~22", 
+    #                                   "0~8",
+    #                                   "0~12", "0~6", "5~7.5", "7.5~10",
+    #                                   "3.6~5", "2~3.6", "3~4", "0~11",
+    #                                   "0~12.5", #"3~25", 
+    #                                   "4~10",
+    #                                   #"0~16", "2~19", "4~22",
+    #                                   "0.5~11", #"4~14", 
+    #                                   "0~9", "0~4", "1",
+    #                                   "3", "8"))
+    
+    xuDF1$Depth <- "0~10"
+    
     xuDF <- xuDF[complete.cases(xuDF$MicrobeP_Frac),]
     n1 <- dim(xuDF)[1]
     
+    
     ### EucFACE values under ambient conditions
-    v1 <- 5.97 # microbial P
-    v2 <- 25.1 # organic P
+    v1 <- 3.43 # 5.97 # microbial P
+    v2 <- 7.55 # 25.1 # organic P
     v3 <- v1/v2 * 100
     
     
@@ -243,41 +275,41 @@ compare_hedley_p_data <- function() {
                                     "Boreal Forest"),]
     
     ### prepare eucface
-    eucDF <- data.frame("Biome"="EucFACE",
-                        "Pmic.mean"=0.001040160,
-                        "Pmic.sd"=0.001227397)
+    #eucDF <- data.frame("Biome"="EucFACE",
+    #                    "Pmic.mean"=0.001040160,
+    #                    "Pmic.sd"=0.001227397)
     
     plotDF <- rbind(eucDF, sumDF)
     
-    p3 <- ggplot(data=plotDF, aes(Biome, Pmic.mean)) +
-        geom_errorbar(aes(ymin=Pmic.mean-Pmic.sd, ymax=Pmic.mean+Pmic.sd),
-                      width=0.2)+
-        geom_point(aes(fill=Biome), pch=21, size=3)+
-        #geom_vline(xintercept=2.5, lty = 2)+
-        theme_linedraw() +
-        theme(panel.grid.minor=element_blank(),
-              axis.title.x = element_text(size=14), 
-              axis.text.x = element_text(size=14),
-              axis.text.y=element_text(size=14),
-              axis.title.y=element_text(size=14),
-              legend.text=element_text(size=14),
-              legend.title=element_text(size=14),
-              panel.grid.major=element_blank(),
-              legend.position="none",
-              legend.text.align=0)+
-        scale_x_discrete(limits=c("EucFACE",
-                                  "Boreal Forest",
-                                  "Temperate Broadleaf Forest",
-                                  "Temperate Coniferous Forest",
-                                  "Tropical/Subtropical Forest"),
-                         label=c("EucFACE",
-                                 "Boreal Forest",
-                                 "Temperate Broadleaf Forest",
-                                 "Temperate Coniferous Forest",
-                                 "Tropical/Subtropical Forest"))+
-        coord_flip()+
-        xlab("")+
-        ylab("Microbial P concentration (%)")
+    #p3 <- ggplot(data=plotDF, aes(Biome, Pmic.mean)) +
+    #    geom_errorbar(aes(ymin=Pmic.mean-Pmic.sd, ymax=Pmic.mean+Pmic.sd),
+    #                  width=0.2)+
+    #    geom_point(aes(fill=Biome), pch=21, size=3)+
+    #    #geom_vline(xintercept=2.5, lty = 2)+
+    #    theme_linedraw() +
+    #    theme(panel.grid.minor=element_blank(),
+    #          axis.title.x = element_text(size=14), 
+    #          axis.text.x = element_text(size=14),
+    #          axis.text.y=element_text(size=14),
+    #          axis.title.y=element_text(size=14),
+    #          legend.text=element_text(size=14),
+    #          legend.title=element_text(size=14),
+    #          panel.grid.major=element_blank(),
+    #          legend.position="none",
+    #          legend.text.align=0)+
+    #    scale_x_discrete(limits=c("EucFACE",
+    #                              "Boreal Forest",
+    #                              "Temperate Broadleaf Forest",
+    #                              "Temperate Coniferous Forest",
+    #                              "Tropical/Subtropical Forest"),
+    #                     label=c("EucFACE",
+    #                             "Boreal Forest",
+    #                             "Temperate Broadleaf Forest",
+    #                             "Temperate Coniferous Forest",
+    #                             "Tropical/Subtropical Forest"))+
+    #    coord_flip()+
+    #    xlab("")+
+    #    ylab("Microbial P concentration (%)")
     
 
     grid.labs <- c("(a)", "(b)")

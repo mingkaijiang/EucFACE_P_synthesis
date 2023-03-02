@@ -95,10 +95,10 @@ microbial_concentration_global_comparison <- function(norm,
     
     #plot(p1)
     
-    pdf(paste0("plots_tables/output/", norm, "/microbial_P_global_comparison.pdf"), 
-        width=8, height=5)
-    plot(p1)
-    dev.off()
+    #pdf(paste0("plots_tables/output/", norm, "/microbial_P_global_comparison.pdf"), 
+    #    width=8, height=5)
+    #plot(p1)
+    #dev.off()
     
     
     
