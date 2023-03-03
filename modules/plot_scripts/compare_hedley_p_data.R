@@ -131,48 +131,44 @@ compare_hedley_p_data <- function() {
     
     xuDF$MicrobeP_Frac <- with(xuDF,Soil_microbial_biomass_phosphorus/Total_organic_phosphorus*100)
     
-    xuDF1 <- subset(xuDF, Depth%in%c("0~10"))#, #"0~20","0~23",
-    #                                   "0~3", "0~2.8", "0~2.7",
-    #                                   "0~2.3", "0~5", "4~12",
-    #                                   #"6~14", "6~16", 
-    #                                   "3~10",
-    #                                   "6~12", "3~11", #"0~15",
-    #                                   "2~6", #"1.5~16", 
-    #                                   "2~13",
-    #                                   "1.5~5", #"5~16", 
-    #                                   "0~2.5",
-    #                                   "2.5~5", "5~10", "2.5~7.5",
-    #                                   "0~2", "2~10", #"0~30",
-    #                                   #"5~15", 
-    #                                   "0~7.5", #"0~18",
-    #                                   #"0~25", "0~24", 
-    #                                   "0~13",
-    #                                   #"3~15", 
-    #                                   "Surface (0~10)",
-    #                                   "1~3", #"0~22", 
-    #                                   "0~8",
-    #                                   "0~12", "0~6", "5~7.5", "7.5~10",
-    #                                   "3.6~5", "2~3.6", "3~4", "0~11",
-    #                                   "0~12.5", #"3~25", 
-    #                                   "4~10",
-    #                                   #"0~16", "2~19", "4~22",
-    #                                   "0.5~11", #"4~14", 
-    #                                   "0~9", "0~4", "1",
-    #                                   "3", "8"))
+    #xuDF1 <- subset(xuDF, Depth%in%c("0~10",
+    #                                 "0~3", "0~2.8", "0~2.7",
+    #                                 "0~2.3", "0~5", "4~12",
+    #                                 "3~10", "6~12", "3~11", 
+    #                                 "2~6", "1.5~5", "0~2.5",
+    #                                 "2.5~5", "5~10", "2.5~7.5",
+    #                                 "0~2", "2~10", "0~7.5",
+    #                                 "Surface (0~10)","1~3", 
+    #                                 "0~8","0~6", "5~7.5", "7.5~10",
+    #                                 "3.6~5", "2~3.6", "3~4", "0~11",
+    #                                 "4~10","0.5~11", "0~9", "0~4", "1",
+    #                                 "3", "8"))
     
-    xuDF1$Depth <- "0~10"
     
-    xuDF <- xuDF[complete.cases(xuDF$MicrobeP_Frac),]
-    n1 <- dim(xuDF)[1]
+    
+    xuDF1 <- subset(xuDF, !Depth%in%c("organic layer",
+                                     #"30~40", "40~50", "50~60",
+                                     #"20~40", 
+                                     "Not mentioned", "L layer",
+                                     "F layer", "4~0", "organic horizon", 
+                                     "mineral horizon", "O layer", "FH layer"))
+    
+    xuDF1$Depth <- "0~30"
+    
+    xuDF1 <- xuDF1[xuDF1$Biome%in%c("Boreal Forest", "Temperate Broadleaf Forest",
+                                    "Temperate Coniferous Forest", "Tropical/Subtropical Forest"),]
+    
+    xuDF1 <- xuDF1[complete.cases(xuDF1$MicrobeP_Frac),]
+    n1 <- dim(xuDF1)[1]
     
     
     ### EucFACE values under ambient conditions
-    v1 <- 3.43 # 5.97 # microbial P
-    v2 <- 7.55 # 25.1 # organic P
+    v1 <- 5.97 # microbial P
+    v2 <- 25.1 # organic P
     v3 <- v1/v2 * 100
     
     
-    subDF <- xuDF[xuDF$Biome%in%c("Temperate Broadleaf Forest",
+    subDF <- xuDF1[xuDF1$Biome%in%c("Temperate Broadleaf Forest",
                                   "Temperate Coniferous Forest",
                                   "Tropical/Subtropical Forest",
                                   "Boreal Forest"),]
@@ -189,13 +185,13 @@ compare_hedley_p_data <- function() {
     
     ### find probability distribution marks
     #probs <- c(0.05, 0.25, 0.5, 0.75, 0.95)
-    probs <- c(0.25, 0.5, 0.75, 0.85, 0.9)
+    probs <- c(0.25, 0.5, 0.75, 0.9)
     quantiles1 <- quantile(subDF$MicrobeP_Frac, prob=probs,na.rm=T)
     
     
     xd1$quant <- factor(findInterval(xd1$x,quantiles1))
     
-    spectral.colors <- brewer.pal(6,"Spectral")
+    spectral.colors <- brewer.pal(5,"Spectral")
     
     
     
@@ -232,14 +228,14 @@ compare_hedley_p_data <- function() {
         #                   labels=c(0, 100, 500, ">1000"),
         #                   limits = c(0,1000),expand=c(0,0)) + 
         scale_fill_manual(name="",
-                          limits=c(0:5),
-                          labels=c("0-25th", "25-50th", "50-75th", "75-85th", "85-90th", "90-100th"),
+                          limits=c(0:4),
+                          labels=c("0-25th", "25-50th", "50-75th", "75-90th", "90-100th"),
                           values=spectral.colors,
-                          guide=guide_legend(nrow=6))+
+                          guide=guide_legend(nrow=5))+
         geom_vline(xintercept=v3,
                    col="black", size = 0.6)+
         annotate(geom="text", x=16, y=0.06, label=paste0("n = ", n2), size=6)+
-        xlab(expression("Fraction of microbial " * P[o] * " (%)"))+
+        xlab(expression("Fraction of soil organic P as microbes (%)"))+
         ylab("Density")+
         theme_linedraw() +
         theme(panel.grid.minor=element_blank(),
@@ -252,7 +248,7 @@ compare_hedley_p_data <- function() {
               panel.grid.major=element_blank(),
               legend.text.align = 0,
               legend.box.background = element_rect(alpha("grey",0.5)),
-              legend.position=c(0.8, 0.23),
+              legend.position=c(0.7, 0.83),
               legend.box = 'vertical',
               legend.box.just = 'left')+
         guides(fill=guide_legend(ncol=2))
@@ -312,17 +308,17 @@ compare_hedley_p_data <- function() {
     #    ylab("Microbial P concentration (%)")
     
 
-    grid.labs <- c("(a)", "(b)")
+    #grid.labs <- c("(a)")#, "(b)")
     
     #top_row <- plot_grid(p2, p3)
     
     pdf(paste0("plots_tables/output/unnormalized/microbial_P_global_comparison.pdf"), 
-        width=12, height=4)
-    ggdraw(p2) + 
-        draw_plot(p3, .45, .47, .5, .5) 
+        width=6, height=4)
+    ggdraw(p2) #+ 
+        #draw_plot(p3, .45, .47, .5, .5) 
     #plot_grid(p3, p2, rel_widths=c(1,1))
-    grid.text(grid.labs,x = c(0.08, 0.92), y = c(0.9, 0.9),
-              gp=gpar(fontsize=16, col="black", fontface="bold"))
+    #grid.text(grid.labs,x = c(0.08, 0.92), y = c(0.9, 0.9),
+    #          gp=gpar(fontsize=16, col="black", fontface="bold"))
     dev.off()
     
     
