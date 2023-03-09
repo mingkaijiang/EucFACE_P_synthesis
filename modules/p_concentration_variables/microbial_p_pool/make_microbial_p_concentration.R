@@ -7,8 +7,8 @@ make_microbial_p_concentration <- function() {
     # download the data
     download_microbial_p_data()
     
-    df1 <- read.csv(file.path(getToPath(), 
-                             "FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130.csv"))
+    #df1 <- read.csv(file.path(getToPath(), 
+    #                         "FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130.csv"))
     df <- read.csv("temp_files/FACE_P0014_RA_MicrobialBiomassCNP_L1_20120613-20151130_V2.csv")
     df$Pmic <- as.numeric(as.character(df$Pmic_2_noEF))
     df <- df[complete.cases(df$ring),]
