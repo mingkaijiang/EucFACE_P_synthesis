@@ -224,6 +224,9 @@ compare_fineroot_c_pool(inDF1=fineroot_c_pool,
                         name3="small_root",
                         name4="large_root")
 
+#c_fraction_fr <- make_fineroot_c_fraction(back.calculate=T,
+#                                          soil_bulk_density=soil_bulk_density)
+
 
 #### Understorey aboveground biomass 
 ### - 1: Varsha's clipping
@@ -453,6 +456,11 @@ standing_dead_p_pool <- make_wood_p_pool(p_conc=sapwood_p_concentration,
 fineroot_p_pool <- make_fineroot_p_pool(p_conc=fineroot_p_concentration,
                                         c_pool=fineroot_c_pool)
 
+#fineroot_p_pool2 <- make_fineroot_p_pool_2(p_conc=fineroot_p_concentration,
+#                                          back.calculate=T,
+#                                          soil_bulk_density=soil_bulk_density,
+#                                          root.size="intermediate")
+    
 
 #### Understorey P pool, assume both species contributed equally
 #### Also because p_conc and c_pool do not match in time,

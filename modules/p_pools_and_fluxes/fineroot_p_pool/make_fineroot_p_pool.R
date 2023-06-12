@@ -29,7 +29,17 @@ make_fineroot_p_pool <- function(p_conc,
     }
     
     # calculate p pool
+    #for (i in 1:6) {
+    #    out$fineroot_p_pool_0_10cm[out$Ring==i] <- out$fineroot_0_10_cm[out$Ring==i] / c_fraction_fr$Cpercent[c_fraction_fr$Ring==i&c_fraction_fr$Depth=="0_10"] * out$PercP[out$Ring==i] / 100
+    #    out$fineroot_p_pool_10_30cm[out$Ring==i] <- out$fineroot_10_30_cm[out$Ring==i] / c_fraction_fr$Cpercent[c_fraction_fr$Ring==i&c_fraction_fr$Depth=="10_30"] * out$PercP[out$Ring==i] / 100
+    #    out$fineroot_p_pool_30_60cm[out$Ring==i] <- out$fineroot_30_60_cm[out$Ring==i] / c_fraction_fr$Cpercent[c_fraction_fr$Ring==i&c_fraction_fr$Depth=="transition"] * out$PercP[out$Ring==i] / 100
+        
+    #}
+    
+    #out$fineroot_p_pool <- with(out, fineroot_p_pool_0_10cm+fineroot_p_pool_10_30cm+fineroot_p_pool_30_60cm)
+
     out$fineroot_p_pool <- out$fineroot_pool / c_fraction_fr * out$PercP / 100
+    
     
     outDF <- out[complete.cases(out),]
     
